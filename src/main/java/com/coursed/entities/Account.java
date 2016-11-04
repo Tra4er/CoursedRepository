@@ -1,18 +1,20 @@
 package com.coursed.entities;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Account {
-
     @Id
     @GeneratedValue
     private Long id;
     private String email;
     private String password;
+
+    @ManyToMany
+    @JoinTable(name = "account_roles", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     public Account() {
     }
@@ -41,6 +43,14 @@ public class Account {
         this.password = password;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
@@ -49,4 +59,6 @@ public class Account {
                 ", password='" + password + '\'' +
                 '}';
     }
+
+
 }

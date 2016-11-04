@@ -1,8 +1,7 @@
 package com.coursed.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by Hexray on 04.11.2016.
@@ -13,6 +12,9 @@ public class Role {
     @GeneratedValue
     private Long id;
     private String Name;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<Account> accounts;
 
     public Role() {
     }
