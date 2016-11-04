@@ -12,10 +12,13 @@
 
 
     <form name="f" th:action="@{/login}" method="post" class="form-signin">
+
         <h2 class="form-signin-heading">Please sign in</h2>
+
         <div th:if="${param.error}" class="alert alert-danger">
             Invalid username and password.
         </div>
+
         <div th:if="${param.logout}" class="alert alert-success">
             You have been logged out.
         </div>
