@@ -34,4 +34,13 @@ public class Role {
     public void setName(String name) {
         Name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", Name='" + Name + '\'' +
+                ", accounts=" + accounts +
+                '}';
+    }
 }

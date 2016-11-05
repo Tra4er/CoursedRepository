@@ -55,10 +55,9 @@ public class Account {
     public String toString() {
         return "Account{" +
                 "id=" + id +
-                ", name='" + email + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", roles=" + roles +
                 '}';
     }
-
-
 }

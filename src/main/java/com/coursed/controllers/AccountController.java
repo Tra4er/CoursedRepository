@@ -21,9 +21,17 @@ public class AccountController {
     @Autowired
     AccountRepository accountRepository;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String getLogin() {
-        return "auth/login";
+    // Login form
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    // Login form with error
+    @RequestMapping("/login-error")
+    public String loginError(Model model) {
+        model.addAttribute("loginError", true);
+        return "login";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
