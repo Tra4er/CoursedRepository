@@ -1,8 +1,8 @@
-package com.coursed.controllers;
+package com.coursed.controllers.mvc;
 
-import com.coursed.dto.AccountRegistrationFormData;
-import com.coursed.entities.Account;
-import com.coursed.repository.AccountRepository;
+import com.coursed.dto.RegistrationFormData;
+import com.coursed.entities.User;
+import com.coursed.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 
 @Controller
-public class AccountController {
+public class UserController {
 
     @Autowired
-    AccountRepository accountRepository;
+    UserService userService;
 
     // Login form
     @RequestMapping("/login")
@@ -40,38 +40,32 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String postRegistration(AccountRegistrationFormData form, Model model) {
+    public String postRegistration(RegistrationFormData form, Model model) {
         if (form.getPassword().equals(form.getConfirmPassword())) {
 
-            Account account = new Account();
-            account.setEmail(form.getEmail());
-            account.setPassword(form.getPassword());
+            User user = new User();
+            user.setEmail(form.getEmail());
+            user.setPassword(form.getPassword());
 
-            accountRepository.save(account);
+            userService.createUser(user);
         } else
             model.addAttribute("message", "Пароли не совпадают");
 
         return "registration";
     }
 
-    @RequestMapping(value = "/account/{id}")
+    @RequestMapping(value = "/user/{id}")
     public String viewAccount(@PathVariable("id") Long id, Model model) {
-
-        if (accountRepository.exists(id)) {
-            Account account = accountRepository.findOne(id);
-            model.addAttribute("accounts", account);
-        } else
-            model.addAttribute("accounts", "Учетной записи с таким id не существует.");
 
         return "accounts";
     }
 
-    @RequestMapping(value = "/accounts")
+    @RequestMapping(value = "/users")
     public String viewAllAccounts(Model model) {
 
-        model.addAttribute("accounts", accountRepository.findAll());
+        model.addAttribute("users", userService.findAll());
 
-        return "accounts";
+        return "users";
     }
 
 }

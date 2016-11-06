@@ -14,7 +14,7 @@ public class Role {
     private String Name;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<Account> accounts;
+    private Set<User> users;
 
     public Role() {
     }
@@ -40,7 +40,7 @@ public class Role {
         return "Role{" +
                 "id=" + id +
                 ", Name='" + Name + '\'' +
-                ", accounts=" + accounts +
+                ", users=" + users +
                 '}';
     }
 }

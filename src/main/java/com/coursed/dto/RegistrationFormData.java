@@ -1,7 +1,7 @@
 package com.coursed.dto;
 
 
-public class AccountRegistrationFormData {
+public class RegistrationFormData {
 
     private String email;
     private String password;

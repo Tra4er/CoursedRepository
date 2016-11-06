@@ -1,9 +1,9 @@
-package com.coursed.controllers;
+package com.coursed.controllers.mvc;
 
-import com.coursed.entities.Account;
 import com.coursed.entities.Role;
-import com.coursed.repository.AccountRepository;
+import com.coursed.entities.User;
 import com.coursed.repository.RoleRepository;
+import com.coursed.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,21 +17,21 @@ import java.util.Set;
 @Controller
 public class IndexController {
 
-//    @Autowired
-//    private AccountRepository accountRepository;
-//
-//    @Autowired
-//    private RoleRepository roleRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @RequestMapping("/")
     public String index() {
-//        System.out.println("==**===============Base configuration have been loaded");
+//        System.out.println("==**===============Base configuration has been loaded");
 //
 //        Role studentRole = new Role();
 //        studentRole.setName("ROLE_STUDENT");
 //
 //        Role adminRole = new Role();
-//        adminRole.setName("ROLE_ADMIN");
+//        adminRole.setName("ROLE_TEACHER");
 //
 //        roleRepository.save(studentRole);
 //        roleRepository.save(adminRole);
@@ -43,19 +43,19 @@ public class IndexController {
 //        adminRoles.add(adminRole);
 //
 //
-//        Account student = new Account();
+//        User student = new User();
 //        student.setEmail("student@mail.u");
 //        student.setPassword("test");
 //        student.setRoles(studentRoles);
 //
-//        Account admin = new Account();
+//        User admin = new User();
 //        admin.setEmail("admin@mail.u");
 //        admin.setPassword("testadmin");
 //        admin.setRoles(adminRoles);
 //
 //
-//        accountRepository.save(student);
-//        accountRepository.save(admin);
+//        userService.save(student);
+//        userService.save(admin);
 
         return "index";
     }

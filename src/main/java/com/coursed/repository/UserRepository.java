@@ -1,6 +1,6 @@
 package com.coursed.repository;
 
-import com.coursed.entities.Account;
+import com.coursed.entities.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface AccountRepository extends CrudRepository<Account, Long> {
+public interface UserRepository extends CrudRepository<User, Long> {
 }
