@@ -4,6 +4,7 @@ import com.coursed.entities.Role;
 import com.coursed.entities.User;
 import com.coursed.repository.RoleRepository;
 import com.coursed.repository.UserRepository;
+import com.coursed.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ import java.util.Set;
 public class IndexController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private RoleRepository roleRepository;
