@@ -1,11 +1,10 @@
 package com.coursed.service;
 
-import com.coursed.entities.Role;
-import com.coursed.entities.User;
+import com.coursed.model.Role;
+import com.coursed.model.User;
 import com.coursed.repository.RoleRepository;
 import com.coursed.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;

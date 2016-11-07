@@ -1,6 +1,6 @@
 package com.coursed.repository;
 
-import com.coursed.entities.Role;
+import com.coursed.model.Role;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.coursed.entities;
+package com.coursed.model;
 
 import javax.persistence.*;
 import java.util.Set;

@@ -1,16 +1,10 @@
-package com.coursed.controllers.mvc;
+package com.coursed.controller.mvc;
 
-import com.coursed.entities.Role;
-import com.coursed.entities.User;
 import com.coursed.repository.RoleRepository;
-import com.coursed.repository.UserRepository;
 import com.coursed.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Hexray on 31.10.2016.

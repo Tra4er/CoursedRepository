@@ -1,7 +1,7 @@
 package com.coursed.service;
 
-import com.coursed.entities.Role;
-import com.coursed.entities.User;
+import com.coursed.model.Role;
+import com.coursed.model.User;
 import com.coursed.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

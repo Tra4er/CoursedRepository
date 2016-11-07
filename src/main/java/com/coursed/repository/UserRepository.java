@@ -1,6 +1,6 @@
 package com.coursed.repository;
 
-import com.coursed.entities.User;
+import com.coursed.model.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

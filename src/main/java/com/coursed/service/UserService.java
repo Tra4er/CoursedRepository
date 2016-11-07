@@ -1,6 +1,6 @@
 package com.coursed.service;
 
-import com.coursed.entities.User;
+import com.coursed.model.User;
 
 /**
  * Created by Hexray on 06.11.2016.

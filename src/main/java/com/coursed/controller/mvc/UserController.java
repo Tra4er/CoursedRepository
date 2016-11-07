@@ -1,7 +1,7 @@
-package com.coursed.controllers.mvc;
+package com.coursed.controller.mvc;
 
 import com.coursed.dto.RegistrationFormData;
-import com.coursed.entities.User;
+import com.coursed.model.User;
 import com.coursed.repository.UserRepository;
 import com.coursed.service.SecurityService;
 import com.coursed.service.UserService;
