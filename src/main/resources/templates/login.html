@@ -1,24 +1,41 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Login page</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <meta charset="UTF-8"/>
+    <title>Аутентифікація користувача</title>
 </head>
 <body>
-<h1>Login page</h1>
-<p th:if="${loginError}">Wrong user or password</p>
-<form th:action="@{/j_spring_security_check}" method="post">
-    <label for="j_username">Username</label>:
-    <input type="text" id="j_username" name="j_username" /> <br />
-    <label for="j_password">Password</label>:
-    <input type="password" id="j_password" name="j_password" /> <br />
-    <input type="submit" value="Log in" />
-</form>
+<div class="container">
 
-<button type="button"
-        onclick="document.getElementById('demo').innerHTML = Date()">
-    Click me to display Date and Time.</button>
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
 
-<p id="demo"></p>
+            <form role="form" method="post">
+                <h2>Необхідно авторизуватись</h2>
+
+                <div class="form-group">
+                    <input type="email" name="email" id="emailField" class="form-control input-lg" placeholder="Email"/>
+                </div>
+
+
+                <div class="form-group">
+                    <input type="password" name="password" id="passwordField" class="form-control input-lg"
+                           placeholder="Пароль"/>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xs-6 col-md-6"><input type="submit" value="Увійти"
+                                                          class="btn btn-primary btn-block btn-lg"/></div>
+                    <div class="col-xs-6 col-md-6"><a href="/registration" class="btn btn-success btn-block btn-lg">Перейти
+                        до
+                        реєстрації</a></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
