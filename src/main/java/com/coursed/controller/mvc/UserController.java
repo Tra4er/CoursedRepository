@@ -1,7 +1,9 @@
-package com.coursed.controllers.mvc;
+package com.coursed.controller.mvc;
 
 import com.coursed.dto.RegistrationFormData;
-import com.coursed.entities.User;
+import com.coursed.model.User;
+import com.coursed.repository.UserRepository;
+import com.coursed.service.SecurityService;
 import com.coursed.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private SecurityService securityService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     // Login form
     @RequestMapping("/login")
@@ -48,6 +56,7 @@ public class UserController {
             user.setPassword(form.getPassword());
 
             userService.createUser(user);
+            securityService.autoLogin(user.getEmail(), user.getPassword());
         } else
             model.addAttribute("message", "Пароли не совпадают");
 

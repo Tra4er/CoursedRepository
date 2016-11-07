@@ -1,8 +1,7 @@
-package com.coursed.entities;
+package com.coursed.model;
 
 
 import javax.persistence.*;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 
