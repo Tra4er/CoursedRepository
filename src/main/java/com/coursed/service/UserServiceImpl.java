@@ -30,20 +30,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
 //        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setPassword(user.getPassword());
-        Set<Role> roles = new HashSet<Role>();
-        roles.add(roleRepository.findOne(1L));
-        user.setRoles(roles);
-        userRepository.save(user);
-    }
-
-    @Override
-    public void createUser(User user) {
         user.setStudent(false);
         user.setTeacher(false);
         user.setEmailConfirmed(false);
         user.setRoleConfirmed(false);
         user.setRegistrationDate(new Date());
+        user.setPassword(user.getPassword());
+        Set<Role> roles = new HashSet<Role>();
+        roles.add(roleRepository.findOne(1L));
+        user.setRoles(roles);
         userRepository.save(user);
     }
 

@@ -8,7 +8,6 @@ import com.coursed.model.User;
  */
 public interface UserService {
     void save(User user);
-    void createUser(User user);
     User findUserById(Long id);
     Iterable<User> findAll();
 }

@@ -26,9 +26,6 @@ public class UserController {
     @Autowired
     private SecurityService securityService;
 
-    @Autowired
-    private UserRepository userRepository;
-
     // Login form
     @RequestMapping("/login")
     public String login() {
@@ -43,34 +40,34 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String getRegistration(Model model) {
+    public String registration(Model model) {
         return "registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String postRegistration(RegistrationFormData form, Model model) {
+    public String registration(RegistrationFormData form, Model model) {
         if (form.getPassword().equals(form.getConfirmPassword())) {
 
             User user = new User();
             user.setEmail(form.getEmail());
             user.setPassword(form.getPassword());
 
-            userService.createUser(user);
+            userService.save(user);
             securityService.autoLogin(user.getEmail(), user.getPassword());
         } else
             model.addAttribute("message", "Пароли не совпадают");
 
-        return "registration";
+        return "redirect:login";
     }
 
     @RequestMapping(value = "/user/{id}")
-    public String viewAccount(@PathVariable("id") Long id, Model model) {
+    public String viewUser(@PathVariable("id") Long id, Model model) {
 
-        return "accounts";
+        return "user";
     }
 
     @RequestMapping(value = "/users")
-    public String viewAllAccounts(Model model) {
+    public String viewAllUsers(Model model) {
 
         model.addAttribute("users", userService.findAll());
 
