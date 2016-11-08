@@ -35,11 +35,13 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-6 col-md-6"><input type="submit" value="Зареєструватись"
+                    <div class="col-xs-6 col-md-6">
+                        <input type="submit" value="Зареєструватись"
                                                           class="btn btn-primary btn-block btn-lg"/></div>
                     <div class="col-xs-6 col-md-6"><a href="/login" class="btn btn-success btn-block btn-lg">Перейти до
                         аутентифікації</a></div>
                 </div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </div>
     </div>

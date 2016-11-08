@@ -2,7 +2,6 @@ package com.coursed.controller.mvc;
 
 import com.coursed.dto.RegistrationFormData;
 import com.coursed.model.User;
-import com.coursed.repository.UserRepository;
 import com.coursed.service.SecurityService;
 import com.coursed.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +31,10 @@ public class UserController {
         return "login";
     }
 
-    // Login form with error
-    @RequestMapping("/login-error")
-    public String loginError(Model model) {
-        model.addAttribute("loginError", true);
-        return "login";
+    @RequestMapping(value="/login", method = RequestMethod.POST)
+    public String login(Model model) {
+
+        return "welcome";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
@@ -57,7 +55,7 @@ public class UserController {
         } else
             model.addAttribute("message", "Пароли не совпадают");
 
-        return "redirect:login";
+        return "redirect:/welcome";
     }
 
     @RequestMapping(value = "/user/{id}")

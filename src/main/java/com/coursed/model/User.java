@@ -7,14 +7,21 @@ import java.util.Set;
 
 @Entity
 public class User {
+
     @Id
     @GeneratedValue
     private Long id;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
     @OneToOne
     @JoinColumn(name = "student_id")
     private Student student;
+
     @OneToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;

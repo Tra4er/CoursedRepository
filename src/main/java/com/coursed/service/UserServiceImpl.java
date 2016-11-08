@@ -5,6 +5,7 @@ import com.coursed.model.User;
 import com.coursed.repository.RoleRepository;
 import com.coursed.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,14 +19,14 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements UserService {
 
-//    @Autowired
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private RoleRepository roleRepository;
+
+    //    @Autowired
+//    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public void save(User user) {
