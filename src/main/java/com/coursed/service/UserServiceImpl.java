@@ -1,5 +1,6 @@
 package com.coursed.service;
 
+import com.coursed.dto.UserRegistrationForm;
 import com.coursed.model.Role;
 import com.coursed.model.User;
 import com.coursed.repository.RoleRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -26,7 +28,12 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Override
-    public void save(User user) {
+    public void save(UserRegistrationForm userForm) {
+
+        User user = new User();
+        user.setEmail(userForm.getEmail());
+        user.setPassword(userForm.getPassword());
+
         user.setStudent(false);
         user.setTeacher(false);
         user.setEmailConfirmed(false);
@@ -40,8 +47,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserById(Long id) {
+    public User getUserById(Long id) {
         return userRepository.findOne(id);
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findOneByEmail(email);
     }
 
     @Override
