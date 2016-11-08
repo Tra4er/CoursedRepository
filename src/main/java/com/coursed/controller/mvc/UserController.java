@@ -55,7 +55,7 @@ public class UserController {
         } else
             model.addAttribute("message", "Пароли не совпадают");
 
-        return "redirect:/welcome";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/user/{id}")
