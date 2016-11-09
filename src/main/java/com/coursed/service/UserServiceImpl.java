@@ -47,6 +47,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void tempSave(User user) {
+        user.setStudent(false);
+        user.setTeacher(false);
+        user.setEmailConfirmed(false);
+        user.setRoleConfirmed(false);
+        user.setRegistrationDate(new Date());
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        Set<Role> roles = new HashSet<Role>();
+        roles.add(roleRepository.findOne(1L));
+        user.setRoles(roles);
+        userRepository.save(user);
+    }
+
+    @Override
     public User getUserById(Long id) {
         return userRepository.findOne(id);
     }

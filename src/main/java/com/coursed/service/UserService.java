@@ -11,6 +11,7 @@ import java.util.Optional;
  */
 public interface UserService {
     void save(UserRegistrationForm userForm);
+    void tempSave(User user);
     User getUserById(Long id);
     Optional<User> getUserByEmail(String email);
     Iterable<User> findAll();

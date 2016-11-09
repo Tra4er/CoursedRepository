@@ -49,8 +49,8 @@ public class IndexController {
 //        admin.setRoles(adminRoles);
 //
 //
-//        userService.save(student);
-//        userService.save(admin);
+//        userService.tempSave(student);
+//        userService.tempSave(admin);
 
         return "index";
     }

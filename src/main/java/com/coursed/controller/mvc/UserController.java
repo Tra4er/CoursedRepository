@@ -8,13 +8,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 
 /**
@@ -31,15 +29,9 @@ public class UserController {
     private SecurityService securityService;
 
     // Login form
-    @RequestMapping("/login")
-    public String login() {
-        return "login";
-    }
-
-    @RequestMapping(value="/login", method = RequestMethod.POST)
-    public String login(Model model) {
-
-        return "welcome";
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
+        return new ModelAndView("login", "error", error);
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)

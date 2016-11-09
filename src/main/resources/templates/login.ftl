@@ -1,3 +1,4 @@
+<#import "/spring.ftl" as spring>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
@@ -12,6 +13,7 @@
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
 
             <form role="form" method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <h2>Необхідно авторизуватись</h2>
 
                 <div class="form-group">
@@ -38,6 +40,8 @@
         </div>
     </div>
 </div>
-
+<#if error.isPresent()>
+<p>The email or password you have entered is invalid, try again.</p>
+</#if>
 </body>
 </html>
