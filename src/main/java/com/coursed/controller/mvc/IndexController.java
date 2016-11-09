@@ -18,7 +18,7 @@ public class IndexController {
     @Autowired
     private RoleRepository roleRepository;
 
-    @RequestMapping("/")
+    @RequestMapping("/steam")
     public String index() {
 //        System.out.println("==**===============Base configuration has been loaded");
 //
