@@ -18,4 +18,8 @@ public class LoginController {
     public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
         return new ModelAndView("login", "error", error);
     }
+//    @RequestMapping(value = "/login", method = RequestMethod.GET)
+//    public String getLoginPage() {
+//        return "welcome";
+//    }
 }
