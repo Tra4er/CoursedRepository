@@ -40,7 +40,6 @@ public class Role {
         return "Role{" +
                 "id=" + id +
                 ", Name='" + Name + '\'' +
-                ", users=" + users +
                 '}';
     }
 }

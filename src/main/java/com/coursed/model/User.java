@@ -12,6 +12,16 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
+
     @Column(nullable = false, unique = true)
     private String email;
 
