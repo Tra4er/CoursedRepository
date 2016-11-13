@@ -16,8 +16,12 @@ public class HomeController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getLoginPage(Model model, Principal principal) {
 
+        if(principal == null)
+        {
+            return "redirect:/login";
+        }
+
         model.addAttribute("currentUser", principal.getName());
-        int a = 5;
         return "welcome";
     }
 }

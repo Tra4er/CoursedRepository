@@ -1086,7 +1086,7 @@ body {
   font-size: 14px;
   line-height: 1.42857143;
   color: #333;
-  background-color: #004358;
+  background-color: #fcfff5;
 }
 input,
 button,
@@ -2546,6 +2546,9 @@ output {
   line-height: 1.42857143;
   color: #555;
 }
+
+/*https://color.adobe.com/ru/Neutral-Blue-color-theme-22361/edit/?copy=true&base=0&rule=Custom&selected=3&name=%D0%9A%D0%BE%D0%BF%D0%B8%D1%8F%20Neutral%20Blue&mode=rgb&rgbvalues=0.988235,1,0.960784,0.819608,0.858824,0.741176,0.568627,0.666667,0.615686,0.243137,0.376471,0.435294,0.0980392,0.203922,0.254902&swatchOrder=0,1,2,3,4*/
+/*https://color.adobe.com/ru/create/color-wheel/?copy=true&base=2&rule=Custom&selected=1&name=%D0%9A%D0%BE%D0%BF%D0%B8%D1%8F%20Vitamin%20C&mode=rgb&rgbvalues=0,0.262745,0.345098,0.119784,0.541176,0.440568,0.745098,0.858824,0.223529,1,0.883455,0.101475,0.992157,0.454902,0&swatchOrder=0,1,2,3,4*/
 .form-control {
   display: block;
   width: 100%;
@@ -2553,8 +2556,8 @@ output {
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857143;
-  color: #BEDB39;
-  background-color: #1F8A70;
+  color: #3e606f;
+  background-color: #D1DBBD;
   background-image: none;
   border: 1px solid #1F8A70;
   border-radius: 4px;
