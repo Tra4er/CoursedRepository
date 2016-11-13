@@ -11,17 +11,11 @@ import java.security.Principal;
  * Created by Trach on 11/9/2016.
  */
 @Controller
-public class HomeController {
-
+public class MainController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getLoginPage(Model model, Principal principal) {
-
-        if(principal == null)
-        {
-            return "redirect:/login";
-        }
+    public String getMainPage(Model model, Principal principal) {
 
         model.addAttribute("currentUser", principal.getName());
-        return "welcome";
+        return "main";
     }
 }

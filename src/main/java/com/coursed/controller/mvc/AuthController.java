@@ -3,9 +3,12 @@ package com.coursed.controller.mvc;
 import com.coursed.dto.UserRegistrationForm;
 import com.coursed.service.SecurityService;
 import com.coursed.service.UserService;
+import com.coursed.validator.UserRegistrationFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +25,15 @@ public class AuthController {
     private UserService userService;
 
     @Autowired
+    private UserRegistrationFormValidator userRegistrationFormValidator;
+
+    @Autowired
     private SecurityService securityService;
+
+    @InitBinder("form")
+    public void initBinder(WebDataBinder binder) {
+        binder.addValidators(userRegistrationFormValidator);
+    }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration() {
@@ -30,13 +41,18 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("form") UserRegistrationForm userForm) {
+    public String registration(@Valid @ModelAttribute("form") UserRegistrationForm userForm, BindingResult bindingResult) {
 
-        try{
+//        if (bindingResult.hasErrors()) {
+//            return "user_create";
+//        }
+
+//        try{
         userService.save(userForm);
-        } catch(DataIntegrityViolationException e) {
-            return "error";
-        }
+//        } catch(DataIntegrityViolationException e) {
+//            bindingResult.reject("email.exists", "Email already exists");
+//            return "registration";
+//        }
 
         securityService.autoLogin(userForm.getEmail(), userForm.getPassword());
 
