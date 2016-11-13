@@ -5,6 +5,8 @@ import com.coursed.model.Role;
 import com.coursed.model.User;
 import com.coursed.repository.RoleRepository;
 import com.coursed.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ import java.util.Set;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -62,16 +66,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) {
+        LOGGER.debug("Getting user={}", id);
         return userRepository.findOne(id);
     }
 
     @Override
     public Optional<User> getUserByEmail(String email) {
+        LOGGER.debug("Getting user by email={}", email.replaceFirst("@.*", "@***"));
         return userRepository.findOneByEmail(email);
     }
 
     @Override
     public Iterable<User> findAll() {
+        LOGGER.debug("Getting all users");
         return userRepository.findAll();
     }
 

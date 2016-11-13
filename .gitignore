@@ -21,3 +21,10 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### Logs ###
+logs/
+.log
+
+### Build ###
+target/
