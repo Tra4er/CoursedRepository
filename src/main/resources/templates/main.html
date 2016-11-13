@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layouts/navbar"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Головна сторінка</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <p th:text="${currentUser}"></p>
+</div>
+</body>
+</html>

@@ -5,6 +5,9 @@ import com.coursed.service.SecurityService;
 import com.coursed.service.UserService;
 import com.coursed.validator.UserRegistrationFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -37,6 +40,14 @@ public class AuthController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+
+            /* The user is logged in - redirect onto root */
+            return "redirect:/";
+        }
+        
         return "auth/registration";
     }
 
@@ -62,6 +73,13 @@ public class AuthController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLoginPage() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+
+            /* The user is logged in - redirect onto root */
+            return "redirect:/";
+        }
         return "auth/login";
     }
 
