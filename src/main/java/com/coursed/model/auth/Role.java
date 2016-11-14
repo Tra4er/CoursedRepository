@@ -1,4 +1,4 @@
-package com.coursed.model;
+package com.coursed.model.auth;
 
 import javax.persistence.*;
 import java.util.Set;

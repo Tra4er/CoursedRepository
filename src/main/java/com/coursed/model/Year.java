@@ -1,7 +1,7 @@
 package com.coursed.model;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -17,7 +17,7 @@ public class Year {
     private Integer beginYear;
 
     @OneToMany(mappedBy = "year")
-    private Set<Semester> semesters;
+    private List<Semester> semesters;
 
     public Year() {
     }
@@ -38,11 +38,11 @@ public class Year {
         this.beginYear = beginYear;
     }
 
-    public Set<Semester> getSemesters() {
+    public List<Semester> getSemesters() {
         return semesters;
     }
 
-    public void setSemesters(Set<Semester> semesters) {
+    public void setSemesters(List<Semester> semesters) {
         this.semesters = semesters;
     }
 }
