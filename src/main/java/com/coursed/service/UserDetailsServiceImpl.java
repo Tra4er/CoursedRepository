@@ -1,7 +1,7 @@
 package com.coursed.service;
 
-import com.coursed.model.Role;
-import com.coursed.model.User;
+import com.coursed.model.auth.Role;
+import com.coursed.model.auth.User;
 import com.coursed.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

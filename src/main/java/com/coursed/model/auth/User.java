@@ -1,5 +1,8 @@
-package com.coursed.model;
+package com.coursed.model.auth;
 
+
+import com.coursed.model.Student;
+import com.coursed.model.Teacher;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -44,7 +47,7 @@ public class User {
 
 
     @ManyToMany
-    @JoinTable(name = "account_roles", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     public User() {

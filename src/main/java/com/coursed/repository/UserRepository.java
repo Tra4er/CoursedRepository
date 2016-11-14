@@ -1,10 +1,9 @@
 package com.coursed.repository;
 
-import com.coursed.model.User;
+import com.coursed.model.auth.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
