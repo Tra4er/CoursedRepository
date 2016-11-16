@@ -1,11 +1,16 @@
 package com.coursed.dto;
 
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class UserRegistrationForm {
 
-    private String email;
-    private String password;
-    private String confirmPassword;
+    @NotEmpty
+    private String email = "";
+    @NotEmpty
+    private String password = "";
+    @NotEmpty
+    private String confirmPassword = "";
 
     public String getEmail() {
         return email;

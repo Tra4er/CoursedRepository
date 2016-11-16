@@ -17,7 +17,7 @@
 
                 <div class="form-edGroup">
                     <input type="email" name="email" id="emailField" class="form-control input-lg"
-                           placeholder="Email"/>
+                           placeholder="Email" autofocus="autofocus"/>
                 </div>
 
 
@@ -26,6 +26,9 @@
                            placeholder="Пароль"/>
                 </div>
 
+                <div th:if="${param.error}" class="alert alert error">
+                    Invalid username and password!
+                </div>
 
                 <div class="row">
                     <div class="col-xs-6 col-md-6">
