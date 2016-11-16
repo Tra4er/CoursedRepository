@@ -2,8 +2,11 @@ package com.coursed.controller.mvc;
 
 import com.coursed.dto.UserRegistrationForm;
 import com.coursed.service.SecurityService;
+import com.coursed.service.SecurityServiceImpl;
 import com.coursed.service.UserService;
 import com.coursed.validator.UserRegistrationFormValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -21,6 +24,8 @@ import java.util.Optional;
 @Controller
 public class AuthController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
+
     @Autowired
     private UserService userService;
 
@@ -37,24 +42,24 @@ public class AuthController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registration() {
+        LOGGER.debug("Sending userForm to client");
         return new ModelAndView("auth/registration", "userForm", new UserRegistrationForm());
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm, BindingResult bindingResult) {
 
+        LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);
+
         if (bindingResult.hasErrors()) {
-            System.out.println("Field Error: " + bindingResult.getFieldError());
-            System.out.println("Error Counter: " + bindingResult.getErrorCount());
-            System.out.println("Model: " + bindingResult.getModel());
-            System.out.println("All Errors: " + bindingResult.getAllErrors());
             return "auth/registration";
         }
 
         try{
-        userService.save(userForm);
-        } catch(DataIntegrityViolationException e) {
-            bindingResult.reject("email", "Email already exists");
+            userService.save(userForm);
+        } catch(DataIntegrityViolationException e) { // TODO Not sure about this
+            LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
+            bindingResult.rejectValue("email", "error.user", "Email already exists");
             return "auth/registration";
         }
 
@@ -66,6 +71,7 @@ public class AuthController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
+        LOGGER.debug("Getting login page, error={}", error);
         return new ModelAndView("auth/login", "error", error);
     }
 

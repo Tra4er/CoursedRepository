@@ -16,7 +16,7 @@
 
                 <div class="form-edGroup">
                     <input type="email" name="email" id="emailField" th:field="*{email}" class="form-control input-lg" placeholder="Email" autofocus="autofocus"/>
-                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"> Email Errors</div>
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email exists</div> <!-- this text means nothing. Data taken from attributes -->
                 </div>
 
                 <div class="row">
@@ -32,8 +32,8 @@
                                    class="form-control input-lg" placeholder="Підтвердіть пароль"/>
                         </div>
                     </div>
-                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"> Email Errors</div>
                 </div>
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Passwords do not match</div> <!-- this text means nothing. Data taken from attributes -->
 
                 <div class="row">
                     <div class="col-xs-6 col-md-6">
