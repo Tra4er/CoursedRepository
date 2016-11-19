@@ -9,5 +9,5 @@ import java.util.List;
  * Created by Hexray on 13.11.2016.
  */
 public interface YearRepository extends CrudRepository<Year, Long> {
-    //List<Year> findAll();
+    List<Year> findAll();
 }
