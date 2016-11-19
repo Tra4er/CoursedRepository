@@ -35,6 +35,8 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userForm.getEmail());
         user.setPassword(userForm.getPassword());
 
+        LOGGER.debug("Saving user with email={}", user.getEmail().replaceFirst("@.*", "@***"));
+
         user.setStudent(false);
         user.setTeacher(false);
         user.setEmailConfirmed(false);

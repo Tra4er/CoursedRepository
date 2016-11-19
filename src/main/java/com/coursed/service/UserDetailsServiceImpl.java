@@ -36,7 +36,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User with email=%s was not found", email)));
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        System.out.println(user);
         for (Role role : user.getRoles()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
         }
