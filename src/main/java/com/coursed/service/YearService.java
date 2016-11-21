@@ -9,4 +9,8 @@ import java.util.List;
  */
 public interface YearService {
     List<Year> findAll();
+
+    void create(Year year);
+
+    void update(Year year);
 }
