@@ -13,6 +13,7 @@ import java.util.Collection;
  * Created by Hexray on 16.11.2016.
  */
 @RestController
+@RequestMapping("/api")
 public class YearController {
     @Autowired
     private YearService yearService;

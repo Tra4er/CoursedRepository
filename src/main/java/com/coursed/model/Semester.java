@@ -2,6 +2,7 @@ package com.coursed.model;
 
 
 import com.coursed.model.enums.SemesterNumber;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,6 +18,7 @@ public class Semester {
     @Enumerated
     private SemesterNumber semesterNumber;
 
+    @JsonBackReference("year-semester")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="year_id")
     private Year year;
