@@ -5,9 +5,11 @@ import com.coursed.service.YearService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created by Hexray on 16.11.2016.
@@ -17,10 +19,13 @@ public class YearController {
     @Autowired
     private YearService yearService;
 
-    @RequestMapping(value = "/years", method = RequestMethod.GET)
-    private Collection<Year> getYears()
+    @RequestMapping(value = "/api/years", method = RequestMethod.GET)
+    public @ResponseBody Set<Year> getYears()
     {
-        return yearService.findAll();
+        Set<Year> years = yearService.findAll();
+
+        int a = 5;
+        return years;
     }
 
 

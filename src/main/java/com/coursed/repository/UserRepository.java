@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Created by Hexray on 16.10.2016.
@@ -15,5 +16,5 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
     Optional<User> findOneByEmail(String email);
-    List<User> findAll();
+    Set<User> findAll();
 }

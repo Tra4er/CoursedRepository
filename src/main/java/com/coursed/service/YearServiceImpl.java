@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Hexray on 16.11.2016.
@@ -16,7 +17,7 @@ public class YearServiceImpl implements YearService {
     private YearRepository yearRepository;
 
     @Override
-    public List<Year> findAll() {
+    public Set<Year> findAll() {
         return yearRepository.findAll();
     }
 }

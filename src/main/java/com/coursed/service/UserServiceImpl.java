@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Iterable<User> findAll() {
+    public Set<User> findAll() {
         LOGGER.debug("Getting all users");
         return userRepository.findAll();
     }

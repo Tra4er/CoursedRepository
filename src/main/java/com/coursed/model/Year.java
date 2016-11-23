@@ -1,5 +1,10 @@
 package com.coursed.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,7 +21,8 @@ public class Year {
     @Column(nullable = false, unique = true)
     private Integer beginYear;
 
-    @OneToMany(mappedBy = "year")
+    @JsonManagedReference("year-semester")
+    @OneToMany(mappedBy = "year", fetch = FetchType.LAZY)
     private List<Semester> semesters;
 
     public Year() {
