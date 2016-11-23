@@ -6,8 +6,8 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Навчальні роки</title>
-    <script th:src="@{/js/scripts.js}" async></script>
-    <script th:src="@{/js/jquery-3.1.1.js}" async></script>
+    <script th:src="@{/js/scripts.js}"></script>
+    <script th:src="@{/js/jquery-3.1.1.js}"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -44,24 +44,6 @@
             <td th:text="${year.begin}">A Smoke Test'</td>
         </tr>
     </table>
-
-    <button type="button"
-            onclick="document.getElementById('demo').innerHTML = Date()">
-        Click me to display Date and Time.
-    </button>
-
-    <script>
-        //        $("button").click(function(){
-        //            alert("Text: ");
-        //        });
-
-        $("button").click(function () {
-            $.get("demo_test.asp", function (data, status) {
-                alert("Data: " + data + "\nStatus: " + status);
-            });
-        });
-    </script>
-
 </div>
 </body>
 </html>
