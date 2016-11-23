@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Blog Main Layout</title>
+    <title>Main Layout</title>
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
 </head>
@@ -31,20 +31,19 @@
 
                     <li class="dropdown" sec:authorize="hasRole('ROLE_STUDENT')">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">Admin <span class="caret"></span></a>
+                           aria-expanded="false">Панель керування <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/admin/posts/">Posts</a></li>
-                            <li><a href="/admin/authors/">Authors</a></li>
+                            <li><a th:href="@{/years}">Навчальні роки</a></li>
                         </ul>
                     </li>
                 </ul>
                 <div class="navbar-text navbar-right">
-                    Welcome <span sec:authentication="name">Guest</span> |
+                    Вітаємо <span sec:authentication="name"></span> |
                     <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post"
                           class="form-inline">
-                        <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Logout</a>
+                        <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Вийти</a>
                     </form>
-                    <a sec:authorize="!isAuthenticated()" th:href="@{/login}"> Login</a>
+                    <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Увійти</a>
                 </div>
             </div>
         </div>

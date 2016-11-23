@@ -20,4 +20,14 @@ public class YearServiceImpl implements YearService {
     public Set<Year> findAll() {
         return yearRepository.findAll();
     }
+
+    @Override
+    public void create(Year year) {
+        yearRepository.save(year);
+    }
+
+    @Override
+    public void update(Year year) {
+
+    }
 }
