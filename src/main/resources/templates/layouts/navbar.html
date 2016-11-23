@@ -8,53 +8,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Main Layout</title>
 
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" href="../../static/css/bootstrap.css" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" href="../../static/css/bootstrap.css"/>
 </head>
 <body>
 
-<div class="container">
-
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header navbar-brand">CoursEd</div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="/">Головна сторінка</a></li>
-
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="true">Дисципліни<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/posts/list">List</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="dropdown" sec:authorize="hasRole('ROLE_STUDENT')">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">Панель керування <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a th:href="@{/years}">Навчальні роки</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="navbar-text navbar-right">
-                    Вітаємо <span sec:authentication="name"></span> |
-                    <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post"
-                          class="form-inline">
-                        <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Вийти</a>
-                    </form>
-                    <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Увійти</a>
-                </div>
-            </div>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-brand">CoursEd</div>
         </div>
-    </nav>
-    <!---->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Головна сторінка</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="true">Дисципліни<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/posts/list">List</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown" sec:authorize="hasRole('ROLE_STUDENT')">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">Панель керування <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/years}">Навчальні роки</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post"></form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a sec:authentication="name"></a></li>
+                <li><a href="javascript:{}"
+                       onclick="document.getElementById('frmlogout').submit(); return false;">Вийти</a></li>
+                <!--<li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Увійти</a></li>-->
+            </ul>
+        </div>
+    </div>
+</nav>
+<!---->
+<div class="container">
     <div layout:fragment="content">
     </div>
-
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<!--<script th:src="@{/js/bootstrap.min.js}" src = "Coursed/src/main/resources/static/js/bootstrap.min.js"></script>-->
+<!--<script th:src="@{/js/jquery-3.1.1.js}" src = "../../static/js/jquery-3.1.1.js"></script>-->
 </body>
 </html>
