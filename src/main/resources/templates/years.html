@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en"
       layout:decorator="layouts/navbar"
-      xmlns:layout="http://www.w3.org/1999/xhtml">
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>Навчальні роки</title>
+    <script th:src="@{/js/scripts.js}" async></script>
+    <script th:src="@{/js/jquery-3.1.1.js}" async></script>
 </head>
 <body>
 <div layout:fragment="content">
 
     <!--<div class="row">-->
-        <!--<div class="col-sm-3"></div>-->
-        <!--<div class="col-sm-4">-->
-            <!--<h3>Рік початку</h3>-->
-        <!--</div>-->
-        <!--<div class="col-sm-4">-->
-            <!--<h3>Рік завершення</h3>-->
-        <!--</div>-->
-        <!--<div class="col-sm-3"></div>-->
+    <!--<div class="col-sm-3"></div>-->
+    <!--<div class="col-sm-4">-->
+    <!--<h3>Рік початку</h3>-->
+    <!--</div>-->
+    <!--<div class="col-sm-4">-->
+    <!--<h3>Рік завершення</h3>-->
+    <!--</div>-->
+    <!--<div class="col-sm-3"></div>-->
     <!--</div>-->
 
     <table class="table table-hover">
@@ -29,27 +32,36 @@
         </thead>
         <tbody>
         <tr>
-            <td>John</td>
-            <td>Doe</td>
+            <td>2015</td>
+            <td>2016</td>
         </tr>
         <tr>
-            <td>Mary</td>
-            <td>Moe</td>
-        </tr>
-        <tr>
-            <td>July</td>
-            <td>Dooley</td>
+            <td>2016</td>
+            <td>2017</td>
         </tr>
         </tbody>
+        <tr th:each="year : ${years}">
+            <td th:text="${year.begin}">A Smoke Test'</td>
+        </tr>
     </table>
-
 
     <button type="button"
             onclick="document.getElementById('demo').innerHTML = Date()">
         Click me to display Date and Time.
     </button>
 
-    <p id="demo"></p>
+    <script>
+        //        $("button").click(function(){
+        //            alert("Text: ");
+        //        });
+
+        $("button").click(function () {
+            $.get("demo_test.asp", function (data, status) {
+                alert("Data: " + data + "\nStatus: " + status);
+            });
+        });
+    </script>
+
 </div>
 </body>
 </html>
