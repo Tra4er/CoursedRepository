@@ -16,5 +16,5 @@ import java.util.Set;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
     Optional<User> findOneByEmail(String email);
-    Set<User> findAll();
+    List<User> findAll();
 }

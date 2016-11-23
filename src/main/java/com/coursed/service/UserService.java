@@ -3,6 +3,7 @@ package com.coursed.service;
 import com.coursed.dto.UserRegistrationForm;
 import com.coursed.model.auth.User;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -15,5 +16,5 @@ public interface UserService {
     void tempSave(User user);
     User getUserById(Long id);
     Optional<User> getUserByEmail(String email);
-    Set<User> findAll();
+    List<User> findAll();
 }

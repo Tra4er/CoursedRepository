@@ -10,5 +10,5 @@ import java.util.Set;
  * Created by Hexray on 13.11.2016.
  */
 public interface YearRepository extends CrudRepository<Year, Long> {
-    Set<Year> findAll();
+    List<Year> findAll();
 }
