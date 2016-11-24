@@ -16,7 +16,7 @@ import java.util.Collection;
  */
 @RestController
 @RequestMapping("/api/years")
-public class YearRestController {
+public class YearResource {
     @Autowired
     private YearService yearService;
 
