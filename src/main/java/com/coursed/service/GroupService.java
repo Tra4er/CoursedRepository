@@ -10,4 +10,5 @@ import java.util.List;
 public interface GroupService {
     void create(Group group);
     List<Group> findAll();
+    List<Group> findAllFromSpeciality(Long specialityId);
 }
