@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * Created by Hexray on 13.11.2016.
  */
-@Entity
-public class EdGroup {
+@Entity(name = "edgroup")
+public class Group {
     @Id
     @GeneratedValue
     private Long id;
@@ -27,17 +27,17 @@ public class EdGroup {
     @JoinColumn(name="semester_id")
     private Semester semester;
 
-    @OneToMany(mappedBy = "edGroup")
+    @OneToMany(mappedBy = "group")
     private List<Student> students;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="speciality_id")
     private Speciality speciality;
 
-    public EdGroup() {
+    public Group() {
     }
 
-    public EdGroup(Integer number, GroupType groupType, GroupDegree groupDegree, CourseNumber courseNumber, Semester semester, List<Student> students, Speciality speciality) {
+    public Group(Integer number, GroupType groupType, GroupDegree groupDegree, CourseNumber courseNumber, Semester semester, List<Student> students, Speciality speciality) {
         this.number = number;
         this.groupType = groupType;
         this.groupDegree = groupDegree;
