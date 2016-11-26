@@ -40,6 +40,22 @@ public class Student {
     public Student() {
     }
 
+    public Student(String firstName, String lastName, String patronymic, String address, String gradeBookNumber, Date birthDate, StudentEducationStatus studentEducationStatus, Boolean isBudgetStudent, String additionalInformation, String parentsInfo, EdGroup edGroup, List<FinalGrade> finalGrades, List<AttestationGrade> attestationGrades) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.patronymic = patronymic;
+        this.address = address;
+        this.gradeBookNumber = gradeBookNumber;
+        this.birthDate = birthDate;
+        this.studentEducationStatus = studentEducationStatus;
+        this.isBudgetStudent = isBudgetStudent;
+        this.additionalInformation = additionalInformation;
+        this.parentsInfo = parentsInfo;
+        this.edGroup = edGroup;
+        this.finalGrades = finalGrades;
+        this.attestationGrades = attestationGrades;
+    }
+
     public Long getId() {
         return id;
     }

@@ -15,16 +15,16 @@ import java.util.Collection;
  */
 @RestController
 @RequestMapping("/api/years")
-public class YearRestController {
+public class YearResource {
     @Autowired
     private YearService yearService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     private Collection<Year> getYears() {
         return yearService.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     private void addYear(@RequestBody Year newYear) {
         yearService.create(newYear);
     }
