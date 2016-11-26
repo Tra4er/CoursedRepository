@@ -5,9 +5,9 @@ import com.coursed.model.Year;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 import com.coursed.model.enums.SemesterNumber;
-import com.coursed.repository.RoleRepository;
 import com.coursed.repository.SemesterRepository;
 import com.coursed.repository.YearRepository;
+import com.coursed.service.RoleService;
 import com.coursed.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@ public class BaseInitController {
     private UserService userService;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private RoleService roleService;
 
     @Autowired
     private SemesterRepository semesterRepository;
@@ -36,16 +36,14 @@ public class BaseInitController {
 
     @RequestMapping("/valve")
     public String index() {
-
-
         Role studentRole = new Role();
         studentRole.setName("ROLE_STUDENT");
 
         Role adminRole = new Role();
         adminRole.setName("ROLE_TEACHER");
 
-        roleRepository.save(studentRole);
-        roleRepository.save(adminRole);
+        roleService.create(studentRole);
+        roleService.create(adminRole);
 
         Set<Role> studentRoles = new HashSet<>();
         studentRoles.add(studentRole);
@@ -65,8 +63,8 @@ public class BaseInitController {
         admin.setRoles(adminRoles);
 
 
-        userService.tempSave(student);
-        userService.tempSave(admin);
+        userService.register(student);
+        userService.register(admin);
         System.out.println("==**===============Base configuration has been loaded");
 
 

@@ -1,4 +1,3 @@
-target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -28,3 +27,4 @@ logs/
 
 ### Build ###
 target/
+/src/main/resources/application.properties

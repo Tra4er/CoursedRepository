@@ -1,6 +1,7 @@
 package com.coursed.service;
 
 import com.coursed.dto.UserRegistrationForm;
+import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 
 import java.util.List;
@@ -12,9 +13,9 @@ import java.util.Set;
  * Changed by Trach on 07.11.2016
  */
 public interface UserService {
-    void save(UserRegistrationForm userForm);
-    void tempSave(User user);
+    void register(User user);
     User getUserById(Long id);
     Optional<User> getUserByEmail(String email);
     List<User> findAll();
+    void addRole(Long userId, Long roleId);
 }

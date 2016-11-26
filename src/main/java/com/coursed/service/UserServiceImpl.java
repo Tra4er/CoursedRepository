@@ -29,37 +29,15 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Override
-    public void save(UserRegistrationForm userForm) {
-
-        User user = new User();
-        user.setEmail(userForm.getEmail());
-        user.setPassword(userForm.getPassword());
+    public void register(User user) {
+        user.setStudent(false);
+        user.setTeacher(false);
+        user.setEmailConfirmed(false);
+        user.setRoleConfirmed(false);
+        user.setRegistrationDate(new Date());
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 
         LOGGER.debug("Saving user with email={}", user.getEmail().replaceFirst("@.*", "@***"));
-
-        user.setStudent(false);
-        user.setTeacher(false);
-        user.setEmailConfirmed(false);
-        user.setRoleConfirmed(false);
-        user.setRegistrationDate(new Date());
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        Set<Role> roles = new HashSet<Role>();
-        roles.add(roleRepository.findOne(1L));
-        user.setRoles(roles);
-        userRepository.save(user);
-    }
-
-    @Override
-    public void tempSave(User user) {
-        user.setStudent(false);
-        user.setTeacher(false);
-        user.setEmailConfirmed(false);
-        user.setRoleConfirmed(false);
-        user.setRegistrationDate(new Date());
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        Set<Role> roles = new HashSet<Role>();
-        roles.add(roleRepository.findOne(1L));
-        user.setRoles(roles);
         userRepository.save(user);
     }
 
@@ -80,5 +58,17 @@ public class UserServiceImpl implements UserService {
         LOGGER.debug("Getting all users");
         return userRepository.findAll();
     }
+
+    @Override
+    public void addRole(Long userId, Long roleId) {
+        //TODO: log it
+        Role role = roleRepository.findOne(roleId);
+        User user = userRepository.findOne(userId);
+
+        Set<Role> userRoles = user.getRoles();
+        userRoles.add(role);
+        user.setRoles(userRoles);
+    }
+
 
 }
