@@ -28,6 +28,11 @@ public class Year {
     public Year() {
     }
 
+    public Year(Integer beginYear, List<Semester> semesters) {
+        this.beginYear = beginYear;
+        this.semesters = semesters;
+    }
+
     public Long getId() {
         return id;
     }

@@ -26,6 +26,14 @@ public class PlannedEvent {
     public PlannedEvent() {
     }
 
+    public PlannedEvent(Date beginDate, Date expirationDate, Date creationDate, PlannedEventType eventType, Semester semester) {
+        this.beginDate = beginDate;
+        this.expirationDate = expirationDate;
+        this.creationDate = creationDate;
+        this.eventType = eventType;
+        this.semester = semester;
+    }
+
     public Long getId() {
         return id;
     }

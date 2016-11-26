@@ -32,6 +32,13 @@ public class Semester {
     public Semester() {
     }
 
+    public Semester(SemesterNumber semesterNumber, Year year, List<EdGroup> edGroups, List<PlannedEvent> plannedEvents) {
+        this.semesterNumber = semesterNumber;
+        this.year = year;
+        this.edGroups = edGroups;
+        this.plannedEvents = plannedEvents;
+    }
+
     public Long getId() {
         return id;
     }

@@ -24,6 +24,13 @@ public class AttestationGrade {
     public AttestationGrade(){
     }
 
+    public AttestationGrade(Boolean firstTry, Boolean secondTry, Student student, Discipline discipline) {
+        this.firstTry = firstTry;
+        this.secondTry = secondTry;
+        this.student = student;
+        this.discipline = discipline;
+    }
+
     public Long getId() {
         return id;
     }

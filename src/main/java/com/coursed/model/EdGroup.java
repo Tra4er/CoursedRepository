@@ -37,6 +37,16 @@ public class EdGroup {
     public EdGroup() {
     }
 
+    public EdGroup(Integer number, GroupType groupType, GroupDegree groupDegree, CourseNumber courseNumber, Semester semester, List<Student> students, Speciality speciality) {
+        this.number = number;
+        this.groupType = groupType;
+        this.groupDegree = groupDegree;
+        this.courseNumber = courseNumber;
+        this.semester = semester;
+        this.students = students;
+        this.speciality = speciality;
+    }
+
     public Long getId() {
         return id;
     }

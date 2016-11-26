@@ -24,6 +24,14 @@ public class Teacher {
     public Teacher() {
     }
 
+    public Teacher(String firstName, String lastName, String patronymic, List<FinalGrade> finalGrades, List<Discipline> disciplines) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.patronymic = patronymic;
+        this.finalGrades = finalGrades;
+        this.disciplines = disciplines;
+    }
+
     public Long getId() {
         return id;
     }

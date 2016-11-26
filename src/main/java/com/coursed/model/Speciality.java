@@ -26,6 +26,13 @@ public class Speciality {
     public Speciality() {
     }
 
+    public Speciality(String fullName, String groupsName, List<EdGroup> edGroups, List<Discipline> disciplines) {
+        this.fullName = fullName;
+        this.groupsName = groupsName;
+        this.edGroups = edGroups;
+        this.disciplines = disciplines;
+    }
+
     public Long getId() {
         return id;
     }

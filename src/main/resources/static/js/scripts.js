@@ -14,13 +14,13 @@ function checkEmail(){
     var email = $("#emailField").val();
     $.ajax({ url: "/api/user/checkEmail", type: "get", data: "email="+email})
         .done(function(response) {
-        if(response){
-            $("#checkEmailResult").text("Email exist");
-        }
-        else{
-            $("#checkEmailResult").text("");
-        }
-    });
+            if(response){
+                $("#checkEmailResult").text("Email exist");
+            }
+            else{
+                $("#checkEmailResult").text("");
+            }
+        });
 }
 
 function chechEmptyPassword() {

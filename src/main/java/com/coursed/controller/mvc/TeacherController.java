@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value="/teacher")
-public class AdminController {
+public class TeacherController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TeacherController.class);
 
     @Autowired
     private UserService userService;
