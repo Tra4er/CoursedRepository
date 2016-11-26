@@ -9,12 +9,11 @@ import com.coursed.repository.SemesterRepository;
 import com.coursed.repository.YearRepository;
 import com.coursed.service.RoleService;
 import com.coursed.service.UserService;
+import com.coursed.service.YearService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Hexray on 31.10.2016.
@@ -29,65 +28,37 @@ public class BaseInitController {
     private RoleService roleService;
 
     @Autowired
-    private SemesterRepository semesterRepository;
+    private YearService yearService;
 
-    @Autowired
-    private YearRepository yearRepository;
-
+    @Transactional
     @RequestMapping("/valve")
     public String index() {
-        Role studentRole = new Role();
-        studentRole.setName("ROLE_STUDENT");
 
-        Role adminRole = new Role();
-        adminRole.setName("ROLE_TEACHER");
-
+        Role registeredRole = new Role("ROLE_REGISTERED", null);
+        Role studentRole = new Role("ROLE_STUDENT", null);
+        Role teacherRole = new Role("ROLE_TEACHER", null);
+        roleService.create(registeredRole);
         roleService.create(studentRole);
-        roleService.create(adminRole);
-
-        Set<Role> studentRoles = new HashSet<>();
-        studentRoles.add(studentRole);
-
-        Set<Role> adminRoles = new HashSet<>();
-        adminRoles.add(adminRole);
-
+        roleService.create(teacherRole);
 
         User student = new User();
-        student.setEmail("student@mail.u");
-        student.setPassword("test");
-        student.setRoles(studentRoles);
+        student.setEmail("student@s.s");
+        student.setPassword("123");
 
-        User admin = new User();
-        admin.setEmail("admin@mail.u");
-        admin.setPassword("testadmin");
-        admin.setRoles(adminRoles);
-
+        User teacher = new User();
+        teacher.setEmail("teacher@t.t");
+        teacher.setPassword("123");
 
         userService.register(student);
-        userService.register(admin);
-        System.out.println("==**===============Base configuration has been loaded");
+        userService.register(teacher);
 
+        userService.connectUserWithRole(student, studentRole);
+        userService.connectUserWithRole(teacher, teacherRole);
 
-        Year year = new Year();
-        year.setBeginYear(2015);
+        Year year = new Year(2015);
+        yearService.create(year);
 
-        Semester sem1 = new Semester();
-        sem1.setSemesterNumber(SemesterNumber.FIRST);
-
-        Semester sem2 = new Semester();
-        sem2.setSemesterNumber(SemesterNumber.SECOND);
-
-        yearRepository.save(year);
-
-        sem1.setYear(year);
-
-        sem2.setYear(year);
-
-        semesterRepository.save(sem1);
-        semesterRepository.save(sem2);
-
-        Year year3 = yearRepository.findOne(1L);
-
+        System.out.println("==>Base configuration has been loaded");
         return "redirect:/login";
     }
 }

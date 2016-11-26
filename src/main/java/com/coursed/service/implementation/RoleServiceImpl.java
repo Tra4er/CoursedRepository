@@ -1,7 +1,8 @@
-package com.coursed.service;
+package com.coursed.service.implementation;
 
 import com.coursed.model.auth.Role;
 import com.coursed.repository.RoleRepository;
+import com.coursed.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

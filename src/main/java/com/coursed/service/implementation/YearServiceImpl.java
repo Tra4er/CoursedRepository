@@ -1,10 +1,11 @@
-package com.coursed.service;
+package com.coursed.service.implementation;
 
 import com.coursed.model.Semester;
 import com.coursed.model.Year;
 import com.coursed.model.enums.SemesterNumber;
 import com.coursed.repository.SemesterRepository;
 import com.coursed.repository.YearRepository;
+import com.coursed.service.YearService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,25 +32,16 @@ public class YearServiceImpl implements YearService {
 
     @Override
     public void create(Year year) {
-
-        Semester semester1 = new Semester();
-        semester1.setSemesterNumber(SemesterNumber.FIRST);
-
-        Semester semester2 = new Semester();
-        semester2.setSemesterNumber(SemesterNumber.SECOND);
+        Semester firstSemester = new Semester(SemesterNumber.FIRST, year);
+        Semester secondSemester = new Semester(SemesterNumber.SECOND, year);
 
         List<Semester> semesters = new ArrayList<>();
-
-        semesters.add(semester1);
-        semesters.add(semester2);
+        semesters.add(firstSemester);
+        semesters.add(secondSemester);
 
         year.setSemesters(semesters);
 
         yearRepository.save(year);
     }
 
-    @Override
-    public void update(Year year) {
-
-    }
 }

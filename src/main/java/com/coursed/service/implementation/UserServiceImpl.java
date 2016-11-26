@@ -1,10 +1,10 @@
-package com.coursed.service;
+package com.coursed.service.implementation;
 
-import com.coursed.dto.UserRegistrationForm;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 import com.coursed.repository.RoleRepository;
 import com.coursed.repository.UserRepository;
+import com.coursed.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +33,20 @@ public class UserServiceImpl implements UserService {
         user.setStudent(false);
         user.setTeacher(false);
         user.setEmailConfirmed(false);
-        user.setRoleConfirmed(false);
         user.setRegistrationDate(new Date());
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+
+        Set<Role> roles = new HashSet<>();
+        Role registeredRole = roleRepository.findByName("ROLE_REGISTERED");
+
+        if(registeredRole == null)
+        {
+            LOGGER.error("There is no role with name 'ROLE_REGISTERED' to create the association with user");
+            throw new RuntimeException("There is no role with name 'ROLE_REGISTERED' to create the association with user. You have to add base info");
+        }
+        roles.add(registeredRole);
+
+        user.setRoles(roles);
 
         LOGGER.debug("Saving user with email={}", user.getEmail().replaceFirst("@.*", "@***"));
         userRepository.save(user);
@@ -60,14 +71,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addRole(Long userId, Long roleId) {
-        //TODO: log it
+    public void connectUserWithRole(Long userId, Long roleId) {
+        //TODO: log it and check it for existing
         Role role = roleRepository.findOne(roleId);
         User user = userRepository.findOne(userId);
-
         Set<Role> userRoles = user.getRoles();
+
         userRoles.add(role);
         user.setRoles(userRoles);
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public void connectUserWithRole(User user, Role role) {
+        //TODO: log it and check it for existing
+        Set<Role> userRoles = user.getRoles();
+
+        userRoles.add(role);
+        user.setRoles(userRoles);
+
+        userRepository.save(user);
     }
 
 

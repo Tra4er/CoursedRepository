@@ -19,7 +19,6 @@ public class MainController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getMainPage(Model model, Principal principal) {
-
         LOGGER.debug("Send homepage to currentUser={}", principal.getName());
 
         model.addAttribute("currentUser", principal.getName());

@@ -17,5 +17,6 @@ public interface UserService {
     User getUserById(Long id);
     Optional<User> getUserByEmail(String email);
     List<User> findAll();
-    void addRole(Long userId, Long roleId);
+    void connectUserWithRole(Long userId, Long roleId);
+    void connectUserWithRole(User user, Role role);
 }

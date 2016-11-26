@@ -32,11 +32,9 @@ public class Semester {
     public Semester() {
     }
 
-    public Semester(SemesterNumber semesterNumber, Year year, List<EdGroup> edGroups, List<PlannedEvent> plannedEvents) {
+    public Semester(SemesterNumber semesterNumber, Year year) {
         this.semesterNumber = semesterNumber;
         this.year = year;
-        this.edGroups = edGroups;
-        this.plannedEvents = plannedEvents;
     }
 
     public Long getId() {
