@@ -18,12 +18,17 @@ public class Speciality {
     private String groupsName;
 
     @OneToMany(mappedBy = "speciality")
-    private List<EdGroup> edGroups;
+    private List<Group> groups;
 
     @OneToMany(mappedBy = "speciality")
     private List<Discipline> disciplines;
 
     public Speciality() {
+    }
+
+    public Speciality(String fullName, String groupsName) {
+        this.fullName = fullName;
+        this.groupsName = groupsName;
     }
 
     public Long getId() {
@@ -50,12 +55,12 @@ public class Speciality {
         this.groupsName = groupsName;
     }
 
-    public List<EdGroup> getEdGroups() {
-        return edGroups;
+    public List<Group> getGroups() {
+        return groups;
     }
 
-    public void setEdGroups(List<EdGroup> edGroups) {
-        this.edGroups = edGroups;
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
     }
 
     public List<Discipline> getDisciplines() {

@@ -28,8 +28,8 @@ public class Student {
     private String parentsInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="edGroup_id")
-    private EdGroup edGroup;
+    @JoinColumn(name="edgroup_id")
+    private Group group;
 
     @OneToMany(mappedBy = "student")
     private List<FinalGrade> finalGrades;
@@ -38,6 +38,22 @@ public class Student {
     private List<AttestationGrade> attestationGrades;
 
     public Student() {
+    }
+
+    public Student(String firstName, String lastName, String patronymic, String address, String gradeBookNumber, Date birthDate, StudentEducationStatus studentEducationStatus, Boolean isBudgetStudent, String additionalInformation, String parentsInfo, Group group, List<FinalGrade> finalGrades, List<AttestationGrade> attestationGrades) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.patronymic = patronymic;
+        this.address = address;
+        this.gradeBookNumber = gradeBookNumber;
+        this.birthDate = birthDate;
+        this.studentEducationStatus = studentEducationStatus;
+        this.isBudgetStudent = isBudgetStudent;
+        this.additionalInformation = additionalInformation;
+        this.parentsInfo = parentsInfo;
+        this.group = group;
+        this.finalGrades = finalGrades;
+        this.attestationGrades = attestationGrades;
     }
 
     public Long getId() {
@@ -128,12 +144,12 @@ public class Student {
         this.parentsInfo = parentsInfo;
     }
 
-    public EdGroup getEdGroup() {
-        return edGroup;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setEdGroup(EdGroup edGroup) {
-        this.edGroup = edGroup;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public List<FinalGrade> getFinalGrades() {

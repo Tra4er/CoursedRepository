@@ -1,8 +1,8 @@
 package com.coursed.controller.mvc;
 
 import com.coursed.dto.UserRegistrationForm;
+import com.coursed.model.auth.User;
 import com.coursed.service.SecurityService;
-import com.coursed.service.SecurityServiceImpl;
 import com.coursed.service.UserService;
 import com.coursed.validator.UserRegistrationFormValidator;
 import org.slf4j.Logger;
@@ -55,8 +55,12 @@ public class AuthController {
             return "auth/registration";
         }
 
+        User user = new User();
+        user.setEmail(userForm.getEmail());
+        user.setPassword(userForm.getPassword());
+
         try{
-            userService.save(userForm);
+            userService.register(user);
         } catch(DataIntegrityViolationException e) { // TODO Not sure about this
             LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
             bindingResult.rejectValue("email", "error.user", "Email already exists");

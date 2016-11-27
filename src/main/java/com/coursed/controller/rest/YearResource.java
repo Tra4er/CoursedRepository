@@ -1,7 +1,6 @@
 package com.coursed.controller.rest;
 
 import com.coursed.model.Year;
-import com.coursed.repository.YearRepository;
 import com.coursed.service.YearService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +15,7 @@ import java.util.Collection;
  */
 @RestController
 @RequestMapping("/api/years")
-public class YearRestController {
+public class YearResource {
     @Autowired
     private YearService yearService;
 

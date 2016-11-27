@@ -24,12 +24,17 @@ public class Semester {
     private Year year;
 
     @OneToMany(mappedBy = "semester")
-    private List<EdGroup> edGroups;
+    private List<Group> groups;
 
     @OneToMany(mappedBy = "semester")
     private List<PlannedEvent> plannedEvents;
 
     public Semester() {
+    }
+
+    public Semester(SemesterNumber semesterNumber, Year year) {
+        this.semesterNumber = semesterNumber;
+        this.year = year;
     }
 
     public Long getId() {
@@ -56,12 +61,12 @@ public class Semester {
         this.year = year;
     }
 
-    public List<EdGroup> getEdGroups() {
-        return edGroups;
+    public List<Group> getGroups() {
+        return groups;
     }
 
-    public void setEdGroups(List<EdGroup> edGroups) {
-        this.edGroups = edGroups;
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
     }
 
     public List<PlannedEvent> getPlannedEvents() {

@@ -42,6 +42,19 @@ public class Discipline {
     public Discipline() {
     }
 
+    public Discipline(String name, DisciplineType type, Float hours, Float credits, CourseNumber courseNumber, SemesterNumber semesterNumber, List<Teacher> teachers, List<FinalGrade> finalGrades, List<AttestationGrade> attestationGrades, Speciality speciality) {
+        this.name = name;
+        this.type = type;
+        this.hours = hours;
+        this.credits = credits;
+        this.courseNumber = courseNumber;
+        this.semesterNumber = semesterNumber;
+        this.teachers = teachers;
+        this.finalGrades = finalGrades;
+        this.attestationGrades = attestationGrades;
+        this.speciality = speciality;
+    }
+
     public List<AttestationGrade> getAttestationGrades() {
         return attestationGrades;
     }

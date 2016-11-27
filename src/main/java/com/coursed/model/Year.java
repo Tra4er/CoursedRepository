@@ -22,10 +22,14 @@ public class Year {
     private Integer beginYear;
 
     @JsonManagedReference("year-semester")
-    @OneToMany(mappedBy = "year", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "year", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Semester> semesters;
 
     public Year() {
+    }
+
+    public Year(Integer beginYear) {
+        this.beginYear = beginYear;
     }
 
     public Long getId() {

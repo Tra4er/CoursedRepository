@@ -15,16 +15,6 @@ public class User {
     @GeneratedValue
     private Long id;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
-                '}';
-    }
-
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -42,7 +32,6 @@ public class User {
     private Boolean isStudent;
     private Boolean isTeacher;
     private Boolean isEmailConfirmed;
-    private Boolean isRoleConfirmed;
     private Date registrationDate;
 
 
@@ -51,6 +40,18 @@ public class User {
     private Set<Role> roles;
 
     public User() {
+    }
+
+    public User(String email, String password, Student student, Teacher teacher, Boolean isStudent, Boolean isTeacher, Boolean isEmailConfirmed, Date registrationDate, Set<Role> roles) {
+        this.email = email;
+        this.password = password;
+        this.student = student;
+        this.teacher = teacher;
+        this.isStudent = isStudent;
+        this.isTeacher = isTeacher;
+        this.isEmailConfirmed = isEmailConfirmed;
+        this.registrationDate = registrationDate;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -105,14 +106,6 @@ public class User {
         isEmailConfirmed = emailConfirmed;
     }
 
-    public Boolean getRoleConfirmed() {
-        return isRoleConfirmed;
-    }
-
-    public void setRoleConfirmed(Boolean roleConfirmed) {
-        isRoleConfirmed = roleConfirmed;
-    }
-
     public Date getRegistrationDate() {
         return registrationDate;
     }
@@ -131,5 +124,15 @@ public class User {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }
