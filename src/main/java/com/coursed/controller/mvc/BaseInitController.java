@@ -61,7 +61,7 @@ public class BaseInitController {
         userService.connectUserWithRole(teacher, teacherRole);
 
         //Year and semesters
-        Year year = new Year(2015);
+        Year year = new Year(2015, 2016);
         yearService.create(year);
 
         //Specialities

@@ -21,6 +21,9 @@ public class Year {
     @Column(nullable = false, unique = true)
     private Integer beginYear;
 
+    @Column(nullable = false, unique = true)
+    private Integer endYear;
+
     @JsonManagedReference("year-semester")
     @OneToMany(mappedBy = "year", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Semester> semesters;
@@ -28,8 +31,9 @@ public class Year {
     public Year() {
     }
 
-    public Year(Integer beginYear) {
+    public Year(Integer beginYear, Integer endYear) {
         this.beginYear = beginYear;
+        this.endYear = endYear;
     }
 
     public Long getId() {
@@ -46,6 +50,14 @@ public class Year {
 
     public void setBeginYear(Integer beginYear) {
         this.beginYear = beginYear;
+    }
+
+    public Integer getEndYear() {
+        return endYear;
+    }
+
+    public void setEndYear(Integer endYear) {
+        this.endYear = endYear;
     }
 
     public List<Semester> getSemesters() {
