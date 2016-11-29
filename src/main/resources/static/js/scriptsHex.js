@@ -1,30 +1,32 @@
 /**
  * Created by Hexray on 27.11.2016.
  */
-var host = "http://localhost:8080/api";
-
-
+const HOST = 'http://localhost:8080/';
+const API = HOST + "api";
 
 $(document).ready(function () {
-    var titles = ['Рік початку', 'Рік завершення'];
-    createTable('content', 'yearsTable', titles);
+    var titles = ['id', 'Рік початку', 'Рік завершення'];
+    insertTable(titles, HOST + "html/frontLayout.html", "contentTable");
 
-    var entityParams = ['beginYear', 'endYear'];
-    fillTableFrom('yearsTable', host + "/years/getAll", entityParams);
-
-    createInput();
+    var entityParams = ['id', 'beginYear', 'endYear'];
+    fillTableFrom("contentTable", API + "/years/getAll", entityParams);
 });
 
-function createTable(mainContainer, tableId, titleArray) {
-    $("#" + mainContainer).append("<table id = " + tableId + " class='table table-hover'></table>");
+$("#buttonYearPost").click(function () {
 
-    $("#" + tableId).append('<thead><tr></tr></thead><tbody></tbody>');
 
+    $.post(API + "/years/create",
+        {
+            yearBegin: $("#yearBegin").val(),
+            yearEnd: $("#yearEnd").val()
+        });
+});
+
+//Loads '#tableId' structure from 'address', puts it into the 'mainContainer' and fills its <thead> with 'titleArray'
+function insertTable(titleArray, address, tableId) {
     $.each(titleArray, function (i, title) {
-        //TODO: check if it really works correct
         $("#" + tableId + "> thead > tr").append('<th>'+ title +'</th>');
     });
-
 }
 
 function fillTableFrom(tableId, requestAddress, params) {
@@ -46,6 +48,3 @@ function fillTableFrom(tableId, requestAddress, params) {
     });
 }
 
-function createInput() {
-
-}

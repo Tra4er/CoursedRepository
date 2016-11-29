@@ -26,6 +26,7 @@ public class YearResource {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     private void addYear(@RequestBody Year newYear) {
+        int a = 5;
         yearService.create(newYear);
     }
 
