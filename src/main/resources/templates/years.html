@@ -6,13 +6,16 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Навчальні роки</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" href="../static/css/bootstrap.css"/>
+
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 
     <script th:defer="true" th:src="@{/js/jquery-3.1.1.js}" src="../static/js/jquery-3.1.1.js"></script>
     <script th:defer="true" th:src="@{/js/scriptsHex.js}" src="../static/js/scriptsHex.js"></script>
     <script th:defer="true" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+
 <div layout:fragment="content">
     <table id="contentTable" class="table table-hover table-striped">
         <thead>
@@ -20,7 +23,6 @@
         </thead>
         <tbody></tbody>
     </table>
-
 
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -30,9 +32,11 @@
                     <h4 class="modal-title">Додати новий навчальний рік</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="frmyear" th:action="@{/api/years/create}" method="post">
-                        <input id='yearBegin' class="form-control" type='text' placeholder='Рік початку'/>
-                        <input id='yearEnd' class="form-control" type='text' placeholder='Рік завершення'/>
+                    <form id="modal-body">
+                        <input name="beginYear" id='beginYear' class="form-control" type='text'
+                               placeholder='Рік початку'/>
+                        <input name="endYear" id='endYear' class="form-control" type='text'
+                               placeholder='Рік завершення'/>
                     </form>
                     <button id='buttonYearPost' type="button" class="btn btn-primary">Додати</button>
                 </div>
@@ -43,8 +47,10 @@
         </div>
     </div>
 
+
     <button id="btnModal" type="button" class="btn btn-info" data-toggle="modal"
-            data-target="#myModal">Додати навчальний рік</button>
+            data-target="#myModal">Додати навчальний рік
+    </button>
 </div>
 </body>
 </html>
