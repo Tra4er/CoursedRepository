@@ -31,6 +31,11 @@ public class YearServiceImpl implements YearService {
     }
 
     @Override
+    public Year findOne(Long id) {
+        return yearRepository.findOne(id);
+    }
+
+    @Override
     public void create(Year year) {
         Semester firstSemester = new Semester(SemesterNumber.FIRST, year);
         Semester secondSemester = new Semester(SemesterNumber.SECOND, year);

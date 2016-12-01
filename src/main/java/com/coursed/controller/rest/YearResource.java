@@ -1,5 +1,6 @@
 package com.coursed.controller.rest;
 
+import com.coursed.model.Semester;
 import com.coursed.model.Year;
 import com.coursed.service.YearService;
 import com.fasterxml.jackson.databind.util.JSONPObject;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Hexray on 16.11.2016.
  */
-@RestController()
+@RestController
 public class YearResource {
     @Autowired
     private YearService yearService;
@@ -28,8 +29,15 @@ public class YearResource {
         return yearService.findAll();
     }
 
+    @RequestMapping(value = "/api/years/getSemestersFromYear/{id}", method = RequestMethod.GET)
+    private Collection<Semester> getSemesters(@PathVariable(value="id") Long yearId) {
+        return yearService.findOne(yearId).getSemesters();
+    }
+
     @RequestMapping(value = "/api/years/create", method = RequestMethod.POST)
     private void createYear(@RequestBody Year year) {
         yearService.create(year);
     }
+
+
 }

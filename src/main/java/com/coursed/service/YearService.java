@@ -9,5 +9,6 @@ import java.util.List;
  */
 public interface YearService {
     List<Year> findAll();
+    Year findOne(Long id);
     void create(Year year);
 }
