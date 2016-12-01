@@ -15,16 +15,14 @@ import java.util.Collection;
  * Created by Hexray on 27.11.2016.
  */
 @RestController
-@RequestMapping("/api/group")
+@RequestMapping
 public class GroupResource {
     @Autowired
     private GroupService groupService;
 
-
     //TODO: test param
-    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    private Collection<Group> getGroups(
-            @RequestParam(name = "specialityId", required = false) Long specialityId) {
+    @RequestMapping(value = "/api/groups/getAll", method = RequestMethod.GET)
+    private Collection<Group> getGroups(@RequestParam(name = "specialityId", required = false) Long specialityId) {
         if(specialityId != null)
         {
             return groupService.findAllFromSpeciality(specialityId);

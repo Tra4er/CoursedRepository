@@ -11,20 +11,17 @@ import javax.xml.ws.ResponseWrapper;
  * Created by Trach on 11/24/2016.
  */
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping
 public class UserResource {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/checkEmail", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/user/checkEmail", method = RequestMethod.GET)
     private boolean checkEmail(@RequestParam("email") String email) {
-        if(userService.getUserByEmail(email).isPresent()) {
-            return true;
-        }
-        return false;
+        return userService.getUserByEmail(email).isPresent();
     }
 
-    @RequestMapping("/getUser")
+    @RequestMapping("/api/user/getUser")
     public User getUser(@RequestParam("email") String email) {
         return userService.getUserByEmail(email).get();
     }
