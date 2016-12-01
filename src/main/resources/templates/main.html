@@ -5,6 +5,7 @@
       xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <title>Реєстрація студента</title>
+    <script th:defer="true" th:src="@{/js/specific/registration.js}" src="../static/js/specific/years.js"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -14,11 +15,11 @@
             <div class="form-group"><input class="form-control" type="text" name="lastName" placeholder="Прізвище" /></div>
             <div class="form-group"><input class="form-control" type="text" name="firstName" placeholder="Ім'я" /></div>
             <div class="form-group"><input class="form-control" type="text" name="patronymic" placeholder="По-батькові" /></div>
-            <div class="form-group"><select class="form-control" name="Year" id="YearId"><option>Обрати рік</option></select></div>
-            <div class="form-group"><select class="form-control" name="semester" id="SemesterId"><option>Обрати семестр</option></select></div>
-            <div class="form-group"><select class="form-control" name="speciality" id="SpecialityId"><option>Обрати спеціальність</option></select></div>
-            <div class="form-group"><select class="form-control" name="group" id="GroupId"><option>Обрати групу</option></select></div>
-            <div class="form-group"><select class="form-control" name="gradeBookNumber" id="GradeBookMarkId"><option>Обрати залікову книжку</option></select></div>
+            <div class="form-group"><select class="form-control" name="Year" id="YearId"><option value="0">Обрати рік</option></select></div>
+            <div class="form-group"><select class="form-control" name="semester" id="SemesterId"><option value="0">Обрати семестр</option></select></div>
+            <div class="form-group"><select class="form-control" name="speciality" id="SpecialityId"><option value="0">Обрати спеціальність</option></select></div>
+            <div class="form-group"><select class="form-control" name="group" id="GroupId"><option value="0">Обрати групу</option></select></div>
+            <div class="form-group"><select class="form-control" name="gradeBookNumber" id="GradeBookMarkId"><option value="0">Обрати залікову книжку</option></select></div>
             <div class="form-group"><input class="form-control" type="text" name="birthDate" placeholder="Дата народження" /></div>
             <div class="form-group"><input class="form-control" type="text" name="PhoneNumber" placeholder="Контактний телефон" /></div>
             <div class="form-group"><input class="form-control" type="text" name="address" placeholder="Адреса" /></div>
