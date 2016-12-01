@@ -1,36 +1,25 @@
 /**
- * Created by Hexray on 27.11.2016.
+ * Created by Hexray on 01.12.2016.
  */
 const HOST = 'http://localhost:8080/';
 const API = "api";
 
-var token;
-var header;
+var csrf_token;
+var csrf_header;
 
-$(document).ready(function () {
-    token = $("meta[name='_csrf']").attr("content");
-    header = $("meta[name='_csrf_header']").attr("content");
-
-    var titles = ['id', 'Рік початку', 'Рік завершення'];
-    insertTable(titles, HOST + "html/frontLayout.html", "contentTable");
-
-    var entityParams = ['id', 'beginYear', 'endYear'];
-    fillTableFrom("contentTable", API + "/years/getAll", entityParams);
+//OnDocumentReady
+$(function(){
+    csrf_token = $("meta[name='_csrf']").attr("content");
+    csrf_header = $("meta[name='_csrf_header']").attr("content");
 });
 
-
+//It handles each ajax request and adds csrf token into the its header
 $(document).ajaxSend(function(e, xhr, options) {
-    xhr.setRequestHeader(header, token);
+    xhr.setRequestHeader(csrf_header, csrf_token);
 });
 
-$('#buttonYearPost').click(function(){
-    var form = $('#modal-body');
-
-    sendAjaxPost(form);
-});
-
-//It loads '#tableId' structure from 'address', puts it into the 'mainContainer' and fills its <thead> with 'titleArray'
-function insertTable(titleArray, address, tableId) {
+//It fills '#tableId' structure of <thead> with 'titleArray'
+function insertTable(titleArray, tableId) {
     $.each(titleArray, function (i, title) {
         $("#" + tableId + "> thead > tr").append('<th>'+ title +'</th>');
     });
@@ -57,10 +46,10 @@ function fillTableFrom(tableId, requestAddress, params) {
 }
 
 //Sends JSON which was extracted and generated from 'elem'
-function sendAjaxPost(element) {
+function sendAjaxPost(element, url) {
     $.ajax({
         type: 'POST',
-        url: 'api/years/create',
+        url: url,
         contentType: "application/json",
         data: JSON.stringify(element.serializeObject()),
         success: function () {

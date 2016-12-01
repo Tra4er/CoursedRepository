@@ -18,17 +18,17 @@ import java.util.stream.Collectors;
 /**
  * Created by Hexray on 16.11.2016.
  */
-@RestController("/api/years/")
+@RestController()
 public class YearResource {
     @Autowired
     private YearService yearService;
 
-    @RequestMapping(value = "getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/years/getAll", method = RequestMethod.GET)
     private Collection<Year> getYears() {
         return yearService.findAll();
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/years/create", method = RequestMethod.POST)
     private void createYear(@RequestBody Year year) {
         yearService.create(year);
     }
