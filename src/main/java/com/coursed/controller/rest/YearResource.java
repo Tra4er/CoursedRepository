@@ -29,8 +29,8 @@ public class YearResource {
         return yearService.findAll();
     }
 
-    @RequestMapping(value = "/api/years/getSemestersFromYear/{yearId}", method = RequestMethod.GET)
-    private Collection<Semester> getSemesters(@PathVariable("yearId") Long yearId) {
+    @RequestMapping(value = "/api/years/getSemestersFromYear/{id}", method = RequestMethod.GET)
+    private Collection<Semester> getSemesters(@PathVariable(value="id") Long yearId) {
         return yearService.findOne(yearId).getSemesters();
     }
 
