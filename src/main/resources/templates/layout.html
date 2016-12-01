@@ -4,11 +4,15 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8"/>
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}" href="../static/css/bootstrap.css"/>
+    <script th:defer="true" th:src="@{/js/jquery-3.1.1.js}" src = "../static/js/jquery-3.1.1.js"></script>
+    <script th:defer="true" th:src="@{/js/bootstrap.min.js}" src = "../static/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 <div class="container">
     <nav class="navbar navbar-inverse">
@@ -49,7 +53,9 @@
     </nav>
 
     <div id="content" layout:fragment="content">
+
     </div>
 </div>
+
 </body>
 </html>
