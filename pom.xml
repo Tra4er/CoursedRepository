@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>Coursed</name>
-	<description>Demo project for Spring Boot</description>
+	<description>System for punishing students.</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -99,7 +99,9 @@
 	</dependencies>
 
 	<build>
+		<finalName>coursed</finalName>
 		<plugins>
+			<!--Comment this before deployment.-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
