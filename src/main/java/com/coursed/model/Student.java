@@ -1,6 +1,8 @@
 package com.coursed.model;
 
 import com.coursed.model.enums.StudentEducationStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,6 +29,7 @@ public class Student {
     private String additionalInformation;
     private String parentsInfo;
 
+    @JsonBackReference("group-students")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="edgroup_id")
     private Group group;

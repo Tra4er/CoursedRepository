@@ -3,6 +3,8 @@ package com.coursed.model;
 import com.coursed.model.enums.CourseNumber;
 import com.coursed.model.enums.GroupDegree;
 import com.coursed.model.enums.GroupType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,13 +25,16 @@ public class Group {
     @Enumerated
     private CourseNumber courseNumber;
 
+    @JsonBackReference("semester-groups")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="semester_id")
     private Semester semester;
 
-    @OneToMany(mappedBy = "group")
+    @JsonManagedReference("group-students")
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
     private List<Student> students;
 
+    @JsonBackReference("speciality-groups")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="speciality_id")
     private Speciality speciality;
@@ -37,13 +42,12 @@ public class Group {
     public Group() {
     }
 
-    public Group(Integer number, GroupType groupType, GroupDegree groupDegree, CourseNumber courseNumber, Semester semester, List<Student> students, Speciality speciality) {
+    public Group(Integer number, GroupType groupType, GroupDegree groupDegree, CourseNumber courseNumber, Semester semester, Speciality speciality) {
         this.number = number;
         this.groupType = groupType;
         this.groupDegree = groupDegree;
         this.courseNumber = courseNumber;
         this.semester = semester;
-        this.students = students;
         this.speciality = speciality;
     }
 

@@ -24,7 +24,7 @@ public class Year {
     @Column(nullable = false, unique = true)
     private Integer endYear;
 
-    @JsonManagedReference("year-semester")
+    @JsonManagedReference("year-semesters")
     @OneToMany(mappedBy = "year", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Semester> semesters;
 

@@ -3,6 +3,7 @@ package com.coursed.model;
 
 import com.coursed.model.enums.SemesterNumber;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,11 +19,12 @@ public class Semester {
     @Enumerated
     private SemesterNumber semesterNumber;
 
-    @JsonBackReference("year-semester")
+    @JsonBackReference("year-semesters")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="year_id")
     private Year year;
 
+    @JsonManagedReference("semester-groups")
     @OneToMany(mappedBy = "semester")
     private List<Group> groups;
 
