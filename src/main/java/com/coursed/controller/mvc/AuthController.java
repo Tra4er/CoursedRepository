@@ -91,7 +91,7 @@ public class AuthController {
 
 //        securityService.autoLogin(userForm.getEmail(), userForm.getPassword()); // TODO read about
 
-        return "redirect:/"; // TODO successRegister
+        return "/auth/verifyYourAccount";
     }
 
     @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
