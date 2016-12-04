@@ -1,11 +1,13 @@
 package com.coursed.registration.listener;
 
+import com.coursed.controller.mvc.AuthController;
 import com.coursed.model.auth.User;
 import com.coursed.registration.OnRegistrationCompleteEvent;
 import com.coursed.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
@@ -18,10 +20,11 @@ import java.util.UUID;
 @Component
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
+
     @Autowired
     private UserService userService;
-    @Autowired
-    private MessageSource messageSource;
+
     @Autowired
     private JavaMailSender javaMailSender;
 
@@ -38,13 +41,14 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         String recipientAddress = user.getEmail();
         String subject = "Registration Confirmation";
         String confirmationUrl
-                = event.getAppUrl() + "/registrationConfirm.html?token=" + token;
-//        String message = messageSource.getMessage("message.regSucc", null, event.getLocale());
+                = event.getAppUrl() + "/registrationConfirm?token=" + token;
+        String message = "Follow this link to confirm your email: ";
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText(/*message + */confirmationUrl);
+        email.setText(message + confirmationUrl);
+        LOGGER.debug("Sending verification email: {}", email);
         javaMailSender.send(email);
     }
 }

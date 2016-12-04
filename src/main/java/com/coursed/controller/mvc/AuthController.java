@@ -42,9 +42,6 @@ public class AuthController {
     private UserRegistrationFormValidator userRegistrationFormValidator;
 
     @Autowired
-    private MessageSource messages;
-
-    @Autowired
     private SecurityService securityService;
 
     @Autowired
@@ -76,7 +73,7 @@ public class AuthController {
 
         User registered;
 
-        try{
+        try{ // TODO connect this two "try". Watch example
             registered = userService.register(user);
         } catch(DataIntegrityViolationException e) { // TODO Not sure about this
             LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
@@ -92,18 +89,20 @@ public class AuthController {
 //            return new ModelAndView("emailError", "user", userForm); TODO
         }
 
-        securityService.autoLogin(userForm.getEmail(), userForm.getPassword()); // TODO read about
+//        securityService.autoLogin(userForm.getEmail(), userForm.getPassword()); // TODO read about
 
         return "redirect:/"; // TODO successRegister
     }
 
     @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
     public String confirmRegistration(WebRequest request, Model model, @RequestParam("token") String token) {
+        LOGGER.debug("Receiving confirmation token: {}", token);
         Locale locale = request.getLocale();
 
         VerificationToken verificationToken = userService.getVerificationToken(token);
         if (verificationToken == null) { // TODO
-            String message = messages.getMessage("auth.message.invalidToken", null, locale);
+            LOGGER.debug("Invalid token received: {}", token);
+            String message = "Invalid token received: " + token;
             model.addAttribute("message", message);
             return "redirect:/badUser.html";
         }
@@ -111,13 +110,15 @@ public class AuthController {
         User user = verificationToken.getUser();
         Calendar cal = Calendar.getInstance();
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-            String messageValue = messages.getMessage("auth.message.expired", null, locale);
+            LOGGER.debug("Verification token expired for user: {}", user);
+            String messageValue = "Verification token expired for user: " + user;
             model.addAttribute("message", messageValue);
             return "redirect:/badUser.html";
         }
 
         user.setEnabled(true);
         userService.saveRegisteredUser(user);
+        LOGGER.debug("Received verification from user: {}", user);
         return "redirect:/login.html";
     }
 

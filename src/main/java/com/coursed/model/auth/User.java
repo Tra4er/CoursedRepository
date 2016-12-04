@@ -34,7 +34,6 @@ public class User {
 
     private Boolean isStudent;
     private Boolean isTeacher;
-    private Boolean isEmailConfirmed;
     private Date registrationDate;
 
     @ManyToMany
@@ -52,7 +51,6 @@ public class User {
         this.teacher = teacher;
         this.isStudent = isStudent;
         this.isTeacher = isTeacher;
-        this.isEmailConfirmed = isEmailConfirmed;
         this.registrationDate = registrationDate;
         this.roles = roles;
     }
@@ -109,14 +107,6 @@ public class User {
         isTeacher = teacher;
     }
 
-    public Boolean getEmailConfirmed() {
-        return isEmailConfirmed;
-    }
-
-    public void setEmailConfirmed(Boolean emailConfirmed) {
-        isEmailConfirmed = emailConfirmed;
-    }
-
     public Date getRegistrationDate() {
         return registrationDate;
     }
@@ -141,6 +131,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", enabled='" + enabled + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", roles=" + roles +

@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/registration", "/valve", "/api/**").permitAll()//TODO: check only for 'hasRole("REGISTERED")
+                .antMatchers("/registration", "/registrationConfirm", "/valve", "/api/**").permitAll()//TODO: check only for 'hasRole("REGISTERED")
                 .antMatchers("/", "/**").hasAnyRole("REGISTERED", "STUDENT", "TEACHER", "ADMIN")
                 .antMatchers("/css/**", "/js/**").permitAll()
                 .and()

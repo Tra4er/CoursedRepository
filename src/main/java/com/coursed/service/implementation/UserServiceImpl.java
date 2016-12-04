@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     public User register(User user) {
         user.setStudent(false);
         user.setTeacher(false);
-        user.setEmailConfirmed(false);
+        user.setEnabled(false);
         user.setRegistrationDate(new Date());
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 
@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveRegisteredUser(final User user) {
+        LOGGER.debug("Saving registered user: {}", user);
         userRepository.save(user);
     }
 
