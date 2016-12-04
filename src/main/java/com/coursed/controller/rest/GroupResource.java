@@ -29,20 +29,15 @@ public class GroupResource {
     private SpecialityService specialityService;
 
 
-    //TODO: test param
     @RequestMapping(value = "/api/groups/getAll", method = RequestMethod.GET)
     private Collection<Group> getGroups(@RequestParam(name = "specialityId", required = false) Long specialityId) {
-        int a = 5;
+
         if(specialityId != null)
         {
             return groupService.findAllFromSpeciality(specialityId);
         }
 
-        List<Group> groupList = groupService.findAll();
-
-        Speciality spec = groupList.get(1).getSpeciality();
-
-        return groupList;
+        return groupService.findAll();
     }
 
 

@@ -5,7 +5,7 @@
       xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <title>Групи</title>
-
+    <script th:defer="true" th:src="@{/js/shared/fill-functions.js}" src="../static/js/shared/fill-functions.js"></script>
     <script th:defer="true" th:src="@{/js/specific/groups.js}" src="../static/js/specific/groups.js"></script>
 </head>
 <body>
@@ -26,11 +26,26 @@
                     <h4 class="modal-title">Додати нову групу</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="modal-body">
-                        <!--<input name="beginYear" class="form-control" type='text'-->
-                               <!--placeholder='Рік початку'/>-->
-                        <!--<input name="endYear" class="form-control" type='text'-->
-                               <!--placeholder='Рік завершення'/>-->
+                    <form id="modal-body-form">
+                        <select name="semesterId" class="form-control" type='text'>
+                            <option>Рік</option>
+                        </select>
+                        <select name="semesterId" class="form-control" type='text'>
+                            <option>Семестр</option>
+                        </select>
+                        <select name="courseNumber" class="form-control" type='text'>
+                            <option>Номер курсу</option>
+                        </select>
+                        <seelct name="groupType" class="form-control" type='text'>
+                            <option>Тип групи</option>
+                        </seelct>
+                        <select name="groupDegree" class="form-control" type='text'>
+                            <option>Рівень групи</option>
+                        </select>
+                        <select name="specialityId" class="form-control" type='text'>
+                            <option>Спеціальність</option>
+                        </select>
+                        <input name="number" class="form-control" type='text' placeholder='Номер групи'/>
                     </form>
                     <button id='button-group-post' type="button" class="btn btn-primary">Додати</button>
                 </div>

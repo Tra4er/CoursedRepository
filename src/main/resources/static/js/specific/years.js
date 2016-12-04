@@ -1,7 +1,6 @@
 /**
  * Created by Hexray on 27.11.2016.
  */
-
 $(document).ready(function () {
     var titles = ['id', 'Рік початку', 'Рік завершення'];
     insertTable(titles, "content-table");
@@ -12,7 +11,7 @@ $(document).ready(function () {
 
 //It sends serialized
 $('#button-year-post').click(function(){
-    var form = $('#modal-body');
+    var form = $('#modal-body-form');
     sendAjaxPost(form, 'api/years/create');
 });
 
