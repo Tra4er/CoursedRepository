@@ -104,7 +104,7 @@ public class AuthController {
             LOGGER.debug("Invalid token received: {}", token);
             String message = "Invalid token received: " + token;
             model.addAttribute("message", message);
-            return "redirect:/badUser.html";
+            return "redirect:/badUser";
         }
 
         User user = verificationToken.getUser();
@@ -113,13 +113,13 @@ public class AuthController {
             LOGGER.debug("Verification token expired for user: {}", user);
             String messageValue = "Verification token expired for user: " + user;
             model.addAttribute("message", messageValue);
-            return "redirect:/badUser.html";
+            return "redirect:/badUser";
         }
 
         user.setEnabled(true);
         userService.saveRegisteredUser(user);
         LOGGER.debug("Received verification from user: {}", user);
-        return "redirect:/login.html";
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
