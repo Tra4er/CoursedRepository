@@ -15,6 +15,9 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Column(name = "enabled")
+    private boolean enabled;
+
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -34,7 +37,6 @@ public class User {
     private Boolean isEmailConfirmed;
     private Date registrationDate;
 
-
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
@@ -43,6 +45,7 @@ public class User {
     }
 
     public User(String email, String password, Student student, Teacher teacher, Boolean isStudent, Boolean isTeacher, Boolean isEmailConfirmed, Date registrationDate, Set<Role> roles) {
+        this.enabled = false;
         this.email = email;
         this.password = password;
         this.student = student;
@@ -60,6 +63,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getEmail() {
