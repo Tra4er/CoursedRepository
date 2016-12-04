@@ -28,7 +28,7 @@ public class YearResource {
     private Collection<Year> getYears() {
         return yearService.findAll();
     }
-
+    //TODO: transfer into semesterResource
     @RequestMapping(value = "/api/years/getSemestersFromYear/{id}", method = RequestMethod.GET)
     private Collection<Semester> getSemesters(@PathVariable(value="id") Long yearId) {
         return yearService.findOne(yearId).getSemesters();

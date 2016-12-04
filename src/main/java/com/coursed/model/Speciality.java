@@ -1,5 +1,7 @@
 package com.coursed.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,6 +19,7 @@ public class Speciality {
     private String fullName;
     private String groupsName;
 
+    @JsonManagedReference("speciality-groups")
     @OneToMany(mappedBy = "speciality")
     private List<Group> groups;
 
