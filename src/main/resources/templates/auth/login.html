@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
       lang="en">
 <head>
-
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
     <meta charset="UTF-8"/>
     <title>Аутентифікація користувача</title>
@@ -11,25 +10,19 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-
             <form th:action="@{/login}" method="post">
                 <h2>Необхідно авторизуватись</h2>
-
                 <div class="form-group">
                     <input type="email" name="email" id="emailField" class="form-control input-lg"
                            placeholder="Email" autofocus="autofocus"/>
                 </div>
-
-
                 <div class="form-group">
                     <input type="password" name="password" id="passwordField" class="form-control input-lg"
                            placeholder="Пароль"/>
                 </div>
-
                 <div th:if="${param.error}" class="alert alert error">
                     Invalid username and password!
                 </div>
-
                 <div class="row">
                     <div class="col-xs-6 col-md-6">
                         <input type="submit" value="Увійти"
@@ -42,7 +35,6 @@
             </form>
         </div>
     </div>
-
 </div>
 </body>
 </html>
