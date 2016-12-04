@@ -6,7 +6,7 @@
 	<groupId>com.coursed</groupId>
 	<artifactId>coursed</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>Coursed</name>
 	<description>System for punishing students.</description>
@@ -31,18 +31,6 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 			<version>1.4.0.RELEASE</version>
 		</dependency>
-
-		<!--<dependency>-->
-			<!--<groupId>org.springframework</groupId>-->
-			<!--<artifactId>spring-context-support</artifactId>-->
-			<!--<version>4.3.3.RELEASE</version>-->
-		<!--</dependency>-->
-
-		<!--<dependency>-->
-			<!--<groupId>javax.mail</groupId>-->
-			<!--<artifactId>mail</artifactId>-->
-			<!--<version>1.4.7</version>-->
-		<!--</dependency>-->
 
 		<!--Security-->
 		<dependency>

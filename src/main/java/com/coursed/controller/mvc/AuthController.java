@@ -59,7 +59,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm, final HttpServletRequest request, BindingResult bindingResult) {
+    public String registration(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm, final HttpServletRequest request, BindingResult bindingResult) throws Exception {
 
         LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);
 
@@ -73,11 +73,10 @@ public class AuthController {
 
         User registered;
 
-        try{ // TODO connect this two "try". Watch example
+        try{
             registered = userService.register(user);
-        } catch(DataIntegrityViolationException e) { // TODO Not sure about this
+        } catch(DataIntegrityViolationException e) {
             LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
-            bindingResult.rejectValue("email", "error.user", "Email already exists");
             return "auth/registration";
         }
 
@@ -86,12 +85,19 @@ public class AuthController {
             eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
         } catch (final Exception ex) {
             LOGGER.warn("Unable to register user", ex);
-//            return new ModelAndView("emailError", "user", userForm); TODO
         }
 
 //        securityService.autoLogin(userForm.getEmail(), userForm.getPassword()); // TODO read about
 
         return "/auth/verifyYourAccount";
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String confirmRegistration(Model model) {
+        System.out.println("TEST");
+        String messageValue = "Verification token expired for user: ";
+        model.addAttribute("message", messageValue);
+        return "/auth/badUser";
     }
 
     @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
@@ -104,16 +110,16 @@ public class AuthController {
             LOGGER.debug("Invalid token received: {}", token);
             String message = "Invalid token received: " + token;
             model.addAttribute("message", message);
-            return "redirect:/badUser";
+            return "/auth/badUser";
         }
 
         User user = verificationToken.getUser();
         Calendar cal = Calendar.getInstance();
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
             LOGGER.debug("Verification token expired for user: {}", user);
-            String messageValue = "Verification token expired for user: " + user;
+            String messageValue = "Verification token expired for user: " + user.getEmail();
             model.addAttribute("message", messageValue);
-            return "redirect:/badUser";
+            return "/auth/badUser";
         }
 
         user.setEnabled(true);

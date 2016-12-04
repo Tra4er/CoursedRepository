@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by Trach on 11/9/2016.
@@ -26,4 +27,5 @@ public class UserController {
 //        TODO
         return "user";
     }
+
 }

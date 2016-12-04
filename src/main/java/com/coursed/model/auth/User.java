@@ -133,7 +133,6 @@ public class User {
                 "id=" + id +
                 ", enabled='" + enabled + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", roles=" + roles +
                 '}';
     }
