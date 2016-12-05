@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <meta charset="UTF-8"/>
+    <title>Невірні дані користувача</title>
+</head>
+<body>
+<h1 class="text-center well">Щось пішло не так.</h1>
+<div th:text="${message}" th:unless="${message == null}" class="alert alert-danger">
+    РУКУ
+        </div>
+<a th:href="@{/login}" class="text-center btn btn-success btn-block btn-lg">Перейти до аутентифікації</a>
+</body>
+</html>
