@@ -1,5 +1,7 @@
 package com.coursed.controller.rest;
 
+import com.coursed.dto.StudentRegistrationForm;
+import com.coursed.model.Student;
 import com.coursed.model.auth.User;
 import com.coursed.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,17 @@ public class UserResource {
     }
 
     @RequestMapping("/api/user/getUser")
-    public User getUser(@RequestParam("email") String email) {
+    private User getUser(@RequestParam("email") String email) {
         return userService.getUserByEmail(email).get();
+    }
+
+    @RequestMapping(value = "/api/user/createStudent", method = RequestMethod.POST)
+    private void createStudent(@RequestBody StudentRegistrationForm studentRegistrationForm){
+
+        Student student = new Student();
+        student.setFirstName(studentRegistrationForm.getFirstName());
+        student.setLastName(studentRegistrationForm.getLastName());
+        student.setPatronymic(studentRegistrationForm.getPatronymic());
+
     }
 }

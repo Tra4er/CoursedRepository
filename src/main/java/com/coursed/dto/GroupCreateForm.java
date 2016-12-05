@@ -9,6 +9,11 @@ import com.coursed.model.enums.GroupType;
  */
 public class GroupCreateForm {
     private Integer number;
+    private GroupType groupType;
+    private GroupDegree groupDegree;
+    private CourseNumber courseNumber;
+    private Long semesterId;
+    private Long specialityId;
 
     public Integer getNumber() {
         return number;
@@ -57,10 +62,4 @@ public class GroupCreateForm {
     public void setSpecialityId(Long specialityId) {
         this.specialityId = specialityId;
     }
-
-    private GroupType groupType;
-    private GroupDegree groupDegree;
-    private CourseNumber courseNumber;
-    private Long semesterId;
-    private Long specialityId;
 }

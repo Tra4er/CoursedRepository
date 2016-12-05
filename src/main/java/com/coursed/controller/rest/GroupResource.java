@@ -2,6 +2,7 @@ package com.coursed.controller.rest;
 
 import com.coursed.dto.GroupCreateForm;
 import com.coursed.model.Group;
+import com.coursed.model.Semester;
 import com.coursed.model.Speciality;
 import com.coursed.model.Year;
 import com.coursed.service.GroupService;
@@ -44,8 +45,11 @@ public class GroupResource {
     @RequestMapping(value = "/api/groups/create", method = RequestMethod.POST)
     private void createGroup(@RequestBody GroupCreateForm groupCreateForm) {
 
+        Semester sem = semesterService.findOne(groupCreateForm.getSemesterId());
+        Speciality spec = specialityService.findOne(groupCreateForm.getSpecialityId());
+
         Group group = new Group(groupCreateForm.getNumber(), groupCreateForm.getGroupType(), groupCreateForm.getGroupDegree(),
-                groupCreateForm.getCourseNumber(),semesterService.findOne(groupCreateForm.getSemesterId()), specialityService.findOne(groupCreateForm.getSpecialityId()));
+                groupCreateForm.getCourseNumber(),sem, spec);
 
         groupService.create(group);
     }
