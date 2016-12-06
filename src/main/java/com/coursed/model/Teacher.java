@@ -82,4 +82,12 @@ public class Teacher {
     public void setDisciplines(List<Discipline> disciplines) {
         this.disciplines = disciplines;
     }
+
+    public List<Group> getCuratedGroups() {
+        return curatedGroups;
+    }
+
+    public void setCuratedGroups(List<Group> curatedGroups) {
+        this.curatedGroups = curatedGroups;
+    }
 }

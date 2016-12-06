@@ -118,4 +118,12 @@ public class Group {
     public void setSpeciality(Speciality speciality) {
         this.speciality = speciality;
     }
+
+    public List<Teacher> getCurators() {
+        return curators;
+    }
+
+    public void setCurators(List<Teacher> curators) {
+        this.curators = curators;
+    }
 }
