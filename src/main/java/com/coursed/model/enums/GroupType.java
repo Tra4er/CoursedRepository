@@ -5,5 +5,5 @@ package com.coursed.model.enums;
  */
 public enum GroupType {
     GENERAL_FORM,
-    EVENING_FORM
+    DISTANCE_FORM
 }
