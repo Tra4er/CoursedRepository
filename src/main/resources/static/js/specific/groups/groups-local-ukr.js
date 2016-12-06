@@ -30,3 +30,19 @@ groupDegree["MASTER"] = "Магістр";
 var groupType = {};
 groupType["GENERAL_FORM"] = "Денна форма";
 groupType["DISTANCE_FORM"] = "Заочна форма";
+
+function getCourse(key) {
+    return courseNumbers[key];
+}
+
+function getSemester(key) {
+    return semesterNumbers[key];
+}
+
+function getDegree(key) {
+    return groupDegree[key];
+}
+
+function getType(key) {
+    return groupType[key];
+}
