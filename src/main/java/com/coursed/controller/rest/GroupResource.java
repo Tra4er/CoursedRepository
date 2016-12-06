@@ -1,13 +1,11 @@
 package com.coursed.controller.rest;
 
 import com.coursed.dto.GroupCreateForm;
-import com.coursed.model.Group;
-import com.coursed.model.Semester;
-import com.coursed.model.Speciality;
-import com.coursed.model.Year;
+import com.coursed.model.*;
 import com.coursed.service.GroupService;
 import com.coursed.service.SemesterService;
 import com.coursed.service.SpecialityService;
+import com.coursed.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +27,8 @@ public class GroupResource {
     @Autowired
     private SpecialityService specialityService;
 
+    @Autowired
+    private TeacherService teacherService;
 
     @RequestMapping(value = "/api/groups/getAll", method = RequestMethod.GET)
     private Collection<Group> getGroups(@RequestParam(name = "specialityId", required = false) Long specialityId) {
@@ -41,7 +41,6 @@ public class GroupResource {
         return groupService.findAll();
     }
 
-
     @RequestMapping(value = "/api/groups/create", method = RequestMethod.POST)
     private void createGroup(@RequestBody GroupCreateForm groupCreateForm) {
 
@@ -53,4 +52,10 @@ public class GroupResource {
 
         groupService.create(group);
     }
+
+    @RequestMapping(value = "/api/groups/connectWithTeacher", method = RequestMethod.POST)
+    private void setGroupCurator(@RequestParam(name = "groupId") Long groupId, @RequestParam(name = "teacherId") Long teacherId){
+        teacherService.setAsCurator(teacherId, groupId);
+    }
+
 }
