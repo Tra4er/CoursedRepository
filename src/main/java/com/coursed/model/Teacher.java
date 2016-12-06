@@ -21,6 +21,9 @@ public class Teacher {
     @ManyToMany(mappedBy = "teachers", fetch = FetchType.LAZY)
     private List<Discipline> disciplines;
 
+    @ManyToMany(mappedBy = "curators", fetch = FetchType.LAZY)
+    private List<Group> curatedGroups;
+
     public Teacher() {
     }
 
