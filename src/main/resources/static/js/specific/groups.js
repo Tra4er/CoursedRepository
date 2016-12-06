@@ -32,6 +32,7 @@ $(document).ready(function () {
 
     var entityParams = ['id', 'number', 'groupType', 'groupDegree', 'courseNumber'];
     fillTableFrom("content-table", API + "/groups/getAll", entityParams);
+
 });
 
 //It sends serialized
@@ -40,3 +41,7 @@ $('#button-group-post').click(function(){
     sendAjaxPost(form, 'api/groups/create');
 });
 
+$('#add-dialog').on('show.bs.modal', function() {
+    fillSelectYear("yearId", API + "/years/getAll");
+    fillSelectFrom("specialityId", API + "/specialities/getAll", "fullName");
+});

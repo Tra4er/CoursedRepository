@@ -27,10 +27,10 @@
                 </div>
                 <div class="modal-body">
                     <form id="modal-body-form">
-                        <select name="semesterId" class="form-control" type='text'>
+                        <select id="yearId" class="form-control" type='text'>
                             <option>Рік</option>
                         </select>
-                        <select name="semesterId" class="form-control" type='text'>
+                        <select id="semesterId" class="form-control" type='text'>
                             <option>Семестр</option>
                         </select>
                         <select name="courseNumber" class="form-control" type='text'>
@@ -42,7 +42,7 @@
                         <select name="groupDegree" class="form-control" type='text'>
                             <option>Рівень групи</option>
                         </select>
-                        <select name="specialityId" class="form-control" type='text'>
+                        <select id="specialityId" class="form-control" type='text'>
                             <option>Спеціальність</option>
                         </select>
                         <input name="number" class="form-control" type='text' placeholder='Номер групи'/>
@@ -55,7 +55,6 @@
             </div>
         </div>
     </div>
-
 
     <button id="btnModal" type="button" class="btn btn-info" data-toggle="modal"
             data-target="#add-dialog">Додати групу
