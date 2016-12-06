@@ -5,7 +5,8 @@
 // Fills select-list of years using getJSON
 function fillSelectYear(selectId, requestAddress) {
     $.getJSON(requestAddress, function (response) {
-        var htmlElements = "<option value='0'>Обрати рік</option>";
+        var firstString = $("#" + selectId + " > option:first").text();
+        var htmlElements = "<option value='0'> " + firstString + "</option>";
         //Go through the each entity in the response
         $.each(response, function (i, year) {
             htmlElements += "<option value='" + year.id + "'>" + year.beginYear + "-" + year.endYear + "</option>";

@@ -36,7 +36,8 @@ function getCourse(key) {
 }
 
 function getSemester(key) {
-    return semesterNumbers[key];
+    var a = semesterNumbers[key];
+    return a;
 }
 
 function getDegree(key) {
