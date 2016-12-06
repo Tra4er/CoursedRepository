@@ -10,4 +10,5 @@ import java.util.List;
 public interface SpecialityService {
     void create(Speciality speciality);
     List<Speciality> findAll();
+    Speciality findOne(Long id);
 }

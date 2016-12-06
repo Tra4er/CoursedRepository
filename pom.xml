@@ -6,10 +6,10 @@
 	<groupId>com.coursed</groupId>
 	<artifactId>coursed</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>Coursed</name>
-	<description>Demo project for Spring Boot</description>
+	<description>System for punishing students.</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -25,7 +25,14 @@
 	</properties>
 
 	<dependencies>
-        <!--Security-->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+			<version>1.4.0.RELEASE</version>
+		</dependency>
+
+		<!--Security-->
 		<dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
@@ -99,7 +106,9 @@
 	</dependencies>
 
 	<build>
+		<finalName>coursed</finalName>
 		<plugins>
+			<!--Comment this before deployment.-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

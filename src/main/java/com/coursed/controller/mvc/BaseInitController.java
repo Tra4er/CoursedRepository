@@ -1,17 +1,18 @@
 package com.coursed.controller.mvc;
 
+import com.coursed.model.Group;
 import com.coursed.model.Semester;
 import com.coursed.model.Speciality;
 import com.coursed.model.Year;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
+import com.coursed.model.enums.CourseNumber;
+import com.coursed.model.enums.GroupDegree;
+import com.coursed.model.enums.GroupType;
 import com.coursed.model.enums.SemesterNumber;
 import com.coursed.repository.SemesterRepository;
 import com.coursed.repository.YearRepository;
-import com.coursed.service.RoleService;
-import com.coursed.service.SpecialityService;
-import com.coursed.service.UserService;
-import com.coursed.service.YearService;
+import com.coursed.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,9 @@ public class BaseInitController {
 
     @Autowired
     private SpecialityService specialityService;
+
+    @Autowired
+    private GroupService groupService;
 
     @Transactional
     @RequestMapping("/valve")
@@ -61,7 +65,7 @@ public class BaseInitController {
         userService.connectUserWithRole(teacher, teacherRole);
 
         //Year and semesters
-        Year year = new Year(2015);
+        Year year = new Year(2015, 2016);
         yearService.create(year);
 
         //Specialities
@@ -71,6 +75,15 @@ public class BaseInitController {
         specialityService.create(pi);
 
 
+        //Groups
+        Semester fifthSemester = yearService.findOne(1L).getSemesters().get(1);
+        Group is43 = new Group(43, GroupType.GENERAL_FORM, GroupDegree.BACHELOR, CourseNumber.THIRD, fifthSemester, is);
+        Group is42 = new Group(42, GroupType.GENERAL_FORM, GroupDegree.BACHELOR, CourseNumber.THIRD, fifthSemester, is);
+        Group is41 = new Group(41, GroupType.GENERAL_FORM, GroupDegree.BACHELOR, CourseNumber.THIRD, fifthSemester, is);
+
+        groupService.create(is43);
+        groupService.create(is42);
+        groupService.create(is41);
 
         System.out.println("==>Base configuration has been loaded");
         return "redirect:/login";

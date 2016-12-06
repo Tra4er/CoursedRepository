@@ -1,35 +1,56 @@
 package com.coursed.controller.rest;
 
+import com.coursed.dto.GroupCreateForm;
 import com.coursed.model.Group;
+import com.coursed.model.Semester;
+import com.coursed.model.Speciality;
 import com.coursed.model.Year;
 import com.coursed.service.GroupService;
+import com.coursed.service.SemesterService;
+import com.coursed.service.SpecialityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Hexray on 27.11.2016.
  */
 @RestController
-@RequestMapping("/api/group")
+@RequestMapping
 public class GroupResource {
     @Autowired
     private GroupService groupService;
 
+    @Autowired
+    private SemesterService semesterService;
 
-    //TODO: test param
-    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    private Collection<Group> getGroups(
-            @RequestParam(name = "specialityId", required = false) Long specialityId) {
+    @Autowired
+    private SpecialityService specialityService;
+
+
+    @RequestMapping(value = "/api/groups/getAll", method = RequestMethod.GET)
+    private Collection<Group> getGroups(@RequestParam(name = "specialityId", required = false) Long specialityId) {
+
         if(specialityId != null)
         {
             return groupService.findAllFromSpeciality(specialityId);
         }
 
         return groupService.findAll();
+    }
+
+
+    @RequestMapping(value = "/api/groups/create", method = RequestMethod.POST)
+    private void createGroup(@RequestBody GroupCreateForm groupCreateForm) {
+
+        Semester sem = semesterService.findOne(groupCreateForm.getSemesterId());
+        Speciality spec = specialityService.findOne(groupCreateForm.getSpecialityId());
+
+        Group group = new Group(groupCreateForm.getNumber(), groupCreateForm.getGroupType(), groupCreateForm.getGroupDegree(),
+                groupCreateForm.getCourseNumber(),sem, spec);
+
+        groupService.create(group);
     }
 }

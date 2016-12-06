@@ -15,6 +15,9 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Column(name = "enabled")
+    private boolean enabled;
+
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -31,9 +34,7 @@ public class User {
 
     private Boolean isStudent;
     private Boolean isTeacher;
-    private Boolean isEmailConfirmed;
     private Date registrationDate;
-
 
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -43,13 +44,13 @@ public class User {
     }
 
     public User(String email, String password, Student student, Teacher teacher, Boolean isStudent, Boolean isTeacher, Boolean isEmailConfirmed, Date registrationDate, Set<Role> roles) {
+        this.enabled = false;
         this.email = email;
         this.password = password;
         this.student = student;
         this.teacher = teacher;
         this.isStudent = isStudent;
         this.isTeacher = isTeacher;
-        this.isEmailConfirmed = isEmailConfirmed;
         this.registrationDate = registrationDate;
         this.roles = roles;
     }
@@ -60,6 +61,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getEmail() {
@@ -98,14 +107,6 @@ public class User {
         isTeacher = teacher;
     }
 
-    public Boolean getEmailConfirmed() {
-        return isEmailConfirmed;
-    }
-
-    public void setEmailConfirmed(Boolean emailConfirmed) {
-        isEmailConfirmed = emailConfirmed;
-    }
-
     public Date getRegistrationDate() {
         return registrationDate;
     }
@@ -130,8 +131,8 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", enabled='" + enabled + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", roles=" + roles +
                 '}';
     }

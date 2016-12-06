@@ -2,8 +2,10 @@ package com.coursed.service.implementation;
 
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
+import com.coursed.model.auth.VerificationToken;
 import com.coursed.repository.RoleRepository;
 import com.coursed.repository.UserRepository;
+import com.coursed.repository.VerificationTokenRepository;
 import com.coursed.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,11 +30,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private VerificationTokenRepository tokenRepository;
+
     @Override
-    public void register(User user) {
+    public User register(User user) {
         user.setStudent(false);
         user.setTeacher(false);
-        user.setEmailConfirmed(false);
+        user.setEnabled(false);
         user.setRegistrationDate(new Date());
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 
@@ -49,6 +54,12 @@ public class UserServiceImpl implements UserService {
         user.setRoles(roles);
 
         LOGGER.debug("Saving user with email={}", user.getEmail().replaceFirst("@.*", "@***"));
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void saveRegisteredUser(final User user) {
+        LOGGER.debug("Saving registered user: {}", user);
         userRepository.save(user);
     }
 
@@ -94,5 +105,15 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    public void createVerificationTokenForUser(final User user, final String token) {
+        final VerificationToken myToken = new VerificationToken(token, user);
+        tokenRepository.save(myToken);
+    }
+
+    @Override
+    public VerificationToken getVerificationToken(final String VerificationToken) {
+        return tokenRepository.findByToken(VerificationToken);
+    }
 
 }
