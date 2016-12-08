@@ -13,16 +13,17 @@ import java.util.Collection;
  * Created by Hexray on 01.12.2016.
  */
 @RestController
+@RequestMapping("/api/specialities")
 public class SpecialityResourse {
     @Autowired
     private SpecialityService specialityService;
 
-    @GetMapping("/api/specialities/getAll")
+    @GetMapping("/getAll")
     private Collection<Speciality> getSpecialities() {
         return specialityService.findAll();
     }
 
-    @PostMapping("/api/specialities/create")
+    @PostMapping("/create")
     private void createSpeciality(@RequestBody Speciality speciality) {
         specialityService.create(speciality);
     }

@@ -20,21 +20,22 @@ import java.util.stream.Collectors;
  * Created by Hexray on 16.11.2016.
  */
 @RestController
+@RequestMapping("/api/years")
 public class YearResource {
     @Autowired
     private YearService yearService;
 
-    @GetMapping("/api/years/getAll")
+    @GetMapping("/getAll")
     private Collection<Year> getYears() {
         return yearService.findAll();
     }
     //TODO: transfer into semesterResource, todo2: change to parameters
-    @GetMapping("/api/years/getSemestersFromYear/{id}")
+    @GetMapping("/getSemestersFromYear/{id}")
     private Collection<Semester> getSemesters(@PathVariable(value="id") Long yearId) {
         return yearService.findOne(yearId).getSemesters();
     }
 
-    @PostMapping("/api/years/create")
+    @PostMapping("/create")
     private void createYear(@RequestBody Year year) {
         yearService.create(year);
     }

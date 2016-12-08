@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Hexray on 27.11.2016.
  */
 @RestController
-@RequestMapping
+@RequestMapping("/api/groups")
 public class GroupResource {
     @Autowired
     private GroupService groupService;
@@ -30,18 +30,29 @@ public class GroupResource {
     @Autowired
     private TeacherService teacherService;
 
-    @GetMapping("/api/groups/getAll")
-    private Collection<Group> getGroups(@RequestParam(name = "specialityId", required = false) Long specialityId) {
+    @GetMapping("/getAll")
+    private Collection<Group> getGroups(@RequestParam(name = "specialityId", required = false) Long specialityId,
+                                        @RequestParam(name = "semesterId", required = false) Long semesterId) {
+
+        if(specialityId != null && semesterId != null)
+        {
+            return groupService.findAllFromSpecialityAndSemester(specialityId, semesterId);
+        }
 
         if(specialityId != null)
         {
             return groupService.findAllFromSpeciality(specialityId);
         }
 
+        if(semesterId != null)
+        {
+            return groupService.findAllFromSemester(semesterId);
+        }
+
         return groupService.findAll();
     }
 
-    @PostMapping("/api/groups/create")
+    @PostMapping("/create")
     private void createGroup(@RequestBody GroupCreateForm groupCreateForm) {
         Semester sem = semesterService.findOne(groupCreateForm.getSemesterId());
         Speciality spec = specialityService.findOne(groupCreateForm.getSpecialityId());
