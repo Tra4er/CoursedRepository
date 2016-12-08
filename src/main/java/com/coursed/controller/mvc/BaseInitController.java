@@ -43,12 +43,21 @@ public class BaseInitController {
     @RequestMapping("/valve")
     public String index() {
         //Roles
-        Role registeredRole = new Role("ROLE_REGISTERED", null);
-        Role studentRole = new Role("ROLE_STUDENT", null);
-        Role teacherRole = new Role("ROLE_TEACHER", null);
+        Role registeredRole = new Role("ROLE_REGISTERED");
+        Role studentRole = new Role("ROLE_STUDENT");
+        Role teacherRole = new Role("ROLE_TEACHER");
+
+        Role headRole = new Role("ROLE_HEAD");
+        Role secretaryRole = new Role("ROLE_SECRETARY");
+        Role educatorRole = new Role("ROLE_EDUCATOR");
+
         roleService.create(registeredRole);
         roleService.create(studentRole);
         roleService.create(teacherRole);
+
+        roleService.create(headRole);
+        roleService.create(secretaryRole);
+        roleService.create(educatorRole);
         //Users
         User student = new User();
         student.setEmail("student@s.s");

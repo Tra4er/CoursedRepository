@@ -19,9 +19,8 @@ public class Role {
     public Role() {
     }
 
-    public Role(String name, Set<User> users) {
+    public Role(String name) {
         this.name = name;
-        this.users = users;
     }
 
     public Long getId() {
