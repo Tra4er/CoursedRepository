@@ -1,4 +1,4 @@
-package com.coursed.service;
+package com.coursed.security;
 
 /**
  * Created by Trach on 11/6/2016.

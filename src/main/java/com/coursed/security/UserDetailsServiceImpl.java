@@ -1,4 +1,4 @@
-package com.coursed.service.implementation;
+package com.coursed.security;
 
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;

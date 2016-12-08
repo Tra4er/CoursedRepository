@@ -24,17 +24,17 @@ public class YearResource {
     @Autowired
     private YearService yearService;
 
-    @RequestMapping(value = "/api/years/getAll", method = RequestMethod.GET)
+    @GetMapping("/api/years/getAll")
     private Collection<Year> getYears() {
         return yearService.findAll();
     }
     //TODO: transfer into semesterResource, todo2: change to parameters
-    @RequestMapping(value = "/api/years/getSemestersFromYear/{id}", method = RequestMethod.GET)
+    @GetMapping("/api/years/getSemestersFromYear/{id}")
     private Collection<Semester> getSemesters(@PathVariable(value="id") Long yearId) {
         return yearService.findOne(yearId).getSemesters();
     }
 
-    @RequestMapping(value = "/api/years/create", method = RequestMethod.POST)
+    @PostMapping("/api/years/create")
     private void createYear(@RequestBody Year year) {
         yearService.create(year);
     }

@@ -4,29 +4,25 @@ import com.coursed.dto.UserRegistrationForm;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
 import com.coursed.registration.OnRegistrationCompleteEvent;
-import com.coursed.service.SecurityService;
+import com.coursed.security.SecurityService;
 import com.coursed.service.UserService;
 import com.coursed.validator.UserRegistrationFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Calendar;
-import java.util.Locale;
-import java.util.Optional;
 
 /**
  * Created by Hexray on 13.11.2016.
@@ -55,13 +51,13 @@ public class AuthController {
     }
 
     //    @GetMapping("/registration") TODO
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    @GetMapping("/registration")
     public ModelAndView registration() {
         LOGGER.debug("Sending userForm to client");
         return new ModelAndView("auth/registration", "userForm", new UserRegistrationForm());
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    @PostMapping("/registration")
     public String registration(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
                                BindingResult bindingResult, final HttpServletRequest request) {
 
@@ -91,19 +87,12 @@ public class AuthController {
             LOGGER.warn("Unable to register user", ex);
         }
 
-//        securityService.autoLogin(userForm.getEmail(), userForm.getPassword()); // TODO read about
+        securityService.autoLogin(userForm.getEmail(), userForm.getPassword()); // TODO read about
 
         return "/auth/verifyYourAccount";
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String confirmRegistration(Model model) {
-        System.out.println("TEST");
-        String message = "Hello";
-        return "redirect:/login?message=" + message;
-    }
-
-    @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
+    @GetMapping("/registrationConfirm")
     public String confirmRegistration(Model model, @RequestParam("token") String token, RedirectAttributes redAtt) {
         LOGGER.debug("Receiving confirmation token: {}", token);
 
@@ -131,7 +120,7 @@ public class AuthController {
         return "redirect:/login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping("/login")
     public String getLoginPage(Model model, @RequestParam(required = false) String error) {
         LOGGER.debug("Getting login page, error={}", error);
         model.addAttribute("error", error);
