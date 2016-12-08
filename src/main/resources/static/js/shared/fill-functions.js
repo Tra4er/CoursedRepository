@@ -13,6 +13,7 @@ function fillSelectYear(selectId, requestAddress) {
         });
         $("#" + selectId).html(htmlElements);
     });
+
 }
 
 // Fills select-list 'selectId' using getJSON and using alias 'param'
@@ -26,4 +27,14 @@ function fillSelectFrom(selectId, requestAddress, param) {
         });
         $("#" + selectId).html(htmlElements);
     });
+}
+
+// Заполняет select из словаря js
+function fillSelect(selectId, dictionaryJS) {
+    var items = "";
+    $.each(dictionaryJS, function(i, entity)
+    {
+        items += "<option value='" + i + "'>" + entity + "</option>";
+    });
+    $("#" + selectId).append(items);
 }

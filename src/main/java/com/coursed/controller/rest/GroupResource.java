@@ -43,13 +43,11 @@ public class GroupResource {
 
     @RequestMapping(value = "/api/groups/create", method = RequestMethod.POST)
     private void createGroup(@RequestBody GroupCreateForm groupCreateForm) {
-
         Semester sem = semesterService.findOne(groupCreateForm.getSemesterId());
         Speciality spec = specialityService.findOne(groupCreateForm.getSpecialityId());
 
         Group group = new Group(groupCreateForm.getNumber(), groupCreateForm.getGroupType(), groupCreateForm.getGroupDegree(),
                 groupCreateForm.getCourseNumber(),sem, spec);
-
         groupService.create(group);
     }
 

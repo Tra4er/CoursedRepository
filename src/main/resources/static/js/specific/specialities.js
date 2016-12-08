@@ -12,6 +12,6 @@ $(document).ready(function () {
 //It sends serialized
 $('#button-spec-post').click(function(){
     var form = $('#modal-body-form');
-    sendAjaxPost(form, 'api/specialities/create');
+    sendAjaxPost(form, 'api/specialities/create', 'add-dialog');
 });
 

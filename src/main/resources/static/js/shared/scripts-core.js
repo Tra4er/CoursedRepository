@@ -25,7 +25,7 @@ function insertTable(titleArray, tableId) {
     });
 }
 
-//It fills table's '#tableId' rows via the getting JSON from 'requestAddress' which contains selected keys in params
+//It fills table's '#tableId' rows via the getting JSON from 'requestAddress' which contains selected keys in 'params'
 function fillTableFrom(tableId, requestAddress, params) {
     $.getJSON(requestAddress, function(response){
         //Go through the each entity in the response
@@ -46,7 +46,7 @@ function fillTableFrom(tableId, requestAddress, params) {
 }
 
 //Sends JSON which was extracted and generated from 'elem'
-function sendAjaxPost(element, url) {
+function sendAjaxPost(element, url, modalId) {
     $.ajax({
         type: 'POST',
         url: url,
@@ -54,6 +54,7 @@ function sendAjaxPost(element, url) {
         data: JSON.stringify(element.serializeObject()),
         success: function () {
             alert("Успішно");
+            $('#' + modalId).modal("toggle");
         },
         error: function (data) {
             alert("Помилка!");
