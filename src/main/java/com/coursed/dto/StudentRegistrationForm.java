@@ -13,13 +13,13 @@ public class StudentRegistrationForm {
     private String patronymic;
     private String address;
     private String gradeBookNumber;
-    //private Date birthDate;
+    private Date birthDate;
     private StudentEducationStatus studentEducationStatus;
     private Boolean isBudgetStudent;
     private String additionalInformation;
     private String parentsInfo;
     private Long groupId;
-    //phoneNumber ??? его нет в моделе. Почему?
+    //phoneNumber Todo
 
 
     public String getFirstName() {
@@ -62,13 +62,13 @@ public class StudentRegistrationForm {
         this.gradeBookNumber = gradeBookNumber;
     }
 
-//    public Date getBirthDate() {
-//        return birthDate;
-//    }
-//
-//    public void setBirthDate(Date birthDate) {
-//        this.birthDate = birthDate;
-//    }
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
 
     public Boolean getBudgetStudent() {
         return isBudgetStudent;

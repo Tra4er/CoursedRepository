@@ -29,7 +29,7 @@ function fillSelectFrom(selectId, requestAddress, param) {
     });
 }
 
-// Заполняет select из словаря js
+// Fills select using dictionary res
 function fillSelect(selectId, dictionaryJS) {
     var items = "";
     $.each(dictionaryJS, function(i, entity)
@@ -39,14 +39,19 @@ function fillSelect(selectId, dictionaryJS) {
     $("#" + selectId).append(items);
 }
 
-// заполняет семестры для выбранного года
+// Fills semesters for the selected year
 $("#yearId").on('change', function () {
     var firstString = $("#semesterId > option:first").text();
     var items = "<option value='0'> " + firstString + "</option>";
+    var sem = "";
     if ($("#yearId > option:selected").attr("value") != '0') {
         $.getJSON(API + "/years/getSemestersFromYear/" + $("#yearId > option:selected").attr("value"), function (response) {
             $.each(response, function (i, entity) {
-                var sem = getSemester(entity['semesterNumber']);
+                //ToDo that is because we fill semesters in two different pages
+                if (typeof localStudentUkr != 'undefined')
+                    sem = localStudent(entity['semesterNumber']);
+                else
+                    sem = localGroup(entity['semesterNumber']);
                 items += "<option value='" + entity.id + "'>" + sem + "</option>";
             });
             $("#semesterId").html(items);

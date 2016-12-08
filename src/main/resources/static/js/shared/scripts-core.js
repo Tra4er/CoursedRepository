@@ -1,7 +1,6 @@
 /**
  * Created by Hexray on 01.12.2016.
  */
-const HOST = 'http://localhost:8080/';
 const API = "api";
 
 var csrf_token;
@@ -45,7 +44,35 @@ function fillTableFrom(tableId, requestAddress, params) {
     });
 }
 
-//Sends JSON which was extracted and generated from 'elem'
+//It fills table's '#tableId' rows via the getting JSON from 'requestAddress' which contains selected keys in 'params'
+//Parameter 'local' is a map which is responsible for localization of paramValue parameters
+function fillLocalizedTableFrom(tableId, requestAddress, params, local) {
+    $.getJSON(requestAddress, function(response){
+        //Go through the each entity in the response
+        $.each(response, function (i, entity) {
+            var htmlRow = "<tr>";
+            //Go through the each parameter in the entity
+            $.each(entity, function (paramName, paramValue) {
+                //If a parameter belongs to params array(argument of function)
+                if($.inArray(paramName, params) !== -1) {
+                    //Then we add the value of this parameter to the row
+                    if (typeof local[paramValue] != 'undefined')
+                    {
+                        htmlRow += ("<td>" + local[paramValue] + "</td>");
+                    }
+                    else
+                    {
+                        htmlRow += ("<td>" + paramValue + "</td>");
+                    }
+                }
+            });
+            htmlRow += "</tr>";
+            $("#" + tableId + "> tbody").append(htmlRow);
+        });
+    });
+}
+
+//Sends JSON which was extracted and generated from 'elem'. In success case closes a modal window
 function sendAjaxPost(element, url, modalId) {
     $.ajax({
         type: 'POST',
