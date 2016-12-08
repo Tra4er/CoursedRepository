@@ -31,6 +31,7 @@ import java.util.Optional;
  * Created by Hexray on 13.11.2016.
  */
 @Controller
+//@RequestMapping("/auth") TODO
 public class AuthController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
@@ -52,6 +53,7 @@ public class AuthController {
         binder.addValidators(userRegistrationFormValidator);
     }
 
+    //    @GetMapping("/registration") TODO
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registration() {
         LOGGER.debug("Sending userForm to client");
@@ -59,7 +61,8 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm, final HttpServletRequest request, BindingResult bindingResult) throws Exception {
+    public String registration(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
+                               BindingResult bindingResult, final HttpServletRequest request) {
 
         LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);
 
@@ -95,15 +98,13 @@ public class AuthController {
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String confirmRegistration(Model model) {
         System.out.println("TEST");
-        String messageValue = "Verification token expired for user: ";
-        model.addAttribute("message", messageValue);
-        return "/auth/badUser";
+        String message = "Hello";
+        return "redirect:/login?message=" + message;
     }
 
     @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
-    public String confirmRegistration(WebRequest request, Model model, @RequestParam("token") String token) {
+    public String confirmRegistration(Model model, @RequestParam("token") String token) {
         LOGGER.debug("Receiving confirmation token: {}", token);
-        Locale locale = request.getLocale();
 
         VerificationToken verificationToken = userService.getVerificationToken(token);
         if (verificationToken == null) { // TODO
@@ -125,13 +126,17 @@ public class AuthController {
         user.setEnabled(true);
         userService.saveRegisteredUser(user);
         LOGGER.debug("Received verification from user: {}", user);
-        return "redirect:/login";
+        String message = "Ваш акаунт був активований. Будь ласка, увійдіть.";
+        return "redirect:/login?message=" + message;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
+    public String getLoginPage(Model model, @RequestParam(required = false, name = "message") String message,
+                               @RequestParam(required = false, name="error") String error) {
         LOGGER.debug("Getting login page, error={}", error);
-        return new ModelAndView("auth/login", "error", error);
+        model.addAttribute("error", error);
+        model.addAttribute("message", message);
+        return "auth/login";
     }
 
 

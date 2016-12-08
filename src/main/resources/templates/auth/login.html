@@ -12,6 +12,7 @@
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
             <form th:action="@{/login}" method="post">
                 <h2>Необхідно авторизуватись</h2>
+                <div th:text="${message}" th:unless="${message == null}" class="alert alert-info"></div>
                 <div class="form-group">
                     <input type="email" name="email" id="emailField" class="form-control input-lg"
                            placeholder="Email" autofocus="autofocus"/>
@@ -21,7 +22,7 @@
                            placeholder="Пароль"/>
                 </div>
                 <div th:if="${param.error}" class="alert alert error">
-                    Invalid username and password!
+                    Невірний емейл або пароль.
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-md-6">
