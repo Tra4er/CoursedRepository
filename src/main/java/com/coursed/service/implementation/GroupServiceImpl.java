@@ -1,14 +1,17 @@
 package com.coursed.service.implementation;
 
 import com.coursed.model.Group;
+import com.coursed.model.Semester;
 import com.coursed.model.Speciality;
 import com.coursed.repository.GroupRepository;
+import com.coursed.repository.SemesterRepository;
 import com.coursed.repository.SpecialityRepository;
 import com.coursed.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Hexray on 26.11.2016.
@@ -20,6 +23,9 @@ public class GroupServiceImpl implements GroupService {
 
     @Autowired
     private SpecialityRepository specialityRepository;
+
+    @Autowired
+    private SemesterRepository semesterRepository;
 
     @Override
     public void create(Group group) {
@@ -39,6 +45,29 @@ public class GroupServiceImpl implements GroupService {
             return speciality.getGroups();
         }
 
+        return null;
+    }
+
+    @Override
+    public List<Group> findAllFromSemester(Long semesterId) {
+        Semester semester = semesterRepository.findOne(semesterId);
+        if(semester != null)
+        {
+            return semester.getGroups();
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<Group> findAllFromSpecialityAndSemester(Long specialityId, Long semesterId) {
+        Speciality speciality = specialityRepository.findOne(specialityId);
+        Semester semester = semesterRepository.findOne(semesterId);
+        //Intersection
+        if(semester != null && speciality != null)
+        {
+            return semester.getGroups().stream().filter(speciality.getGroups()::contains).collect(Collectors.toList());
+        }
         return null;
     }
 }

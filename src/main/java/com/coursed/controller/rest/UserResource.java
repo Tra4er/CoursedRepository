@@ -13,22 +13,22 @@ import javax.xml.ws.ResponseWrapper;
  * Created by Trach on 11/24/2016.
  */
 @RestController
-@RequestMapping
+@RequestMapping("/api/user")
 public class UserResource {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/api/user/checkEmail")
+    @GetMapping("/checkEmail")
     private boolean checkEmail(@RequestParam("email") String email) {
         return userService.getUserByEmail(email).isPresent();
     }
 
-    @GetMapping("/api/user/getUser")
+    @GetMapping("/getUser")
     private User getUser(@RequestParam("email") String email) {
         return userService.getUserByEmail(email).get();
     }
 
-    @PostMapping("/api/user/createStudent")
+    @PostMapping("/createStudent")
     private void createStudent(@RequestBody StudentRegistrationForm studentRegistrationForm){
 
         Student student = new Student();

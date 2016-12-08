@@ -11,4 +11,6 @@ public interface GroupService {
     void create(Group group);
     List<Group> findAll();
     List<Group> findAllFromSpeciality(Long specialityId);
+    List<Group> findAllFromSemester(Long semesterId);
+    List<Group> findAllFromSpecialityAndSemester(Long specialityId, Long semesterId);
 }
