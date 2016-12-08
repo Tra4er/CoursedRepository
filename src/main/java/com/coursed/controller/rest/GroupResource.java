@@ -30,7 +30,7 @@ public class GroupResource {
     @Autowired
     private TeacherService teacherService;
 
-    @RequestMapping(value = "/api/groups/getAll", method = RequestMethod.GET)
+    @GetMapping("/api/groups/getAll")
     private Collection<Group> getGroups(@RequestParam(name = "specialityId", required = false) Long specialityId) {
 
         if(specialityId != null)
@@ -41,7 +41,7 @@ public class GroupResource {
         return groupService.findAll();
     }
 
-    @RequestMapping(value = "/api/groups/create", method = RequestMethod.POST)
+    @PostMapping("/api/groups/create")
     private void createGroup(@RequestBody GroupCreateForm groupCreateForm) {
         Semester sem = semesterService.findOne(groupCreateForm.getSemesterId());
         Speciality spec = specialityService.findOne(groupCreateForm.getSpecialityId());
@@ -51,7 +51,7 @@ public class GroupResource {
         groupService.create(group);
     }
 
-    @RequestMapping(value = "/api/groups/connectWithTeacher", method = RequestMethod.POST)
+    @PostMapping("/api/groups/connectWithTeacher")
     private void setGroupCurator(@RequestParam(name = "groupId") Long groupId, @RequestParam(name = "teacherId") Long teacherId){
         teacherService.setAsCurator(teacherId, groupId);
     }

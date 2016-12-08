@@ -4,33 +4,31 @@ import com.coursed.dto.UserRegistrationForm;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
 import com.coursed.registration.OnRegistrationCompleteEvent;
-import com.coursed.service.SecurityService;
+import com.coursed.security.SecurityService;
 import com.coursed.service.UserService;
 import com.coursed.validator.UserRegistrationFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Calendar;
-import java.util.Locale;
-import java.util.Optional;
 
 /**
  * Created by Hexray on 13.11.2016.
  */
 @Controller
+//@RequestMapping("/auth") TODO
 public class AuthController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
@@ -52,14 +50,16 @@ public class AuthController {
         binder.addValidators(userRegistrationFormValidator);
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    //    @GetMapping("/registration") TODO
+    @GetMapping("/registration")
     public ModelAndView registration() {
         LOGGER.debug("Sending userForm to client");
         return new ModelAndView("auth/registration", "userForm", new UserRegistrationForm());
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm, final HttpServletRequest request, BindingResult bindingResult) throws Exception {
+    @PostMapping("/registration")
+    public String registration(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
+                               BindingResult bindingResult, final HttpServletRequest request) {
 
         LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);
 
@@ -87,23 +87,14 @@ public class AuthController {
             LOGGER.warn("Unable to register user", ex);
         }
 
-//        securityService.autoLogin(userForm.getEmail(), userForm.getPassword()); // TODO read about
+        securityService.autoLogin(userForm.getEmail(), userForm.getPassword()); // TODO read about
 
         return "/auth/verifyYourAccount";
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String confirmRegistration(Model model) {
-        System.out.println("TEST");
-        String messageValue = "Verification token expired for user: ";
-        model.addAttribute("message", messageValue);
-        return "/auth/badUser";
-    }
-
-    @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
-    public String confirmRegistration(WebRequest request, Model model, @RequestParam("token") String token) {
+    @GetMapping("/registrationConfirm")
+    public String confirmRegistration(Model model, @RequestParam("token") String token, RedirectAttributes redAtt) {
         LOGGER.debug("Receiving confirmation token: {}", token);
-        Locale locale = request.getLocale();
 
         VerificationToken verificationToken = userService.getVerificationToken(token);
         if (verificationToken == null) { // TODO
@@ -125,13 +116,15 @@ public class AuthController {
         user.setEnabled(true);
         userService.saveRegisteredUser(user);
         LOGGER.debug("Received verification from user: {}", user);
+        redAtt.addFlashAttribute("message", "Ви активували свій акаунт. Увійдіть.");
         return "redirect:/login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
+    @GetMapping("/login")
+    public String getLoginPage(Model model, @RequestParam(required = false) String error) {
         LOGGER.debug("Getting login page, error={}", error);
-        return new ModelAndView("auth/login", "error", error);
+        model.addAttribute("error", error);
+        return "auth/login";
     }
 
 

@@ -18,17 +18,17 @@ public class UserResource {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/api/user/checkEmail", method = RequestMethod.GET)
+    @GetMapping("/api/user/checkEmail")
     private boolean checkEmail(@RequestParam("email") String email) {
         return userService.getUserByEmail(email).isPresent();
     }
 
-    @RequestMapping("/api/user/getUser")
+    @GetMapping("/api/user/getUser")
     private User getUser(@RequestParam("email") String email) {
         return userService.getUserByEmail(email).get();
     }
 
-    @RequestMapping(value = "/api/user/createStudent", method = RequestMethod.POST)
+    @PostMapping("/api/user/createStudent")
     private void createStudent(@RequestBody StudentRegistrationForm studentRegistrationForm){
 
         Student student = new Student();
