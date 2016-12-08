@@ -12,6 +12,6 @@ $(document).ready(function () {
 //It sends serialized
 $('#button-year-post').click(function(){
     var form = $('#modal-body-form');
-    sendAjaxPost(form, 'api/years/create');
+    sendAjaxPost(form, 'api/years/create', 'add-dialog');
 });
 
