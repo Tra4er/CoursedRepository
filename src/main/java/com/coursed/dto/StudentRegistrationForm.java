@@ -1,5 +1,7 @@
 package com.coursed.dto;
 
+import com.coursed.model.enums.StudentEducationStatus;
+
 import java.util.Date;
 
 /**
@@ -11,12 +13,14 @@ public class StudentRegistrationForm {
     private String patronymic;
     private String address;
     private String gradeBookNumber;
-    private Date birthDate;
+    //private Date birthDate;
+    private StudentEducationStatus studentEducationStatus;
     private Boolean isBudgetStudent;
     private String additionalInformation;
     private String parentsInfo;
-
     private Long groupId;
+    //phoneNumber ??? его нет в моделе. Почему?
+
 
     public String getFirstName() {
         return firstName;
@@ -58,13 +62,13 @@ public class StudentRegistrationForm {
         this.gradeBookNumber = gradeBookNumber;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
+//    public Date getBirthDate() {
+//        return birthDate;
+//    }
+//
+//    public void setBirthDate(Date birthDate) {
+//        this.birthDate = birthDate;
+//    }
 
     public Boolean getBudgetStudent() {
         return isBudgetStudent;
@@ -97,4 +101,13 @@ public class StudentRegistrationForm {
     public void setGroupId(Long groupId) {
         this.groupId = groupId;
     }
+
+    public StudentEducationStatus getStudentEducationStatus() {
+        return studentEducationStatus;
+    }
+
+    public void setStudentEducationStatus(StudentEducationStatus studentEducationStatus) {
+        this.studentEducationStatus = studentEducationStatus;
+    }
+
 }

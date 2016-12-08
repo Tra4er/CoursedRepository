@@ -53,7 +53,7 @@
                 <input class="form-control" type="text" name="birthDate" placeholder="Дата народження" />
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" name="PhoneNumber" placeholder="Контактний телефон" />
+                <input class="form-control" type="text" name="phoneNumber" placeholder="Контактний телефон" />
             </div>
             <div class="form-group">
                 <input class="form-control" type="text" name="address" placeholder="Адреса" />
@@ -63,8 +63,13 @@
                     <option value="0">Обрати статус навчання</option>
                 </select>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="isBudgetStudent"/>Навчаюсь за кошти державного бюджету</label>
+            <!--<div class="checkbox"><label><input type="checkbox" name="isBudgetStudent"/>Навчаюсь за кошти державного бюджету</label></div>-->
+            <div class="form-group">
+                <select class="form-control" name="isBudgetStudent" id="isBudgetStudent">
+                    <option value="0">Обрати форму навчання</option>
+                    <option value="true">Бюджетна</option>
+                    <option value="false">Контрактна</option>
+                </select>
             </div>
             <div class="form-group">
                 <input class="form-control" type="text" name="parentsInfo" placeholder="Інформація про батьків (ПІБ, телефон)" />
