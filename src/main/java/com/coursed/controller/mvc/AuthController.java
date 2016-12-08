@@ -20,6 +20,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -103,7 +104,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
-    public String confirmRegistration(Model model, @RequestParam("token") String token) {
+    public String confirmRegistration(Model model, @RequestParam("token") String token, RedirectAttributes redAtt) {
         LOGGER.debug("Receiving confirmation token: {}", token);
 
         VerificationToken verificationToken = userService.getVerificationToken(token);
@@ -126,16 +127,14 @@ public class AuthController {
         user.setEnabled(true);
         userService.saveRegisteredUser(user);
         LOGGER.debug("Received verification from user: {}", user);
-        String message = "Ваш акаунт був активований. Будь ласка, увійдіть.";
-        return "redirect:/login?message=" + message;
+        redAtt.addFlashAttribute("message", "Ви активували свій акаунт. Увійдіть.");
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String getLoginPage(Model model, @RequestParam(required = false, name = "message") String message,
-                               @RequestParam(required = false, name="error") String error) {
+    public String getLoginPage(Model model, @RequestParam(required = false) String error) {
         LOGGER.debug("Getting login page, error={}", error);
         model.addAttribute("error", error);
-        model.addAttribute("message", message);
         return "auth/login";
     }
 
