@@ -1,6 +1,8 @@
 package com.coursed.controller.mvc;
 
+import com.coursed.dto.StudentRegistrationForm;
 import com.coursed.dto.UserRegistrationForm;
+import com.coursed.model.Student;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
 import com.coursed.registration.OnRegistrationCompleteEvent;
@@ -50,7 +52,6 @@ public class AuthController {
         binder.addValidators(userRegistrationFormValidator);
     }
 
-    //    @GetMapping("/registration") TODO
     @GetMapping("/registration")
     public ModelAndView registration() {
         LOGGER.debug("Sending userForm to client");
@@ -59,6 +60,7 @@ public class AuthController {
 
     @PostMapping("/registration")
     public String registration(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
+                               @RequestBody StudentRegistrationForm studentForm,
                                BindingResult bindingResult, final HttpServletRequest request) {
 
         LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);
@@ -70,6 +72,10 @@ public class AuthController {
         User user = new User();
         user.setEmail(userForm.getEmail());
         user.setPassword(userForm.getPassword());
+
+        //TODO FIRST - TRANSFER TO THE REST
+        //Handle and connect student
+
 
         User registered;
 
@@ -127,5 +133,14 @@ public class AuthController {
         return "auth/login";
     }
 
+    @GetMapping("/registration-student")
+    public String getRegStudent() {
+        return "registration-student";
+    }
+
+    @GetMapping("/registration-teacher")
+    public String getRegTeacher() {
+        return "registration-teacher";
+    }
 
 }
