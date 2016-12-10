@@ -45,7 +45,7 @@ public class GroupServiceImpl implements GroupService {
             return speciality.getGroups();
         }
 
-        return null;
+        return null; // TODO throw new IllegalArgumentException()
     }
 
     @Override
