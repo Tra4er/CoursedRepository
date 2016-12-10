@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.coursed.model.diagram</OriginalElement>
+  <nodes>
+    <node x="-229.08593750000003" y="339.0">com.coursed.model.EdGroup</node>
+    <node x="-8.940104166666686" y="-82.0">com.coursed.model.auth.Role</node>
+    <node x="-10.375" y="440.0">com.coursed.model.Discipline</node>
+    <node x="-420.71223958333337" y="181.0">com.coursed.model.PlannedEvent</node>
+    <node x="-231.89973958333337" y="444.0">com.coursed.model.Speciality</node>
+    <node x="-236.81119791666669" y="186.0">com.coursed.model.Semester</node>
+    <node x="169.76692708333331" y="444.0">com.coursed.model.FinalGrade</node>
+    <node x="168.56184895833334" y="93.0">com.coursed.model.Teacher</node>
+    <node x="-97.75" y="337.0">com.coursed.model.AttestationGrade</node>
+    <node x="-71.08723958333337" y="172.0">com.coursed.model.Student</node>
+    <node x="-226.71223958333337" y="20.0">com.coursed.model.Year</node>
+    <node x="-16.39973958333337" y="61.0">com.coursed.model.auth.User</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.coursed.model.Discipline" target="com.coursed.model.Speciality">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.Teacher" target="com.coursed.model.FinalGrade">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.auth.User" target="com.coursed.model.Teacher">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.PlannedEvent" target="com.coursed.model.Semester">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.Speciality" target="com.coursed.model.Discipline">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.auth.User" target="com.coursed.model.Student">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.Discipline" target="com.coursed.model.Teacher">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.Student" target="com.coursed.model.FinalGrade">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.AttestationGrade" target="com.coursed.model.Discipline">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.Discipline" target="com.coursed.model.FinalGrade">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.FinalGrade" target="com.coursed.model.Discipline">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.Discipline" target="com.coursed.model.AttestationGrade">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.Year" target="com.coursed.model.Semester">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.Semester" target="com.coursed.model.Year">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.EdGroup" target="com.coursed.model.Speciality">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.auth.User" target="com.coursed.model.auth.Role">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.FinalGrade" target="com.coursed.model.Teacher">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.Student" target="com.coursed.model.AttestationGrade">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.AttestationGrade" target="com.coursed.model.Student">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.Student" target="com.coursed.model.EdGroup">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.EdGroup" target="com.coursed.model.Semester">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.Teacher" target="com.coursed.model.Discipline">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.Semester" target="com.coursed.model.EdGroup">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.Speciality" target="com.coursed.model.EdGroup">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.EdGroup" target="com.coursed.model.Student">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.FinalGrade" target="com.coursed.model.Student">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.Semester" target="com.coursed.model.PlannedEvent">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.coursed.model.auth.Role" target="com.coursed.model.auth.User">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="155.5" y="277.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
