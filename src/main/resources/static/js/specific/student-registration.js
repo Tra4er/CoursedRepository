@@ -36,6 +36,11 @@ $("#semesterId").on('change', function () {
 });
 
 $('#button-student-post').click(function(){
-    var form = $('#form-student');
-    sendAjaxPost(form, 'api/user/createStudent', 'Myform');
+    var form = $('#registration-student-form');
+    sendAjaxPost(form, 'api/user/registration', 'Myform');
+});
+
+$('#button-teacher-post').click(function(){
+    var form = $('#registration-teacher-form');
+    sendAjaxPost(form, 'api/user/registration', 'Myform');
 });
