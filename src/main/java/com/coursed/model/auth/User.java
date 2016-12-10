@@ -24,16 +24,16 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    private Boolean isAStudent;
-    private Boolean isATeacher;
+    private boolean isAStudent;
+    private boolean isATeacher;
 
     private Date registrationDate;
 
