@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserService {
         student.setLastName(registrationForm.getLastName());
         student.setPatronymic(registrationForm.getPatronymic());
         student.setAdditionalInformation(registrationForm.getAdditionalInformation());
+        student.setGradeBookNumber(registrationForm.getGradeBookNumber());
         student.setAddress(registrationForm.getAddress());
         student.setBirthDate(registrationForm.getBirthDate());
         student.setBudgetStudent(registrationForm.getBudgetStudent());

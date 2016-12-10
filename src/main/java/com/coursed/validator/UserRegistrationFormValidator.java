@@ -1,6 +1,5 @@
 package com.coursed.validator;
 
-import com.coursed.controller.mvc.UsersController;
 import com.coursed.dto.UserRegistrationForm;
 import com.coursed.service.UserService;
 import org.slf4j.Logger;
