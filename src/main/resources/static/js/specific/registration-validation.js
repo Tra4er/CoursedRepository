@@ -7,9 +7,7 @@ function init(){
     $("#emailField").focusout(checkEmail);
     $("#passwordField").focusout(checkPassword);
     $("#confirmPasswordField").focusout(checkConfirmPassword);
-
     $("#submit").submit(Validate);
-
 }
 
 function checkEmail(){

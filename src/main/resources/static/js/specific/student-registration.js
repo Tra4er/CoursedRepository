@@ -1,9 +1,9 @@
 /**
  * Created by Алена on 01.12.2016.
  */
-$(function () {
-    fillSelectYear("yearId", API + "/years/getAll");
-    fillSelectFrom("specialityId", API + "/specialities/getAll", "fullName");
+$("#registration-student").on('click', function () {
+    fillSelectYear("yearId", "api/years/getAll");
+    fillSelectFrom("specialityId", "api/specialities/getAll", "fullName");
     fillSelect("studentEducationStatus", studentEducationStatus)
 });
 
@@ -37,10 +37,10 @@ $("#semesterId").on('change', function () {
 
 $('#button-student-post').click(function(){
     var form = $('#registration-student-form');
-    sendAjaxPost(form, 'api/user/registration', 'Myform');
+    sendAjaxPost(form, 'api/user/registration-student', 'Myform');
 });
 
 $('#button-teacher-post').click(function(){
     var form = $('#registration-teacher-form');
-    sendAjaxPost(form, 'api/user/registration', 'Myform');
+    sendAjaxPost(form, 'api/user/registration-teacher', 'Myform');
 });

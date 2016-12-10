@@ -19,16 +19,15 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-
-            <br/><br/><br/>
-
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3" style="padding-top:50px; padding-bottom:50px">
+            <h2 align="center">Coursed</h2>
+            <h2 align="center"><small>e-кафедра АСОІУ</small></h2>
+            <hr/>
             <ul class="nav nav-tabs">
                 <li class="active" ><a data-toggle="tab" href="#login">Вхід</a></li>
                 <li><a data-toggle="tab" href="#student" id="registration-student">Я - новий студент</a></li>
                 <li><a data-toggle="tab" href="#teacher" id="registration-teacher">Я - новий викладач</a></li>
             </ul>
-
             <div class="tab-content">
                 <div id="login" class="tab-pane fade in active">
                     <form th:action="@{/login}" method="post">
@@ -42,10 +41,8 @@
                             <input type="password" name="password" id="passwordField" class="form-control input-lg" placeholder="Пароль"/>
                         </div>
                         <div th:if="${param.error}" class="alert alert error">Невірний емейл або пароль.</div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <input type="submit" value="Увійти" class="btn btn-primary btn-block btn-lg"/>
-                            </div>
+                        <div class="col-xs-12">
+                            <input type="submit" value="Увійти" class="btn btn-primary btn-block btn-lg"/>
                         </div>
                     </form>
                 </div>
