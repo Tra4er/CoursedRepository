@@ -67,7 +67,7 @@ public class GroupResource {
         groupService.create(group);
     }
 
-    @PostMapping("/api/groups/connectWithTeacher")
+    @PostMapping("/connectWithTeacher")
     private void setGroupCurator(@RequestParam(name = "groupId") Long groupId, @RequestParam(name = "teacherId") Long teacherId){
         teacherService.setAsCurator(teacherId, groupId);
     }

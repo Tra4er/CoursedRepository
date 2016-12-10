@@ -43,7 +43,7 @@ public class Group {
     @JoinColumn(name="speciality_id")
     private Speciality speciality;
 
-    @JsonIgnore
+
     @ManyToMany
     @JoinTable(name = "curators_groups", joinColumns = @JoinColumn(name = "edgroup_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private List<Teacher> curators;
