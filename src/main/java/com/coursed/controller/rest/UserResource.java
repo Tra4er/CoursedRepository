@@ -200,7 +200,7 @@ public class UserResource {
     }
 
     @GetMapping("/getAllTeachers")
-    Collection<User> getAllTeachers(){
-        return userService.findAllTeachers();
+    Collection<User> getAllTeachers(@RequestParam(name = "groupId") Long groupId){
+        return userService.findAllTeachers(groupId);
     }
 }
