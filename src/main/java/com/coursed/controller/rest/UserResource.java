@@ -1,10 +1,7 @@
 package com.coursed.controller.rest;
 
 import com.coursed.controller.mvc.AuthController;
-import com.coursed.dto.StudentRegistrationForm;
-import com.coursed.dto.TeacherRegistrationForm;
-import com.coursed.dto.UserRegistrationForm;
-import com.coursed.dto.UserStudentRegistrationForm;
+import com.coursed.dto.*;
 import com.coursed.model.Student;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
@@ -101,7 +98,7 @@ public class UserResource {
 //    }
 //TODO ADD VALIDATION
     @PostMapping("/registration-student")
-    public String reg(@RequestBody UserStudentRegistrationForm userStudentRegistrationForm, final HttpServletRequest request) {
+    public String regStudent(@RequestBody UserStudentRegistrationForm userStudentRegistrationForm, final HttpServletRequest request) {
 
         //LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);
 
@@ -112,6 +109,35 @@ public class UserResource {
         User registered;
         try{
             registered = userService.registerStudent(userStudentRegistrationForm);
+        } catch(DataIntegrityViolationException e) {
+            LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
+            return "auth/registration";
+        }
+
+        try {
+            final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
+        } catch (final Exception ex) {
+            LOGGER.warn("Unable to register user", ex);
+        }
+
+        //securityService.autoLogin(userForm.getEmail(), userForm.getPassword()); // TODO read about
+
+        return "/auth/verifyYourAccount";
+    }
+
+    @PostMapping("/registration-teacher")
+    public String regTeacher(@RequestBody UserTeacherRegistrationForm userTeacherRegistrationForm, final HttpServletRequest request) {
+
+        //LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);
+
+//        if (bindingResult.hasErrors()) {
+//            return "auth/registration";
+//        }
+
+        User registered;
+        try{
+            registered = userService.registerTeacher(userTeacherRegistrationForm);
         } catch(DataIntegrityViolationException e) {
             LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
             return "auth/registration";

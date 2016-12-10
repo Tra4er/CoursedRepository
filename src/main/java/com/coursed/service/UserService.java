@@ -1,9 +1,6 @@
 package com.coursed.service;
 
-import com.coursed.dto.StudentRegistrationForm;
-import com.coursed.dto.TeacherRegistrationForm;
-import com.coursed.dto.UserRegistrationForm;
-import com.coursed.dto.UserStudentRegistrationForm;
+import com.coursed.dto.*;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
@@ -17,7 +14,7 @@ import java.util.Optional;
  */
 public interface UserService {
     User registerStudent(UserStudentRegistrationForm registrationForm);
-    User registerTeacher(UserRegistrationForm userForm, TeacherRegistrationForm teacherForm);
+    User registerTeacher(UserTeacherRegistrationForm registrationForm);
     void saveRegisteredUser(final User user);
     User getUserById(Long id);
     Optional<User> getUserByEmail(String email);
