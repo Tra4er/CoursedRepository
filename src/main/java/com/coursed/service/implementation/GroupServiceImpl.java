@@ -70,4 +70,9 @@ public class GroupServiceImpl implements GroupService {
         }
         return null;
     }
+
+    @Override
+    public List<Group> findAllWithoutCurator(Long semesterId) {
+        return null;
+    }
 }

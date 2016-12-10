@@ -52,6 +52,11 @@ public class GroupResource {
         return groupService.findAll();
     }
 
+    @GetMapping("/getAllWithoutCurators")
+    private Collection<Group> getGroupsWithoutCurators() {
+        return groupService.findAll();
+    }
+
     @PostMapping("/create")
     private void createGroup(@RequestBody GroupCreateForm groupCreateForm) {
         Semester sem = semesterService.findOne(groupCreateForm.getSemesterId());
@@ -62,7 +67,7 @@ public class GroupResource {
         groupService.create(group);
     }
 
-    @PostMapping("/api/groups/connectWithTeacher")
+    @PostMapping("/connectWithTeacher")
     private void setGroupCurator(@RequestParam(name = "groupId") Long groupId, @RequestParam(name = "teacherId") Long teacherId){
         teacherService.setAsCurator(teacherId, groupId);
     }

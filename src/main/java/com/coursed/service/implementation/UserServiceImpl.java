@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
         student.setAddress(registrationForm.getAddress());
         student.setBirthDate(registrationForm.getBirthDate());
 
-        if("true".compareTo(registrationForm.getIsBudgetStudent()) == 0)
+        if ("true".compareTo(registrationForm.getIsBudgetStudent()) == 0)
             student.setBudgetStudent(true);
         else
             student.setBudgetStudent(false);
@@ -78,8 +78,7 @@ public class UserServiceImpl implements UserService {
         Set<Role> roles = new HashSet<>();
         Role registeredRole = roleRepository.findByName("ROLE_REGISTERED");
 
-        if(registeredRole == null)
-        {
+        if (registeredRole == null) {
             LOGGER.error("There is no role with name 'ROLE_REGISTERED' to create the association with user");
             throw new RuntimeException("There is no role with name 'ROLE_REGISTERED' to create the association with user. You have to add base info");
         }
@@ -113,8 +112,7 @@ public class UserServiceImpl implements UserService {
         Set<Role> roles = new HashSet<>();
         Role registeredRole = roleRepository.findByName("ROLE_REGISTERED");
 
-        if(registeredRole == null)
-        {
+        if (registeredRole == null) {
             LOGGER.error("There is no role with name 'ROLE_REGISTERED' to create the association with user");
             throw new RuntimeException("There is no role with name 'ROLE_REGISTERED' to create the association with user. You have to add base info");
         }
@@ -160,6 +158,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findAllTeachers(Long groupId) {
+        Role role = roleRepository.findByName("ROLE_TEACHER");
+
+
+        if (groupId == null) {
+            return findAll().stream()
+                    .filter(User::isATeacher)
+                    .filter(user -> user.getRoles().contains(role))
+                    .collect(Collectors.toList());
+        } else {
+            Group exceptThisGroup = groupRepository.findOne(groupId);
+            return findAll().stream()
+                    .filter(User::isATeacher)
+                    .filter(user -> user.getRoles().contains(role))
+                    .filter(user -> !(user.getTeacherEntity().getCuratedGroups().contains(exceptThisGroup)))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    @Override
     public void connectUserWithRole(Long userId, Long roleId) {
         //TODO: log it and check it for existing
         Role role = roleRepository.findOne(roleId);
@@ -186,11 +204,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void makeATeacher(Long userId) {
         Role role = roleRepository.findByName("ROLE_TEACHER");
-        if(role != null)
-        {
+        if (role != null) {
             connectUserWithRole(userId, role.getId());
-        }
-        else throw new RuntimeException("There no base role ROLE_TEACHER");
+        } else throw new RuntimeException("There no base role ROLE_TEACHER");
 
     }
 
