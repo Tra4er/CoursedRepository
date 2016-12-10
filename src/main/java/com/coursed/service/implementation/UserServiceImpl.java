@@ -161,19 +161,20 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllTeachers(Long groupId) {
         Role role = roleRepository.findByName("ROLE_TEACHER");
 
-        Group exceptThisGroup = groupRepository.findOne(groupId);
 
-        if (groupId == null)
+        if (groupId == null) {
             return findAll().stream()
                     .filter(User::isATeacher)
                     .filter(user -> user.getRoles().contains(role))
                     .collect(Collectors.toList());
-        else
+        } else {
+            Group exceptThisGroup = groupRepository.findOne(groupId);
             return findAll().stream()
                     .filter(User::isATeacher)
                     .filter(user -> user.getRoles().contains(role))
                     .filter(user -> !(user.getTeacherEntity().getCuratedGroups().contains(exceptThisGroup)))
                     .collect(Collectors.toList());
+        }
     }
 
     @Override
