@@ -69,18 +69,9 @@ public class AuthController {
             return "auth/registration";
         }
 
-        User user = new User();
-        user.setEmail(userForm.getEmail());
-        user.setPassword(userForm.getPassword());
-
-        //TODO FIRST - TRANSFER TO THE REST
-        //Handle and connect student
-
-
         User registered;
-
         try{
-            registered = userService.register(user);
+            registered = userService.registerStudent(userForm, studentForm);
         } catch(DataIntegrityViolationException e) {
             LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
             return "auth/registration";

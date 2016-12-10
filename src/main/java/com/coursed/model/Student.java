@@ -43,7 +43,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(String firstName, String lastName, String patronymic, String address, String gradeBookNumber, Date birthDate, StudentEducationStatus studentEducationStatus, Boolean isBudgetStudent, String additionalInformation, String parentsInfo, Group group, List<FinalGrade> finalGrades, List<AttestationGrade> attestationGrades) {
+    public Student(String firstName, String lastName, String patronymic, String address, String gradeBookNumber, Date birthDate, StudentEducationStatus studentEducationStatus, Boolean isBudgetStudent, String additionalInformation, String parentsInfo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
@@ -54,9 +54,6 @@ public class Student {
         this.isBudgetStudent = isBudgetStudent;
         this.additionalInformation = additionalInformation;
         this.parentsInfo = parentsInfo;
-        this.group = group;
-        this.finalGrades = finalGrades;
-        this.attestationGrades = attestationGrades;
     }
 
     public Long getId() {

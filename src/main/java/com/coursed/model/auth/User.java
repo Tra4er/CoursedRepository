@@ -32,8 +32,9 @@ public class User {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    private Boolean isStudent;
-    private Boolean isTeacher;
+    private Boolean isAStudent;
+    private Boolean isATeacher;
+
     private Date registrationDate;
 
     @ManyToMany
@@ -43,16 +44,15 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, Student student, Teacher teacher, Boolean isStudent, Boolean isTeacher, Boolean isEmailConfirmed, Date registrationDate, Set<Role> roles) {
-        this.enabled = false;
+    public User(boolean enabled, String email, String password, Student student, Teacher teacher, Boolean isAStudent, Boolean isATeacher, Date registrationDate) {
+        this.enabled = enabled;
         this.email = email;
         this.password = password;
         this.student = student;
         this.teacher = teacher;
-        this.isStudent = isStudent;
-        this.isTeacher = isTeacher;
+        this.isAStudent = isAStudent;
+        this.isATeacher = isATeacher;
         this.registrationDate = registrationDate;
-        this.roles = roles;
     }
 
     public Long getId() {
@@ -91,10 +91,6 @@ public class User {
         return student;
     }
 
-    public void setStudent(Boolean student) {
-        isStudent = student;
-    }
-
     public void setStudent(Student student) {
         this.student = student;
     }
@@ -103,8 +99,24 @@ public class User {
         return teacher;
     }
 
-    public void setTeacher(Boolean teacher) {
-        isTeacher = teacher;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public Boolean getAStudent() {
+        return isAStudent;
+    }
+
+    public void setAStudent(Boolean AStudent) {
+        isAStudent = AStudent;
+    }
+
+    public Boolean getATeacher() {
+        return isATeacher;
+    }
+
+    public void setATeacher(Boolean ATeacher) {
+        isATeacher = ATeacher;
     }
 
     public Date getRegistrationDate() {
@@ -121,19 +133,5 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", enabled='" + enabled + '\'' +
-                ", email='" + email + '\'' +
-                ", roles=" + roles +
-                '}';
     }
 }
