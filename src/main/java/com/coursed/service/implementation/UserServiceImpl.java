@@ -1,11 +1,9 @@
 package com.coursed.service.implementation;
 
-import com.coursed.dto.StudentRegistrationForm;
-import com.coursed.dto.TeacherRegistrationForm;
-import com.coursed.dto.UserRegistrationForm;
-import com.coursed.dto.UserStudentRegistrationForm;
+import com.coursed.dto.*;
 import com.coursed.model.Group;
 import com.coursed.model.Student;
+import com.coursed.model.Teacher;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
@@ -21,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Hexray on 06.11.2016.
@@ -63,7 +62,11 @@ public class UserServiceImpl implements UserService {
         student.setGradeBookNumber(registrationForm.getGradeBookNumber());
         student.setAddress(registrationForm.getAddress());
         student.setBirthDate(registrationForm.getBirthDate());
-        student.setBudgetStudent(registrationForm.getBudgetStudent());
+
+        if("true".compareTo(registrationForm.getIsBudgetStudent()) == 0)
+            student.setBudgetStudent(true);
+        else
+            student.setBudgetStudent(false);
         student.setParentsInfo(registrationForm.getParentsInfo());
         student.setStudentEducationStatus(registrationForm.getStudentEducationStatus());
 
@@ -89,9 +92,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerTeacher(UserRegistrationForm userForm, TeacherRegistrationForm teacherForm) {
-        //TODO Implement
-        return null;
+    public User registerTeacher(UserTeacherRegistrationForm registrationForm) {
+
+        User user = new User();
+        user.setEmail(registrationForm.getEmail());
+        user.setPassword(registrationForm.getPassword());
+        user.setATeacher(true);
+        user.setAStudent(false);
+        user.setEnabled(false);
+        user.setRegistrationDate(new Date());
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+
+        Teacher teacher = new Teacher();
+        teacher.setFirstName(registrationForm.getFirstName());
+        teacher.setLastName(registrationForm.getLastName());
+        teacher.setPatronymic(registrationForm.getPatronymic());
+
+        user.setTeacher(teacher);
+
+        Set<Role> roles = new HashSet<>();
+        Role registeredRole = roleRepository.findByName("ROLE_REGISTERED");
+
+        if(registeredRole == null)
+        {
+            LOGGER.error("There is no role with name 'ROLE_REGISTERED' to create the association with user");
+            throw new RuntimeException("There is no role with name 'ROLE_REGISTERED' to create the association with user. You have to add base info");
+        }
+        roles.add(registeredRole);
+
+        user.setRoles(roles);
+
+        LOGGER.debug("Saving user with email={}", user.getEmail().replaceFirst("@.*", "@***"));
+        return userRepository.save(user);
     }
 
     @Override
@@ -119,6 +151,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findAllTeachers() {
+        return findAll().stream().filter(User::getATeacher).collect(Collectors.toList());
+    }
+
+    @Override
     public void connectUserWithRole(Long userId, Long roleId) {
         //TODO: log it and check it for existing
         Role role = roleRepository.findOne(roleId);
@@ -141,6 +178,18 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
     }
+
+    @Override
+    public void makeATeacher(Long userId) {
+        Role role = roleRepository.findByName("ROLE_TEACHER");
+        if(role != null)
+        {
+            connectUserWithRole(userId, role.getId());
+        }
+        else throw new RuntimeException("There no base role ROLE_TEACHER");
+
+    }
+
 
     @Override
     public void createVerificationTokenForUser(final User user, final String token) {

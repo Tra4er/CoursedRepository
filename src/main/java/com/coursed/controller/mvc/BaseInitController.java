@@ -1,5 +1,7 @@
 package com.coursed.controller.mvc;
 
+import com.coursed.dto.TeacherRegistrationForm;
+import com.coursed.dto.UserTeacherRegistrationForm;
 import com.coursed.model.Group;
 import com.coursed.model.Semester;
 import com.coursed.model.Speciality;
@@ -17,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Set;
 
 /**
  * Created by Hexray on 31.10.2016.
@@ -59,6 +63,18 @@ public class BaseInitController {
         roleService.create(secretaryRole);
         roleService.create(educatorRole);
         //Users
+
+        UserTeacherRegistrationForm user_Zhdanova = new UserTeacherRegistrationForm();
+        user_Zhdanova.setEmail("head@head.com");
+        user_Zhdanova.setPassword("123");
+        user_Zhdanova.setPatronymic("Григорівна");
+        user_Zhdanova.setLastName("Жданова");
+        user_Zhdanova.setFirstName("Олена");
+
+        User zhd = userService.registerTeacher(user_Zhdanova);
+        userService.connectUserWithRole(zhd, headRole);
+
+
 
         //Year and semesters
         Year year = new Year(2015, 2016);

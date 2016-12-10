@@ -16,7 +16,7 @@ public class UserStudentRegistrationForm {
     private String gradeBookNumber;
     private Date birthDate;
     private StudentEducationStatus studentEducationStatus;
-    private boolean isBudgetStudent;
+    private String isBudgetStudent;
     private String additionalInformation;
     private String parentsInfo;
     private Long groupId;
@@ -27,7 +27,6 @@ public class UserStudentRegistrationForm {
     private String password;
 
     private String confirmPassword;
-
 
     public String getFirstName() {
         return firstName;
@@ -77,12 +76,20 @@ public class UserStudentRegistrationForm {
         this.birthDate = birthDate;
     }
 
-    public Boolean getBudgetStudent() {
+    public StudentEducationStatus getStudentEducationStatus() {
+        return studentEducationStatus;
+    }
+
+    public void setStudentEducationStatus(StudentEducationStatus studentEducationStatus) {
+        this.studentEducationStatus = studentEducationStatus;
+    }
+
+    public String getIsBudgetStudent() {
         return isBudgetStudent;
     }
 
-    public void setBudgetStudent(Boolean budgetStudent) {
-        isBudgetStudent = budgetStudent;
+    public void setIsBudgetStudent(String isBudgetStudent) {
+        this.isBudgetStudent = isBudgetStudent;
     }
 
     public String getAdditionalInformation() {
@@ -108,16 +115,6 @@ public class UserStudentRegistrationForm {
     public void setGroupId(Long groupId) {
         this.groupId = groupId;
     }
-
-    public StudentEducationStatus getStudentEducationStatus() {
-        return studentEducationStatus;
-    }
-
-    public void setStudentEducationStatus(StudentEducationStatus studentEducationStatus) {
-        this.studentEducationStatus = studentEducationStatus;
-    }
-
-
 
     public String getEmail() {
         return email;
