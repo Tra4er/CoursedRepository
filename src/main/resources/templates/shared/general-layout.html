@@ -46,6 +46,7 @@
                         <li><a th:href="@{/years}">Навчальні роки</a></li>
                     </ul>
                 </li>
+                <li><a th:href="@{/events}">Події</a></li>
             </ul>
             <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post"></form>
             <ul class="nav navbar-nav navbar-right">
