@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Hexray on 06.11.2016.
@@ -150,6 +151,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findAllTeachers() {
+        return findAll().stream().filter(User::getATeacher).collect(Collectors.toList());
+    }
+
+    @Override
     public void connectUserWithRole(Long userId, Long roleId) {
         //TODO: log it and check it for existing
         Role role = roleRepository.findOne(roleId);
@@ -172,6 +178,18 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
     }
+
+    @Override
+    public void makeATeacher(Long userId) {
+        Role role = roleRepository.findByName("ROLE_TEACHER");
+        if(role != null)
+        {
+            connectUserWithRole(userId, role.getId());
+        }
+        else throw new RuntimeException("There no base role ROLE_TEACHER");
+
+    }
+
 
     @Override
     public void createVerificationTokenForUser(final User user, final String token) {

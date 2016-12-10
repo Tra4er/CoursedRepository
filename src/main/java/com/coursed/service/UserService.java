@@ -19,8 +19,10 @@ public interface UserService {
     User getUserById(Long id);
     Optional<User> getUserByEmail(String email);
     List<User> findAll();
+    List<User> findAllTeachers();
     void connectUserWithRole(Long userId, Long roleId);
     void connectUserWithRole(User user, Role role);
+    void makeATeacher(Long userId);
     void createVerificationTokenForUser(final User user, final String token);
     VerificationToken getVerificationToken(final String VerificationToken);
 }

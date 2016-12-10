@@ -3,10 +3,12 @@ package com.coursed.controller.rest;
 import com.coursed.controller.mvc.AuthController;
 import com.coursed.dto.*;
 import com.coursed.model.Student;
+import com.coursed.model.Teacher;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
 import com.coursed.registration.OnRegistrationCompleteEvent;
 import com.coursed.security.SecurityService;
+import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
 import com.coursed.validator.UserRegistrationFormValidator;
 import org.slf4j.Logger;
@@ -24,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.xml.ws.ResponseWrapper;
 import java.util.Calendar;
+import java.util.Collection;
 
 /**
  * Created by Trach on 11/24/2016.
@@ -35,6 +38,9 @@ public class UserResource {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TeacherService teacherService;
 
     @Autowired
     private SecurityService securityService;
@@ -183,5 +189,13 @@ public class UserResource {
         return "redirect:/login";
     }
 
+    @PostMapping("/confirm-teacher")
+    public void confirmTeacher(@RequestParam(name = "userId") Long userId){
+        userService.makeATeacher(userId);
+    }
 
+    @GetMapping("/getAllTeachers")
+    Collection<User> getAllTeachers(){
+        return userService.findAllTeachers();
+    }
 }
