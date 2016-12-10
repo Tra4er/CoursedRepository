@@ -2,8 +2,8 @@
  * Created by Алена on 01.12.2016.
  */
 $("#registration-student").on('click', function () {
-    fillSelectYear("yearId", "api/years/getAll");
-    fillSelectFrom("specialityId", "api/specialities/getAll", "fullName");
+    fillSelectYear("yearId", API + "/years/getAll");
+    fillSelectFrom("specialityId", API + "/specialities/getAll", "fullName");
     fillSelect("studentEducationStatus", studentEducationStatus)
 });
 

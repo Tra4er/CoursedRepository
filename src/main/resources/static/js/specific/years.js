@@ -16,3 +16,4 @@ $('#button-year-post').click(function(){
     sendAjaxPost(form, 'api/years/create', 'add-dialog');
 
 });
+
