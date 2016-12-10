@@ -59,19 +59,6 @@ public class BaseInitController {
         roleService.create(secretaryRole);
         roleService.create(educatorRole);
         //Users
-        User student = new User();
-        student.setEmail("student@s.s");
-        student.setPassword("123");
-
-        User teacher = new User();
-        teacher.setEmail("teacher@t.t");
-        teacher.setPassword("123");
-
-        userService.register(student);
-        userService.register(teacher);
-
-        userService.connectUserWithRole(student, studentRole);
-        userService.connectUserWithRole(teacher, teacherRole);
 
         //Year and semesters
         Year year = new Year(2015, 2016);

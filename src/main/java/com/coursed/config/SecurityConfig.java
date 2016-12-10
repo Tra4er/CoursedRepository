@@ -22,8 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/registration", "/registration-student", "/registration-teacher", "/registrationConfirm",
-                        "/test", "/valve", "/api/**").permitAll()//TODO: check only for 'hasRole("REGISTERED")
+                .antMatchers("/registration", "/test", "/valve", "/api/**").permitAll()//TODO: check only for 'hasRole("REGISTERED")
                 .antMatchers("/", "/**").hasAnyRole("REGISTERED", "STUDENT", "TEACHER", "ADMIN")
                 .antMatchers("/css/**", "/js/**").permitAll()
                 .and()
@@ -41,7 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe();
     }
-
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
