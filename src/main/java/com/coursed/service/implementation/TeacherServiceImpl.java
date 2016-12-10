@@ -46,5 +46,6 @@ public class TeacherServiceImpl implements TeacherService {
         curators.add(teacher);
 
         group.setCurators(curators);
+        groupRepository.save(group);
     }
 }
