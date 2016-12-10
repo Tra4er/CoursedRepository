@@ -3,6 +3,7 @@ package com.coursed.service;
 import com.coursed.dto.StudentRegistrationForm;
 import com.coursed.dto.TeacherRegistrationForm;
 import com.coursed.dto.UserRegistrationForm;
+import com.coursed.dto.UserStudentRegistrationForm;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
@@ -15,7 +16,7 @@ import java.util.Optional;
  * Changed by Trach on 07.11.2016
  */
 public interface UserService {
-    User registerStudent(UserRegistrationForm userForm, StudentRegistrationForm studentForm);
+    User registerStudent(UserStudentRegistrationForm registrationForm);
     User registerTeacher(UserRegistrationForm userForm, TeacherRegistrationForm teacherForm);
     void saveRegisteredUser(final User user);
     User getUserById(Long id);
