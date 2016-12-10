@@ -1,6 +1,7 @@
 package com.coursed.controller.mvc;
 
 import com.coursed.dto.StudentRegistrationForm;
+import com.coursed.dto.TeacherRegistrationForm;
 import com.coursed.dto.UserRegistrationForm;
 import com.coursed.model.Student;
 import com.coursed.model.auth.User;
@@ -30,91 +31,13 @@ import java.util.Calendar;
  * Created by Hexray on 13.11.2016.
  */
 @Controller
-//@RequestMapping("/auth") TODO
 public class AuthController {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserRegistrationFormValidator userRegistrationFormValidator;
-
-    @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    ApplicationEventPublisher eventPublisher;
-
-    @InitBinder("userForm")
-    public void initBinder(WebDataBinder binder) {
-        binder.addValidators(userRegistrationFormValidator);
-    }
 
     @GetMapping("/registration")
     public ModelAndView registration() {
         LOGGER.debug("Sending userForm to client");
         return new ModelAndView("auth/registration", "userForm", new UserRegistrationForm());
-    }
-
-    @PostMapping("/registration")
-    public String registration(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
-                               @RequestBody StudentRegistrationForm studentForm,
-                               BindingResult bindingResult, final HttpServletRequest request) {
-
-        LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            return "auth/registration";
-        }
-
-        User registered;
-        try{
-            registered = userService.registerStudent(userForm, studentForm);
-        } catch(DataIntegrityViolationException e) {
-            LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
-            return "auth/registration";
-        }
-
-        try {
-            final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
-        } catch (final Exception ex) {
-            LOGGER.warn("Unable to register user", ex);
-        }
-
-        securityService.autoLogin(userForm.getEmail(), userForm.getPassword()); // TODO read about
-
-        return "/auth/verifyYourAccount";
-    }
-
-    @GetMapping("/registrationConfirm")
-    public String confirmRegistration(Model model, @RequestParam("token") String token, RedirectAttributes redAtt) {
-        LOGGER.debug("Receiving confirmation token: {}", token);
-
-        VerificationToken verificationToken = userService.getVerificationToken(token);
-        if (verificationToken == null) { // TODO
-            LOGGER.debug("Invalid token received: {}", token);
-            String message = "Invalid token received: " + token;
-            model.addAttribute("message", message);
-            return "/auth/badUser";
-        }
-
-        User user = verificationToken.getUser();
-        Calendar cal = Calendar.getInstance();
-        if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-            LOGGER.debug("Verification token expired for user: {}", user);
-            String messageValue = "Verification token expired for user: " + user.getEmail();
-            model.addAttribute("message", messageValue);
-            return "/auth/badUser";
-        }
-
-        user.setEnabled(true);
-        userService.saveRegisteredUser(user);
-        LOGGER.debug("Received verification from user: {}", user);
-        redAtt.addFlashAttribute("message", "Ви активували свій акаунт. Увійдіть.");
-        return "redirect:/login";
     }
 
     @GetMapping("/login")
@@ -123,15 +46,4 @@ public class AuthController {
         model.addAttribute("error", error);
         return "auth/login";
     }
-
-    @GetMapping("/registration-student")
-    public String getRegStudent() {
-        return "registration-student";
-    }
-
-    @GetMapping("/registration-teacher")
-    public String getRegTeacher() {
-        return "registration-teacher";
-    }
-
 }

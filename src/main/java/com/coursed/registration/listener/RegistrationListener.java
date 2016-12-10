@@ -39,10 +39,10 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         userService.createVerificationTokenForUser(user, token);
 
         String recipientAddress = user.getEmail();
-        String subject = "Registration Confirmation";
+        String subject = "Підтвердження реєстрації на CoursEd";
         String confirmationUrl
-                = event.getAppUrl() + "/registrationConfirm?token=" + token;
-        String message = "Follow this link to confirm your email: ";
+                = event.getAppUrl() + "api/user/registrationConfirm?token=" + token;
+        String message = "Щоб підтвердити свій E-Mail, перейдіть по цьому посиланню: ";
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
