@@ -13,4 +13,5 @@ public interface GroupService {
     List<Group> findAllFromSpeciality(Long specialityId);
     List<Group> findAllFromSemester(Long semesterId);
     List<Group> findAllFromSpecialityAndSemester(Long specialityId, Long semesterId);
+    List<Group> findAllWithoutCurator(Long semesterId);
 }
