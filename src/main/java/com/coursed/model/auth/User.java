@@ -3,6 +3,7 @@ package com.coursed.model.auth;
 
 import com.coursed.model.Student;
 import com.coursed.model.Teacher;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,7 +11,6 @@ import java.util.Set;
 
 @Entity
 public class User {
-
     @Id
     @GeneratedValue
     private Long id;
@@ -21,38 +21,30 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
-    private Student student;
+    private Student studentEntity;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
-
+    private Teacher teacherEntity;
+    @JsonIgnore
     private boolean isAStudent;
+    @JsonIgnore
     private boolean isATeacher;
-
+    @JsonIgnore
     private Date registrationDate;
+
 
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     public User() {
-    }
-
-    public User(boolean enabled, String email, String password, Student student, Teacher teacher, Boolean isAStudent, Boolean isATeacher, Date registrationDate) {
-        this.enabled = enabled;
-        this.email = email;
-        this.password = password;
-        this.student = student;
-        this.teacher = teacher;
-        this.isAStudent = isAStudent;
-        this.isATeacher = isATeacher;
-        this.registrationDate = registrationDate;
     }
 
     public Long getId() {
@@ -87,35 +79,35 @@ public class User {
         this.password = password;
     }
 
-    public Student getStudent() {
-        return student;
+    public Student getStudentEntity() {
+        return studentEntity;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudentEntity(Student studentEntity) {
+        this.studentEntity = studentEntity;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public Teacher getTeacherEntity() {
+        return teacherEntity;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setTeacherEntity(Teacher teacherEntity) {
+        this.teacherEntity = teacherEntity;
     }
 
-    public Boolean getAStudent() {
+    public boolean isAStudent() {
         return isAStudent;
     }
 
-    public void setAStudent(Boolean AStudent) {
+    public void setAsStudent(boolean AStudent) {
         isAStudent = AStudent;
     }
 
-    public Boolean getATeacher() {
+    public boolean isATeacher() {
         return isATeacher;
     }
 
-    public void setATeacher(Boolean ATeacher) {
+    public void setAsTeacher(boolean ATeacher) {
         isATeacher = ATeacher;
     }
 

@@ -1,5 +1,7 @@
 package com.coursed.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,12 +17,14 @@ public class Teacher {
     private String lastName;
     private String patronymic;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
     private List<FinalGrade> finalGrades;
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "teachers", fetch = FetchType.LAZY)
     private List<Discipline> disciplines;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "curators", fetch = FetchType.LAZY)
     private List<Group> curatedGroups;
 

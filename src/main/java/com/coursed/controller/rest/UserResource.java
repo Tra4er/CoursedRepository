@@ -194,8 +194,8 @@ public class UserResource {
         userService.makeATeacher(userId);
     }
 
-    @GetMapping("/getAllTeachers")
+    @GetMapping("/getAllUnconfirmedTeachers")
     Collection<User> getAllTeachers(){
-        return userService.findAllTeachers();
+        return userService.findAllUnconfirmedTeachers();
     }
 }

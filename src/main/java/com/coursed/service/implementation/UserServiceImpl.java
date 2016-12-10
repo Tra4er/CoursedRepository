@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setEmail(registrationForm.getEmail());
         user.setPassword(registrationForm.getPassword());
-        user.setATeacher(false);
-        user.setAStudent(true);
+        user.setAsTeacher(false);
+        user.setAsStudent(true);
         user.setEnabled(false);
         user.setRegistrationDate(new Date());
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
         Group group = groupRepository.findOne(registrationForm.getGroupId());
         student.setGroup(group);
 
-        user.setStudent(student);
+        user.setStudentEntity(student);
 
         Set<Role> roles = new HashSet<>();
         Role registeredRole = roleRepository.findByName("ROLE_REGISTERED");
@@ -97,8 +97,8 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setEmail(registrationForm.getEmail());
         user.setPassword(registrationForm.getPassword());
-        user.setATeacher(true);
-        user.setAStudent(false);
+        user.setAsTeacher(true);
+        user.setAsStudent(false);
         user.setEnabled(false);
         user.setRegistrationDate(new Date());
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
         teacher.setLastName(registrationForm.getLastName());
         teacher.setPatronymic(registrationForm.getPatronymic());
 
-        user.setTeacher(teacher);
+        user.setTeacherEntity(teacher);
 
         Set<Role> roles = new HashSet<>();
         Role registeredRole = roleRepository.findByName("ROLE_REGISTERED");
@@ -151,8 +151,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllTeachers() {
-        return findAll().stream().filter(User::getATeacher).collect(Collectors.toList());
+    public List<User> findAllUnconfirmedTeachers() {
+        Role role = roleRepository.findByName("ROLE_TEACHER");
+        return findAll().stream()
+                .filter(User::isATeacher)
+                .filter(user -> !(user.getRoles().contains(role)))
+                .collect(Collectors.toList());
     }
 
     @Override

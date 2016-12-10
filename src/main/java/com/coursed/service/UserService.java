@@ -19,7 +19,7 @@ public interface UserService {
     User getUserById(Long id);
     Optional<User> getUserByEmail(String email);
     List<User> findAll();
-    List<User> findAllTeachers();
+    List<User> findAllUnconfirmedTeachers();
     void connectUserWithRole(Long userId, Long roleId);
     void connectUserWithRole(User user, Role role);
     void makeATeacher(Long userId);
