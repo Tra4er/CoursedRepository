@@ -4,6 +4,7 @@ import com.coursed.controller.mvc.AuthController;
 import com.coursed.dto.StudentRegistrationForm;
 import com.coursed.dto.TeacherRegistrationForm;
 import com.coursed.dto.UserRegistrationForm;
+import com.coursed.dto.UserStudentRegistrationForm;
 import com.coursed.model.Student;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
@@ -61,28 +62,56 @@ public class UserResource {
     private User getUser(@RequestParam("email") String email) {
         return userService.getUserByEmail(email).get();
     }
+//    @PostMapping("/registrations")
+//    public String registration(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
+//                               @RequestBody(required = false) StudentRegistrationForm studentForm,
+//                               @RequestBody(required = false) TeacherRegistrationForm teacherForm,
+//                               BindingResult bindingResult, final HttpServletRequest request) {
+//
+//        LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);
+//
+//        if (bindingResult.hasErrors()) {
+//            return "auth/registration";
+//        }
+//
+//        if(studentForm == null && teacherForm == null)
+//            throw new RuntimeException("No entity except User has been found in registration request");
+//
+//        User registered;
+//        try{
+//            if(studentForm != null)
+//                registered = userService.registerStudent(userForm, studentForm);
+//            else
+//                registered = userService.registerTeacher(userForm, teacherForm);
+//        } catch(DataIntegrityViolationException e) {
+//            LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
+//            return "auth/registration";
+//        }
+//
+//        try {
+//            final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+//            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
+//        } catch (final Exception ex) {
+//            LOGGER.warn("Unable to register user", ex);
+//        }
+//
+//        securityService.autoLogin(userForm.getEmail(), userForm.getPassword()); // TODO read about
+//
+//        return "/auth/verifyYourAccount";
+//    }
+//TODO ADD VALIDATION
+    @PostMapping("/registration-student")
+    public String reg(@RequestBody UserStudentRegistrationForm userStudentRegistrationForm, final HttpServletRequest request) {
 
-    @PostMapping("/registration")
-    public String registration(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
-                               @RequestBody(required = false) StudentRegistrationForm studentForm,
-                               @RequestBody(required = false) TeacherRegistrationForm teacherForm,
-                               BindingResult bindingResult, final HttpServletRequest request) {
+        //LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);
 
-        LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            return "auth/registration";
-        }
-
-        if(studentForm == null && teacherForm == null)
-            throw new RuntimeException("No entity except User has been found in registration request");
+//        if (bindingResult.hasErrors()) {
+//            return "auth/registration";
+//        }
 
         User registered;
         try{
-            if(studentForm != null)
-                registered = userService.registerStudent(userForm, studentForm);
-            else
-                registered = userService.registerTeacher(userForm, teacherForm);
+            registered = userService.registerStudent(userStudentRegistrationForm);
         } catch(DataIntegrityViolationException e) {
             LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
             return "auth/registration";
@@ -95,7 +124,7 @@ public class UserResource {
             LOGGER.warn("Unable to register user", ex);
         }
 
-        securityService.autoLogin(userForm.getEmail(), userForm.getPassword()); // TODO read about
+        //securityService.autoLogin(userForm.getEmail(), userForm.getPassword()); // TODO read about
 
         return "/auth/verifyYourAccount";
     }

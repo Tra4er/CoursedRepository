@@ -3,6 +3,7 @@ package com.coursed.service.implementation;
 import com.coursed.dto.StudentRegistrationForm;
 import com.coursed.dto.TeacherRegistrationForm;
 import com.coursed.dto.UserRegistrationForm;
+import com.coursed.dto.UserStudentRegistrationForm;
 import com.coursed.model.Group;
 import com.coursed.model.Student;
 import com.coursed.model.auth.Role;
@@ -43,11 +44,11 @@ public class UserServiceImpl implements UserService {
     private VerificationTokenRepository tokenRepository;
 
     @Override
-    public User registerStudent(UserRegistrationForm userForm, StudentRegistrationForm studentForm) {
+    public User registerStudent(UserStudentRegistrationForm registrationForm) {
 
         User user = new User();
-        user.setEmail(userForm.getEmail());
-        user.setPassword(userForm.getPassword());
+        user.setEmail(registrationForm.getEmail());
+        user.setPassword(registrationForm.getPassword());
         user.setATeacher(false);
         user.setAStudent(true);
         user.setEnabled(false);
@@ -55,17 +56,17 @@ public class UserServiceImpl implements UserService {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 
         Student student = new Student();
-        student.setFirstName(studentForm.getFirstName());
-        student.setLastName(studentForm.getLastName());
-        student.setPatronymic(studentForm.getPatronymic());
-        student.setAdditionalInformation(studentForm.getAdditionalInformation());
-        student.setAddress(studentForm.getAddress());
-        student.setBirthDate(studentForm.getBirthDate());
-        student.setBudgetStudent(studentForm.getBudgetStudent());
-        student.setParentsInfo(studentForm.getParentsInfo());
-        student.setStudentEducationStatus(studentForm.getStudentEducationStatus());
+        student.setFirstName(registrationForm.getFirstName());
+        student.setLastName(registrationForm.getLastName());
+        student.setPatronymic(registrationForm.getPatronymic());
+        student.setAdditionalInformation(registrationForm.getAdditionalInformation());
+        student.setAddress(registrationForm.getAddress());
+        student.setBirthDate(registrationForm.getBirthDate());
+        student.setBudgetStudent(registrationForm.getBudgetStudent());
+        student.setParentsInfo(registrationForm.getParentsInfo());
+        student.setStudentEducationStatus(registrationForm.getStudentEducationStatus());
 
-        Group group = groupRepository.findOne(studentForm.getGroupId());
+        Group group = groupRepository.findOne(registrationForm.getGroupId());
         student.setGroup(group);
 
         user.setStudent(student);
