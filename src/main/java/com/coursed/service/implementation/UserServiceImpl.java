@@ -160,6 +160,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findAllTeachers() {
+        Role role = roleRepository.findByName("ROLE_TEACHER");
+        return findAll().stream()
+                .filter(User::isATeacher)
+                .filter(user -> user.getRoles().contains(role))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void connectUserWithRole(Long userId, Long roleId) {
         //TODO: log it and check it for existing
         Role role = roleRepository.findOne(roleId);

@@ -1,5 +1,7 @@
 package com.coursed.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.Entity;
@@ -19,10 +21,11 @@ public class Speciality {
     private String fullName;
     private String groupsName;
 
-    @JsonManagedReference("speciality-groups")
+    @JsonBackReference("group-speciality")
     @OneToMany(mappedBy = "speciality")
     private List<Group> groups;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "speciality")
     private List<Discipline> disciplines;
 

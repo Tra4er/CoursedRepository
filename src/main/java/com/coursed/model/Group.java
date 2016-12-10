@@ -4,6 +4,7 @@ import com.coursed.model.enums.CourseNumber;
 import com.coursed.model.enums.GroupDegree;
 import com.coursed.model.enums.GroupType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -25,20 +26,24 @@ public class Group {
     @Enumerated
     private CourseNumber courseNumber;
 
-    @JsonBackReference("semester-groups")
+    @JsonIgnore
+    //@JsonBackReference("semester-groups")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="semester_id")
     private Semester semester;
 
-    @JsonManagedReference("group-students")
+    @JsonIgnore
+    //@JsonManagedReference("group-students")
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
     private List<Student> students;
 
-    @JsonBackReference("speciality-groups")
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @JsonManagedReference("group-speciality")
+    @ManyToOne
     @JoinColumn(name="speciality_id")
     private Speciality speciality;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "curators_groups", joinColumns = @JoinColumn(name = "edgroup_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private List<Teacher> curators;
