@@ -17,3 +17,9 @@ $('#button-year-post').click(function(){
 
 });
 
+$('#add-dialog').on('hide.bs.modal', function(){
+    //$("#content-table > tbody").html("");
+    $("#tbodyId").empty();
+    var entityParams1 = ['id', 'beginYear', 'endYear'];
+    fillTableFrom("content-table", API + "/years/getAll", entityParams1);
+});
