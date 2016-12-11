@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class GroupServiceImpl implements GroupService {
+//    TODO LOGGER
+
     @Autowired
     private GroupRepository groupRepository;
 
@@ -45,7 +47,7 @@ public class GroupServiceImpl implements GroupService {
             return speciality.getGroups();
         }
 
-        return null;
+        return null; // TODO throw new IllegalArgumentException()
     }
 
     @Override

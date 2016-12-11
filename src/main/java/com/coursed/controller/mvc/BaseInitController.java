@@ -2,16 +2,10 @@ package com.coursed.controller.mvc;
 
 import com.coursed.dto.TeacherRegistrationForm;
 import com.coursed.dto.UserTeacherRegistrationForm;
-import com.coursed.model.Group;
-import com.coursed.model.Semester;
-import com.coursed.model.Speciality;
-import com.coursed.model.Year;
+import com.coursed.model.*;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
-import com.coursed.model.enums.CourseNumber;
-import com.coursed.model.enums.GroupDegree;
-import com.coursed.model.enums.GroupType;
-import com.coursed.model.enums.SemesterNumber;
+import com.coursed.model.enums.*;
 import com.coursed.repository.SemesterRepository;
 import com.coursed.repository.YearRepository;
 import com.coursed.service.*;
@@ -20,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.text.SimpleDateFormat;
 import java.util.Set;
 
 /**
@@ -42,6 +37,12 @@ public class BaseInitController {
 
     @Autowired
     private GroupService groupService;
+
+    @Autowired
+    private PlannedEventService plannedEventService;
+
+    @Autowired
+    private SemesterService semesterService;
 
     @Transactional
     @RequestMapping("/valve")
@@ -96,6 +97,20 @@ public class BaseInitController {
         groupService.create(is43);
         groupService.create(is42);
         groupService.create(is41);
+
+        SimpleDateFormat dateformat3 = new SimpleDateFormat("dd/MM/yyyy");
+        PlannedEvent event1 = null;
+        PlannedEvent event2 = null;
+        try {
+            event1 = new PlannedEvent(dateformat3.parse("8/10/2016"), dateformat3.parse("8/10/2016"),
+                    PlannedEventType.ATTESTATION_FIRST, semesterService.findOne(1L));
+            event2 = new PlannedEvent(dateformat3.parse("8/10/2017"), dateformat3.parse("8/10/2017"),
+                    PlannedEventType.ATTESTATION_FIRST, semesterService.findOne(1L));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        plannedEventService.create(event1);
+        plannedEventService.create(event2);
 
         System.out.println("==>Base configuration has been loaded");
         return "redirect:/login";

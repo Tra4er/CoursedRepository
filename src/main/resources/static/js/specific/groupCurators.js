@@ -14,10 +14,10 @@ function fillCuratorsTable() {
              htmlRow +="<td>" + entity.speciality['groupsName'] + "-" + entity.number + "</td>";
             htmlRow +="<td>" + groupType[entity.groupType] + "</td>";
             htmlRow +="<td>" + groupDegree[entity.groupDegree] + "</td>";
-            htmlRow +="<td>" + courseNumbers[entity.courseNumber] + "</td><td>";
+            htmlRow +="<td>" + courseNumbers[entity.courseNumber] + "</td><td class='curators'>";
             if (entity.curators.length != 0){
-                entity.curators.each(function (i, curator) {
-                    htmlRow += "<p>" + curator.teacher['lastName'] + "</p>";
+                $.each(entity.curators, function (i, curator) {
+                    htmlRow += "<p>" + curator.lastName + "</p>";
                 })
             }
             else {
@@ -31,11 +31,11 @@ function fillCuratorsTable() {
 }
 
 $('#groupCurators-table > tbody').on('click', 'tr > td > .btn-default', function(){
-    var groupId = $(this).attr("id");
+    var grId = $(this).attr("id");
     var info = $(this).closest('tr').children('td:first').text()
-    $('#teacher-container').html("<h2 id='"+ groupId +"'> група " + info + "</h2> <br/>");
+    $('#teacher-container').html("<h2 id='"+ grId +"'> група " + info + "</h2> <br/>");
 
-    $.getJSON("api/user/getAllTeachers", function(response){
+    $.getJSON("api/user/getAllTeachers", {groupId: grId}, function(response){
         $.each(response, function(i, teach){
             var item = "<input type='button' id='" + teach.teacherEntity['id'] + "' class='btn btn-default col-xs-12' value = '"
                 + teach.teacherEntity['lastName'] + " " + teach.teacherEntity['firstName'] + " " + teach.teacherEntity['patronymic'] + "'/>";
@@ -46,16 +46,15 @@ $('#groupCurators-table > tbody').on('click', 'tr > td > .btn-default', function
 
 $('#teacher-container').on('click', 'input', function(){
     var gId = $(this).parent().children('h2:first').attr('id');
-    var tId= $(this).attr('id')
+    var tId= $(this).attr('id');
     $.post( "api/groups/connectWithTeacher", {groupId: gId, teacherId: tId})
         .done(function(){
             $('#curator-dialog').modal("hide");
+            //ToDo: update string tr
+            //ToDo: Oleg get curators by groupId
+
         })
         .fail(function() {
             alert( "Помилка!" );
         });
 });
-
-api/group/connectWithTeacher
-groupId
-teacherId

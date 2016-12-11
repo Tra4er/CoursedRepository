@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Hexray on 27.11.2016.
  */
 @RestController
-@RequestMapping("/api/groups")
+@RequestMapping("/api/groups") // TODO group(s)?
 public class GroupResource {
     @Autowired
     private GroupService groupService;
