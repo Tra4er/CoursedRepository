@@ -100,17 +100,13 @@ public class BaseInitController {
         groupService.create(is42);
         groupService.create(is41);
 
-        SimpleDateFormat dateformat3 = new SimpleDateFormat("dd/MM/yyyy");
+//        Planned Events
         PlannedEvent event1 = null;
         PlannedEvent event2 = null;
-        try {
-            event1 = new PlannedEvent(dateformat3.parse("8/10/2016"), dateformat3.parse("8/10/2016"),
+            event1 = new PlannedEvent("2016-10-08T12:30", "2016-11-08T18:00",
                     PlannedEventType.ATTESTATION_FIRST, semesterService.findOne(1L));
-            event2 = new PlannedEvent(dateformat3.parse("8/10/2017"), dateformat3.parse("8/10/2017"),
+            event2 = new PlannedEvent("2017-04-08T12:30", "2017-07-08T18:00",
                     PlannedEventType.ATTESTATION_FIRST, semesterService.findOne(1L));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         plannedEventService.create(event1);
         plannedEventService.create(event2);
 

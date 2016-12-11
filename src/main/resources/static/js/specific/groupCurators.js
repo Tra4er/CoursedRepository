@@ -10,7 +10,7 @@ $(function(){
 function fillCuratorsTable() {
     $.getJSON(API + "/groups/getAll" , function(response){
         $.each(response, function (i, entity) {
-            var htmlRow = "<tr>";
+            var htmlRow = "<tr id=" + entity.id + ">";
              htmlRow +="<td>" + entity.speciality['groupsName'] + "-" + entity.number + "</td>";
             htmlRow +="<td>" + groupType[entity.groupType] + "</td>";
             htmlRow +="<td>" + groupDegree[entity.groupDegree] + "</td>";
@@ -50,11 +50,26 @@ $('#teacher-container').on('click', 'input', function(){
     $.post( "api/groups/connectWithTeacher", {groupId: gId, teacherId: tId})
         .done(function(){
             $('#curator-dialog').modal("hide");
-            //ToDo: update string tr
-            //ToDo: Oleg get curators by groupId
-
+            reloadCuratorsForGroup(gId);
         })
         .fail(function() {
             alert( "Помилка!" );
         });
 });
+
+
+function reloadCuratorsForGroup(grId){
+    $.getJSON('api/user/getAllGroupCurators', {groupId: grId}, function(response){
+            var htmlRow = "";
+            if (response.length != 0){
+                $.each( response, function (i, curator) {
+                    htmlRow += "<p>" + curator.teacherEntity['lastName'] + "</p>";
+                })
+            }
+            else {
+                htmlRow += 'не призначено';
+            }
+            $("#groupCurators-table > tbody > #" + grId + " > td:last").prev().html(htmlRow);
+        });
+
+};
