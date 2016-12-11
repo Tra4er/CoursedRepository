@@ -24,13 +24,16 @@ function fillTeachersTable(){
 
 $('#UnconfirmedTeachers-table > tbody').on('click', 'tr > td > .btn-success', function(){
     var myId = $(this).parent().attr("id");
-    $.post( "api/user/confirm-teacher", {userId: myId}).done(function(){
-        //ToDO: test
-        $(this).closest('tr').remove();
-        }
-    );
-
+    var thisButton = $(this).closest('tr');
+    $.post( "api/user/confirm-teacher", {userId: myId})
+        .done(function(){
+            $(thisButton).remove();
+        })
+        .fail(function () {
+            alert("Помилка!")
+        });
 });
+
 $('#UnconfirmedTeachers-table > tbody').on('click', 'tr > td > .btn-danger', function(){
     alert('Видалення користувачів на стадії розробки');
 });

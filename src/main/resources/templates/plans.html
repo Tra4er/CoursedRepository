@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="shared/general-layout"
+      xmlns:layout="http://www.w3.org/1999/xhtml">>
+<head>
+    <title>Навчальний план</title>
+    <script th:defer="true" th:src="@{/js/specific/plans.js}" src="../static/js/specific/plans.js"></script>
+    <script th:defer="true" th:src="@{/js/shared/fill-functions.js}" src="../static/js/shared/fill-functions.js"></script>
+    <script th:defer="true" th:src="@{/js/local/groups-local-ukr.js}" src="../static/js/local/groups-local-ukr.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <h2 align="center" >Навчальні плани</h2>
+
+    <div class="row">
+        <div id="criterias-container" class="col-xs-3">
+            <button id="btnModalPlan" type="button" class="btn btn-info col-xs-12" data-toggle="modal"
+                    data-target="#plan-dialog">Додати план
+            </button>
+            <button id='button-get-all-plans' type="button" class="btn btn-primary col-xs-12">Показати всі</button>
+
+            <form id="show-criterias-plan">
+                <h3>Показати за критеріями: </h3>
+                <select id="yearIdCrit" name="yearId" class="form-control col-xs-12" type='text'>
+                    <option>Навчальний рік</option>
+                </select>
+                <select id="specialityIdCrit" name="specialityId" class="form-control col-xs-12" type='text'>
+                    <option>Спеціальність</option>
+                </select>
+                <select id="groupDegreeCrit" name="groupDegree" class="form-control col-xs-12" type='text'>
+                    <option>Освітній ступень</option>
+                </select>
+                <select id="groupTypeCrit" name="groupType" class="form-control col-xs-12" type='text'>
+                    <option>Форма навчання</option>
+                </select>
+                <select id="courseNumberCrit" name="courseNumber" class="form-control col-xs-12" type='text'>
+                    <option>Курс</option>
+                </select>
+            </form>
+
+            <button id='button-get-criterias-plans' type="button" class="btn btn-primary col-xs-12">Показати</button>
+
+
+
+
+        </div>
+        <div id="plan-content-container" class="col-xs-9">
+            <!--<button id="btnModalDiscipline" type="button" class="btn btn-info col-xs-12" data-toggle="modal"-->
+            <!--data-target="#add-dialog">Додати дисципліну-->
+            <!--</button>-->
+
+        </div>
+    </div>
+    <!---->
+    <!--<table id="" class="table table-hover table-striped">-->
+        <!--<thead>-->
+        <!--<tr></tr>-->
+        <!--</thead>-->
+        <!--<tbody></tbody>-->
+    <!--</table>-->
+
+    <div id="plan-dialog" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Навчальний план</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal-body-form-plan">
+                        <select id="yearId" name="yearId" class="form-control" type='text'>
+                            <option>Обрати рік</option>
+                        </select>
+                        <select id="courseNumber" name="courseNumber" class="form-control" type='text'>
+                            <option>Обрати номер курсу</option>
+                        </select>
+                        <select id="groupType" name="groupType" class="form-control" type='text'>
+                            <option>Обрати тип групи</option>
+                        </select>
+                        <select id="groupDegree" name="groupDegree" class="form-control" type='text'>
+                            <option>Рівень групи</option>
+                        </select>
+                        <select id="specialityId" name="specialityId" class="form-control" type='text'>
+                            <option>Обрати спеціальність</option>
+                        </select>
+                    </form>
+                    <button id='button-post-plan' type="button" class="btn btn-primary">Додати</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="discipline-dialog" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Дисципліна</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="discipline-container">
+                        <form id="modal-body-form-discipline">
+                            <input id="name" name="number" class="form-control" type='text' placeholder='Найменування дисципліни'/>
+                            <select id="type" name="semesterId" class="form-control" type='text'>
+                                <option>Обрати тип дисципліни</option>
+                            </select>
+                            <select id="hours" name="courseNumber" class="form-control" type='text'></select>
+                            <select id="credits" name="groupType" class="form-control" type='text'></select>
+                            <div class="form-group">
+                                    <label class="control-label col-sm-2">Курс</label>
+                                    <div class="col-sm-10">
+                                        <p id="courseNumberDiscipline" class="form-control-static"></p>
+                                    </div>
+                            </div>
+                            <select id="specialityIdDiscipline" name="specialityId" class="form-control" type='text'>
+                                <option>Обрати спеціальність</option>
+                            </select>
+                            </form>
+                        <button id='button-post-discipline' type="button" class="btn btn-primary">Додати</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

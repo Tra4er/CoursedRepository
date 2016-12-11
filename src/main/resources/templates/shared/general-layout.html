@@ -10,10 +10,8 @@
     <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}" href="../../static/css/bootstrap.css"/>
 
-    <script th:defer="true" th:src="@{/js/frameworks/jquery-3.1.1.js}"
-            src="../../static/js/frameworks/jquery-3.1.1.js"></script>
-    <script th:defer="true" th:src="@{/js/frameworks/bootstrap.min.js}"
-            src="../../static/js/frameworks/bootstrap.min.js"></script>
+    <script th:defer="true" th:src="@{/js/frameworks/jquery-3.1.1.js}" src="../../static/js/frameworks/jquery-3.1.1.js"></script>
+    <script th:defer="true" th:src="@{/js/frameworks/bootstrap.min.js}" src="../../static/js/frameworks/bootstrap.min.js"></script>
     <script th:defer="true" th:src="@{/js/shared/scripts-core.js}" src="../../static/js/shared/scripts-core.js"></script>
 </head>
 <body>
@@ -39,6 +37,8 @@
                     </ul>
                 </li>
                 <li><a th:href="@{/teacherConfirm}">Підтвердження викладача</a></li>
+                <li><a th:href="@{/plans}">Навчальний план</a></li>
+                <li><a th:href="@{/groupCurators}">Куратори</a></li>
                 <li class="dropdown" sec:authorize="hasRole('ROLE_STUDENT')">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">Панель керування <span class="caret"></span></a>
