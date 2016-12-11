@@ -1,5 +1,6 @@
 package com.coursed.controller.rest;
 
+import com.coursed.dto.YearForm;
 import com.coursed.model.Semester;
 import com.coursed.model.Year;
 import com.coursed.service.YearService;
@@ -36,8 +37,8 @@ public class YearResource {
     }
 
     @PostMapping("/create")
-    private void createYear(@RequestBody Year year) {
-        yearService.create(year);
+    private void createYear(@RequestBody YearForm yearForm) {
+        yearService.create(yearForm);
     }
 
 

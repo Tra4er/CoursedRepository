@@ -1,11 +1,7 @@
 package com.coursed.controller.rest;
 
 import com.coursed.dto.EducationPlanForm;
-import com.coursed.dto.GroupCreateForm;
 import com.coursed.model.EducationPlan;
-import com.coursed.model.Group;
-import com.coursed.model.Semester;
-import com.coursed.model.Speciality;
 import com.coursed.service.EducationPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

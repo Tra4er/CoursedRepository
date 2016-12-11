@@ -34,9 +34,8 @@ public class Semester {
     public Semester() {
     }
 
-    public Semester(SemesterNumber semesterNumber, Year year) {
+    public Semester(SemesterNumber semesterNumber) {
         this.semesterNumber = semesterNumber;
-        this.year = year;
     }
 
     public Long getId() {

@@ -1,5 +1,6 @@
 package com.coursed.service;
 
+import com.coursed.dto.YearForm;
 import com.coursed.model.Year;
 
 import java.util.List;
@@ -10,5 +11,5 @@ import java.util.List;
 public interface YearService {
     List<Year> findAll();
     Year findOne(Long id);
-    void create(Year year);
+    void create(YearForm yearForm);
 }
