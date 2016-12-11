@@ -4,7 +4,9 @@ import com.coursed.model.enums.PlannedEventType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
+import java.time.*;
 
 /**
  * Created by Hexray on 14.11.2016.
@@ -14,9 +16,9 @@ public class PlannedEvent {
     @Id
     @GeneratedValue
     private Long id;
-    private Date beginDate;
-    private Date expirationDate;
-    private Date creationDate;
+    private LocalDateTime beginDate;
+    private LocalDateTime expirationDate;
+    private LocalDateTime creationDate;
     @Enumerated
     private PlannedEventType eventType;
 
@@ -28,10 +30,26 @@ public class PlannedEvent {
     public PlannedEvent() {
     }
 
-    public PlannedEvent(Date beginDate, Date expirationDate, PlannedEventType eventType, Semester semester) {
+    /**
+     *  Returns list of events that have expiration date as in param
+     * @param beginDate date - string of format "1986-04-08T12:30"
+     * @param expirationDate date - string of format "1986-04-08T12:30"
+     * @param eventType enum of {@link com.coursed.model.enums.PlannedEventType} type
+     * @param semester object of {@link com.coursed.model.Semester} class
+     * @return list of events.
+     */
+    public PlannedEvent(String beginDate, String expirationDate, PlannedEventType eventType, Semester semester) {
+        this.beginDate = LocalDateTime.parse(beginDate);
+        this.expirationDate = LocalDateTime.parse(expirationDate);
+        this.creationDate = LocalDateTime.now();
+        this.eventType = eventType;
+        this.semester = semester;
+    }
+
+    public PlannedEvent(LocalDateTime beginDate, LocalDateTime expirationDate, PlannedEventType eventType, Semester semester) {
         this.beginDate = beginDate;
         this.expirationDate = expirationDate;
-        this.creationDate = new Date();
+        this.creationDate = LocalDateTime.now();
         this.eventType = eventType;
         this.semester = semester;
     }
@@ -44,27 +62,27 @@ public class PlannedEvent {
         this.id = id;
     }
 
-    public Date getBeginDate() {
+    public LocalDateTime getBeginDate() {
         return beginDate;
     }
 
-    public void setBeginDate(Date beginDate) {
+    public void setBeginDate(LocalDateTime beginDate) {
         this.beginDate = beginDate;
     }
 
-    public Date getExpirationDate() {
+    public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(Date expirationDate) {
+    public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 

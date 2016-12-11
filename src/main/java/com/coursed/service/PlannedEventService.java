@@ -4,6 +4,7 @@ import com.coursed.model.PlannedEvent;
 import com.coursed.model.Semester;
 import com.coursed.model.enums.PlannedEventType;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -13,8 +14,8 @@ import java.util.List;
 public interface PlannedEventService {
     void create(PlannedEvent event);
     List<PlannedEvent> findAll();
-    List<PlannedEvent> findAllByBeginDate(Date date);
-    List<PlannedEvent> findAllByExpirationDate(Date date);
+    List<PlannedEvent> findAllByBeginDate(String date);
+    List<PlannedEvent> findAllByExpirationDate(String date);
     List<PlannedEvent> findAllByEventType(PlannedEventType plannedEventType);
     List<PlannedEvent> findAllBySemester(Semester semester);
 }

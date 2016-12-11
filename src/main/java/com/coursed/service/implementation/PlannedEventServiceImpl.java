@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,6 @@ public class PlannedEventServiceImpl implements PlannedEventService {
     @Autowired
     private PlannedEventRepository plannedEventRepository;
 
-    // TODO implement methods
     @Override
     public void create(PlannedEvent event) {
         plannedEventRepository.save(event);
@@ -36,23 +36,35 @@ public class PlannedEventServiceImpl implements PlannedEventService {
         return plannedEventRepository.findAll();
     }
 
+    /**
+     *  Returns list of events that have begin date from as in param
+     * @param dateString date - string of format "1986-04-08 12:30"
+     * @return list of events.
+     */
     @Override
-    public List<PlannedEvent> findAllByBeginDate(Date date) {
-        return null;
+    public List<PlannedEvent> findAllByBeginDate(String dateString) {
+        LocalDateTime date = LocalDateTime.parse(dateString);
+        return plannedEventRepository.findAllByBeginDate(date);
     }
 
+    /**
+     *  Returns list of events that have expiration date as in param
+     * @param dateString date - string of format "1986-04-08 12:30"
+     * @return list of events.
+     */
     @Override
-    public List<PlannedEvent> findAllByExpirationDate(Date date) {
-        return null;
+    public List<PlannedEvent> findAllByExpirationDate(String dateString) {
+        LocalDateTime date = LocalDateTime.parse(dateString);
+        return plannedEventRepository.findAllByExpirationDate(date);
     }
 
     @Override
     public List<PlannedEvent> findAllByEventType(PlannedEventType plannedEventType) {
-        return null;
+        return plannedEventRepository.findAllByEventType(plannedEventType);
     }
 
     @Override
     public List<PlannedEvent> findAllBySemester(Semester semester) {
-        return null;
+        return plannedEventRepository.findAllBySemester(semester);
     }
 }
