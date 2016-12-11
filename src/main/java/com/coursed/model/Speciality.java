@@ -29,12 +29,23 @@ public class Speciality {
     @OneToMany(mappedBy = "speciality")
     private List<Discipline> disciplines;
 
+    @OneToMany(mappedBy = "speciality")
+    private List<EducationPlan> educationPlans;
+
     public Speciality() {
     }
 
     public Speciality(String fullName, String groupsName) {
         this.fullName = fullName;
         this.groupsName = groupsName;
+    }
+
+    public List<EducationPlan> getEducationPlans() {
+        return educationPlans;
+    }
+
+    public void setEducationPlans(List<EducationPlan> educationPlans) {
+        this.educationPlans = educationPlans;
     }
 
     public Long getId() {
