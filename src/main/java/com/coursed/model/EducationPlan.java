@@ -16,12 +16,6 @@ public class EducationPlan {
     @Id
     @GeneratedValue
     private Long id;
-
-    @JsonBackReference("year-educationplan")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="year_id")
-    private Year year;
-
     @Enumerated
     private GroupType groupType;
     @Enumerated
@@ -32,9 +26,15 @@ public class EducationPlan {
     @OneToMany(mappedBy = "educationPlan", fetch = FetchType.LAZY)
     private List<Discipline> disciplines;
 
+    @JsonBackReference("speciality-educationplan")
     @ManyToOne
     @JoinColumn(name="speciality_id")
     private Speciality speciality;
+
+    @JsonBackReference("year-educationplan")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="year_id")
+    private Year year;
 
     public EducationPlan() {
     }

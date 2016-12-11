@@ -4,6 +4,7 @@ import com.coursed.dto.DisciplineForm;
 import com.coursed.model.Discipline;
 import com.coursed.model.EducationPlan;
 import com.coursed.model.Speciality;
+import com.coursed.model.Teacher;
 import com.coursed.repository.DisciplineRepository;
 import com.coursed.repository.EducationPlanRepository;
 import com.coursed.repository.SpecialityRepository;
@@ -40,26 +41,34 @@ public class DisciplineServiceImpl implements DisciplineService {
     @Override
     public Discipline create(DisciplineForm disciplineForm) {
         Discipline discipline = new Discipline();
+
+        discipline.setName(disciplineForm.getName());
+        discipline.setType(disciplineForm.getType());
+        discipline.setHours(disciplineForm.getHours());
+        discipline.setCredits(disciplineForm.getCredits());
         discipline.setCourseNumber(disciplineForm.getCourseNumber());
+        discipline.setSemesterNumber(disciplineForm.getSemesterNumber());
 
         Speciality speciality = specialityRepository.findOne(disciplineForm.getSpecialityId());
         EducationPlan educationPlan = educationPlanRepository.findOne(disciplineForm.getEducationPlanId());
 
         if(speciality == null || educationPlan == null)
-            throw new NullPointerException("speciality of educationPlan is null");
+            throw new IllegalArgumentException("speciality of educationPlan is null");
 
         discipline.setSpeciality(speciality);
-        discipline.setCredits(disciplineForm.getCredits());
 
-        discipline.setName(disciplineForm.getName());
-
-
-
-        return null;
+        return disciplineRepository.save(discipline);
     }
 
     @Override
     public void connectWithTeacher(Long disciplineId, Long teacherId) {
+        Teacher teacher = teacherRepository.findOne(teacherId);
+        Discipline discipline = disciplineRepository.findOne(disciplineId);
 
+        List<Teacher> teachersList = discipline.getTeachers();
+        teachersList.add(teacher);
+
+        discipline.setTeachers(teachersList);
+        disciplineRepository.save(discipline);
     }
 }
