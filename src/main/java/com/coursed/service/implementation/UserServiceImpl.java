@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerStudent(UserStudentRegistrationForm registrationForm) {
-
+        // TODO check data and throw exceptions
         User user = new User();
         user.setEmail(registrationForm.getEmail());
         user.setPassword(registrationForm.getPassword());

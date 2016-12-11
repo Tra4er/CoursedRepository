@@ -42,6 +42,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String getLoginPage(Model model, @RequestParam(required = false) String error) {
+//      TODO  Send dto: studentDTO or teacherDTO
         LOGGER.debug("Getting login page, error={}", error);
         model.addAttribute("error", error);
         return "auth/login";
