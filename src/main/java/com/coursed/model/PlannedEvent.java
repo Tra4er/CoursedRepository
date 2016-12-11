@@ -1,6 +1,7 @@
 package com.coursed.model;
 
 import com.coursed.model.enums.PlannedEventType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,6 +20,7 @@ public class PlannedEvent {
     @Enumerated
     private PlannedEventType eventType;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="semester_id")
     private Semester semester;
@@ -26,10 +28,10 @@ public class PlannedEvent {
     public PlannedEvent() {
     }
 
-    public PlannedEvent(Date beginDate, Date expirationDate, Date creationDate, PlannedEventType eventType, Semester semester) {
+    public PlannedEvent(Date beginDate, Date expirationDate, PlannedEventType eventType, Semester semester) {
         this.beginDate = beginDate;
         this.expirationDate = expirationDate;
-        this.creationDate = creationDate;
+        this.creationDate = new Date();
         this.eventType = eventType;
         this.semester = semester;
     }
@@ -80,5 +82,17 @@ public class PlannedEvent {
 
     public void setSemester(Semester semester) {
         this.semester = semester;
+    }
+
+    @Override
+    public String toString() {
+        return "PlannedEvent{" +
+                "id=" + id +
+                ", beginDate=" + beginDate +
+                ", expirationDate=" + expirationDate +
+                ", creationDate=" + creationDate +
+                ", eventType=" + eventType +
+                ", semester=" + semester.getSemesterNumber() +
+                '}';
     }
 }
