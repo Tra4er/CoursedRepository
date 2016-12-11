@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +39,7 @@ public class PlannedEventServiceImpl implements PlannedEventService {
 
     /**
      *  Returns list of events that have begin date from as in param
-     * @param dateString date - string of format "1986-04-08 12:30"
+     * @param dateString date - string of format "1986-04-08T12:30:00"
      * @return list of events.
      */
     @Override
@@ -47,9 +48,11 @@ public class PlannedEventServiceImpl implements PlannedEventService {
         return plannedEventRepository.findAllByBeginDate(date);
     }
 
+//    Instant instant = Instant.parse(creationDate.toString());
+//        instant.toEpochMilli(); TODO
     /**
      *  Returns list of events that have expiration date as in param
-     * @param dateString date - string of format "1986-04-08 12:30"
+     * @param dateString date - string of format "1986-04-08T12:30:00"
      * @return list of events.
      */
     @Override
