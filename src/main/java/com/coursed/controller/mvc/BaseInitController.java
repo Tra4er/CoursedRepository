@@ -2,6 +2,7 @@ package com.coursed.controller.mvc;
 
 import com.coursed.dto.TeacherRegistrationForm;
 import com.coursed.dto.UserTeacherRegistrationForm;
+import com.coursed.dto.YearForm;
 import com.coursed.model.*;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
@@ -76,10 +77,11 @@ public class BaseInitController {
         userService.connectUserWithRole(zhd, headRole);
 
 
-
         //Year and semesters
-        Year year = new Year(2015, 2016);
-        yearService.create(year);
+        YearForm yearForm = new YearForm();
+        yearForm.setBeginYear(2015);
+        yearForm.setEndYear(2016);
+        yearService.create(yearForm);
 
         //Specialities
         Speciality is = new Speciality("Комп'ютерні науки", "ІС");
