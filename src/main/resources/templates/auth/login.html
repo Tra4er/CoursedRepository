@@ -47,7 +47,7 @@
                     </form>
                 </div>
                 <div id="student" class="tab-pane fade">
-                    <form id="registration-student-form" person-parameter="Student" action="#" th:action="@{/registration-student}" method="post">
+                    <form id="registration-student-form" action="#" th:action="@{/registration-student}" method="post">
                         <h2>Створіть акаунт студента</h2>
                         <div class="form-group">
                             <input class="form-control" type="text" name="lastName" placeholder="Прізвище" />
@@ -108,32 +108,49 @@
                         <div class="form-group">
                             <input class="form-control" type="text" name="additionalInformation" placeholder="Додаткова інформація (Захоплення, вміння та навички)" />
                         </div>
-                        <div class="form-group">
-                            <input type="email" name="email" id="emailFieldStudent" person-parameter="Student"  class="form-control" placeholder="Email" value="" autocomplete="off"/>
-                            <div id="checkEmailResultStudent" class="alert-danger"></div>
-                        </div>
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <input type="password" name="password" id="passwordFieldStudent" person-parameter="Student" class="form-control" placeholder="Пароль"/>
-                                    <div id="emptyPasswordResultStudent" class="alert-danger"></div>
+                                    <input type="email" name="email" id="emailFieldStudent" class="form-control" placeholder="Email" value="" autocomplete="off"/>
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <input type="password" name="confirmPassword" id="confirmPasswordFieldStudent" person-parameter="Student" class="form-control" placeholder="Підтвердіть пароль"/>
+                                    <div id="checkEmailResultStudent" class="alert-danger"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" name="password" id="passwordFieldStudent" class="form-control" placeholder="Пароль"/>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <div id="emptyPasswordResultStudent" class="alert-danger"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" name="confirmPassword" id="confirmPasswordFieldStudent" class="form-control" placeholder="Підтвердіть пароль"/>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
                                     <div id="confirmPasswordResultStudent" class="alert-danger"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group col-xs-12">
-                            <input id="button-student-post" person-parameter="Student" type="submit" value="Подати заявку" class="btn btn-success btn-block btn-lg" />
+                            <input id="button-student-post" type="submit" value="Подати заявку" class="btn btn-success btn-block btn-lg" />
                         </div>
-                        <br/>
                     </form>
                 </div>
                 <div id="teacher" class="tab-pane fade">
-                    <form id="registration-teacher-form" person-parameter="Teacher" action="#" th:action="@{/registration-teacher}" method="post">
+                    <form id="registration-teacher-form" action="#" th:action="@{/registration-teacher}" method="post">
                         <h2>Створіть акаунт викладача</h2>
                         <div class="form-group">
                             <input class="form-control" type="text" name="lastName" placeholder="Прізвище" />
@@ -144,27 +161,45 @@
                         <div class="form-group">
                             <input class="form-control" type="text" name="patronymic" placeholder="По-батькові" />
                         </div>
-                        <div class="form-group">
-                            <input type="email" name="email" id="emailFieldTeacher" person-parameter="Teacher" class="form-control" placeholder="Email" value="" autocomplete="off"/>
-                            <div id="checkEmailResultTeacher" class="alert-danger"></div>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="email" name="email" id="emailFieldTeacher" class="form-control" placeholder="Email" value="" autocomplete="off"/>
+                                </div>
+                                </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <div id="checkEmailResultTeacher" class="alert-danger"></div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <input type="password" name="password" id="passwordFieldTeacher" person-parameter="Teacher" class="form-control"
+                                    <input type="password" name="password" id="passwordFieldTeacher" class="form-control"
                                            placeholder="Пароль"/>
-                                    <div id="emptyPasswordResultTeacher" class="alert-danger"></div>
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <input type="password" name="confirmPassword" id="confirmPasswordFieldTeacher" person-parameter="Teacher" class="form-control" placeholder="Підтвердіть пароль"/>
+                                    <div id="emptyPasswordResultTeacher" class="alert-danger"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" name="confirmPassword" id="confirmPasswordFieldTeacher" class="form-control" placeholder="Підтвердіть пароль"/>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
                                     <div id="confirmPasswordResultTeacher" class="alert-danger"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group col-xs-12">
-                            <input id="button-teacher-post" person-parameter="Teacher" type="submit" value="Подати заявку" class="btn btn-success btn-block btn-lg" />
+                            <input id="button-teacher-post" type="submit" value="Подати заявку" class="btn btn-success btn-block btn-lg" />
                         </div>
                     </form>
                 </div>

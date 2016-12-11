@@ -1,27 +1,35 @@
 $(document).ready(init);
 
 var emailRegex = /^[A-Za-z0-9._]*\@[A-Za-z]*\.[A-Za-z]{2,5}$/;
+var person;
 
 function init(){
     console.log("Init");
+
+    // get person
+    $("#registration-student").click(function () {
+        person = "Student";
+    });
+    $("#registration-teacher").click(function () {
+        person = "Teacher";
+    });
 
     // Student check
     $("#emailFieldStudent").focusout(checkEmail);
     $("#passwordFieldStudent").focusout(checkPassword);
     $("#confirmPasswordFieldStudent").focusout(checkConfirmPassword);
-    // $("#registration-student-form").submit(Validate);
+    $("#registration-student-form").submit(Validate);
 
     // Teacher check
     $("#emailFieldTeacher").focusout(checkEmail);
     $("#passwordFieldTeacher").focusout(checkPassword);
     $("#confirmPasswordFieldTeacher").focusout(checkConfirmPassword);
-    // $("#registration-teacher-form").submit(Validate);
+    $("#registration-teacher-form").submit(Validate);
 }
 
 function checkEmail(){
     console.log("checkEmail  " + $("#emailField" + person));
 
-    var person = this.getAttribute("person-parameter");
     var email = $("#emailField" + person).val();
     var availableEmail = false;
     if(emailRegex.test(email)) {
@@ -45,7 +53,6 @@ function checkEmail(){
 function checkPassword() {
     console.log("checkPassword");
 
-    var person = this.getAttribute("person-parameter");
     var password = $("#passwordField" + person).val();
     if(password == "") {
         $("#emptyPasswordResult" + person).text("Це поле не може бути пустим.");
@@ -59,7 +66,6 @@ function checkPassword() {
 function checkConfirmPassword() {
     console.log("checkConfirmPassword");
 
-    var person = this.getAttribute("person-parameter");
     var password = $("#passwordField" + person).val();
     var confirmPassword = $("#confirmPasswordField" + person).val();
     if(password != confirmPassword) {
@@ -71,10 +77,9 @@ function checkConfirmPassword() {
     }
 }
 
-function Validate(){ // TODO
+function Validate(){
     console.log("Validate");
 
-    var person = this.getAttribute("person-parameter");
     if(!checkEmail()){
         $("#emailField" + person).focus();
         return false;
