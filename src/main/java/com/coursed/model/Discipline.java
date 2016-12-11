@@ -3,6 +3,7 @@ package com.coursed.model;
 import com.coursed.model.enums.CourseNumber;
 import com.coursed.model.enums.DisciplineType;
 import com.coursed.model.enums.SemesterNumber;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.List;
@@ -39,20 +40,19 @@ public class Discipline {
     @JoinColumn(name="speciality_id")
     private Speciality speciality;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="educationPlan_id")
+    private EducationPlan educationPlan;
+
     public Discipline() {
     }
 
-    public Discipline(String name, DisciplineType type, Float hours, Float credits, CourseNumber courseNumber, SemesterNumber semesterNumber, List<Teacher> teachers, List<FinalGrade> finalGrades, List<AttestationGrade> attestationGrades, Speciality speciality) {
-        this.name = name;
-        this.type = type;
-        this.hours = hours;
-        this.credits = credits;
-        this.courseNumber = courseNumber;
-        this.semesterNumber = semesterNumber;
-        this.teachers = teachers;
-        this.finalGrades = finalGrades;
-        this.attestationGrades = attestationGrades;
-        this.speciality = speciality;
+    public EducationPlan getEducationPlan() {
+        return educationPlan;
+    }
+
+    public void setEducationPlan(EducationPlan educationPlan) {
+        this.educationPlan = educationPlan;
     }
 
     public List<AttestationGrade> getAttestationGrades() {

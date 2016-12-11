@@ -4,6 +4,7 @@ package com.coursed.model.auth;
 import com.coursed.model.Student;
 import com.coursed.model.Teacher;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -24,14 +25,15 @@ public class User {
     @JsonIgnore
     @Column(nullable = false)
     private String password;
-
+    @JsonManagedReference("user-student")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
     private Student studentEntity;
-
+    @JsonManagedReference("user-teacher")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "teacher_id")
     private Teacher teacherEntity;
+
     @JsonIgnore
     private boolean isAStudent;
     @JsonIgnore
@@ -39,7 +41,7 @@ public class User {
     @JsonIgnore
     private Date registrationDate;
 
-
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;

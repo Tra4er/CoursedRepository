@@ -178,6 +178,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findAllGroupCurators(Long groupId) {
+        List<Teacher> teachers = groupRepository.findOne(groupId).getCurators();
+        List<User> users = new ArrayList<>();
+
+        for (Teacher teacher : teachers) {
+            users.add(userRepository.findOne(teacher.getUser().getId()));
+        }
+        return users;
+    }
+
+    @Override
     public void connectUserWithRole(Long userId, Long roleId) {
         //TODO: log it and check it for existing
         Role role = roleRepository.findOne(roleId);

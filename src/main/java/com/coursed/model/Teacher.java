@@ -1,5 +1,7 @@
 package com.coursed.model;
 
+import com.coursed.model.auth.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -13,6 +15,10 @@ public class Teacher {
     @Id
     @GeneratedValue
     private Long id;
+    @JsonBackReference("user-teacher")
+    @OneToOne(mappedBy = "teacherEntity")
+    private User user;
+
     private String firstName;
     private String lastName;
     private String patronymic;
@@ -29,6 +35,14 @@ public class Teacher {
     private List<Group> curatedGroups;
 
     public Teacher() {
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Teacher(String firstName, String lastName, String patronymic, List<FinalGrade> finalGrades, List<Discipline> disciplines) {
