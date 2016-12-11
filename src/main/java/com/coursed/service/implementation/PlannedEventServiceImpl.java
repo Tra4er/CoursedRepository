@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,31 @@ public class PlannedEventServiceImpl implements PlannedEventService {
 
     @Autowired
     private PlannedEventRepository plannedEventRepository;
+
+    /**
+     *  Returns list of events that have begin date from as in param
+     * @param beginDateString date - string of format "1986-04-08T12:30:00"
+     * @param expirationDateString date - string of format "1986-04-08T12:30:00"
+     * @return list of events.
+     */
+    @Override
+    public void create(String beginDateString, String expirationDateString, PlannedEventType plannedEventType, Semester semester) throws DateTimeParseException {
+        LocalDateTime beginDate;
+        LocalDateTime expirationDate;
+        try {
+            beginDate = LocalDateTime.parse(beginDateString);
+            expirationDate = LocalDateTime.parse(expirationDateString);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Wrong date.", e);
+        }
+
+        if(semester == null) { // TODO mb i should go to semester rep and check
+            throw new IllegalArgumentException("Wrong semester");
+        }
+
+        PlannedEvent plannedEvent = new PlannedEvent(beginDate, expirationDate, plannedEventType, semester);
+        plannedEventRepository.save(plannedEvent);
+    }
 
     @Override
     public void create(PlannedEvent event) {
