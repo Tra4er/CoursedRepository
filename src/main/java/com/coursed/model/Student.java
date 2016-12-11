@@ -1,5 +1,6 @@
 package com.coursed.model;
 
+import com.coursed.model.auth.User;
 import com.coursed.model.enums.StudentEducationStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -16,6 +17,10 @@ public class Student {
     @Id
     @GeneratedValue
     private Long id;
+    @JsonBackReference("user-student")
+    @OneToOne(mappedBy = "studentEntity")
+    private User user;
+
     private String firstName;
     private String lastName;
     private String patronymic;
@@ -41,6 +46,14 @@ public class Student {
     private List<AttestationGrade> attestationGrades;
 
     public Student() {
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Student(String firstName, String lastName, String patronymic, String address, String gradeBookNumber, Date birthDate, StudentEducationStatus studentEducationStatus, Boolean isBudgetStudent, String additionalInformation, String parentsInfo) {
