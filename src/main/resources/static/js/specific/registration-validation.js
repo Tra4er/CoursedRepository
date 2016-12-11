@@ -1,68 +1,93 @@
 $(document).ready(init);
 
 var emailRegex = /^[A-Za-z0-9._]*\@[A-Za-z]*\.[A-Za-z]{2,5}$/;
+var person;
 
 function init(){
+    console.log("Init");
 
-    $("#emailField").focusout(checkEmail);
-    $("#passwordField").focusout(checkPassword);
-    $("#confirmPasswordField").focusout(checkConfirmPassword);
-    $("#submit").submit(Validate);
+    // get person
+    $("#registration-student").click(function () {
+        person = "Student";
+    });
+    $("#registration-teacher").click(function () {
+        person = "Teacher";
+    });
+
+    // Student check
+    $("#emailFieldStudent").focusout(checkEmail);
+    $("#passwordFieldStudent").focusout(checkPassword);
+    $("#confirmPasswordFieldStudent").focusout(checkConfirmPassword);
+    $("#registration-student-form").submit(Validate);
+
+    // Teacher check
+    $("#emailFieldTeacher").focusout(checkEmail);
+    $("#passwordFieldTeacher").focusout(checkPassword);
+    $("#confirmPasswordFieldTeacher").focusout(checkConfirmPassword);
+    $("#registration-teacher-form").submit(Validate);
 }
 
 function checkEmail(){
-    var email = $("#emailField").val();
+    console.log("checkEmail  " + $("#emailField" + person));
+
+    var email = $("#emailField" + person).val();
     var availableEmail = false;
     if(emailRegex.test(email)) {
-        $.ajax({ url: "/api/user/checkEmail", async: false, type: "get", data: "email="+email})
+        $.ajax({ url: "/api/user/checkEmail", async: false, type: "get", data: "email=" + email})
             .done(function(response) {
                 if(response){
-                    $("#checkEmailResult").text("Емейл існує");
+                    $("#checkEmailResult" + person).text("Емейл існує");
                     availableEmail = false;
                 } else {
-                    $("#checkEmailResult").text("");
+                    $("#checkEmailResult" + person).text("");
                     availableEmail = true;
                 }
             });
     } else {
-        $("#checkEmailResult").text("Емейл введено невірно.");
+        $("#checkEmailResult" + person).text("Емейл введено невірно.");
         availableEmail = false;
     }
     return availableEmail;
 }
 
 function checkPassword() {
-    var password = $("#passwordField").val();
+    console.log("checkPassword");
+
+    var password = $("#passwordField" + person).val();
     if(password == "") {
-        $("#emptyPasswordResult").text("Це поле не може бути пустим.");
+        $("#emptyPasswordResult" + person).text("Це поле не може бути пустим.");
         return false;
     } else {
-        $("#emptyPasswordResult").text("");
+        $("#emptyPasswordResult" + person).text("");
         return true;
     }
 }
 
 function checkConfirmPassword() {
-    var password = $("#passwordField").val();
-    var confirmPassword = $("#confirmPasswordField").val();
+    console.log("checkConfirmPassword");
+
+    var password = $("#passwordField" + person).val();
+    var confirmPassword = $("#confirmPasswordField" + person).val();
     if(password != confirmPassword) {
-        $("#confirmPasswordResult").text("Паролі не співпадають.")
+        $("#confirmPasswordResult" + person).text("Паролі не співпадають.")
         return false;
     } else {
-        $("#confirmPasswordResult").text("")
+        $("#confirmPasswordResult" + person).text("")
         return true;
     }
 }
 
 function Validate(){
+    console.log("Validate");
+
     if(!checkEmail()){
-        $("#emailField").focus();
+        $("#emailField" + person).focus();
         return false;
     } else if(!checkPassword()) {
-        $("#passwordField").focus();
+        $("#passwordField" + person).focus();
         return false;
     } else if(!checkConfirmPassword()) {
-        $("#confirmPasswordField").focus();
+        $("#confirmPasswordField" + person).focus();
         return false;
     }
     return true;
