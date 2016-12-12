@@ -7,15 +7,16 @@ $(document).ready(function () {
 
     fillTable();
 });
+
 function fillTable(){
     var entityParams = ['id', 'beginYear', 'endYear'];
     fillTableFrom("content-table", API + "/years/getAll", entityParams);
 }
+
 //It sends serialized
 $('#button-year-post').click(function(){
     var form = $('#modal-body-form');
     sendAjaxPost(form, 'api/years/create', 'add-dialog');
-
 });
 
 $('#add-dialog').on('hide.bs.modal', function(){
