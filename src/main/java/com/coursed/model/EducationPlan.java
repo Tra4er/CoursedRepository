@@ -26,7 +26,7 @@ public class EducationPlan {
     @OneToMany(mappedBy = "educationPlan", fetch = FetchType.LAZY)
     private List<Discipline> disciplines;
 
-    @JsonBackReference("speciality-educationplan")
+//    @JsonBackReference("speciality-educationplan")
     @ManyToOne
     @JoinColumn(name="speciality_id")
     private Speciality speciality;

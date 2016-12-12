@@ -5,60 +5,16 @@
       xmlns:layout="http://www.w3.org/1999/xhtml">>
 <head>
     <title>Навчальний план</title>
+    <link rel="stylesheet" th:href="@{/css/plans.css}" href="../static/css/plans.css"/>
     <script th:defer="true" th:src="@{/js/specific/plans.js}" src="../static/js/specific/plans.js"></script>
     <script th:defer="true" th:src="@{/js/shared/fill-functions.js}" src="../static/js/shared/fill-functions.js"></script>
     <script th:defer="true" th:src="@{/js/local/groups-local-ukr.js}" src="../static/js/local/groups-local-ukr.js"></script>
 </head>
 <body>
 <div layout:fragment="content">
-    <h2 align="center" >Навчальні плани</h2>
-
-    <div class="row">
-        <div id="criterias-container" class="col-xs-3">
-            <button id="btnModalPlan" type="button" class="btn btn-info col-xs-12" data-toggle="modal"
-                    data-target="#plan-dialog">Додати план
-            </button>
-            <button id='button-get-all-plans' type="button" class="btn btn-primary col-xs-12">Показати всі</button>
-
-            <form id="show-criterias-plan">
-                <h3>Показати за критеріями: </h3>
-                <select id="yearIdCrit" name="yearId" class="form-control col-xs-12" type='text'>
-                    <option>Навчальний рік</option>
-                </select>
-                <select id="specialityIdCrit" name="specialityId" class="form-control col-xs-12" type='text'>
-                    <option>Спеціальність</option>
-                </select>
-                <select id="groupDegreeCrit" name="groupDegree" class="form-control col-xs-12" type='text'>
-                    <option>Освітній ступень</option>
-                </select>
-                <select id="groupTypeCrit" name="groupType" class="form-control col-xs-12" type='text'>
-                    <option>Форма навчання</option>
-                </select>
-                <select id="courseNumberCrit" name="courseNumber" class="form-control col-xs-12" type='text'>
-                    <option>Курс</option>
-                </select>
-            </form>
-
-            <button id='button-get-criterias-plans' type="button" class="btn btn-primary col-xs-12">Показати</button>
-
-
-
-
-        </div>
-        <div id="plan-content-container" class="col-xs-9">
-            <!--<button id="btnModalDiscipline" type="button" class="btn btn-info col-xs-12" data-toggle="modal"-->
-            <!--data-target="#add-dialog">Додати дисципліну-->
-            <!--</button>-->
-
-        </div>
+    <h2 align="center">Навчальний план </h2>
+    <div id="plan-content-container" class="col-xs-12 plan-content-container" >
     </div>
-    <!---->
-    <!--<table id="" class="table table-hover table-striped">-->
-        <!--<thead>-->
-        <!--<tr></tr>-->
-        <!--</thead>-->
-        <!--<tbody></tbody>-->
-    <!--</table>-->
 
     <div id="plan-dialog" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -86,6 +42,57 @@
                         </select>
                     </form>
                     <button id='button-post-plan' type="button" class="btn btn-primary">Додати</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="plan-dialog-simple" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Навчальний план</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal-body-form-plan-simple">
+
+                        <select id="courseNumberS" name="courseNumber" class="form-control col-xs-12" type='text'>
+                            <option>Обрати курс</option>
+                        </select>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">Навчальний рік</label>
+                            <div class="col-xs-8">
+                                <p name="yearId" class="form-control-static yearId"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">Спеціальність</label>
+                            <div class="col-xs-8">
+                                <p name="specialityId" class="form-control-static specialityId"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">Форма навчання</label>
+                            <div class="col-xs-8">
+                                <p name="groupType" class="form-control-static groupType"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">Освітній ступень</label>
+                            <div class="col-xs-8">
+                                <p name="groupDegree" class="form-control-static groupDegree"></p>
+                            </div>
+                        </div>
+
+                    </form>
+                    <button id='button-post-plan-simple' type="button" class="btn btn-primary">Додати</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
@@ -129,7 +136,10 @@
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <button id="btnModalPlan" type="button" class="btn btn-info col-xs-6" data-toggle="modal" data-target="#plan-dialog">Додати план</button>
+        <button id='button-get-all-plans' type="button" class="btn btn-primary col-xs-6">Показати всі</button>
+    </div>
 </div>
 </body>
 </html>

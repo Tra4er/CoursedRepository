@@ -28,6 +28,7 @@ public class Year {
     @OneToMany(mappedBy = "year", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Semester> semesters;
 
+//  @JsonIgnore
     @JsonManagedReference("year-educationplan")
     @OneToMany(mappedBy = "year", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<EducationPlan> educationPlans;
