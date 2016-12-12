@@ -45,4 +45,3 @@ function clearTable() {
     $("#table-heads").empty();
     $("#content-table> tbody").empty();
 }
-

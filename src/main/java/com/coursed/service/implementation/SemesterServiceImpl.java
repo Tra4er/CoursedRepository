@@ -6,6 +6,8 @@ import com.coursed.service.SemesterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Hexray on 04.12.2016.
  */
@@ -18,5 +20,10 @@ public class SemesterServiceImpl implements SemesterService {
     @Override
     public Semester findOne(Long id) {
         return semesterRepository.findOne(id);
+    }
+
+    @Override
+    public List<Semester> findAll() {
+        return semesterRepository.findAll();
     }
 }
