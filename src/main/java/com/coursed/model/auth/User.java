@@ -39,7 +39,7 @@ public class User {
     @JsonIgnore
     private boolean isATeacher;
     @JsonIgnore
-    private Date registrationDate;
+    private Date registrationDate; // TODO LocalDateTime
 
     @JsonIgnore
     @ManyToMany

@@ -16,7 +16,7 @@ public class UserStudentRegistrationForm {
     private String gradeBookNumber;
     private Date birthDate;
     private StudentEducationStatus studentEducationStatus;
-    private String isBudgetStudent;
+    private Boolean isBudgetStudent;
     private String additionalInformation;
     private String parentsInfo;
     private Long groupId;
@@ -84,11 +84,11 @@ public class UserStudentRegistrationForm {
         this.studentEducationStatus = studentEducationStatus;
     }
 
-    public String getIsBudgetStudent() {
+    public Boolean getBudgetStudent() {
         return isBudgetStudent;
     }
 
-    public void setIsBudgetStudent(String isBudgetStudent) {
+    public void setBudgetStudent(Boolean isBudgetStudent) {
         this.isBudgetStudent = isBudgetStudent;
     }
 

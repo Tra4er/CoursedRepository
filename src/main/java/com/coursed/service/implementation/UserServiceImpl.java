@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerTeacher(UserTeacherRegistrationForm registrationForm) {
+    public User registerTeacher(UserTeacherRegistrationForm registrationForm) { // TODO move to teacherService
 
         User user = new User();
         user.setEmail(registrationForm.getEmail());
