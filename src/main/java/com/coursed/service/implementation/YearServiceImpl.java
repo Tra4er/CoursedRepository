@@ -51,6 +51,9 @@ public class YearServiceImpl implements YearService {
         semesters.add(secondSemester);
         year.setSemesters(semesters);
 
+        firstSemester.setYear(year);
+        secondSemester.setYear(year);
+
         yearRepository.save(year);
     }
 
