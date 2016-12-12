@@ -29,7 +29,8 @@ public class Speciality {
     @OneToMany(mappedBy = "speciality")
     private List<Discipline> disciplines;
 
-    @JsonManagedReference("speciality-educationplan")
+    @JsonIgnore
+    //@JsonManagedReference("speciality-educationplan")
     @OneToMany(mappedBy = "speciality")
     private List<EducationPlan> educationPlans;
 

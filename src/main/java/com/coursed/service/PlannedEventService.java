@@ -5,6 +5,7 @@ import com.coursed.model.Semester;
 import com.coursed.model.enums.PlannedEventType;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * Created by Trach on 12/11/2016.
  */
 public interface PlannedEventService {
+    void create(String beginDate, String expirationDate, PlannedEventType plannedEventType, Semester semester) throws DateTimeParseException;
     void create(PlannedEvent event);
     List<PlannedEvent> findAll();
     List<PlannedEvent> findAllByBeginDate(String date);
