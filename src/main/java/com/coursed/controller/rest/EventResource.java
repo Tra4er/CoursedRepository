@@ -22,10 +22,8 @@ public class EventResource {
     private PlannedEventService plannedEventService;
 
     @GetMapping("/getAll")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class) // TODO remove
     public Collection<PlannedEvent> getAll() {
-
-        System.out.println(plannedEventService.findAll());
         return plannedEventService.findAll();
     }
 }

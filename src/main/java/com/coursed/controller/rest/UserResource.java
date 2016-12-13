@@ -199,7 +199,7 @@ public class UserResource {
         return userService.findAllUnconfirmedTeachers();
     }
 
-    @GetMapping("/getAllTeachers")
+    @GetMapping("/getAllTeachers") // TODO create separate controller
     Collection<User> getAllTeachers(@RequestParam(name = "groupId", required = false) Long groupId){
         return userService.findAllTeachers(groupId);
     }

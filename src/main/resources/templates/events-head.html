@@ -14,20 +14,11 @@
 <body>
     <div layout:fragment="content">
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#plannedEventsTable" id="plannedEvents">Заплановані події</a></li>
-            <li><a data-toggle="tab" href="#createEvent">Створити подію</a></li>
+            <li class="active"><a data-toggle="tab" href="#createEvent">Створити подію</a></li>
+            <li><a data-toggle="tab" href="#plannedEventsTable" id="plannedEvents">Заплановані події</a></li>
         </ul>
         <div class="tab-content">
-            <div id="plannedEventsTable" class="tab-pane fade in active">
-                <div id="updateButton" value="Оновити" class="btn btn-success btn-block btn-lg"></div>
-                <table id="content-table" class="table table-hover table-striped">
-                    <thead>
-                    <tr id="table-heads"></tr>
-                    </thead>
-                    <tbody id="tbodyId"></tbody>
-                </table>
-            </div>
-            <div id="createEvent" class="tab-pane fade">
+            <div id="createEvent" class="tab-pane fade in active">
                 <form id="create-event-form" action="#" th:action="@{/createEvent}" method="post">
                     <h2>Створіть подію</h2>
                     <div class="form-group">
@@ -51,6 +42,15 @@
                                class="btn btn-success btn-block btn-lg"/>
                     </div>
                 </form>
+            </div>
+            <div id="plannedEventsTable" class="tab-pane fade">
+                <button id="updateButton" type="button" class="btn btn-default">Оновити</button>
+                <table id="content-table" class="table table-hover table-striped">
+                    <thead>
+                    <tr id="table-heads"></tr>
+                    </thead>
+                    <tbody id="tbodyId"></tbody>
+                </table>
             </div>
         </div>
     </div>

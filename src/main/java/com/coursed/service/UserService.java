@@ -10,7 +10,6 @@ import java.util.Optional;
 
 /**
  * Created by Hexray on 06.11.2016.
- * Changed by Trach on 07.11.2016
  */
 public interface UserService {
     User registerStudent(UserStudentRegistrationForm registrationForm);

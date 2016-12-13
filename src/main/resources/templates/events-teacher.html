@@ -10,13 +10,30 @@
     <script th:defer="true" th:src="@{/js/specific/events-teacher.js}" src="../static/js/specific/groups.js"></script>
 </head>
 <body>
-<div layout:fragment="content">
-    <table id="content-table" class="table table-hover table-striped">
-        <thead>
-        <tr></tr>
-        </thead>
-        <tbody id="tbodyId"></tbody>
-    </table>
-</div>
+    <div layout:fragment="content">
+        <ul class="nav nav-tabs">
+            <!--TODO every group will be like a link to the event-->
+            <li class="active"><a data-toggle="tab" href="#groupList">Список груп</a></li>
+            <li><a data-toggle="tab" href="#plannedEventsTable" id="plannedEvents">Заплановані події</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="groupList" class="tab-pane fade in active">
+                <table id="content-table-groups" class="table table-hover table-striped">
+                    <thead>
+                    <tr></tr>
+                    </thead>
+                    <tbody id="groupsTBody"></tbody>
+                </table>
+            </div>
+            <div id="plannedEventsTable" class="tab-pane fade">
+                <table id="content-table-events" class="table table-hover table-striped">
+                    <thead>
+                    <tr id="table-heads"></tr>
+                    </thead>
+                    <tbody id="eventsTBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
