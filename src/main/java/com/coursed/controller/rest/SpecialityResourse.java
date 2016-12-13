@@ -1,5 +1,6 @@
 package com.coursed.controller.rest;
 
+import com.coursed.dto.SpecialityForm;
 import com.coursed.model.Speciality;
 import com.coursed.model.Year;
 import com.coursed.service.SpecialityService;
@@ -24,7 +25,7 @@ public class SpecialityResourse {
     }
 
     @PostMapping("/create")
-    private void createSpeciality(@RequestBody Speciality speciality) {
-        specialityService.create(speciality);
+    private void createSpeciality(@RequestBody SpecialityForm specialityForm) {
+        specialityService.create(specialityForm);
     }
 }

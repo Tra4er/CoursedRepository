@@ -1,5 +1,6 @@
 package com.coursed.controller.mvc;
 
+import com.coursed.dto.SpecialityForm;
 import com.coursed.dto.TeacherRegistrationForm;
 import com.coursed.dto.UserTeacherRegistrationForm;
 import com.coursed.dto.YearForm;
@@ -84,17 +85,17 @@ public class BaseInitController {
         yearService.create(yearForm);
 
         //Specialities
-        Speciality is = new Speciality("Комп'ютерні науки", "ІС");
-        Speciality pi = new Speciality("Програмна інженерія", "ІП");
-        specialityService.create(is);
-        specialityService.create(pi);
+        SpecialityForm is = new SpecialityForm("Комп'ютерні науки", "ІС");
+        SpecialityForm pi = new SpecialityForm("Програмна інженерія", "ІП");
+        Speciality isSp = specialityService.create(is);
+        Speciality piSp = specialityService.create(pi);
 
 
         //Groups
         Semester fifthSemester = yearService.findOne(1L).getSemesters().get(1);
-        Group is43 = new Group(43, GroupType.GENERAL_FORM, GroupDegree.BACHELOR, CourseNumber.THIRD, fifthSemester, is);
-        Group is42 = new Group(42, GroupType.GENERAL_FORM, GroupDegree.BACHELOR, CourseNumber.THIRD, fifthSemester, is);
-        Group is41 = new Group(41, GroupType.GENERAL_FORM, GroupDegree.BACHELOR, CourseNumber.THIRD, fifthSemester, is);
+        Group is43 = new Group(43, GroupType.GENERAL_FORM, GroupDegree.BACHELOR, CourseNumber.THIRD, fifthSemester, isSp);
+        Group is42 = new Group(42, GroupType.GENERAL_FORM, GroupDegree.BACHELOR, CourseNumber.THIRD, fifthSemester, isSp);
+        Group is41 = new Group(41, GroupType.GENERAL_FORM, GroupDegree.BACHELOR, CourseNumber.THIRD, fifthSemester, isSp);
 
         groupService.create(is43);
         groupService.create(is42);
