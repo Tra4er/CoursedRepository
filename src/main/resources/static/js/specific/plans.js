@@ -2,15 +2,8 @@
  * Created by alena on 11.12.2016.
  */
 $(function(){
-
-// заполнить селекты в модальном окне добавления плана
-    fillSelectYear("yearId", API + "/years/getAll");
-    fillSelect("courseNumber", courseNumbers);
-    fillSelect("groupType", groupType);
-    fillSelect("groupDegree", groupDegree);
-    fillSelectFrom("specialityId", API + "/specialities/getAll", "fullName");
-
     fillPlans();
+    fillSelect("courseNumberS", courseNumbers);
 });
 
 function getSpecialities() {
@@ -25,7 +18,6 @@ function getSpecialities() {
     });
     return spec;
 }
-
 
 function fillPlans() {
     // var spec = [{1: 'комп науки'}, {2: 'програмна'}];
@@ -42,20 +34,20 @@ function fillPlans() {
                     if (plan.speciality['id'] == spec[key2].id){
 
                         if (plan.groupType == 'GENERAL_FORM') {
-                            general += "<input type='button' class='btn btn-success col-xs-12' id='" + plan.id + "' value='" + localGroupUkr[plan.courseNumber] +"' курс'/>";
+                            general += "<input type='button' class='btn btn-success col-xs-12' id='" + plan.id + "' value='" + localGroupUkr[plan.courseNumber] + " курс'/>";
                         }
                         else if (plan.groupType == 'DISTANCE_FORM')
                         {
-                            distance += "<input type='button' class='btn btn-success col-xs-12' id='" + plan.id + "' value='" + localGroupUkr[plan.courseNumber] + "' курс'/>";
+                            distance += "<input type='button' class='btn btn-success col-xs-12' id='" + plan.id + "' value='" + localGroupUkr[plan.courseNumber] + " курс'/>";
                         }
                     }
 
                 });
-                general += "<br/><br/><button type='button' class='btn btn-success col-xs-12 add-plan-btn' data-toggle='modal' data-target='#plan-dialog-simple'><span class='glyphicon glyphicon-plus'></span></button><br/><br/></div>";
-                distance += "<br/><br/><button type='button' class='btn btn-success col-xs-12 add-plan-btn' data-toggle='modal' data-target='#plan-dialog-simple'><span class='glyphicon glyphicon-plus'></span></button><br/><br/></div>";
+                general += "<button type='button' class='btn btn-success col-xs-12 add-plan-btn' data-toggle='modal' data-target='#plan-dialog-simple'><span class='glyphicon glyphicon-plus'></span></button></div>";
+                distance += "<button type='button' class='btn btn-success col-xs-12 add-plan-btn' data-toggle='modal' data-target='#plan-dialog-simple'><span class='glyphicon glyphicon-plus'></span></button></div>";
                 htmlCode += general + distance + "</div>";
             });
-            htmlCode += "</div><br/><br/><br/><br/>";
+            htmlCode += "</div>";
             $("#plan-content-container").append(htmlCode);
         });
     });
@@ -66,25 +58,34 @@ $('#plan-content-container').on('click', 'input', function () {
 });
 
 $('#plan-content-container').on('click', '.add-plan-btn', function () {
-    //yearId
-    //courseNumber
-    //groupType
-    //groupDegree
-    //specialityId
     var yearId = $(this).closest('.year-container').attr('name');
-    var groupType = $(this).closest('.group-type-container').attr('name');
+    var yearText = $(this).closest('.year-container').children('h3').text();
     var specialityId = $(this).closest('.speciality-container').attr('name');
-    $('#modal-body-form-plan-simple .yearId').attr('id', yearId).text(yearId);
-    $('#modal-body-form-plan-simple .groupType').attr('id', groupType).text(groupType);
-    $('#modal-body-form-plan-simple .specialityId').attr('id', specialityId).text(specialityId);
+    var specialityText = $(this).closest('.speciality-container').children('h4').text();
+    var groupType = $(this).closest('.group-type-container').attr('name');
 
-    //alert('и тут мы добавляем этот план для года ' + yearId + ' ' +groupType +' '+ specialityId)
-
+    $('#plan-dialog-simple .modal-title').text('Навчальний план ' + yearText);
+    $('#modal-body-form-plan-simple .yearId').attr('value', yearId);
+    $('#modal-body-form-plan-simple .specialityId').attr('value', specialityId).text(specialityText);
+    $('#modal-body-form-plan-simple .groupType').attr('value', groupType).text(localGroupUkr[groupType]);
 });
 
+$('#courseNumberS').on('change', function(){
+   var value = $('#courseNumberS').val();
+    if (value == 'FIRST' || value == 'SECOND' || value == 'THIRD' || value == 'FOURTH'){
+        $('#modal-body-form-plan-simple .groupDegree').attr('value', 'BACHELOR').text(localGroupUkr["BACHELOR"]);
+    }
+    else if (value == 'FIFTH' || value == 'SIXTH'){
+        $('#modal-body-form-plan-simple .groupDegree').attr('value', 'MASTER').text(localGroupUkr["MASTER"]);
 
-//ToDo: реализовать сброс, подгрузку курсов и нормальных именований.
+    }
+    else
+    {
+        $('#modal-body-form-plan-simple .groupDegree').attr('value', '0').text('не обрано курс');
+    }
+});
 
+//ToDo: реализовать сброс, подгрузку курсов
 // Устанавливаем в 0 выпадающие списки как только начинает отображаться окно
 // $('#plan-dialog').on('hidden.bs.modal', function (event) {
 //     // resetSelect('modal-body-form-plan');
@@ -93,51 +94,35 @@ $('#plan-content-container').on('click', '.add-plan-btn', function () {
 //      });
 // });
 
-// Отправляем данные по клику
-$('#button-post-plan').on('click', function(){
-    var form = $('#modal-body-form-plan');
-    sendAjaxPost(form, 'api/educationPlan/create', 'plan-dialog');
+$('#button-post-plan-simple').on('click', function() {
+
+    var obj = JSON.stringify({"yearId" : $('#modal-body-form-plan-simple .yearId').attr('value'),
+        "specialityId": $('#modal-body-form-plan-simple .specialityId').attr('value'),
+        "groupType": $('#modal-body-form-plan-simple .groupType').attr('value'),
+        "groupDegree": $('#modal-body-form-plan-simple .groupDegree').attr('value'),
+        "courseNumber": $('#modal-body-form-plan-simple [name=courseNumber]').val()
+        });
+
+    $.ajax({
+            type: "POST",
+            url: "api/educationPlan/create",
+            contentType: "application/json",
+            data: obj,
+            success: function (data) {
+                alert('Успішно!');
+                $('#' + modalId).modal("toggle");
+            },
+            error: function (e) {
+                alert('Помилка!');
+                console.log(data)
+            }
+        });
 });
 
 // Отобразить все учебные планы
-$('#button-get-all-plans').on('click', function(){
-    $("#tbodyId").empty();
-    //fillTable();
-    //#plans-table
-    //api/educationPlan/getAll
-});
-
-//api/educationPlan/create
-
-function downloadYears() {
-    // получить все года
-    // заполнить выпадающий список, или в виде кнопок
-}
-
-function downloadPlanByYear(){
-    // получить учебные планы по id года
-
-    // $.getJSON("api/user/getAllPlans", function(response){
-    //     var item = "<h2>Навчальний план на ...</h2>"
-    //     $.each(response, function(i, plan){
-    //         var item = "<input type='button' id='" + teach.teacherEntity['id'] + "' class='btn btn-default col-xs-12' value = '"
-    //             + teach.teacherEntity['lastName'] + " " + teach.teacherEntity['firstName'] + " " + teach.teacherEntity['patronymic'] + "'/>";
-    //         $('#teacher-container').append(item);
-    //     })
-    //     ('#plans-container').append()
-    // });
-    //
-};
-
-function ShowByType() {
-
-}
-
-function ShowByDegree() {
-
-}
-
-function ShowByCourse() {
-
-}
-
+// $('#button-get-all-plans').on('click', function(){
+//     $("#tbodyId").empty();
+//     //fillTable();
+//     //#plans-table
+//     //api/educationPlan/getAll
+// });
