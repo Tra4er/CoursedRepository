@@ -35,12 +35,12 @@ $("#semesterId").on('change', function () {
     fillGroups()
 });
 
-$('#button-student-post').click(function(){
-    var form = $('#registration-student-form');
-    sendAjaxPost(form, 'api/user/registration-student', 'Myform');
-});
+// $('#button-student-post').click(function(){
+//     var form = $('#registration-student-form');
+//     sendAjaxPost(form, '/registration-student', 'Myform');
+// });
 
-$('#button-teacher-post').click(function(){
-    var form = $('#registration-teacher-form');
-    sendAjaxPost(form, 'api/user/registration-teacher', 'Myform');
-});
+// $('#button-teacher-post').click(function(){
+//     var form = $('#registration-teacher-form');
+//     sendAjaxPost(form, '/registration-teacher', 'Myform');
+// });

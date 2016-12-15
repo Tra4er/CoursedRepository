@@ -7,7 +7,11 @@
     <title>Підтвердіть свій акаунт</title>
 </head>
 <body>
-<h1 class="text-center well">Ми відправили вам на емейл повідомлення із підтвердженям. <span class="glyphicon glyphicon-envelope"></span></h1>
+<h1 class="text-center well">Ваш обліковий запис збережений!</h1>
+<h5 th:text="'Ми відправили вам повідомлення із підтвердженям.'" th:unless="${emailMessage == null}"></h5>
+<a th:href="${emailMessage}" th:text="${emailMessage}" th:unless="${emailMessage == null}"></a>
+<h5 class="text-center well" th:text="'Упс, помилка. Ми не змогли вам відправити повідомлення із підтвердженням.'" th:unless="${emailMessage != null}"></h5>
+<!--TODO-->
 <a th:href="@{/login}" class="text-center btn btn-success btn-block btn-lg">Перейти до аутентифікації</a>
 </body>
 </html>
