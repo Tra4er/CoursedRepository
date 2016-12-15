@@ -11,4 +11,5 @@ import java.util.List;
 public interface EducationPlanService {
     List<EducationPlan> findAll();
     EducationPlan create(EducationPlanForm planForm);
+    EducationPlan findOne(Long educationPlanId);
 }

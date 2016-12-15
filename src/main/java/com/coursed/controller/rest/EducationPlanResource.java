@@ -27,4 +27,10 @@ public class EducationPlanResource {
     {
         return educationPlanService.findAll();
     }
+
+    @GetMapping("/getOne")
+    private EducationPlan getOne(@RequestParam(name = "educationPlanId") Long educationPlanId)
+    {
+        return educationPlanService.findOne(educationPlanId);
+    }
 }
