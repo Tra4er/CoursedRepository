@@ -53,4 +53,9 @@ public class EducationPlanServiceImpl implements EducationPlanService {
 
         return educationPlanRepository.save(educationPlan);
     }
+
+    @Override
+    public EducationPlan findOne(Long educationPlanId) {
+        return educationPlanRepository.findOne(educationPlanId);
+    }
 }

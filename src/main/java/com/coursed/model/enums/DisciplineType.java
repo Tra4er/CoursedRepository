@@ -6,6 +6,7 @@ package com.coursed.model.enums;
 public enum DisciplineType {
     EXAM,
     CREDIT,
-    DIFFERENTIAL_CREDIT,
-    COURSE_PROJECT
+    DIFFERENTIATED_CREDIT,
+    COURSE_PROJECT,
+    NON_GRADABLE
 }

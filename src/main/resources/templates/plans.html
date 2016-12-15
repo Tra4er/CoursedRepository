@@ -16,39 +16,39 @@
     <div id="plan-content-container" class="col-xs-12 plan-content-container" >
     </div>
 
-    <div id="plan-dialog" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Навчальний план</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="modal-body-form-plan">
-                        <select id="yearId" name="yearId" class="form-control" type='text'>
-                            <option>Обрати рік</option>
-                        </select>
-                        <select id="courseNumber" name="courseNumber" class="form-control" type='text'>
-                            <option>Обрати номер курсу</option>
-                        </select>
-                        <select id="groupType" name="groupType" class="form-control" type='text'>
-                            <option>Обрати тип групи</option>
-                        </select>
-                        <select id="groupDegree" name="groupDegree" class="form-control" type='text'>
-                            <option>Рівень групи</option>
-                        </select>
-                        <select id="specialityId" name="specialityId" class="form-control" type='text'>
-                            <option>Обрати спеціальність</option>
-                        </select>
-                    </form>
-                    <button id='button-post-plan' type="button" class="btn btn-primary">Додати</button>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!--<div id="plan-dialog" class="modal fade" role="dialog">-->
+        <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                    <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                    <!--<h4 class="modal-title">Навчальний план</h4>-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                    <!--<form id="modal-body-form-plan">-->
+                        <!--<select id="yearId" name="yearId" class="form-control" type='text'>-->
+                            <!--<option>Обрати рік</option>-->
+                        <!--</select>-->
+                        <!--<select id="courseNumber" name="courseNumber" class="form-control" type='text'>-->
+                            <!--<option>Обрати номер курсу</option>-->
+                        <!--</select>-->
+                        <!--<select id="groupType" name="groupType" class="form-control" type='text'>-->
+                            <!--<option>Обрати тип групи</option>-->
+                        <!--</select>-->
+                        <!--<select id="groupDegree" name="groupDegree" class="form-control" type='text'>-->
+                            <!--<option>Рівень групи</option>-->
+                        <!--</select>-->
+                        <!--<select id="specialityId" name="specialityId" class="form-control" type='text'>-->
+                            <!--<option>Обрати спеціальність</option>-->
+                        <!--</select>-->
+                    <!--</form>-->
+                    <!--<button id='button-post-plan' type="button" class="btn btn-primary">Додати</button>-->
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 
     <div id="plan-dialog-simple" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -59,17 +59,18 @@
                 </div>
                 <div class="modal-body">
                     <form id="modal-body-form-plan-simple">
-
-                        <select id="courseNumberS" name="courseNumber" class="form-control col-xs-12" type='text'>
-                            <option>Обрати курс</option>
-                        </select>
-
                         <div class="form-group">
-                            <label class="control-label col-xs-4">Навчальний рік</label>
-                            <div class="col-xs-8">
-                                <p name="yearId" class="form-control-static yearId"></p>
-                            </div>
+                            <select id="courseNumberS" name="courseNumber" class="form-control col-xs-12" type='text'>
+                                <option>Обрати курс</option>
+                            </select>
                         </div>
+                        <p name="yearId" class="form-control-static yearId"></p>
+                        <!--<div class="form-group">-->
+                            <!--<label class="control-label col-xs-4">Навчальний рік</label>-->
+                            <!--<div class="col-xs-8">-->
+                                <!--<p name="yearId" class="form-control-static yearId"></p>-->
+                            <!--</div>-->
+                        <!--</div>-->
                         <div class="form-group">
                             <label class="control-label col-xs-4">Спеціальність</label>
                             <div class="col-xs-8">
@@ -101,45 +102,45 @@
         </div>
     </div>
 
-    <div id="discipline-dialog" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Дисципліна</h4>
-                </div>
-                <div class="modal-body">
-                    <div id="discipline-container">
-                        <form id="modal-body-form-discipline">
-                            <input id="name" name="number" class="form-control" type='text' placeholder='Найменування дисципліни'/>
-                            <select id="type" name="semesterId" class="form-control" type='text'>
-                                <option>Обрати тип дисципліни</option>
-                            </select>
-                            <select id="hours" name="courseNumber" class="form-control" type='text'></select>
-                            <select id="credits" name="groupType" class="form-control" type='text'></select>
-                            <div class="form-group">
-                                    <label class="control-label col-sm-2">Курс</label>
-                                    <div class="col-sm-10">
-                                        <p id="courseNumberDiscipline" class="form-control-static"></p>
-                                    </div>
-                            </div>
-                            <select id="specialityIdDiscipline" name="specialityId" class="form-control" type='text'>
-                                <option>Обрати спеціальність</option>
-                            </select>
-                            </form>
-                        <button id='button-post-discipline' type="button" class="btn btn-primary">Додати</button>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <button id="btnModalPlan" type="button" class="btn btn-info col-xs-6" data-toggle="modal" data-target="#plan-dialog">Додати план</button>
-        <button id='button-get-all-plans' type="button" class="btn btn-primary col-xs-6">Показати всі</button>
-    </div>
+    <!--<div id="discipline-dialog" class="modal fade" role="dialog">-->
+        <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                    <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                    <!--<h4 class="modal-title">Дисципліна</h4>-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                    <!--<div id="discipline-container">-->
+                        <!--<form id="modal-body-form-discipline">-->
+                            <!--<input id="name" name="number" class="form-control" type='text' placeholder='Найменування дисципліни'/>-->
+                            <!--<select id="type" name="semesterId" class="form-control" type='text'>-->
+                                <!--<option>Обрати тип дисципліни</option>-->
+                            <!--</select>-->
+                            <!--<select id="hours" name="courseNumber" class="form-control" type='text'></select>-->
+                            <!--<select id="credits" name="groupType" class="form-control" type='text'></select>-->
+                            <!--<div class="form-group">-->
+                                    <!--<label class="control-label col-sm-2">Курс</label>-->
+                                    <!--<div class="col-sm-10">-->
+                                        <!--<p id="courseNumberDiscipline" class="form-control-static"></p>-->
+                                    <!--</div>-->
+                            <!--</div>-->
+                            <!--<select id="specialityIdDiscipline" name="specialityId" class="form-control" type='text'>-->
+                                <!--<option>Обрати спеціальність</option>-->
+                            <!--</select>-->
+                            <!--</form>-->
+                        <!--<button id='button-post-discipline' type="button" class="btn btn-primary">Додати</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row">-->
+        <!--<button id="btnModalPlan" type="button" class="btn btn-info col-xs-6" data-toggle="modal" data-target="#plan-dialog">Додати план</button>-->
+        <!--<button id='button-get-all-plans' type="button" class="btn btn-primary col-xs-6">Показати всі</button>-->
+    <!--</div>-->
 </div>
 </body>
 </html>
