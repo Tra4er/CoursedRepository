@@ -32,16 +32,14 @@ function fillPlans() {
                 var distance = "<div class='col-xs-6 group-type-container' name='DISTANCE_FORM'><h5 align='center' class='col-xs-12'>" + localGroupUkr['DISTANCE_FORM'] + "</h5>";
                 $.each(year.educationPlans, function(key3, plan){
                     if (plan.speciality['id'] == spec[key2].id){
-
                         if (plan.groupType == 'GENERAL_FORM') {
-                            general += "<input type='button' class='btn btn-success col-xs-12' id='" + plan.id + "' value='" + localGroupUkr[plan.courseNumber] + " курс'/>";
+                            general += "<a href='/disciplines?planId=" + plan.id +"'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
                         }
                         else if (plan.groupType == 'DISTANCE_FORM')
                         {
-                            distance += "<input type='button' class='btn btn-success col-xs-12' id='" + plan.id + "' value='" + localGroupUkr[plan.courseNumber] + " курс'/>";
+                            distance += "<a href='/disciplines?planId=" + plan.id +"'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
                         }
                     }
-
                 });
                 general += "<button type='button' class='btn btn-success col-xs-12 add-plan-btn' data-toggle='modal' data-target='#plan-dialog-simple'><span class='glyphicon glyphicon-plus'></span></button></div>";
                 distance += "<button type='button' class='btn btn-success col-xs-12 add-plan-btn' data-toggle='modal' data-target='#plan-dialog-simple'><span class='glyphicon glyphicon-plus'></span></button></div>";
@@ -54,7 +52,10 @@ function fillPlans() {
 }
 
 $('#plan-content-container').on('click', 'input', function () {
-    alert('и тут мы переходим на страничку учебного плана либо он открывается в модальном окне');
+    var pId = "1";
+    var yStr = "blabla"
+    $.get( "/disciplines", { planId : pId, yearString: yStr});
+    // alert('и тут мы переходим на страничку учебного плана либо он открывается в модальном окне');
 });
 
 $('#plan-content-container').on('click', '.add-plan-btn', function () {
@@ -109,8 +110,7 @@ $('#button-post-plan-simple').on('click', function() {
             contentType: "application/json",
             data: obj,
             success: function (data) {
-                alert('Успішно!');
-                $('#' + modalId).modal("toggle");
+                $('#plan-dialog-simple').modal("toggle");
             },
             error: function (e) {
                 alert('Помилка!');
@@ -118,6 +118,7 @@ $('#button-post-plan-simple').on('click', function() {
             }
         });
 });
+
 
 // Отобразить все учебные планы
 // $('#button-get-all-plans').on('click', function(){

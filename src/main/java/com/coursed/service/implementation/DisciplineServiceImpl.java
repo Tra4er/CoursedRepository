@@ -56,6 +56,7 @@ public class DisciplineServiceImpl implements DisciplineService {
             throw new IllegalArgumentException("speciality of educationPlan is null");
 
         discipline.setSpeciality(speciality);
+        discipline.setEducationPlan(educationPlan);
 
         return disciplineRepository.save(discipline);
     }

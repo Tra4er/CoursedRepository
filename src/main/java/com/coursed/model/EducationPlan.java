@@ -31,8 +31,8 @@ public class EducationPlan {
     @JoinColumn(name="speciality_id")
     private Speciality speciality;
 
-    @JsonBackReference("year-educationplan")
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @JsonBackReference("year-educationplan")
+    @ManyToOne/*(fetch = FetchType.LAZY)*/
     @JoinColumn(name="year_id")
     private Year year;
 
