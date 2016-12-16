@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorator="shared/general-layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Навчальний план</title>
+    <script th:defer="true" th:src="@{/js/specific/disciplines.js}" src="../static/js/specific/disciplines.js"></script>
+    <script th:defer="true" th:src="@{/js/local/groups-local-ukr.js}"
+            src="../static/js/local/groups-local-ukr.js"></script>
+    <script th:defer="true" th:src="@{/js/local/disciplines-local-ukr.js}"
+            src="../static/js/local/disciplines-local-ukr.js"></script>
+    <script th:defer="true" th:src="@{/js/shared/fill-functions.js}"
+            src="../static/js/shared/fill-functions.js"></script>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!--<input th:value="${planId}" type="hidden"/>-->
+    <div class="row">
+        <div class="col-xs-8 plan-info">
+            <div class="form-group">
+                <label class="control-label col-xs-4">Навчальний рік</label>
+                <div class="col-xs-8">
+                    <p class="form-control-static yearId"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-4">Спеціальність</label>
+                <div class="col-xs-8">
+                    <p class="form-control-static specialityId"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-4">Освітній ступень</label>
+                <div class="col-xs-8">
+                    <p class="form-control-static groupDegree"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-4">Курс</label>
+                <div class="col-xs-8">
+                    <p class="form-control-static courseNumber"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-4">Форма навчання</label>
+                <div class="col-xs-8">
+                    <p class="form-control-static groupType"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <button id="btnModal" type="button" class="btn btn-success" data-toggle="modal"
+                    data-target="#discipline-dialog">Додати дисципліну
+            </button>
+            <a href="/plans">
+                <button id='button-get-all-plans' type="button" class="btn btn-primary">Всі навчальні плани</button>
+            </a>
+        </div>
+    </div>
+
+    <table id="content-table-disciplines" class="table table-hover table-striped">
+        <thead>
+        <tr></tr>
+        </thead>
+        <tbody id="tbodyId"></tbody>
+    </table>
+
+    <div id="discipline-dialog" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Дисципліна</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="discipline-container">
+                        <form id="modal-body-form-discipline">
+                            <div class="form-group col-xs-12">
+                                <input id="nameForm" class="form-control" type='text'
+                                       placeholder='Найменування дисципліни'/>
+                            </div>
+                            <div class="form-group col-xs-12">
+                                <select id="disciplineType" class="form-control" type='text'>
+                                    <option>Обрати тип дисципліни</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-xs-12">
+                                <select id="semesterId" class="form-control" type='text'>
+                                    <option>Обрати семестр</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-xs-12">
+                                <label class="control-label">Кількість кредитів ECTS: </label>
+                                <input name="creditsForm" class="form-control" type="number" min="0" step="0.1"/>
+                            </div>
+                            <div class="form-group col-xs-12">
+                                <label class="control-label col-xs-4">Кількість годин: </label>
+                                <p name="hoursForm" class="form-control-static col-xs-8"></p>
+                            </div>
+                            <div class="form-group col-xs-12">
+                                <label class="control-label col-xs-4">Номер курсу: </label>
+                                <p class="form-control-static courseNumber col-xs-8"></p>
+                            </div>
+                            <div class="form-group col-xs-12">
+                                <label class="control-label col-xs-4">Спеціальність: </label>
+                                <p class="form-control-static specialityId col-xs-8"></p>
+                            </div>
+                        </form>
+                        <button id='button-post-discipline' type="button" class="btn btn-primary">Додати</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
