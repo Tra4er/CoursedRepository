@@ -28,12 +28,11 @@ public class UserTeacherRegistrationFormValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         LOGGER.debug("Validating {}", target);
-        BasicValidatorUtil basicValidatorUtil = new BasicValidatorUtil();
         UserTeacherRegistrationForm form = (UserTeacherRegistrationForm) target;
         try {
-            basicValidatorUtil.validateEmail(form);
-            basicValidatorUtil.validatePasswords(form);
-            basicValidatorUtil.validateNames(form);
+            BasicValidatorUtil.validateEmail(form);
+            BasicValidatorUtil.validatePasswords(form);
+            BasicValidatorUtil.validateNames(form);
         } catch (Exception e) {
             errors.reject("error.user", e.getMessage());
             LOGGER.debug("Found invalid data for {}: {}", target, e.getMessage());

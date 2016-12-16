@@ -27,12 +27,11 @@ public class UserStudentRegistrationFormValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         LOGGER.debug("Validating {}", target);
-        BasicValidatorUtil basicValidatorUtil = new BasicValidatorUtil();
         UserStudentRegistrationForm form = (UserStudentRegistrationForm) target;
         try {
-            basicValidatorUtil.validateEmail(form);
-            basicValidatorUtil.validatePasswords(form);
-            basicValidatorUtil.validateNames(form);
+            BasicValidatorUtil.validateEmail(form);
+            BasicValidatorUtil.validatePasswords(form);
+            BasicValidatorUtil.validateNames(form);
             validateNumber(form);
             validateAddress(form);
             validateSemester(form);
