@@ -29,7 +29,7 @@ public class Year {
     private List<Semester> semesters;
 
 //    @JsonIgnore
-//    @JsonManagedReference("year-educationplan")
+    @JsonManagedReference("year-educationplan")
     @OneToMany(mappedBy = "year", /*fetch = FetchType.LAZY,*/ cascade = CascadeType.ALL)
     private List<EducationPlan> educationPlans;
 

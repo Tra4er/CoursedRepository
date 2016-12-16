@@ -25,7 +25,8 @@ function fillPlans() {
     $.getJSON(API + "/years/getAll", function(responseYears){
         //Go through the each entity in the response
         $.each(responseYears, function (key1, year) {
-            var htmlCode = "<div class='row year-container' name='" + year.id + "'><h3 align='center'>на " + year.beginYear + "-" + year.endYear + " рік</h3>";
+            var yearString = year.beginYear + "-" + year.endYear;
+            var htmlCode = "<div class='row year-container' name='" + year.id + "'><h3 align='center'>на " + yearString + " рік</h3>";
             $.each(spec, function (key2, speciality){
                 htmlCode += "<div class='speciality-container col-xs-12' name='" + spec[key2].id + "'><h4 align='center'>" + spec[key2].name + "</h4>";
                 var general = "<div class='col-xs-6 group-type-container' name='GENERAL_FORM'><h5 align='center' class='col-xs-12'>" + localGroupUkr['GENERAL_FORM'] + "</h5>";
@@ -33,11 +34,11 @@ function fillPlans() {
                 $.each(year.educationPlans, function(key3, plan){
                     if (plan.speciality['id'] == spec[key2].id){
                         if (plan.groupType == 'GENERAL_FORM') {
-                            general += "<a href='/disciplines?planId=" + plan.id +"'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
+                            general += "<a href='/disciplines?planId=" + plan.id + "&yearStr=" + yearString + "'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
                         }
                         else if (plan.groupType == 'DISTANCE_FORM')
                         {
-                            distance += "<a href='/disciplines?planId=" + plan.id +"'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
+                            distance += "<a href='/disciplines?planId=" + plan.id + "&yearStr=" + yearString + "'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
                         }
                     }
                 });
