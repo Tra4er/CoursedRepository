@@ -27,20 +27,40 @@ public class UserStudentRegistrationFormValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         LOGGER.debug("Validating {}", target);
+        BasicValidatorUtil basicValidatorUtil = new BasicValidatorUtil();
         UserStudentRegistrationForm form = (UserStudentRegistrationForm) target;
-        validatePasswords(errors, form);
-        validateEmail(errors, form);
-    }
-
-    private void validatePasswords(Errors errors, UserStudentRegistrationForm form) {
-        if (!form.getPassword().equals(form.getConfirmPassword())) {
-            errors.rejectValue("password", "error.user", "Passwords do not match");
+        try {
+            basicValidatorUtil.validateEmail(form);
+            basicValidatorUtil.validatePasswords(form);
+            basicValidatorUtil.validateNames(form);
+            validateNumber(form);
+            validateAddress(form);
+            validateSemester(form);
+        } catch (Exception e) {
+            errors.reject("error.user", e.getMessage());
+            LOGGER.debug("Found invalid data for {}: {}", target, e.getMessage());
         }
     }
 
-    private void validateEmail(Errors errors, UserStudentRegistrationForm form) {
-        if (userService.getUserByEmail(form.getEmail()).isPresent()) {
-            errors.rejectValue("email", "error.user","Email exists");
-        }
+    private void validateNumber(UserStudentRegistrationForm form) throws Exception {
+        String reg = "^(\\+380)[0-9]{9}";
+//        if (!form.getPhoneNumber().matches(reg)) { // TODO uncomment me when you will add phone number to model
+//            throw new Exception("Wrong phone number");
+//        }
     }
+
+    private void validateAddress(UserStudentRegistrationForm form) throws Exception {
+        String reg = "^(м\\.)\\s^[А-Я][а-я]{1,40}"; // TODO
+//        if (!form.getPhoneNumber().matches(reg)) {
+//            throw new Exception("Wrong phone number");
+//        }
+    }
+
+    private void validateSemester(UserStudentRegistrationForm form) throws Exception {
+        String reg = "(FIRST | SECOND)"; // TODO uncomment me when you will add phone number to model
+//        if (!form.getSemester().matches(reg)) {
+//            throw new Exception("Wrong phone number");
+//        }
+    }
+
 }

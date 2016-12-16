@@ -28,20 +28,16 @@ public class UserTeacherRegistrationFormValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         LOGGER.debug("Validating {}", target);
+        BasicValidatorUtil basicValidatorUtil = new BasicValidatorUtil();
         UserTeacherRegistrationForm form = (UserTeacherRegistrationForm) target;
-        validatePasswords(errors, form);
-        validateEmail(errors, form);
-    }
-
-    private void validatePasswords(Errors errors, UserTeacherRegistrationForm form) {
-        if (!form.getPassword().equals(form.getConfirmPassword())) {
-            errors.rejectValue("password", "error.user", "Passwords do not match");
+        try {
+            basicValidatorUtil.validateEmail(form);
+            basicValidatorUtil.validatePasswords(form);
+            basicValidatorUtil.validateNames(form);
+        } catch (Exception e) {
+            errors.reject("error.user", e.getMessage());
+            LOGGER.debug("Found invalid data for {}: {}", target, e.getMessage());
         }
     }
 
-    private void validateEmail(Errors errors, UserTeacherRegistrationForm form) {
-        if (userService.getUserByEmail(form.getEmail()).isPresent()) {
-            errors.rejectValue("email", "error.user","Email exists");
-        }
-    }
 }

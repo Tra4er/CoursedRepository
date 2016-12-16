@@ -68,11 +68,11 @@ public class AuthController {
     public String regsterStudent(@Valid @ModelAttribute("studentForm") UserStudentRegistrationForm userStudentRegistrationForm,
                              BindingResult bindingResult, final HttpServletRequest request, Model model) {
 
-        //LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);
+        LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userStudentRegistrationForm, bindingResult);
 
-//        if (bindingResult.hasErrors()) {
-//            return "auth/registration";
-//        }
+        if (bindingResult.hasErrors()) {
+            return "auth/login";
+        }
 
         User registered;
         try{
@@ -97,11 +97,11 @@ public class AuthController {
     public String registerTeacher(@Valid @ModelAttribute("teacherForm") UserTeacherRegistrationForm userTeacherRegistrationForm,
                              BindingResult bindingResult, final HttpServletRequest request, Model model) {
 
-        //LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);
+        LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userTeacherRegistrationForm, bindingResult);
 
-//        if (bindingResult.hasErrors()) {
-//            return "auth/registration";
-//        }
+        if (bindingResult.hasErrors()) {
+            return "auth/login";
+        }
 
         User registered;
         try{

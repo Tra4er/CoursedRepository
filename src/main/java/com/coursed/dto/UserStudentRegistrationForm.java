@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Created by Hexray on 10.12.2016.
  */
-public class UserStudentRegistrationForm {
+public class UserStudentRegistrationForm implements BasicUserRegistrationForm {
     private String firstName;
     private String lastName;
     private String patronymic;
@@ -28,26 +28,32 @@ public class UserStudentRegistrationForm {
 
     private String confirmPassword;
 
+    @Override
     public String getFirstName() {
         return firstName;
     }
 
+    @Override
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }
 
+    @Override
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    @Override
     public String getPatronymic() {
         return patronymic;
     }
 
+    @Override
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
     }
@@ -116,26 +122,32 @@ public class UserStudentRegistrationForm {
         this.groupId = groupId;
     }
 
+    @Override
     public String getEmail() {
         return email;
     }
 
+    @Override
     public void setEmail(String email) {
         this.email = email;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
 
+    @Override
     public void setPassword(String password) {
         this.password = password;
     }
 
+    @Override
     public String getConfirmPassword() {
         return confirmPassword;
     }
 
+    @Override
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
