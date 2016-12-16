@@ -30,12 +30,37 @@ public class UserStudentRegistrationFormValidator implements Validator {
         BasicValidatorUtil basicValidatorUtil = new BasicValidatorUtil();
         UserStudentRegistrationForm form = (UserStudentRegistrationForm) target;
         try {
-            basicValidatorUtil.validateEmail(errors, form);
-            basicValidatorUtil.validatePasswords(errors, form);
-            basicValidatorUtil.validateNames(errors, form);
+            basicValidatorUtil.validateEmail(form);
+            basicValidatorUtil.validatePasswords(form);
+            basicValidatorUtil.validateNames(form);
+            validateNumber(form);
+            validateAddress(form);
+            validateSemester(form);
         } catch (Exception e) {
             errors.reject("error.user", e.getMessage());
+            LOGGER.debug("Found invalid data for {}: {}", target, e.getMessage());
         }
+    }
+
+    private void validateNumber(UserStudentRegistrationForm form) throws Exception {
+        String reg = "^(\\+380)[0-9]{9}";
+//        if (!form.getPhoneNumber().matches(reg)) { // TODO uncomment me when you will add phone number to model
+//            throw new Exception("Wrong phone number");
+//        }
+    }
+
+    private void validateAddress(UserStudentRegistrationForm form) throws Exception {
+        String reg = "^(м\\.)\\s^[А-Я][а-я]{1,40}"; // TODO
+//        if (!form.getPhoneNumber().matches(reg)) {
+//            throw new Exception("Wrong phone number");
+//        }
+    }
+
+    private void validateSemester(UserStudentRegistrationForm form) throws Exception {
+        String reg = "(FIRST | SECOND)"; // TODO uncomment me when you will add phone number to model
+//        if (!form.getSemester().matches(reg)) {
+//            throw new Exception("Wrong phone number");
+//        }
     }
 
 }

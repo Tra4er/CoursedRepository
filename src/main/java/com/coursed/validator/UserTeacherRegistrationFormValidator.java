@@ -31,11 +31,12 @@ public class UserTeacherRegistrationFormValidator implements Validator {
         BasicValidatorUtil basicValidatorUtil = new BasicValidatorUtil();
         UserTeacherRegistrationForm form = (UserTeacherRegistrationForm) target;
         try {
-            basicValidatorUtil.validateEmail(errors, form);
-            basicValidatorUtil.validatePasswords(errors, form);
-            basicValidatorUtil.validateNames(errors, form);
+            basicValidatorUtil.validateEmail(form);
+            basicValidatorUtil.validatePasswords(form);
+            basicValidatorUtil.validateNames(form);
         } catch (Exception e) {
             errors.reject("error.user", e.getMessage());
+            LOGGER.debug("Found invalid data for {}: {}", target, e.getMessage());
         }
     }
 

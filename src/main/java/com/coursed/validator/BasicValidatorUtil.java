@@ -13,7 +13,7 @@ public class BasicValidatorUtil {
     @Autowired
     private UserService userService;
 
-    public void validateEmail(Errors errors, BasicUserRegistrationForm form) throws Exception {
+    public void validateEmail(BasicUserRegistrationForm form) throws Exception {
         String reg = "[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z]+(\\.[A-Za-z]+)*(\\.[A-Za-z]{2,5})$";
         if (!form.getEmail().matches(reg)) {
             throw new Exception("Wrong characters in email");
@@ -23,7 +23,7 @@ public class BasicValidatorUtil {
         }
     }
 
-    public void validatePasswords(Errors errors, BasicUserRegistrationForm form) throws Exception{
+    public void validatePasswords(BasicUserRegistrationForm form) throws Exception{
         String reg = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})";
         if(!form.getPassword().matches(reg)) {
             throw new Exception("Password is too simple");
@@ -33,7 +33,7 @@ public class BasicValidatorUtil {
         }
     }
 
-    public void validateNames(Errors errors, BasicUserRegistrationForm form) throws Exception {
+    public void validateNames(BasicUserRegistrationForm form) throws Exception {
         String reg = "^[А-Я][а-я]{1,15}";
         if (!form.getFirstName().matches(reg)) {
             throw new Exception("First name is wrong");
