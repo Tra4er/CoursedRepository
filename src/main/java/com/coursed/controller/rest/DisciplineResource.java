@@ -27,4 +27,11 @@ public class DisciplineResource {
     {
         return disciplineService.findAll();
     }
+
+    @PostMapping
+    private void connectWithTeacher(@RequestParam(name = "disciplineId") Long disciplineId,
+                                    @RequestParam(name = "teacherId") Long teacherId)
+    {
+        disciplineService.connectWithTeacher(disciplineId, teacherId);
+    }
 }
