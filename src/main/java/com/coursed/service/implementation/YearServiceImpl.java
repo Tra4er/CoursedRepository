@@ -9,10 +9,9 @@ import com.coursed.repository.YearRepository;
 import com.coursed.service.YearService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.util.resources.cldr.aa.CalendarData_aa_DJ;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Hexray on 16.11.2016.
@@ -55,6 +54,31 @@ public class YearServiceImpl implements YearService {
         secondSemester.setYear(year);
 
         yearRepository.save(year);
+    }
+
+    @Override
+    public Year getCurrent() {
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int month = cal.get(Calendar.MONTH) + 1;
+
+        Optional<Year> searchedYear;
+
+        if(month >= 1 && month <= 8)
+            searchedYear = yearRepository.findAll().stream()
+                    .filter(year -> year.getEndYear() == cal.get(Calendar.YEAR))
+                    .findFirst();
+        else//(month >= 9 && month <= 12)
+            searchedYear = yearRepository.findAll().stream()
+                    .filter(year -> year.getBeginYear() == cal.get(Calendar.YEAR))
+                    .findFirst();
+
+        if(!searchedYear.isPresent())
+            searchedYear = yearRepository.findAll().stream()
+                    .max((y1, y2) -> Integer.compare(y1.getBeginYear(), y2.getBeginYear()));
+
+        return searchedYear.get();
     }
 
 }

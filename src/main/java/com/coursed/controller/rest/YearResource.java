@@ -41,5 +41,8 @@ public class YearResource {
         yearService.create(yearForm);
     }
 
-
+    @GetMapping("/getCurrent")
+    private Year getCurrentYear() {
+        return yearService.getCurrent();
+    }
 }
