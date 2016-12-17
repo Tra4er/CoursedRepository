@@ -60,7 +60,6 @@ $('#teacher-container').on('click', 'input', function(){
 
 function reloadCuratorsForGroup(grId){
     $.getJSON('api/user/getAllGroupCurators', {groupId: grId}, function(response){
-            var htmlRow = "<td class='curators'>";
             var htmlRow = "";
             if (response.length != 0){
                 $.each( response, function (i, curator) {
@@ -70,8 +69,6 @@ function reloadCuratorsForGroup(grId){
             else {
                 htmlRow += 'не призначено';
             }
-            //alet(htmlRow);
-            //htmlRow +="</td>";
             $("#groupCurators-table > tbody > #" + grId + " > td:last").prev().html(htmlRow);
         });
 

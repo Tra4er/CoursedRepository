@@ -49,13 +49,11 @@ public class DisciplineServiceImpl implements DisciplineService {
         discipline.setCourseNumber(disciplineForm.getCourseNumber());
         discipline.setSemesterNumber(disciplineForm.getSemesterNumber());
 
-        Speciality speciality = specialityRepository.findOne(disciplineForm.getSpecialityId());
         EducationPlan educationPlan = educationPlanRepository.findOne(disciplineForm.getEducationPlanId());
 
-        if(speciality == null || educationPlan == null)
-            throw new IllegalArgumentException("speciality of educationPlan is null");
+        if(educationPlan == null)
+            throw new IllegalArgumentException("educationPlan is null");
 
-        discipline.setSpeciality(speciality);
         discipline.setEducationPlan(educationPlan);
 
         return disciplineRepository.save(discipline);

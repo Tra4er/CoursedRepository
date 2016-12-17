@@ -12,4 +12,5 @@ public interface YearService {
     List<Year> findAll();
     Year findOne(Long id);
     void create(YearForm yearForm);
+    Year getCurrent();
 }

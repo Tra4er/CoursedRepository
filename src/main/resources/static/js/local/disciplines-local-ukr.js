@@ -9,3 +9,8 @@ localDisciplineUkr["DIFFERENTIATED_CREDIT"] = "Диф. залік";
 localDisciplineUkr["COURSE_PROJECT"] = "Курсовий проект";
 localDisciplineUkr["NON_GRADABLE"] = "Без оцінювання";
 //UkrToEng
+
+
+var semesterNumbers = {};
+semesterNumbers["FIRST"] = "Перший";
+semesterNumbers["SECOND"] = "Другий";

@@ -4,6 +4,8 @@ import com.coursed.model.enums.CourseNumber;
 import com.coursed.model.enums.DisciplineType;
 import com.coursed.model.enums.SemesterNumber;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
@@ -36,10 +38,7 @@ public class Discipline {
     @OneToMany(mappedBy = "discipline")
     private List<AttestationGrade> attestationGrades;
 
-    @ManyToOne
-    @JoinColumn(name="speciality_id")
-    private Speciality speciality;
-
+    @JsonBackReference("educationplan-discipline")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="educationPlan_id")
     private EducationPlan educationPlan;
@@ -133,13 +132,5 @@ public class Discipline {
 
     public void setFinalGrades(List<FinalGrade> finalGrades) {
         this.finalGrades = finalGrades;
-    }
-
-    public Speciality getSpeciality() {
-        return speciality;
-    }
-
-    public void setSpeciality(Speciality speciality) {
-        this.speciality = speciality;
     }
 }
