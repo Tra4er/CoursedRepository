@@ -15,7 +15,6 @@ public class Teacher {
     @Id
     @GeneratedValue
     private Long id;
-    @JsonBackReference("user-teacher")
     @OneToOne(mappedBy = "teacherEntity")
     private User user;
 

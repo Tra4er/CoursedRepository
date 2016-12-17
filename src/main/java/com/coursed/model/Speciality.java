@@ -1,8 +1,6 @@
 package com.coursed.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +11,7 @@ import java.util.List;
 /**
  * Created by Hexray on 14.11.2016.
  */
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
 public class Speciality {
     @Id
@@ -21,12 +20,10 @@ public class Speciality {
     private String fullName;
     private String groupsName;
 
-    @JsonBackReference("group-speciality")
     @OneToMany(mappedBy = "speciality")
     private List<Group> groups;
 
     @JsonIgnore
-    //@JsonManagedReference("speciality-educationplan")
     @OneToMany(mappedBy = "speciality")
     private List<EducationPlan> educationPlans;
 

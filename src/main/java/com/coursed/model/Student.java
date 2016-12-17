@@ -3,7 +3,9 @@ package com.coursed.model;
 import com.coursed.model.auth.User;
 import com.coursed.model.enums.StudentEducationStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,12 +14,13 @@ import java.util.List;
 /**
  * Created by Hexray on 06.11.2016.
  */
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
 public class Student {
     @Id
     @GeneratedValue
     private Long id;
-    @JsonBackReference("user-student")
+
     @OneToOne(mappedBy = "studentEntity")
     private User user;
 
@@ -34,7 +37,6 @@ public class Student {
     private String additionalInformation;
     private String parentsInfo;
 
-    @JsonBackReference("group-students")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="edgroup_id")
     private Group group;

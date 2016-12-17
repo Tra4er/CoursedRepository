@@ -2,9 +2,7 @@ package com.coursed.model;
 
 
 import com.coursed.model.enums.SemesterNumber;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +10,7 @@ import java.util.List;
 /**
  * Created by Hexray on 13.11.2016.
  */
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
 public class Semester {
     @Id
@@ -20,18 +19,16 @@ public class Semester {
     @Enumerated
     private SemesterNumber semesterNumber;
 
-    @JsonBackReference("year-semesters")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="year_id")
     private Year year;
 
     @JsonIgnore
-    //@JsonManagedReference("semester-groups")
-    @OneToMany(mappedBy = "semester")
+    @OneToMany(mappedBy = "semester", fetch = FetchType.LAZY)
     private List<Group> groups;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "semester")
+    @OneToMany(mappedBy = "semester", fetch = FetchType.LAZY)
     private List<PlannedEvent> plannedEvents;
 
     public Semester() {
