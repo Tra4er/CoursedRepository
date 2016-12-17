@@ -38,11 +38,6 @@ public class Discipline {
     @OneToMany(mappedBy = "discipline")
     private List<AttestationGrade> attestationGrades;
 
-
-    @ManyToOne
-    @JoinColumn(name="speciality_id")
-    private Speciality speciality;
-
     @JsonBackReference("educationplan-discipline")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="educationPlan_id")
@@ -137,13 +132,5 @@ public class Discipline {
 
     public void setFinalGrades(List<FinalGrade> finalGrades) {
         this.finalGrades = finalGrades;
-    }
-
-    public Speciality getSpeciality() {
-        return speciality;
-    }
-
-    public void setSpeciality(Speciality speciality) {
-        this.speciality = speciality;
     }
 }

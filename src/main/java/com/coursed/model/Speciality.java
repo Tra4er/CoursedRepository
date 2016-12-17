@@ -26,10 +26,6 @@ public class Speciality {
     private List<Group> groups;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "speciality")
-    private List<Discipline> disciplines;
-
-    @JsonIgnore
     //@JsonManagedReference("speciality-educationplan")
     @OneToMany(mappedBy = "speciality")
     private List<EducationPlan> educationPlans;
@@ -80,13 +76,5 @@ public class Speciality {
 
     public void setGroups(List<Group> groups) {
         this.groups = groups;
-    }
-
-    public List<Discipline> getDisciplines() {
-        return disciplines;
-    }
-
-    public void setDisciplines(List<Discipline> disciplines) {
-        this.disciplines = disciplines;
     }
 }

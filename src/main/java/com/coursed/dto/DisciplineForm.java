@@ -14,7 +14,6 @@ public class DisciplineForm {
     private Float credits;
     private CourseNumber courseNumber;
     private SemesterNumber semesterNumber;
-    private Long specialityId;
     private Long educationPlanId;
 
     public String getName() {
@@ -63,14 +62,6 @@ public class DisciplineForm {
 
     public void setSemesterNumber(SemesterNumber semesterNumber) {
         this.semesterNumber = semesterNumber;
-    }
-
-    public Long getSpecialityId() {
-        return specialityId;
-    }
-
-    public void setSpecialityId(Long specialityId) {
-        this.specialityId = specialityId;
     }
 
     public Long getEducationPlanId() {
