@@ -133,4 +133,9 @@ public class UserResource {
     Collection<User> getAllTeachersWithoutDiscipline(@RequestParam(name = "disciplineId") Long disciplineId){
         return userService.findAllTeachersWithoutDiscipline(disciplineId);
     }
+
+    @GetMapping("/deleteUser")
+    void deleteUser(@RequestParam(name = "userId") Long userId){
+        userService.deleteUser(userId);
+    }
 }
