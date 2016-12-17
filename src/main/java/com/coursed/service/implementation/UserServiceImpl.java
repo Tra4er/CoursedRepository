@@ -179,32 +179,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllTeachersWithoutDiscipline(Long disciplineId) {
-        Role role = roleRepository.findByName("ROLE_TEACHER");
-
-        Discipline discipline = disciplineRepository.findOne(disciplineId);
-
-        return findAll().stream()
-                .filter(User::isATeacher)
-                .filter(user -> user.getRoles().contains(role)
-                        && !user.getTeacherEntity().getDisciplines().contains(discipline))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<User> findAllTeachersWithDiscipline(Long disciplineId) {
-        Role role = roleRepository.findByName("ROLE_TEACHER");
-
-        Discipline discipline = disciplineRepository.findOne(disciplineId);
-
-        return findAll().stream()
-                .filter(User::isATeacher)
-                .filter(user -> user.getRoles().contains(role)
-                        && user.getTeacherEntity().getDisciplines().contains(discipline))
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<User> findAllGroupCurators(Long groupId) {
         List<Teacher> teachers = groupRepository.findOne(groupId).getCurators();
         List<User> users = new ArrayList<>();
