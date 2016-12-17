@@ -1,10 +1,14 @@
 package com.coursed.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 
 /**
  * Created by Hexray on 15.11.2016.
  */
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
 public class AttestationGrade {
     @Id

@@ -18,8 +18,8 @@ public class DisciplineResource {
     private DisciplineService disciplineService;
 
     @PostMapping("/create")
-    private void createEducationPlan(@RequestBody DisciplineForm disciplineForm) {
-        disciplineService.create(disciplineForm);
+    private Discipline createEducationPlan(@RequestBody DisciplineForm disciplineForm) {
+        return disciplineService.create(disciplineForm);
     }
 
     @GetMapping("/getAll")
