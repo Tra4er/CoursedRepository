@@ -12,12 +12,14 @@ function fillTeachersTable(){
     $.getJSON("api/user/getAllUnconfirmedTeachers", function(response){
         //Go through the each entity in the response
         $.each(response, function (i, entity) {
-            var htmlRow = "<tr >";
-            htmlRow += ("<td>" + entity.teacherEntity['lastName']+ " " + entity.teacherEntity['firstName'] +" " + entity.teacherEntity['patronymic'] +"</td>");
-            htmlRow += ("<td>" + entity.email + "</td>");
-            htmlRow += ("<td id=" + entity.id + "><button type='button' class='btn btn-success btn-sm'><span class='glyphicon glyphicon-ok'></span> Так</button><button type='button' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-remove'></span> Ні</button></td>");
-            htmlRow += "</tr>";
-            $("#UnconfirmedTeachers-table > tbody").append(htmlRow);
+            if(entity.teacherEntity != null) {
+                var htmlRow = "<tr >";
+                htmlRow += ("<td>" + entity.teacherEntity['lastName'] + " " + entity.teacherEntity['firstName'] + " " + entity.teacherEntity['patronymic'] + "</td>");
+                htmlRow += ("<td>" + entity.email + "</td>");
+                htmlRow += ("<td id=" + entity.id + "><button type='button' class='btn btn-success btn-sm'><span class='glyphicon glyphicon-ok'></span> Так</button><button type='button' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-remove'></span> Ні</button></td>");
+                htmlRow += "</tr>";
+                $("#UnconfirmedTeachers-table > tbody").append(htmlRow);
+            }
         });
     });
 }

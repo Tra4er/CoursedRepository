@@ -23,7 +23,7 @@ function fillTableDisciplinesForPlan() {
                 htmlRow += "<td>" + localDisciplineUkr[entity.type] + "</td><td class='teachers'>";
                 if (entity.teachers.length != 0) {
                     $.each(entity.teachers, function (i, teach) {
-                        htmlRow += "<p>" + teach.lastName + "</p>";
+                        htmlRow += "<p>" + teach.lastName + " " + teach.firstName.substring(0,1) + ". " + teach.patronymic.substring(0,1) + ".</p>";
                     })
                 }
                 else {
@@ -38,7 +38,7 @@ function fillTableDisciplinesForPlan() {
         }
     );
     $('.plan-info .yearId').text($.urlParam('yearStr'));
-    fillSelect("semesterNumber", semesterNumbers)
+    fillSelect("semesterNumber", semesterNumbers);
     fillSelect("disciplineType", localDisciplineUkr);
 }
 
@@ -93,7 +93,7 @@ $('#content-table-disciplines > tbody').on('click', 'tr > td > .btn-default', fu
 
     $('#teacher-container').html("<h2 id='"+ discId +"'>" + info + "</h2> <br/>");
 
-    $.getJSON("api/user/getAllTeachers", function(response){
+    $.getJSON("api/user/getAllTeachersWithoutDiscipline", {disciplineId : discId}, function(response){
         $.each(response, function(i, teach){
             var item = "<input type='button' id='" + teach.teacherEntity['id'] + "' class='btn btn-default col-xs-12' value = '"
                 + teach.teacherEntity['lastName'] + " " + teach.teacherEntity['firstName'] + " " + teach.teacherEntity['patronymic'] + "'/>";
@@ -106,13 +106,35 @@ $('#content-table-disciplines > tbody').on('click', 'tr > td > .btn-default', fu
 $('#teacher-container').on('click', 'input', function(){
     var discId = $(this).parent().children('h2:first').attr('id');
     var tId= $(this).attr('id');
-    alert('ну тут типо должно быть добавление, которого я найти не смогла');
-    // $.post( "api/groups/connectWithTeacher", {groupId: discId, teacherId: tId})
-    //     .done(function(){
-    //         $('#curator-dialog').modal("hide");
-    //         reloadCuratorsForGroup(gId);
-    //     })
-    //     .fail(function() {
-    //         alert( "Помилка!" );
-    //     });
+    // alert('ну тут типо должно быть добавление, которого я найти не смогла' + "преподаватель " + tId + " дисциплина " + discId);
+    $.post( "api/discipline/connectTeacherWithDiscipline", {disciplineId: discId, teacherId: tId})
+        .done(function(){
+            $('#teacher-discipline-dialog').modal("hide");
+            reloadTeachersForDiscipline(discId);
+        })
+        .fail(function() {
+            alert( "Помилка!" );
+        });
 });
+
+function reloadTeachersForDiscipline(disciplineId)
+{
+    $.getJSON('api/user/getAllTeachersWithDiscipline', {disciplineId : disciplineId}, function(response){
+        var htmlRow = "";
+        if (response.length != 0){
+            $.each( response, function (i, teacher) {
+                htmlRow += "<p>" + teacher.teacherEntity['lastName'] + " " + teacher.teacherEntity['firstName'].substring(0,1) + ". " + teacher.teacherEntity['patronymic'].substring(0,1) + ".</p>";
+            })
+        }
+        else {
+            htmlRow += 'не призначено';
+        }
+
+        $("#content-table-disciplines > tbody > #" + disciplineId + " > td:last").prev().prev().html(htmlRow);
+    });
+}
+
+// /api/user
+// getAllTeachersWithDiscipline
+// getAllTeachersWithoutDiscipline
+//
