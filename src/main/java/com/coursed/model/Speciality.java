@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Hexray on 14.11.2016.
  */
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Speciality.class)
 @Entity
 public class Speciality {
     @Id

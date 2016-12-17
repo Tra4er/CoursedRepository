@@ -3,6 +3,7 @@ package com.coursed.model;
 import com.coursed.model.enums.CourseNumber;
 import com.coursed.model.enums.GroupDegree;
 import com.coursed.model.enums.GroupType;
+import com.coursed.model.jsonView.YearView;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
@@ -11,27 +12,30 @@ import java.util.List;
 /**
  * Created by Hexray on 11.12.2016.
  */
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = EducationPlan.class)
 @Entity
 public class EducationPlan {
     @Id
     @GeneratedValue
     private Long id;
+
     @Enumerated
     private GroupType groupType;
+
     @Enumerated
     private GroupDegree groupDegree;
+
     @Enumerated
     private CourseNumber courseNumber;
 
     @OneToMany(mappedBy = "educationPlan", fetch = FetchType.LAZY)
     private List<Discipline> disciplines;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="speciality_id")
     private Speciality speciality;
 
-    @ManyToOne/*(fetch = FetchType.LAZY)*/
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="year_id")
     private Year year;
 

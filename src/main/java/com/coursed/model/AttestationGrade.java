@@ -8,7 +8,7 @@ import javax.persistence.*;
 /**
  * Created by Hexray on 15.11.2016.
  */
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = AttestationGrade.class)
 @Entity
 public class AttestationGrade {
     @Id

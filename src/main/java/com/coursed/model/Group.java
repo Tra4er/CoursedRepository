@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Hexray on 13.11.2016.
  */
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Group.class)
 @Entity(name = "edgroup")
 public class Group {
     @Id

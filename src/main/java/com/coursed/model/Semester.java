@@ -2,6 +2,7 @@ package com.coursed.model;
 
 
 import com.coursed.model.enums.SemesterNumber;
+import com.coursed.model.jsonView.YearView;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
@@ -10,12 +11,13 @@ import java.util.List;
 /**
  * Created by Hexray on 13.11.2016.
  */
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Semester.class)
 @Entity
 public class Semester {
     @Id
     @GeneratedValue
     private Long id;
+
     @Enumerated
     private SemesterNumber semesterNumber;
 
@@ -23,11 +25,9 @@ public class Semester {
     @JoinColumn(name="year_id")
     private Year year;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "semester", fetch = FetchType.LAZY)
     private List<Group> groups;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "semester", fetch = FetchType.LAZY)
     private List<PlannedEvent> plannedEvents;
 
