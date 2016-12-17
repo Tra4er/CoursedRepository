@@ -123,4 +123,14 @@ public class UserResource {
     Collection<User> getAllGroupCurators(@RequestParam(name = "groupId") Long groupId){
         return userService.findAllGroupCurators(groupId);
     }
+
+    @GetMapping("/getAllTeachersWithDiscipline")
+    Collection<User> getAllTeachersWithDiscipline(@RequestParam(name = "disciplineId") Long disciplineId){
+        return userService.findAllTeachersWithDiscipline(disciplineId);
+    }
+
+    @GetMapping("/getAllTeachersWithoutDiscipline")
+    Collection<User> getAllTeachersWithoutDiscipline(@RequestParam(name = "disciplineId") Long disciplineId){
+        return userService.findAllTeachersWithoutDiscipline(disciplineId);
+    }
 }

@@ -1,16 +1,14 @@
 package com.coursed.service.implementation;
 
 import com.coursed.dto.*;
+import com.coursed.model.Discipline;
 import com.coursed.model.Group;
 import com.coursed.model.Student;
 import com.coursed.model.Teacher;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
-import com.coursed.repository.GroupRepository;
-import com.coursed.repository.RoleRepository;
-import com.coursed.repository.UserRepository;
-import com.coursed.repository.VerificationTokenRepository;
+import com.coursed.repository.*;
 import com.coursed.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +39,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private VerificationTokenRepository tokenRepository;
+
+    @Autowired
+    private DisciplineRepository disciplineRepository;
 
     @Override
     public User registerStudent(UserStudentRegistrationForm registrationForm) {
@@ -175,6 +176,32 @@ public class UserServiceImpl implements UserService {
                     .filter(user -> !(user.getTeacherEntity().getCuratedGroups().contains(exceptThisGroup)))
                     .collect(Collectors.toList());
         }
+    }
+
+    @Override
+    public List<User> findAllTeachersWithoutDiscipline(Long disciplineId) {
+        Role role = roleRepository.findByName("ROLE_TEACHER");
+
+        Discipline discipline = disciplineRepository.findOne(disciplineId);
+
+        return findAll().stream()
+                .filter(User::isATeacher)
+                .filter(user -> user.getRoles().contains(role)
+                        && !user.getTeacherEntity().getDisciplines().contains(discipline))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> findAllTeachersWithDiscipline(Long disciplineId) {
+        Role role = roleRepository.findByName("ROLE_TEACHER");
+
+        Discipline discipline = disciplineRepository.findOne(disciplineId);
+
+        return findAll().stream()
+                .filter(User::isATeacher)
+                .filter(user -> user.getRoles().contains(role)
+                        && user.getTeacherEntity().getDisciplines().contains(discipline))
+                .collect(Collectors.toList());
     }
 
     @Override
