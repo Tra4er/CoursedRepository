@@ -15,7 +15,36 @@
 <body>
 <div layout:fragment="content">
     <h2 align="center">Навчальні плани</h2>
-    <div id="plan-content-container" class="col-xs-12 plan-content-container">
+    <!--<div class="row">-->
+        <!--<div class="radio-inline">-->
+            <!--<label><input type="radio" name="plan-show" value="one" checked="true"/>Поточний</label>-->
+        <!--</div>-->
+        <!--<div class="radio-inline">-->
+            <!--<label><input type="radio" name="plan-show" value="all"/>Всі роки</label>-->
+        <!--</div>-->
+
+    <!--</div>-->
+    <!--<ul class="nav nav-pills">-->
+        <!--<li class="active"><a name="plan-show" href="#">Поточний рік</a></li>-->
+        <!--<li><a name="plan-show" href="#">Всі роки</a></li>-->
+    <!--</ul>-->
+    <!--<div id="plan-content-container" class="col-xs-12 plan-content-container">-->
+    <!--</div>-->
+    <ul class="nav nav-pills">
+        <li class="active"><a name="plan-show" data-toggle="pill" href="#one" id="one-plan">Поточний рік</a></li>
+        <li><a name="plan-show" data-toggle="pill" href="#all" id="all-plans">Всі роки</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="one" class="tab-pane fade in active">
+            <div id="one-plan-container" class="col-xs-12 plan-content-container">
+            </div>
+        </div>
+        <div id="all" class="tab-pane fade">
+            <div id="all-plans-container" class="col-xs-12 plan-content-container">
+            </div>
+        </div>
+
     </div>
     <div id="plan-dialog-simple" class="modal fade" role="dialog">
         <div class="modal-dialog">

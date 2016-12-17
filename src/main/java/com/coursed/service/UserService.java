@@ -20,9 +20,8 @@ public interface UserService {
     List<User> findAll();
     List<User> findAllUnconfirmedTeachers();
     List<User> findAllTeachers(Long groupId);
-    List<User> findAllTeachersWithoutDiscipline(Long disciplineId);
-    List<User> findAllTeachersWithDiscipline(Long disciplineId);
     List<User> findAllGroupCurators(Long groupId);
+    void deleteUser(Long userId);
     void connectUserWithRole(Long userId, Long roleId);
     void connectUserWithRole(User user, Role role);
     void makeATeacher(Long userId);

@@ -12,4 +12,6 @@ public interface TeacherService {
     List<Teacher> findAll();
     Teacher findOne(Long id);
     void setAsCurator(Long teacherId, Long groupId);
+    List<Teacher> findAllTeachersWithoutDiscipline(Long disciplineId);
+    List<Teacher> findAllTeachersWithDiscipline(Long disciplineId);
 }

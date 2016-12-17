@@ -124,13 +124,8 @@ public class UserResource {
         return userService.findAllGroupCurators(groupId);
     }
 
-    @GetMapping("/getAllTeachersWithDiscipline")
-    Collection<User> getAllTeachersWithDiscipline(@RequestParam(name = "disciplineId") Long disciplineId){
-        return userService.findAllTeachersWithDiscipline(disciplineId);
-    }
-
-    @GetMapping("/getAllTeachersWithoutDiscipline")
-    Collection<User> getAllTeachersWithoutDiscipline(@RequestParam(name = "disciplineId") Long disciplineId){
-        return userService.findAllTeachersWithoutDiscipline(disciplineId);
+    @GetMapping("/deleteUser")
+    void deleteUser(@RequestParam(name = "userId") Long userId){
+        userService.deleteUser(userId);
     }
 }

@@ -1,14 +1,20 @@
 package com.coursed.service.implementation;
 
+import com.coursed.model.Discipline;
 import com.coursed.model.Group;
 import com.coursed.model.Teacher;
+import com.coursed.model.auth.Role;
+import com.coursed.model.auth.User;
+import com.coursed.repository.DisciplineRepository;
 import com.coursed.repository.GroupRepository;
+import com.coursed.repository.RoleRepository;
 import com.coursed.repository.TeacherRepository;
 import com.coursed.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Hexray on 06.12.2016.
@@ -22,6 +28,12 @@ public class TeacherServiceImpl implements TeacherService {
     @Autowired
     private GroupRepository groupRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private DisciplineRepository disciplineRepository;
+
     @Override
     public void create(Teacher teacher) {
         teacherRepository.save(teacher);
@@ -34,7 +46,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Teacher findOne(Long id) {
-        return findOne(id);
+        return teacherRepository.findOne(id);
     }
 
     @Override
@@ -47,5 +59,27 @@ public class TeacherServiceImpl implements TeacherService {
 
         group.setCurators(curators);
         groupRepository.save(group);
+    }
+
+    @Override
+    public List<Teacher> findAllTeachersWithoutDiscipline(Long disciplineId) {
+        Role role = roleRepository.findByName("ROLE_TEACHER");
+
+        Discipline discipline = disciplineRepository.findOne(disciplineId);
+
+        return teacherRepository.findAll().stream()
+                .filter(teacher -> !teacher.getDisciplines().contains(discipline))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Teacher> findAllTeachersWithDiscipline(Long disciplineId) {
+        Role role = roleRepository.findByName("ROLE_TEACHER");
+
+        Discipline discipline = disciplineRepository.findOne(disciplineId);
+
+        return teacherRepository.findAll().stream()
+                .filter(teacher -> teacher.getDisciplines().contains(discipline))
+                .collect(Collectors.toList());
     }
 }

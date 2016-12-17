@@ -18,8 +18,8 @@ public class EducationPlanResource {
     private EducationPlanService educationPlanService;
 
     @PostMapping("/create")
-    private void createEducationPlan(@RequestBody EducationPlanForm planForm) {
-        educationPlanService.create(planForm);
+    private EducationPlan createEducationPlan(@RequestBody EducationPlanForm planForm) {
+        return educationPlanService.create(planForm);
     }
 
     @GetMapping("/getAll")
