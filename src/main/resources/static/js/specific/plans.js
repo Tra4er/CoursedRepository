@@ -93,7 +93,7 @@ $('.plan-content-container').on('click', '.add-plan-btn', function () {
     $('#modal-body-form-plan-simple .specialityId').attr('value', specialityId).text(specialityText);
     $('#modal-body-form-plan-simple .groupType').attr('value', groupType).text(localGroupUkr[groupType]);
 
-    $aEl = $(this).closest('.group-type-container').children('a');
+    var $aEl = $(this).closest('.group-type-container').children('a');
     var myArray = [];
     $aEl.each(function(i, elem){
          myArray.push($(elem).attr('name'));
@@ -164,9 +164,9 @@ $('#button-post-plan-simple').on('click', function() {
 
 // динамическое добавление кнопки
 function addCourseButton (yearId, specialityId, groupType, courseNumber, planId){
-    $groupTypeContainer = $('.plan-content-container .year-container[name=' +yearId+ '] .speciality-container[name='+ specialityId +'] .group-type-container[name='+ groupType +']');
-    $buttonInContainer = $groupTypeContainer.children('button');
-    $aInContainer = $groupTypeContainer.children('a');
+    var $groupTypeContainer = $('.plan-content-container .year-container[name=' +yearId+ '] .speciality-container[name='+ specialityId +'] .group-type-container[name='+ groupType +']');
+    var $buttonInContainer = $groupTypeContainer.children('button');
+    var $aInContainer = $groupTypeContainer.children('a');
     var yearString = $buttonInContainer.last().attr('name');
     var htmlInfo = "<a href='/disciplines?planId=" + planId + "&yearStr=" + yearString + "' name='" + courseNumber + "'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[courseNumber] + " курс'/></a>"
     if ($aInContainer.length == 0)

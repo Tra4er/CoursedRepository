@@ -33,8 +33,8 @@ public class YearResource {
     }
 
     @PostMapping("/create")
-    private void createYear(@RequestBody YearForm yearForm) {
-        yearService.create(yearForm);
+    private Year createYear(@RequestBody YearForm yearForm) {
+       return yearService.create(yearForm);
     }
 
     @GetMapping("/getCurrent")

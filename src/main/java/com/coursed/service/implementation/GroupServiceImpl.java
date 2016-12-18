@@ -30,8 +30,8 @@ public class GroupServiceImpl implements GroupService {
     private SemesterRepository semesterRepository;
 
     @Override
-    public void create(Group group) {
-        groupRepository.save(group);
+    public Group create(Group group) {
+        return groupRepository.save(group);
     }
 
     @Override

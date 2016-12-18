@@ -15,3 +15,16 @@ $('#button-spec-post').click(function(){
     sendAjaxPost(form, 'api/specialities/create', 'add-dialog');
 });
 
+function addItem(item){
+    var params = ['id', 'fullName', 'groupsName'];
+    var htmlRow = "<tr>";
+    $.each(item, function (paramName, paramValue) {
+        htmlRow += ("<td>" + paramValue + "</td>");
+    });
+    htmlRow += "</tr>";
+    $("#content-table > tbody").append(htmlRow);
+}
+
+$('#add-dialog').on('hidden.bs.modal', function(){
+    $(this).find('input').val('');
+});

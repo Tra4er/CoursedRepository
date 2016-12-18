@@ -36,7 +36,7 @@ public class YearServiceImpl implements YearService {
     }
 
     @Override
-    public void create(YearForm yearForm) {
+    public Year create(YearForm yearForm) {
 
         Year year = new Year();
         year.setBeginYear(yearForm.getBeginYear());
@@ -53,7 +53,7 @@ public class YearServiceImpl implements YearService {
         firstSemester.setYear(year);
         secondSemester.setYear(year);
 
-        yearRepository.save(year);
+        return yearRepository.save(year);
     }
 
     @Override

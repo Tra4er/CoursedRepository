@@ -25,7 +25,7 @@ public class SpecialityResourse {
     }
 
     @PostMapping("/create")
-    private void createSpeciality(@RequestBody SpecialityForm specialityForm) {
-        specialityService.create(specialityForm);
+    private Speciality createSpeciality(@RequestBody SpecialityForm specialityForm) {
+        return specialityService.create(specialityForm);
     }
 }

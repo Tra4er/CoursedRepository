@@ -3,8 +3,9 @@
  */
 
 $(function () {
-    var titles = ['№', 'Дисципліна', 'Кількіть годин', 'Кількість кредитів', 'Вид семестрової атестації', 'ПІБ викладачів', 'Cеместер'];
-    insertTable(titles, "content-table-disciplines");
+    var titles = ['№', 'Дисципліна', 'Кількіть годин', 'Кількість кредитів', 'Вид семестрової атестації', 'ПІБ викладачів', 'Опції'];
+    insertTable(titles, "FIRST");
+    insertTable(titles, "SECOND");
     fillTableDisciplinesForPlan();
 });
 
@@ -14,27 +15,10 @@ function fillTableDisciplinesForPlan() {
             $('.plan-info .groupType').attr('value', r.groupType).text(localGroupUkr[r.groupType]);
             $('.plan-info .groupDegree').attr('value', r.groupDegree).text(localGroupUkr[r.groupDegree]);
             $('.courseNumber').attr('value', r.courseNumber).text(localGroupUkr[r.courseNumber]);
-            var count = 0;
+             var countFirst = 0;
+             var countSecond = 0;
             $.each(r.disciplines, function (i, entity) {
-                var htmlRow = "<tr id=" + entity.id + ">";
-                htmlRow += "<td>" + ++count + "</td>";
-                htmlRow += "<td>" + entity.name + "</td>";
-                htmlRow += "<td>" + entity.hours + "</td>";
-                htmlRow += "<td>" + entity.credits + "</td>";
-                htmlRow += "<td>" + localDisciplineUkr[entity.type] + "</td><td class='teachers'>";
-                if (entity.teachers.length != 0) {
-                    $.each(entity.teachers, function (i, teach) {
-                        htmlRow += "<p>" + teach.lastName + " " + teach.firstName.substring(0,1) + ". " + teach.patronymic.substring(0,1) + ".</p>";
-                    })
-                }
-                else {
-                    htmlRow += 'не призначено';
-                }
-                htmlRow += "</td><td>" + localGroupUkr[entity.semesterNumber] + "</td>";
-                htmlRow += "<td><button id='" + entity.id + "' type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#teacher-discipline-dialog'>Додати викладача</button></td>";
-
-                htmlRow += "</tr>";
-                $("#content-table-disciplines > tbody").append(htmlRow);
+                addDisciplineIntoTable(entity);
             });
         }
     );
@@ -62,12 +46,10 @@ $('#button-post-discipline').on('click', function () {
     var obj = JSON.stringify({
         "name": $('#nameForm').val(),
         "type": $('#disciplineType').val(),
-        //"semesterId" : $('#modal-body-form-discipline .semesterId').attr('value'),
         "hours": $('[name=hoursForm]').text(),
         "credits": $('[name=creditsForm]').val(),
         "courseNumber": $('#modal-body-form-discipline .courseNumber').attr('value'),
         "semesterNumber": $('#semesterNumber').val(),
-        "specialityId": $('.specialityId').attr('value'),
         "educationPlanId": $.urlParam('planId')
     });
 
@@ -78,7 +60,8 @@ $('#button-post-discipline').on('click', function () {
         data: obj,
         success: function (data) {
             $('#discipline-dialog').modal("toggle");
-            location.reload();
+            // location.reload();
+            addDisciplineIntoTable(data);
         },
         error: function (e) {
             alert('Помилка!');
@@ -87,13 +70,32 @@ $('#button-post-discipline').on('click', function () {
     });
 });
 
+function addDisciplineIntoTable(discipline)
+{
+    var number = $("#" + discipline.semesterNumber +" > tbody").children('tr').last().children('td').first().text();
+    if (number == undefined) number = 0;
+    var htmlRow = "<tr id=" + discipline.id + ">";
+    htmlRow += "<td>" + ++number + "</td>";
+    htmlRow += "<td>" + discipline.name + "</td>";
+    htmlRow += "<td>" + discipline.hours + "</td>";
+    htmlRow += "<td>" + discipline.credits + "</td>";
+    htmlRow += "<td>" + localDisciplineUkr[discipline.type] + "</td><td class='teachers'>";
+    if (discipline.teachers == null || discipline.teachers.length == 0) {
+        htmlRow += 'не призначено';
+    }
+    else{
+        $.each(discipline.teachers, function (i, teach) {
+            htmlRow += "<p>" + teach.lastName + "&nbsp;" + teach.firstName.substring(0,1) + ".&nbsp;" + teach.patronymic.substring(0,1) + ".</p>";
+        })
+    }
+    htmlRow += "<td><button id='" + discipline.id + "' type='button' class='btn btn-default btn-sm disc-teach-btn' data-toggle='modal' data-target='#teacher-discipline-dialog'>Додати викладача</button></td></tr>";
+    $("#" + discipline.semesterNumber +" > tbody").append(htmlRow);
+}
 
-$('#content-table-disciplines > tbody').on('click', 'tr > td > .btn-default', function(){
+$('tbody').on('click', 'tr .disc-teach-btn', function(){
     var discId = $(this).closest('tr').attr("id");
-    var info = $(this).closest('tr').children('td:first').next().text()
-
+    var info = $(this).closest('tr').children('td:first').next().text();
     $('#teacher-container').html("<h2 id='"+ discId +"'>" + info + "</h2> <br/>");
-
     $.getJSON("api/teacher/getAllWithoutDiscipline", {disciplineId : discId}, function(response){
         $.each(response, function(i, teach){
             var item = "<input type='button' id='" + teach.id + "' class='btn btn-default col-xs-12' value = '"
@@ -103,11 +105,9 @@ $('#content-table-disciplines > tbody').on('click', 'tr > td > .btn-default', fu
     });
 });
 
-
 $('#teacher-container').on('click', 'input', function(){
-    var discId = $(this).parent().children('h2:first').attr('id');
+    var discId = $(this).parent().children('h2').first().attr('id');
     var tId= $(this).attr('id');
-    // alert('ну тут типо должно быть добавление, которого я найти не смогла' + "преподаватель " + tId + " дисциплина " + discId);
     $.post( "api/discipline/connectTeacherWithDiscipline", {disciplineId: discId, teacherId: tId})
         .done(function(){
             $('#teacher-discipline-dialog').modal("hide");
@@ -124,18 +124,19 @@ function reloadTeachersForDiscipline(disciplineId)
         var htmlRow = "";
         if (response.length != 0){
             $.each( response, function (i, teacher) {
-                htmlRow += "<p>" + teacher.lastName + " " + teacher.firstName.substring(0,1) + ". " + teacher.patronymic.substring(0,1) + ".</p>";
+                htmlRow += "<p>" + teacher.lastName + "&nbsp;" + teacher.firstName.substring(0,1) + ".&nbsp;" + teacher.patronymic.substring(0,1) + ".</p>";
             })
         }
         else {
             htmlRow += 'не призначено';
         }
-
-        $("#content-table-disciplines > tbody > #" + disciplineId + " > td:last").prev().prev().html(htmlRow);
+        $("#" + disciplineId + " > td:last").prev().html(htmlRow);
     });
 }
 
-// /api/user
-// getAllTeachersWithDiscipline
-// getAllTeachersWithoutDiscipline
-//
+// очистка формы при ее закрытии
+$('#discipline-dialog').on('hidden.bs.modal', function(){
+    $(this).find('input').val('');
+    $(this).find('p[name=hoursForm]').empty();
+    $(this).find('select').val('0');
+});
