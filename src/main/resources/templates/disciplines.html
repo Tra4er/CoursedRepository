@@ -60,12 +60,34 @@
         </div>
     </div>
 
-    <table id="content-table-disciplines" class="table table-hover table-striped">
-        <thead>
-        <tr></tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <ul class="nav nav-pills">
+        <li class="active"><a name="semester-show" data-toggle="pill" href="#first-semester">Перший семестр</a></li>
+        <li><a name="semester-show" data-toggle="pill" href="#second-semester">Другий семестр</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="first-semester" class="tab-pane fade in active">
+            <table id="FIRST" class="table table-hover table-striped">
+                <thead>
+                <tr></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <!--<div id="one-plan-container" class="col-xs-12 plan-content-container">-->
+            <!--</div>-->
+        </div>
+        <div id="second-semester" class="tab-pane fade">
+            <table id="SECOND" class="table table-hover table-striped">
+                <thead>
+                <tr></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <!--<div id="all-plans-container" class="col-xs-12 plan-content-container">-->
+            <!--</div>-->
+        </div>
+    </div>
+
+
 
     <div id="discipline-dialog" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -83,12 +105,12 @@
                             </div>
                             <div class="form-group col-xs-12">
                                 <select id="disciplineType" class="form-control" type='text'>
-                                    <option>Обрати тип дисципліни</option>
+                                    <option value="0">Обрати тип дисципліни</option>
                                 </select>
                             </div>
                             <div class="form-group col-xs-12">
                                 <select id="semesterNumber" class="form-control" type='text'>
-                                    <option>Обрати семестр</option>
+                                    <option value="0">Обрати семестр</option>
                                 </select>
                             </div>
                             <div class="form-group col-xs-12">

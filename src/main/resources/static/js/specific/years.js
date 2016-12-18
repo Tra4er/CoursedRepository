@@ -4,7 +4,6 @@
 $(document).ready(function () {
     var titles = ['id', 'Рік початку', 'Рік завершення'];
     insertTable(titles, "content-table");
-
     fillTable();
 });
 
@@ -19,7 +18,12 @@ $('#button-year-post').click(function(){
     sendAjaxPost(form, 'api/years/create', 'add-dialog');
 });
 
-$('#add-dialog').on('hide.bs.modal', function(){
-    $("#tbodyId").empty();
-    fillTable();
+// очистка формы при ее закрытии
+$('#add-dialog').on('hidden.bs.modal', function(){
+    $(this).find('input').val('');
 });
+
+function addItem(item){
+    var htmlRow = "<tr><td>" + item.id + "</td><td>" + item.beginYear + "</td><td>" + item.endYear + "</td></tr>";
+    $("#content-table > tbody").append(htmlRow);
+}

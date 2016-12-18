@@ -79,9 +79,10 @@ function sendAjaxPost(element, url, modalId) {
         url: url,
         contentType: "application/json",
         data: JSON.stringify(element.serializeObject()),
-        success: function () {
-            alert("Успішно");
+        success: function (data) {
+            // alert("Успішно");
             $('#' + modalId).modal("toggle");
+            addItem(data);
         },
         error: function (data) {
             alert("Помилка!");

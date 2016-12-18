@@ -16,7 +16,9 @@ function fillGroups(){
     && $("#semesterId > option:selected").attr("value") != '0') {
         $.getJSON(API + "/groups/getAll/", {specialityId: $("#specialityId > option:selected").attr("value"), semesterId: $("#semesterId > option:selected").attr("value")}, function (response) {
             $.each(response, function (i, entity) {
-                items += "<option value='" + entity.id + "'>" + entity.number + "</option>";
+                var myVar = "";
+                if(entity.groupType == 'DISTANCE_FORM') myVar = " (заочна)";
+                items += "<option value='" + entity.id + "'>" + entity.number + myVar + "</option>";
             });
             $("#groupId").html(items);
         });
@@ -33,6 +35,12 @@ $("#specialityId").on('change', function () {
 
 $("#semesterId").on('change', function () {
     fillGroups()
+});
+
+$("#yearId").on('change', function () {
+    var firstString = $("#groupId > option:first").text();
+    var items = "<option value='0'> " + firstString + "</option>";
+    $("#groupIdId").html(items);
 });
 
 // $('#button-student-post').click(function(){
