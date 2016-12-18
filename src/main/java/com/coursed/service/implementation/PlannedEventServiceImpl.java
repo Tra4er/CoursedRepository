@@ -33,6 +33,10 @@ public class PlannedEventServiceImpl implements PlannedEventService {
     @Autowired
     private YearService yearService;
 
+    @Override
+    public PlannedEvent findOne(String eventId) {
+        return plannedEventRepository.findOne(Long.parseLong(eventId));
+    }
     /**
      *  Returns list of events that have begin date from as in param
      * @param beginDateString date - string of format "1986-04-08T12:30:00"

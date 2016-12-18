@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collection;
@@ -23,16 +24,22 @@ public class EventsController {
     @GetMapping("/events") // TODO config access to rest
     public String events(RedirectAttributes redAtt, Authentication authentication) {
         if(hasRole("ROLE_HEAD") || hasRole("ROLE_SECRETARY")) { // TODO add more roles if needed
-            return "/events-head";
+            return "/events/events-head";
         }
         if(hasRole("ROLE_TEACHER")) {
-            return "/events-teacher";
+            return "/events/events-teacher";
         }
         if(hasRole("ROLE_STUDENT")) {
-            return "/events-student";
+            return "/events/events-student";
         }
         redAtt.addFlashAttribute("message", "You do not have access to this page.");
         return "/auth/badUser"; // TODO redirect:error page
+    }
+
+    @GetMapping("/events/{eventId}")
+    public String getEvent(@PathVariable String eventId, Model model) {
+        model.addAttribute("eventId", eventId);
+        return "events/event";
     }
 
 

@@ -13,6 +13,7 @@ import java.util.List;
  * Created by Trach on 12/11/2016.
  */
 public interface PlannedEventService {
+    PlannedEvent findOne(String eventId);
     void create(String beginDate, String expirationDate, PlannedEventType plannedEventType, Semester semester) throws DateTimeParseException;
     void create(PlannedEvent event);
     List<PlannedEvent> findAll();
