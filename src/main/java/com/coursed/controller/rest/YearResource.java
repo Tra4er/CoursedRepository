@@ -3,12 +3,9 @@ package com.coursed.controller.rest;
 import com.coursed.dto.YearForm;
 import com.coursed.model.Semester;
 import com.coursed.model.Year;
-import com.coursed.model.jsonView.YearView;
 import com.coursed.service.YearService;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.ObjectToStringHttpMessageConverter;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -22,7 +19,6 @@ public class YearResource {
     @Autowired
     private YearService yearService;
 
-    @JsonView(YearView.Full.class)
     @GetMapping("/getAll")
     private Collection<Year> getYears() {
         return yearService.findAll();
@@ -41,7 +37,6 @@ public class YearResource {
         yearService.create(yearForm);
     }
 
-    @JsonView(YearView.Full.class)
     @GetMapping("/getCurrent")
     private Year getCurrentYear() {
         return yearService.getCurrent();

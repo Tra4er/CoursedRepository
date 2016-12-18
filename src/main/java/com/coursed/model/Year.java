@@ -1,6 +1,5 @@
 package com.coursed.model;
 
-import com.coursed.model.jsonView.YearView;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
@@ -13,24 +12,19 @@ import java.util.List;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Year.class)
 @Entity
 public class Year {
-    @JsonView(YearView.Partial.class)
     @Id
     @GeneratedValue
     private Long id;
 
-    @JsonView(YearView.Partial.class)
     @Column(nullable = false, unique = true)
     private Integer beginYear;
 
-    @JsonView(YearView.Partial.class)
     @Column(nullable = false, unique = true)
     private Integer endYear;
 
-    @JsonView(YearView.Partial.class)
     @OneToMany(mappedBy = "year", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Semester> semesters;
 
-    @JsonView(YearView.Full.class)
     @OneToMany(mappedBy = "year", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<EducationPlan> educationPlans;
 

@@ -2,7 +2,6 @@ package com.coursed.model;
 
 
 import com.coursed.model.enums.SemesterNumber;
-import com.coursed.model.jsonView.YearView;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
