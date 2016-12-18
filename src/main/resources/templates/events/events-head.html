@@ -5,54 +5,102 @@
       xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <title>Події</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.css}"
+          href="../../static/css/bootstrap-datetimepicker.css"/>
     <script th:defer="true" th:src="@{/js/shared/fill-functions.js}"
             src="../../static/js/shared/fill-functions.js"></script>
     <script th:defer="true" th:src="@{/js/local/groups-local-ukr.js}"
             src="../../static/js/local/groups-local-ukr.js"></script>
-    <script th:defer="true" th:src="@{/js/specific/events/events-head.js}" src="../../static/js/specific/groups.js"></script>
+    <script th:defer="true" th:src="@{/js/local/events-local-ukr.js}"
+            src="../../static/js/local/events-local-ukr.js"></script>
+    <script th:defer="true" th:src="@{/js/specific/events/events-head.js}"
+            src="../../static/js/specific/groups.js"></script>
+
+    <script th:defer="true" th:src="@{/js/moment/moment.js}" src="../../static/js/moment/moment.js"></script>
+    <script th:defer="true" th:src="@{/js/moment/uk.js}" src="../../static/js/moment/uk.js"></script>
+    <script th:defer="true" th:src="@{/js/moment/bootstrap-datetimepicker.js}"
+            src="../../static/js/moment/bootstrap-datetimepicker.js"></script>
 </head>
 <body>
-    <div layout:fragment="content">
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#createEvent">Створити подію</a></li>
-            <li><a data-toggle="tab" href="#plannedEventsTable" id="plannedEvents">Заплановані події</a></li>
-        </ul>
-        <div class="tab-content">
-            <div id="createEvent" class="tab-pane fade in active">
-                <form id="create-event-form" action="#" th:action="@{/createEvent}" method="post">
-                    <h2>Створіть подію</h2>
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="beginDate" placeholder="Дата початку"/>
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="expirationDate" placeholder="Дата кінця"/>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" name="eventType" id="eventType">
-                            <option value="0">Тип події</option>
+<div layout:fragment="content">
+    <!--<ul class="nav nav-tabs">-->
+    <!--<li class="active"><a data-toggle="tab" href="#createEvent">Створити подію</a></li>-->
+    <!--<li><a data-toggle="tab" href="#plannedEventsTable" id="plannedEvents">Заплановані події</a></li>-->
+    <!--</ul>-->
+    <!--<div class="tab-content">-->
+    <!--<div id="createEvent" class="tab-pane fade in active">-->
+    <!--<form id="create-event-form" action="#" th:action="@{/createEvent}" method="post">-->
+    <!--<h2>Створіть подію</h2>-->
+    <!--<div class="form-group">-->
+    <!--<input class="form-control" type="text" name="beginDate" placeholder="Дата початку"/>-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+    <!--<input class="form-control" type="text" name="expirationDate" placeholder="Дата кінця"/>-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+    <!--<select class="form-control" name="eventType" id="eventType">-->
+    <!--<option value="0">Тип події</option>-->
+    <!--</select>-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+    <!--<select class="form-control" name="semester" id="semester">-->
+    <!--<option value="0">Семестер</option>-->
+    <!--</select>-->
+    <!--</div>-->
+    <!--<div class="form-group col-xs-12">-->
+    <!--<input id="button-teacher-post" type="submit" value="Створити подію"-->
+    <!--class="btn btn-success btn-block btn-lg"/>-->
+    <!--</div>-->
+    <!--</form>-->
+    <!--</div>-->
+    <!--<div id="plannedEventsTable" class="tab-pane fade">-->
+    <!--<button id="updateButton" type="button" class="btn btn-default">Оновити</button>-->
+    <!--<table id="content-table" class="table table-hover table-striped">-->
+    <!--<thead>-->
+    <!--<tr id="table-heads"></tr>-->
+    <!--</thead>-->
+    <!--<tbody id="tbodyId"></tbody>-->
+    <!--</table>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div id="add-event-dialog" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Додати подію</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal-event-body-form">
+                        <select id="yearId" class="form-control" type='text'>
+                            <option value="0">Обрати рік</option>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" name="semester" id="semester">
-                            <option value="0">Семестер</option>
+                        <select id="semesterId" name="semesterId" class="form-control" type='text'>
+                            <option value="0">Обрати семестр</option>
                         </select>
-                    </div>
-                    <div class="form-group col-xs-12">
-                        <input id="button-teacher-post" type="submit" value="Створити подію"
-                               class="btn btn-success btn-block btn-lg"/>
-                    </div>
-                </form>
-            </div>
-            <div id="plannedEventsTable" class="tab-pane fade">
-                <button id="updateButton" type="button" class="btn btn-default">Оновити</button>
-                <table id="content-table" class="table table-hover table-striped">
-                    <thead>
-                    <tr id="table-heads"></tr>
-                    </thead>
-                    <tbody id="tbodyId"></tbody>
-                </table>
+                        <select id="eventType" name="eventType" class="form-control" type='text'>
+                            <option value="0">Обрати тип події</option>
+                        </select>
+                        <div class="col-sm-6">
+                        <input type='text' class="form-control" id='beginDate' placeholder="Початок"/>
+                        </div>
+                        <div class="col-sm-6">
+                        <input type='text' class="form-control" id='endDate' placeholder="Кінець"/>
+                        </div>
+                    </form>
+                    <button id='button-event-post' type="button" class="btn btn-primary">Додати</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <button id="btnModal" type="button" class="btn btn-info" data-toggle="modal"
+            data-target="#add-event-dialog">Створити подію
+    </button>
+</div>
 </body>
 </html>
