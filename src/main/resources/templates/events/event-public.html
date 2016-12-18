@@ -9,11 +9,19 @@
             src="../../static/js/shared/fill-functions.js"></script>
     <script th:defer="true" th:src="@{/js/local/groups-local-ukr.js}"
             src="../../static/js/local/groups-local-ukr.js"></script>
-    <script th:defer="true" th:src="@{/js/specific/events/event-public.js}" src="../../static/js/specific/groups.js"></script>
+    <script th:defer="true" th:src="@{/js/specific/events/event-public.js}" src="../../static/js/specific/events/event-public.js"></script>
 </head>
 <body>
 <div layout:fragment="content">
-
+    <div id="eventId" hidden="hidden" th:text="${eventId}"></div>
+    <div id="plannedEventTable" class="tab-pane fade">
+        <table id="content-table-event" class="table table-hover table-striped">
+            <thead>
+            <tr id="table-heads"></tr>
+            </thead>
+            <tbody id="tbodyId"></tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>
