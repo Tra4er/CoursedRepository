@@ -96,14 +96,14 @@ public class BaseInitController {
         groupService.create(is41);
 
 //        Planned Events
-        PlannedEvent event1 = null;
-        PlannedEvent event2 = null;
-            event1 = new PlannedEvent("2016-10-08T12:30:00", "2016-11-08T18:00:00",
-                    PlannedEventType.ATTESTATION_FIRST, semesterService.findOne(1L));
-            event2 = new PlannedEvent("2017-04-08T12:30:00", "2017-07-08T18:00:00",
-                    PlannedEventType.ATTESTATION_FIRST, semesterService.findOne(1L));
-        plannedEventService.create(event1);
-        plannedEventService.create(event2);
+//        PlannedEvent event1 = null;
+//        PlannedEvent event2 = null;
+//            event1 = new PlannedEvent("2016-10-08T12:30:00", "2016-11-08T18:00:00",
+//                    PlannedEventType.ATTESTATION_FIRST, semesterService.findOne(1L));
+//            event2 = new PlannedEvent("2017-04-08T12:30:00", "2017-07-08T18:00:00",
+//                    PlannedEventType.ATTESTATION_FIRST, semesterService.findOne(1L));
+//        plannedEventService.create(event1);
+//        plannedEventService.create(event2);
 
         System.out.println("==>Base configuration has been loaded");
         return "redirect:/login";
