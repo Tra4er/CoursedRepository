@@ -14,10 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,7 +54,7 @@ public class PlannedEventServiceImpl implements PlannedEventService {
 
         plannedEvent.setBeginDate(plannedEventDTO.getBeginDate());
         plannedEvent.setExpirationDate(plannedEventDTO.getExpirationDate());
-        plannedEvent.setCreationDate(LocalDateTime.now(ZoneId.systemDefault()));
+        plannedEvent.setCreationDate(ZonedDateTime.now());
         plannedEvent.setEventType(plannedEventDTO.getEventType());
 
         Semester semester = semesterRepository.findOne(plannedEventDTO.getSemesterId());
