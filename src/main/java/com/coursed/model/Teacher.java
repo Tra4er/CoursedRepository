@@ -2,9 +2,7 @@ package com.coursed.model;
 
 import com.coursed.model.auth.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,12 +10,12 @@ import java.util.List;
 /**
  * Created by Hexray on 06.11.2016.
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Teacher.class)
 @Entity
 public class Teacher {
     @Id
     @GeneratedValue
     private Long id;
+    @JsonBackReference("user-teacher")
     @OneToOne(mappedBy = "teacherEntity")
     private User user;
 

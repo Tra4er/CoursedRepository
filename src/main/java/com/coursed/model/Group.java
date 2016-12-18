@@ -3,7 +3,9 @@ package com.coursed.model;
 import com.coursed.model.enums.CourseNumber;
 import com.coursed.model.enums.GroupDegree;
 import com.coursed.model.enums.GroupType;
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,7 +13,6 @@ import java.util.List;
 /**
  * Created by Hexray on 13.11.2016.
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Group.class)
 @Entity(name = "edgroup")
 public class Group {
     @Id
@@ -26,17 +27,22 @@ public class Group {
     private CourseNumber courseNumber;
 
     @JsonIgnore
+    //@JsonBackReference("semester-groups")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="semester_id")
     private Semester semester;
 
     @JsonIgnore
+    //@JsonManagedReference("group-students")
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
     private List<Student> students;
 
+
+    @JsonManagedReference("group-speciality")
     @ManyToOne
     @JoinColumn(name="speciality_id")
     private Speciality speciality;
+
 
     @ManyToMany
     @JoinTable(name = "curators_groups", joinColumns = @JoinColumn(name = "edgroup_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
