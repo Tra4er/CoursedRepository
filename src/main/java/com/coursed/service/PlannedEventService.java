@@ -1,5 +1,6 @@
 package com.coursed.service;
 
+import com.coursed.dto.PlannedEventDTO;
 import com.coursed.model.PlannedEvent;
 import com.coursed.model.Semester;
 import com.coursed.model.enums.PlannedEventType;
@@ -14,8 +15,8 @@ import java.util.List;
  */
 public interface PlannedEventService {
     PlannedEvent findOne(Long eventId);
-    void create(String beginDate, String expirationDate, PlannedEventType plannedEventType, Semester semester) throws DateTimeParseException;
-    void create(PlannedEvent event);
+    PlannedEvent create(PlannedEventDTO plannedEventDTO) throws DateTimeParseException;
+    PlannedEvent create(PlannedEvent event);
     List<PlannedEvent> findAll();
     List<PlannedEvent> findAllByBeginDate(String date);
     List<PlannedEvent> findAllByExpirationDate(String date);

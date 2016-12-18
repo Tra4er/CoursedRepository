@@ -1,10 +1,12 @@
 package com.coursed.service.implementation;
 
+import com.coursed.dto.PlannedEventDTO;
 import com.coursed.model.PlannedEvent;
 import com.coursed.model.Semester;
 import com.coursed.model.Year;
 import com.coursed.model.enums.PlannedEventType;
 import com.coursed.repository.PlannedEventRepository;
+import com.coursed.repository.SemesterRepository;
 import com.coursed.service.PlannedEventService;
 import com.coursed.service.YearService;
 import org.slf4j.Logger;
@@ -13,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +37,9 @@ public class PlannedEventServiceImpl implements PlannedEventService {
     @Autowired
     private YearService yearService;
 
+    @Autowired
+    private SemesterRepository semesterRepository;
+
     @Override
     public PlannedEvent findOne(Long eventId) {
         try{
@@ -42,33 +49,26 @@ public class PlannedEventServiceImpl implements PlannedEventService {
         }
     }
     /**
-     *  Returns list of events that have begin date from as in param
-     * @param beginDateString date - string of format "1986-04-08T12:30:00"
-     * @param expirationDateString date - string of format "1986-04-08T12:30:00"
-     * @return list of events.
+
      */
     @Override
-    public void create(String beginDateString, String expirationDateString, PlannedEventType plannedEventType, Semester semester) throws DateTimeParseException {
-        LocalDateTime beginDate;
-        LocalDateTime expirationDate;
-        try {
-            beginDate = LocalDateTime.parse(beginDateString);
-            expirationDate = LocalDateTime.parse(expirationDateString);
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Wrong date.");
-        }
+    public PlannedEvent create(PlannedEventDTO plannedEventDTO){
+        PlannedEvent plannedEvent = new PlannedEvent();
 
-        if(semester == null) { // TODO mb i should go to semester rep and check
-            throw new IllegalArgumentException("Wrong semester");
-        }
+        plannedEvent.setBeginDate(plannedEventDTO.getBeginDate());
+        plannedEvent.setExpirationDate(plannedEventDTO.getExpirationDate());
+        plannedEvent.setCreationDate(LocalDateTime.now(ZoneId.systemDefault()));
+        plannedEvent.setEventType(plannedEventDTO.getEventType());
 
-        PlannedEvent plannedEvent = new PlannedEvent(beginDate, expirationDate, plannedEventType, semester);
-        plannedEventRepository.save(plannedEvent);
+        Semester semester = semesterRepository.findOne(plannedEventDTO.getSemesterId());
+        plannedEvent.setSemester(semester);
+
+        return plannedEventRepository.save(plannedEvent);
     }
 
     @Override
-    public void create(PlannedEvent event) {
-        plannedEventRepository.save(event);
+    public PlannedEvent create(PlannedEvent event) {
+        return plannedEventRepository.save(event);
     }
 
     @Override
