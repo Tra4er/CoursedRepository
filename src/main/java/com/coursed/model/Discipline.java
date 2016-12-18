@@ -3,9 +3,7 @@ package com.coursed.model;
 import com.coursed.model.enums.CourseNumber;
 import com.coursed.model.enums.DisciplineType;
 import com.coursed.model.enums.SemesterNumber;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +11,7 @@ import java.util.List;
 /**
  * Created by Hexray on 14.11.2016.
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Discipline.class)
 @Entity
 public class Discipline {
     @Id
@@ -38,7 +37,6 @@ public class Discipline {
     @OneToMany(mappedBy = "discipline")
     private List<AttestationGrade> attestationGrades;
 
-    @JsonBackReference("educationplan-discipline")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="educationPlan_id")
     private EducationPlan educationPlan;

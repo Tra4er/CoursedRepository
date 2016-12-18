@@ -110,22 +110,22 @@ public class UserResource {
     }
 
     @GetMapping("/getAllUnconfirmedTeachers")
-    Collection<User> getAllUnconfirmedTeachers(){
+    private Collection<User> getAllUnconfirmedTeachers(){
         return userService.findAllUnconfirmedTeachers();
     }
 
     @GetMapping("/getAllTeachers") // TODO create separate controller
-    Collection<User> getAllTeachers(@RequestParam(name = "groupId", required = false) Long groupId){
+    private Collection<User> getAllTeachers(@RequestParam(name = "groupId", required = false) Long groupId){
         return userService.findAllTeachers(groupId);
     }
 
     @GetMapping("/getAllGroupCurators")
-    Collection<User> getAllGroupCurators(@RequestParam(name = "groupId") Long groupId){
+    private Collection<User> getAllGroupCurators(@RequestParam(name = "groupId") Long groupId){
         return userService.findAllGroupCurators(groupId);
     }
 
     @GetMapping("/deleteUser")
-    void deleteUser(@RequestParam(name = "userId") Long userId){
+    private void deleteUser(@RequestParam(name = "userId") Long userId){
         userService.deleteUser(userId);
     }
 }

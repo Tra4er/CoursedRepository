@@ -1,9 +1,7 @@
 package com.coursed.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.coursed.model.jsonView.YearView;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,31 +10,43 @@ import java.util.List;
 /**
  * Created by Hexray on 13.11.2016.
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Year.class)
 @Entity
 public class Year {
+    @JsonView(YearView.Partial.class)
     @Id
     @GeneratedValue
     private Long id;
 
+    @JsonView(YearView.Partial.class)
     @Column(nullable = false, unique = true)
     private Integer beginYear;
 
+    @JsonView(YearView.Partial.class)
     @Column(nullable = false, unique = true)
     private Integer endYear;
 
-    @JsonManagedReference("year-semesters")
+    @JsonView(YearView.Partial.class)
     @OneToMany(mappedBy = "year", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Semester> semesters;
 
-//    @JsonIgnore
-    @JsonManagedReference("year-educationplan")
-    @OneToMany(mappedBy = "year", /*fetch = FetchType.LAZY,*/ cascade = CascadeType.ALL)
+    @JsonView(YearView.Full.class)
+    @OneToMany(mappedBy = "year", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<EducationPlan> educationPlans;
 
     public Year() {
     }
 
+    public List<EducationPlan> getEducationPlans() {
+        return educationPlans;
+    }
+
+    public void setEducationPlans(List<EducationPlan> educationPlans) {
+        this.educationPlans = educationPlans;
+    }
+
     public Year(Integer beginYear, Integer endYear) {
+
         this.beginYear = beginYear;
         this.endYear = endYear;
     }

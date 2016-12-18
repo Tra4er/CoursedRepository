@@ -1,11 +1,15 @@
 package com.coursed.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by Hexray on 14.11.2016.
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = FinalGrade.class)
 @Entity
 public class FinalGrade {
     @Id
