@@ -14,9 +14,9 @@ public class PlannedEvent {
     @Id
     @GeneratedValue
     private Long id;
-    private ZonedDateTime beginDate;
-    private ZonedDateTime expirationDate;
-    private ZonedDateTime creationDate;
+    private LocalDateTime beginDate;
+    private LocalDateTime expirationDate;
+    private LocalDateTime creationDate;
     @Enumerated
     private PlannedEventType eventType;
 
@@ -37,17 +37,17 @@ public class PlannedEvent {
      * @return list of events.
      */
     public PlannedEvent(String beginDate, String expirationDate, PlannedEventType eventType, Semester semester) {
-        this.beginDate = ZonedDateTime.parse(beginDate);
-        this.expirationDate = ZonedDateTime.parse(expirationDate);
-        this.creationDate = ZonedDateTime.now();
+        this.beginDate = LocalDateTime.parse(beginDate);
+        this.expirationDate = LocalDateTime.parse(expirationDate);
+        this.creationDate = LocalDateTime.now();
         this.eventType = eventType;
         this.semester = semester;
     }
 
-    public PlannedEvent(ZonedDateTime beginDate, ZonedDateTime expirationDate, PlannedEventType eventType, Semester semester) {
+    public PlannedEvent(LocalDateTime beginDate, LocalDateTime expirationDate, PlannedEventType eventType, Semester semester) {
         this.beginDate = beginDate;
         this.expirationDate = expirationDate;
-        this.creationDate = ZonedDateTime.now();
+        this.creationDate = LocalDateTime.now();
         this.eventType = eventType;
         this.semester = semester;
     }
@@ -60,27 +60,27 @@ public class PlannedEvent {
         this.id = id;
     }
 
-    public ZonedDateTime getBeginDate() {
+    public LocalDateTime getBeginDate() {
         return beginDate;
     }
 
-    public void setBeginDate(ZonedDateTime beginDate) {
+    public void setBeginDate(LocalDateTime beginDate) {
         this.beginDate = beginDate;
     }
 
-    public ZonedDateTime getExpirationDate() {
+    public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(ZonedDateTime expirationDate) {
+    public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
     }
 
-    public ZonedDateTime getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(ZonedDateTime creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.ZonedDateTimeSerializer;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -13,28 +14,24 @@ import java.time.ZonedDateTime;
  * Created by Hexray on 18.12.2016.
  */
 public class PlannedEventDTO {
-    private ZonedDateTime beginDate;
-    private ZonedDateTime expirationDate;
+    private LocalDateTime beginDate;
+    private LocalDateTime expirationDate;
     private PlannedEventType eventType;
     private Long semesterId;
 
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    public ZonedDateTime getBeginDate() {
+    public LocalDateTime getBeginDate() {
         return beginDate;
     }
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    public void setBeginDate(ZonedDateTime beginDate) {
+    public void setBeginDate(LocalDateTime beginDate) {
         this.beginDate = beginDate;
     }
 
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    public ZonedDateTime getExpirationDate() {
+    public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    public void setExpirationDate(ZonedDateTime expirationDate) {
+    public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
     }
 

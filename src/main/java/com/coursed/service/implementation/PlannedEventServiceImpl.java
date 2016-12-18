@@ -54,7 +54,8 @@ public class PlannedEventServiceImpl implements PlannedEventService {
 
         plannedEvent.setBeginDate(plannedEventDTO.getBeginDate());
         plannedEvent.setExpirationDate(plannedEventDTO.getExpirationDate());
-        plannedEvent.setCreationDate(ZonedDateTime.now());
+        plannedEvent.setCreationDate(LocalDateTime.now());
+
         plannedEvent.setEventType(plannedEventDTO.getEventType());
 
         Semester semester = semesterRepository.findOne(plannedEventDTO.getSemesterId());
