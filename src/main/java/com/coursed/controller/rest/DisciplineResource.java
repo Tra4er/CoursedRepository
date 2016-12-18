@@ -2,11 +2,16 @@ package com.coursed.controller.rest;
 
 import com.coursed.dto.DisciplineForm;
 import com.coursed.model.Discipline;
+import com.coursed.model.auth.User;
 import com.coursed.service.DisciplineService;
+import com.coursed.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Created by Hexray on 11.12.2016.
@@ -16,6 +21,9 @@ import java.util.Collection;
 public class DisciplineResource {
     @Autowired
     private DisciplineService disciplineService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/create")
     private Discipline createEducationPlan(@RequestBody DisciplineForm disciplineForm) {
@@ -36,9 +44,13 @@ public class DisciplineResource {
     }
 
     @GetMapping("/getAllActualConnectedWithTeacher")
-    private Collection<Discipline> getAllActualConnectedWithTeacher(@RequestParam(name = "teacherId") Long teacherId,
-                                                                    @RequestParam(name = "teacherId", required = false) Long plannedEventId)
+    private Collection<Discipline> getAllActualConnectedWithTeacher(@RequestParam(name = "plannedEventId", required = false) Long plannedEventId, Principal principal)
     {
-        return disciplineService.getAllActualConnectedWithTeacher(teacherId, plannedEventId);
+        if(principal == null)
+            throw new IllegalArgumentException("You haven`t logged in to retrieve principal");
+
+        Optional<User> user = userService.getUserByEmail(principal.getName());
+
+        return disciplineService.getAllActualConnectedWithTeacher(user.get().getTeacherEntity().getId(), plannedEventId);
     }
 }

@@ -28,7 +28,6 @@ public class Discipline {
     @Enumerated
     private SemesterNumber semesterNumber;
 
-    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "discipline_teachers", joinColumns = @JoinColumn(name = "discipline_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private List<Teacher> teachers;
