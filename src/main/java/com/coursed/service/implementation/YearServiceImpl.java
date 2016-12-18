@@ -1,6 +1,6 @@
 package com.coursed.service.implementation;
 
-import com.coursed.dto.YearForm;
+import com.coursed.dto.YearDTO;
 import com.coursed.model.Semester;
 import com.coursed.model.Year;
 import com.coursed.model.enums.SemesterNumber;
@@ -9,7 +9,6 @@ import com.coursed.repository.YearRepository;
 import com.coursed.service.YearService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.util.resources.cldr.aa.CalendarData_aa_DJ;
 
 import java.util.*;
 
@@ -36,11 +35,11 @@ public class YearServiceImpl implements YearService {
     }
 
     @Override
-    public Year create(YearForm yearForm) {
+    public Year create(YearDTO yearDTO) {
 
         Year year = new Year();
-        year.setBeginYear(yearForm.getBeginYear());
-        year.setEndYear(yearForm.getEndYear());
+        year.setBeginYear(yearDTO.getBeginYear());
+        year.setEndYear(yearDTO.getEndYear());
 
         Semester firstSemester = new Semester(SemesterNumber.FIRST);
         Semester secondSemester = new Semester(SemesterNumber.SECOND);

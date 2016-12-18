@@ -1,12 +1,9 @@
 package com.coursed.service.implementation;
 
-import com.coursed.dto.EducationPlanForm;
+import com.coursed.dto.EducationPlanDTO;
 import com.coursed.model.EducationPlan;
 import com.coursed.model.Speciality;
 import com.coursed.model.Year;
-import com.coursed.model.enums.CourseNumber;
-import com.coursed.model.enums.GroupDegree;
-import com.coursed.model.enums.GroupType;
 import com.coursed.repository.EducationPlanRepository;
 import com.coursed.repository.SpecialityRepository;
 import com.coursed.repository.YearRepository;
@@ -36,7 +33,7 @@ public class EducationPlanServiceImpl implements EducationPlanService {
     }
 
     @Override
-    public EducationPlan create(EducationPlanForm planForm) {
+    public EducationPlan create(EducationPlanDTO planForm) {
         EducationPlan educationPlan = new EducationPlan();
         educationPlan.setCourseNumber(planForm.getCourseNumber());
         educationPlan.setGroupDegree(planForm.getGroupDegree());

@@ -1,6 +1,6 @@
 package com.coursed.service;
 
-import com.coursed.dto.DisciplineForm;
+import com.coursed.dto.DisciplineDTO;
 import com.coursed.model.Discipline;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface DisciplineService {
     List<Discipline> findAll();
-    Discipline create(DisciplineForm disciplineForm);
+    Discipline create(DisciplineDTO disciplineDTO);
     void connectWithTeacher(Long disciplineId, Long teacherId);
     List<Discipline> getAllActualConnectedWithTeacher(Long teacherId, Long plannedEventId);
 }

@@ -3,7 +3,7 @@ package com.coursed.dto;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class UserRegistrationForm {
+public class UserDTO {
 
     @NotEmpty
     private String email = "";

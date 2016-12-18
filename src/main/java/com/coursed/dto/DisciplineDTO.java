@@ -7,7 +7,7 @@ import com.coursed.model.enums.SemesterNumber;
 /**
  * Created by Hexray on 11.12.2016.
  */
-public class DisciplineForm {
+public class DisciplineDTO {
     private String name;
     private DisciplineType type;
     private Float hours;

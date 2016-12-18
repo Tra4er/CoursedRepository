@@ -1,6 +1,6 @@
 package com.coursed.validator;
 
-import com.coursed.dto.UserStudentRegistrationForm;
+import com.coursed.dto.UserStudentDTO;
 import com.coursed.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,13 +21,13 @@ public class UserStudentRegistrationFormValidator implements Validator {
     private UserService userService;
 
     public boolean supports(Class clazz) {
-        return UserStudentRegistrationForm.class.isAssignableFrom(clazz);
+        return UserStudentDTO.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
         LOGGER.debug("Validating {}", target);
-        UserStudentRegistrationForm form = (UserStudentRegistrationForm) target;
+        UserStudentDTO form = (UserStudentDTO) target;
         try {
             BasicValidatorUtil.validateEmail(form);
             BasicValidatorUtil.validatePasswords(form);
@@ -41,21 +41,21 @@ public class UserStudentRegistrationFormValidator implements Validator {
         }
     }
 
-    private void validateNumber(UserStudentRegistrationForm form) throws Exception {
+    private void validateNumber(UserStudentDTO form) throws Exception {
         String reg = "^(\\+380)[0-9]{9}";
 //        if (!form.getPhoneNumber().matches(reg)) { // TODO uncomment me when you will add phone number to model
 //            throw new Exception("Wrong phone number");
 //        }
     }
 
-    private void validateAddress(UserStudentRegistrationForm form) throws Exception {
+    private void validateAddress(UserStudentDTO form) throws Exception {
         String reg = "^(м\\.)\\s^[А-Я][а-я]{1,40}"; // TODO
 //        if (!form.getPhoneNumber().matches(reg)) {
 //            throw new Exception("Wrong phone number");
 //        }
     }
 
-    private void validateSemester(UserStudentRegistrationForm form) throws Exception {
+    private void validateSemester(UserStudentDTO form) throws Exception {
         String reg = "(FIRST | SECOND)"; // TODO uncomment me when you will add phone number to model
 //        if (!form.getSemester().matches(reg)) {
 //            throw new Exception("Wrong phone number");

@@ -1,10 +1,7 @@
 package com.coursed.service.implementation;
 
-import com.coursed.dto.StudentRegistrationForm;
-import com.coursed.dto.UserStudentRegistrationForm;
-import com.coursed.model.Group;
+import com.coursed.dto.UserStudentDTO;
 import com.coursed.model.Student;
-import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 import com.coursed.repository.RoleRepository;
 import com.coursed.repository.StudentRepository;
@@ -13,13 +10,9 @@ import com.coursed.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Trach on 12/12/2016.
@@ -44,7 +37,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public User registerStudent(UserStudentRegistrationForm registrationForm) {
+    public User registerStudent(UserStudentDTO registrationForm) {
         return null; //TODO
     }
 

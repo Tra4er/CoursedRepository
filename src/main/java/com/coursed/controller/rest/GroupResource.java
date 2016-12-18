@@ -1,6 +1,6 @@
 package com.coursed.controller.rest;
 
-import com.coursed.dto.GroupCreateForm;
+import com.coursed.dto.GroupDTO;
 import com.coursed.model.*;
 import com.coursed.service.GroupService;
 import com.coursed.service.SemesterService;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by Hexray on 27.11.2016.
@@ -58,12 +57,12 @@ public class GroupResource {
     }
 
     @PostMapping("/create")
-    private Group createGroup(@RequestBody GroupCreateForm groupCreateForm) {
-        Semester sem = semesterService.findOne(groupCreateForm.getSemesterId());
-        Speciality spec = specialityService.findOne(groupCreateForm.getSpecialityId());
+    private Group createGroup(@RequestBody GroupDTO groupDTO) {
+        Semester sem = semesterService.findOne(groupDTO.getSemesterId());
+        Speciality spec = specialityService.findOne(groupDTO.getSpecialityId());
 
-        Group group = new Group(groupCreateForm.getNumber(), groupCreateForm.getGroupType(), groupCreateForm.getGroupDegree(),
-                groupCreateForm.getCourseNumber(),sem, spec);
+        Group group = new Group(groupDTO.getNumber(), groupDTO.getGroupType(), groupDTO.getGroupDegree(),
+                groupDTO.getCourseNumber(),sem, spec);
         return groupService.create(group);
     }
 

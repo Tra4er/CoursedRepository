@@ -7,7 +7,7 @@ import com.coursed.model.enums.GroupType;
 /**
  * Created by Hexray on 04.12.2016.
  */
-public class GroupCreateForm {
+public class GroupDTO {
     private Integer number;
     private GroupType groupType;
     private GroupDegree groupDegree;

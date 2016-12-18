@@ -1,6 +1,6 @@
 package com.coursed.service;
 
-import com.coursed.dto.EducationPlanForm;
+import com.coursed.dto.EducationPlanDTO;
 import com.coursed.model.EducationPlan;
 
 import java.util.List;
@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface EducationPlanService {
     List<EducationPlan> findAll();
-    EducationPlan create(EducationPlanForm planForm);
+    EducationPlan create(EducationPlanDTO planForm);
     EducationPlan findOne(Long educationPlanId);
 }

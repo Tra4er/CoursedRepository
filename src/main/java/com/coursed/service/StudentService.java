@@ -1,6 +1,6 @@
 package com.coursed.service;
 
-import com.coursed.dto.UserStudentRegistrationForm;
+import com.coursed.dto.UserStudentDTO;
 import com.coursed.model.Student;
 import com.coursed.model.auth.User;
 
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface StudentService {
     void create(Student student);
-    User registerStudent(UserStudentRegistrationForm userStudentRegistrationForm);
+    User registerStudent(UserStudentDTO userStudentDTO);
     Student findOne(Long id);
     List<Student> findAll();
 }

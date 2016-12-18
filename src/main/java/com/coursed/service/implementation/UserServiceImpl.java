@@ -1,7 +1,6 @@
 package com.coursed.service.implementation;
 
 import com.coursed.dto.*;
-import com.coursed.model.Discipline;
 import com.coursed.model.Group;
 import com.coursed.model.Student;
 import com.coursed.model.Teacher;
@@ -44,7 +43,7 @@ public class UserServiceImpl implements UserService {
     private DisciplineRepository disciplineRepository;
 
     @Override
-    public User registerStudent(UserStudentRegistrationForm registrationForm) {
+    public User registerStudent(UserStudentDTO registrationForm) {
         // TODO check data and throw exceptions
         User user = new User();
         user.setEmail(registrationForm.getEmail());
@@ -92,7 +91,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerTeacher(UserTeacherRegistrationForm registrationForm) { // TODO move to teacherService
+    public User registerTeacher(UserTeacherDTO registrationForm) { // TODO move to teacherService
 
         User user = new User();
         user.setEmail(registrationForm.getEmail());

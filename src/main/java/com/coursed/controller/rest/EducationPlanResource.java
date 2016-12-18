@@ -1,6 +1,6 @@
 package com.coursed.controller.rest;
 
-import com.coursed.dto.EducationPlanForm;
+import com.coursed.dto.EducationPlanDTO;
 import com.coursed.model.EducationPlan;
 import com.coursed.service.EducationPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class EducationPlanResource {
     private EducationPlanService educationPlanService;
 
     @PostMapping("/create")
-    private EducationPlan createEducationPlan(@RequestBody EducationPlanForm planForm) {
+    private EducationPlan createEducationPlan(@RequestBody EducationPlanDTO planForm) {
         return educationPlanService.create(planForm);
     }
 

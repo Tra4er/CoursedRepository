@@ -12,8 +12,8 @@ import java.util.Optional;
  * Created by Hexray on 06.11.2016.
  */
 public interface UserService {
-    User registerStudent(UserStudentRegistrationForm registrationForm);
-    User registerTeacher(UserTeacherRegistrationForm registrationForm);
+    User registerStudent(UserStudentDTO registrationForm);
+    User registerTeacher(UserTeacherDTO registrationForm);
     void saveRegisteredUser(final User user);
     User getUserById(Long id);
     Optional<User> getUserByEmail(String email);

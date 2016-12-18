@@ -1,7 +1,6 @@
 package com.coursed.validator;
 
-import com.coursed.dto.UserStudentRegistrationForm;
-import com.coursed.dto.UserTeacherRegistrationForm;
+import com.coursed.dto.UserTeacherDTO;
 import com.coursed.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +21,13 @@ public class UserTeacherRegistrationFormValidator implements Validator {
     private UserService userService;
 
     public boolean supports(Class clazz) {
-        return UserTeacherRegistrationForm.class.isAssignableFrom(clazz);
+        return UserTeacherDTO.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
         LOGGER.debug("Validating {}", target);
-        UserTeacherRegistrationForm form = (UserTeacherRegistrationForm) target;
+        UserTeacherDTO form = (UserTeacherDTO) target;
         try {
             BasicValidatorUtil.validateEmail(form);
             BasicValidatorUtil.validatePasswords(form);

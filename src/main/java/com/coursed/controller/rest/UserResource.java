@@ -66,9 +66,9 @@ public class UserResource {
         return userService.getUserByEmail(email).get();
     }
 //    @PostMapping("/registrations")
-//    public String registration(@Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
-//                               @RequestBody(required = false) StudentRegistrationForm studentForm,
-//                               @RequestBody(required = false) TeacherRegistrationForm teacherForm,
+//    public String registration(@Valid @ModelAttribute("userForm") UserDTO userForm,
+//                               @RequestBody(required = false) StudentDTO studentForm,
+//                               @RequestBody(required = false) TeacherDTO teacherForm,
 //                               BindingResult bindingResult, final HttpServletRequest request) {
 //
 //        LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);

@@ -1,11 +1,10 @@
 package com.coursed.service.implementation;
 
-import com.coursed.dto.DisciplineForm;
+import com.coursed.dto.DisciplineDTO;
 import com.coursed.model.*;
 import com.coursed.repository.*;
 import com.coursed.service.DisciplineService;
 import com.coursed.service.YearService;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,17 +38,17 @@ public class DisciplineServiceImpl implements DisciplineService {
     }
 
     @Override
-    public Discipline create(DisciplineForm disciplineForm) {
+    public Discipline create(DisciplineDTO disciplineDTO) {
         Discipline discipline = new Discipline();
 
-        discipline.setName(disciplineForm.getName());
-        discipline.setType(disciplineForm.getType());
-        discipline.setHours(disciplineForm.getHours());
-        discipline.setCredits(disciplineForm.getCredits());
-        discipline.setCourseNumber(disciplineForm.getCourseNumber());
-        discipline.setSemesterNumber(disciplineForm.getSemesterNumber());
+        discipline.setName(disciplineDTO.getName());
+        discipline.setType(disciplineDTO.getType());
+        discipline.setHours(disciplineDTO.getHours());
+        discipline.setCredits(disciplineDTO.getCredits());
+        discipline.setCourseNumber(disciplineDTO.getCourseNumber());
+        discipline.setSemesterNumber(disciplineDTO.getSemesterNumber());
 
-        EducationPlan educationPlan = educationPlanRepository.findOne(disciplineForm.getEducationPlanId());
+        EducationPlan educationPlan = educationPlanRepository.findOne(disciplineDTO.getEducationPlanId());
 
         if (educationPlan == null)
             throw new IllegalArgumentException("educationPlan is null");

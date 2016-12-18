@@ -3,7 +3,7 @@ package com.coursed.dto;
 /**
  * Created by Hexray on 11.12.2016.
  */
-public class YearForm {
+public class YearDTO {
     private Integer beginYear;
     private Integer endYear;
 

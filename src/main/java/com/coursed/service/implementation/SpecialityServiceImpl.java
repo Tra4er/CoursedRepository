@@ -1,6 +1,6 @@
 package com.coursed.service.implementation;
 
-import com.coursed.dto.SpecialityForm;
+import com.coursed.dto.SpecialityDTO;
 import com.coursed.model.Speciality;
 import com.coursed.repository.SpecialityRepository;
 import com.coursed.service.SpecialityService;
@@ -18,10 +18,10 @@ public class SpecialityServiceImpl implements SpecialityService {
     private SpecialityRepository specialityRepository;
 
     @Override
-    public Speciality create(SpecialityForm specialityForm) {
+    public Speciality create(SpecialityDTO specialityDTO) {
         Speciality speciality = new Speciality();
-        speciality.setFullName(specialityForm.getFullName());
-        speciality.setGroupsName(specialityForm.getGroupsName());
+        speciality.setFullName(specialityDTO.getFullName());
+        speciality.setGroupsName(specialityDTO.getGroupsName());
 
         return specialityRepository.save(speciality);
     }

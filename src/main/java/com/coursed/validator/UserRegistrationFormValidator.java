@@ -1,6 +1,6 @@
 package com.coursed.validator;
 
-import com.coursed.dto.UserRegistrationForm;
+import com.coursed.dto.UserDTO;
 import com.coursed.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,24 +21,24 @@ public class UserRegistrationFormValidator implements Validator {
     private UserService userService;
 
     public boolean supports(Class clazz) {
-        return UserRegistrationForm.class.isAssignableFrom(clazz);
+        return UserDTO.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
         LOGGER.debug("Validating {}", target);
-        UserRegistrationForm form = (UserRegistrationForm) target;
+        UserDTO form = (UserDTO) target;
         validatePasswords(errors, form);
         validateEmail(errors, form);
     }
 
-    private void validatePasswords(Errors errors, UserRegistrationForm form) {
+    private void validatePasswords(Errors errors, UserDTO form) {
         if (!form.getPassword().equals(form.getConfirmPassword())) {
             errors.rejectValue("password", "error.user", "Passwords do not match");
         }
     }
 
-    private void validateEmail(Errors errors, UserRegistrationForm form) {
+    private void validateEmail(Errors errors, UserDTO form) {
         if (userService.getUserByEmail(form.getEmail()).isPresent()) {
             errors.rejectValue("email", "error.user","Email exists");
         }

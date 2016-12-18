@@ -1,10 +1,8 @@
 package com.coursed.controller.rest;
 
-import com.coursed.dto.SpecialityForm;
+import com.coursed.dto.SpecialityDTO;
 import com.coursed.model.Speciality;
-import com.coursed.model.Year;
 import com.coursed.service.SpecialityService;
-import com.coursed.service.YearService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +23,7 @@ public class SpecialityResourse {
     }
 
     @PostMapping("/create")
-    private Speciality createSpeciality(@RequestBody SpecialityForm specialityForm) {
-        return specialityService.create(specialityForm);
+    private Speciality createSpeciality(@RequestBody SpecialityDTO specialityDTO) {
+        return specialityService.create(specialityDTO);
     }
 }

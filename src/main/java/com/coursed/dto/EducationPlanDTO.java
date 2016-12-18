@@ -7,7 +7,7 @@ import com.coursed.model.enums.GroupType;
 /**
  * Created by Hexray on 11.12.2016.
  */
-public class EducationPlanForm {
+public class EducationPlanDTO {
     private Long yearId;
     private Long specialityId;
 
@@ -15,7 +15,7 @@ public class EducationPlanForm {
     private GroupDegree groupDegree;
     private CourseNumber courseNumber;
 
-    public EducationPlanForm() {
+    public EducationPlanDTO() {
     }
 
     public Long getYearId() {

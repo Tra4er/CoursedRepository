@@ -3,7 +3,7 @@ package com.coursed.dto;
 /**
  * Created by Hexray on 10.12.2016.
  */
-public class UserTeacherRegistrationForm implements BasicUserRegistrationForm {
+public class UserTeacherDTO implements BasicUserRegistrationForm {
     private String firstName;
     private String lastName;
     private String patronymic;
@@ -14,7 +14,7 @@ public class UserTeacherRegistrationForm implements BasicUserRegistrationForm {
 
     private String confirmPassword;
 
-    public UserTeacherRegistrationForm() {
+    public UserTeacherDTO() {
     }
 
     @Override

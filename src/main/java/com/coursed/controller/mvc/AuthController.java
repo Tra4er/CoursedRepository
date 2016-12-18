@@ -1,13 +1,10 @@
 package com.coursed.controller.mvc;
 
 import com.coursed.dto.*;
-import com.coursed.model.Student;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
 import com.coursed.registration.OnRegistrationCompleteEvent;
-import com.coursed.security.SecurityService;
 import com.coursed.service.UserService;
-import com.coursed.validator.UserRegistrationFormValidator;
 import com.coursed.validator.UserStudentRegistrationFormValidator;
 import com.coursed.validator.UserTeacherRegistrationFormValidator;
 import org.slf4j.Logger;
@@ -20,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,10 +61,10 @@ public class AuthController {
     }
 
     @PostMapping("/registration-student")
-    public String regsterStudent(@Valid @ModelAttribute("studentForm") UserStudentRegistrationForm userStudentRegistrationForm,
+    public String regsterStudent(@Valid @ModelAttribute("studentForm") UserStudentDTO userStudentDTO,
                              BindingResult bindingResult, final HttpServletRequest request, Model model) {
 
-        LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userStudentRegistrationForm, bindingResult);
+        LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userStudentDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "auth/login";
@@ -76,7 +72,7 @@ public class AuthController {
 
         User registered;
         try{
-            registered = userService.registerStudent(userStudentRegistrationForm);
+            registered = userService.registerStudent(userStudentDTO);
         } catch(DataIntegrityViolationException e) {
             LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
             return "auth/login";
@@ -94,10 +90,10 @@ public class AuthController {
     }
 
     @PostMapping("/registration-teacher")
-    public String registerTeacher(@Valid @ModelAttribute("teacherForm") UserTeacherRegistrationForm userTeacherRegistrationForm,
+    public String registerTeacher(@Valid @ModelAttribute("teacherForm") UserTeacherDTO userTeacherDTO,
                              BindingResult bindingResult, final HttpServletRequest request, Model model) {
 
-        LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userTeacherRegistrationForm, bindingResult);
+        LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userTeacherDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "auth/login";
@@ -105,7 +101,7 @@ public class AuthController {
 
         User registered;
         try{
-            registered = userService.registerTeacher(userTeacherRegistrationForm);
+            registered = userService.registerTeacher(userTeacherDTO);
         } catch(DataIntegrityViolationException e) {
             LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
             return "auth/login";

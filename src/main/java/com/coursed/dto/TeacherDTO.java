@@ -3,12 +3,12 @@ package com.coursed.dto;
 /**
  * Created by Hexray on 10.12.2016.
  */
-public class TeacherRegistrationForm {
+public class TeacherDTO {
     private String firstName;
     private String lastName;
     private String patronymic;
 
-    public TeacherRegistrationForm() {
+    public TeacherDTO() {
     }
 
     public String getFirstName() {

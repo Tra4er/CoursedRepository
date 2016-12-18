@@ -3,7 +3,7 @@ package com.coursed.dto;
 /**
  * Created by Hexray on 13.12.2016.
  */
-public class SpecialityForm {
+public class SpecialityDTO {
     private String fullName;
     private String groupsName;
 
@@ -23,11 +23,11 @@ public class SpecialityForm {
         this.groupsName = groupsName;
     }
 
-    public SpecialityForm(String fullName, String groupsName) {
+    public SpecialityDTO(String fullName, String groupsName) {
         this.fullName = fullName;
         this.groupsName = groupsName;
     }
 
-    public SpecialityForm() {
+    public SpecialityDTO() {
     }
 }

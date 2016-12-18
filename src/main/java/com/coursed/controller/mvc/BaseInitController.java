@@ -1,23 +1,17 @@
 package com.coursed.controller.mvc;
 
-import com.coursed.dto.SpecialityForm;
-import com.coursed.dto.TeacherRegistrationForm;
-import com.coursed.dto.UserTeacherRegistrationForm;
-import com.coursed.dto.YearForm;
+import com.coursed.dto.SpecialityDTO;
+import com.coursed.dto.UserTeacherDTO;
+import com.coursed.dto.YearDTO;
 import com.coursed.model.*;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 import com.coursed.model.enums.*;
-import com.coursed.repository.SemesterRepository;
-import com.coursed.repository.YearRepository;
 import com.coursed.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.text.SimpleDateFormat;
-import java.util.Set;
 
 /**
  * Created by Hexray on 31.10.2016.
@@ -67,7 +61,7 @@ public class BaseInitController {
         roleService.create(educatorRole);
         //Users
 
-        UserTeacherRegistrationForm user_Zhdanova = new UserTeacherRegistrationForm();
+        UserTeacherDTO user_Zhdanova = new UserTeacherDTO();
         user_Zhdanova.setEmail("head@head.com");
         user_Zhdanova.setPassword("123");
         user_Zhdanova.setPatronymic("Григорівна");
@@ -79,14 +73,14 @@ public class BaseInitController {
 
 
         //Year and semesters
-        YearForm yearForm = new YearForm();
-        yearForm.setBeginYear(2015);
-        yearForm.setEndYear(2016);
-        yearService.create(yearForm);
+        YearDTO yearDTO = new YearDTO();
+        yearDTO.setBeginYear(2015);
+        yearDTO.setEndYear(2016);
+        yearService.create(yearDTO);
 
         //Specialities
-        SpecialityForm is = new SpecialityForm("Комп'ютерні науки", "ІС");
-        SpecialityForm pi = new SpecialityForm("Програмна інженерія", "ІП");
+        SpecialityDTO is = new SpecialityDTO("Комп'ютерні науки", "ІС");
+        SpecialityDTO pi = new SpecialityDTO("Програмна інженерія", "ІП");
         Speciality isSp = specialityService.create(is);
         Speciality piSp = specialityService.create(pi);
 

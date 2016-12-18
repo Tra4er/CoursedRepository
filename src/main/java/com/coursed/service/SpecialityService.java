@@ -1,6 +1,6 @@
 package com.coursed.service;
 
-import com.coursed.dto.SpecialityForm;
+import com.coursed.dto.SpecialityDTO;
 import com.coursed.model.Speciality;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Hexray on 26.11.2016.
  */
 public interface SpecialityService {
-    Speciality create(SpecialityForm specialityForm);
+    Speciality create(SpecialityDTO specialityDTO);
     List<Speciality> findAll();
     Speciality findOne(Long id);
 }
