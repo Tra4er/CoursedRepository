@@ -28,17 +28,20 @@ public class Discipline {
     @Enumerated
     private SemesterNumber semesterNumber;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "discipline_teachers", joinColumns = @JoinColumn(name = "discipline_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private List<Teacher> teachers;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "discipline")
     private List<FinalGrade> finalGrades;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "discipline")
     private List<AttestationGrade> attestationGrades;
 
-    @JsonBackReference("educationplan-discipline")
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="educationPlan_id")
     private EducationPlan educationPlan;

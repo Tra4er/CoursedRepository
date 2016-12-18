@@ -1,20 +1,17 @@
 package com.coursed.service.implementation;
 
 import com.coursed.dto.DisciplineForm;
-import com.coursed.model.Discipline;
-import com.coursed.model.EducationPlan;
-import com.coursed.model.Speciality;
-import com.coursed.model.Teacher;
-import com.coursed.repository.DisciplineRepository;
-import com.coursed.repository.EducationPlanRepository;
-import com.coursed.repository.SpecialityRepository;
-import com.coursed.repository.TeacherRepository;
+import com.coursed.model.*;
+import com.coursed.repository.*;
 import com.coursed.service.DisciplineService;
+import com.coursed.service.YearService;
 import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Hexray on 11.12.2016.
@@ -28,10 +25,13 @@ public class DisciplineServiceImpl implements DisciplineService {
     private TeacherRepository teacherRepository;
 
     @Autowired
-    private SpecialityRepository specialityRepository;
+    private EducationPlanRepository educationPlanRepository;
 
     @Autowired
-    private EducationPlanRepository educationPlanRepository;
+    private YearService yearService;
+
+    @Autowired
+    private PlannedEventRepository plannedEventRepository;
 
     @Override
     public List<Discipline> findAll() {
@@ -51,7 +51,7 @@ public class DisciplineServiceImpl implements DisciplineService {
 
         EducationPlan educationPlan = educationPlanRepository.findOne(disciplineForm.getEducationPlanId());
 
-        if(educationPlan == null)
+        if (educationPlan == null)
             throw new IllegalArgumentException("educationPlan is null");
 
         discipline.setEducationPlan(educationPlan);
@@ -69,5 +69,44 @@ public class DisciplineServiceImpl implements DisciplineService {
 
         discipline.setTeachers(teachersList);
         disciplineRepository.save(discipline);
+    }
+
+    @Override
+    public List<Discipline> getAllActualConnectedWithTeacher(Long teacherId, Long plannedEventId) {
+        List<Discipline> disciplineList = disciplineRepository.findAll();
+        Teacher teacher = teacherRepository.findOne(teacherId);
+
+        Year currentYear = yearService.getCurrent();
+        List<EducationPlan> educationPlans = currentYear.getEducationPlans();
+
+        //// TODO: 18.12.2016  transfer to jpa to improve performance
+        List<Discipline> connectedWithTeacher = disciplineList.stream()
+                .filter(discipline -> discipline.getTeachers().contains(teacher))
+                .collect(Collectors.toList());
+
+        List<Discipline> actualDisciplines = new ArrayList<>();
+
+        if (plannedEventId != null) {
+            Semester semester = plannedEventRepository.findOne(plannedEventId).getSemester();
+            for (EducationPlan plan : educationPlans) {
+
+                List<Discipline> disciplinesFromPlan = plan.getDisciplines();
+                for (Discipline discipline : connectedWithTeacher) {
+                    if (disciplinesFromPlan.contains(discipline) &&
+                            discipline.getSemesterNumber() == semester.getSemesterNumber())
+                        actualDisciplines.add(discipline);
+                }
+            }
+        } else {
+            for (EducationPlan plan : educationPlans) {
+                List<Discipline> disciplinesFromPlan = plan.getDisciplines();
+                for (Discipline discipline : connectedWithTeacher) {
+                    if (disciplinesFromPlan.contains(discipline))
+                        actualDisciplines.add(discipline);
+                }
+            }
+        }
+
+        return actualDisciplines;
     }
 }

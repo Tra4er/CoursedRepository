@@ -34,4 +34,11 @@ public class DisciplineResource {
     {
         disciplineService.connectWithTeacher(disciplineId, teacherId);
     }
+
+    @GetMapping("/getAllActualConnectedWithTeacher")
+    private Collection<Discipline> getAllActualConnectedWithTeacher(@RequestParam(name = "teacherId") Long teacherId,
+                                                                    @RequestParam(name = "teacherId", required = false) Long plannedEventId)
+    {
+        return disciplineService.getAllActualConnectedWithTeacher(teacherId, plannedEventId);
+    }
 }

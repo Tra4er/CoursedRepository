@@ -12,4 +12,5 @@ public interface DisciplineService {
     List<Discipline> findAll();
     Discipline create(DisciplineForm disciplineForm);
     void connectWithTeacher(Long disciplineId, Long teacherId);
+    List<Discipline> getAllActualConnectedWithTeacher(Long teacherId, Long plannedEventId);
 }

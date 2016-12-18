@@ -41,6 +41,14 @@ public class Year {
         this.endYear = endYear;
     }
 
+    public List<EducationPlan> getEducationPlans() {
+        return educationPlans;
+    }
+
+    public void setEducationPlans(List<EducationPlan> educationPlans) {
+        this.educationPlans = educationPlans;
+    }
+
     public Long getId() {
         return id;
     }
