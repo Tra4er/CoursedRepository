@@ -7,7 +7,7 @@ localGroupUkr["FIRST"] = "Перший";
 localGroupUkr["SECOND"] = "Другий";
 localGroupUkr["THIRD"] = "Третій";
 localGroupUkr["FOURTH"] = "Четвертий";
-localGroupUkr["FIFTH"] = "П'ятий";
+localGroupUkr["FIFTH"] = "П’ятий";
 localGroupUkr["SIXTH"] = "Шостий";
 localGroupUkr["BACHELOR"] = "Бакалаврат";
 localGroupUkr["MASTER"] = "Магістратура";
@@ -25,7 +25,7 @@ courseNumbers["FIRST"] = "Перший";
 courseNumbers["SECOND"] = "Другий";
 courseNumbers["THIRD"] = "Третій";
 courseNumbers["FOURTH"] = "Четвертий";
-courseNumbers["FIFTH"] = "П'ятий";
+courseNumbers["FIFTH"] = "П’ятий";
 courseNumbers["SIXTH"] = "Шостий";
 
 var groupDegree = {};

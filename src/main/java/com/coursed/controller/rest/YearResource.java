@@ -4,18 +4,11 @@ import com.coursed.dto.YearForm;
 import com.coursed.model.Semester;
 import com.coursed.model.Year;
 import com.coursed.service.YearService;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Collection;
-import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 /**
  * Created by Hexray on 16.11.2016.
@@ -30,9 +23,12 @@ public class YearResource {
     private Collection<Year> getYears() {
         return yearService.findAll();
     }
+
     //TODO: transfer into semesterResource, todo2: change to parameters
     @GetMapping("/getSemestersFromYear/{id}")
     private Collection<Semester> getSemesters(@PathVariable(value="id") Long yearId) {
+        ObjectMapper mapper = new ObjectMapper();
+
         return yearService.findOne(yearId).getSemesters();
     }
 

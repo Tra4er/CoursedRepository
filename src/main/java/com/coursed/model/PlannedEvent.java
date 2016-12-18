@@ -1,9 +1,7 @@
 package com.coursed.model;
 
 import com.coursed.model.enums.PlannedEventType;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.time.*;
@@ -11,7 +9,6 @@ import java.time.*;
 /**
  * Created by Hexray on 14.11.2016.
  */
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
 public class PlannedEvent {
     @Id

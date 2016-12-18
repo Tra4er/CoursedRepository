@@ -2,9 +2,11 @@ package com.coursed.service.implementation;
 
 import com.coursed.model.PlannedEvent;
 import com.coursed.model.Semester;
+import com.coursed.model.Year;
 import com.coursed.model.enums.PlannedEventType;
 import com.coursed.repository.PlannedEventRepository;
 import com.coursed.service.PlannedEventService;
+import com.coursed.service.YearService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +29,9 @@ public class PlannedEventServiceImpl implements PlannedEventService {
 
     @Autowired
     private PlannedEventRepository plannedEventRepository;
+
+    @Autowired
+    private YearService yearService;
 
     /**
      *  Returns list of events that have begin date from as in param
@@ -95,5 +101,19 @@ public class PlannedEventServiceImpl implements PlannedEventService {
     @Override
     public List<PlannedEvent> findAllBySemester(Semester semester) {
         return plannedEventRepository.findAllBySemester(semester);
+    }
+
+    @Override
+    public List<PlannedEvent> findAllFromCurrentYear() {
+        Year year = yearService.getCurrent();
+        List<PlannedEvent> plannedEvents = new ArrayList<>();
+
+        List<PlannedEvent> eventsFromFirstSemester = year.getSemesters().get(0).getPlannedEvents();
+        List<PlannedEvent> eventsFromSecondSemester = year.getSemesters().get(1).getPlannedEvents();
+
+        eventsFromFirstSemester.stream().forEach(plannedEvent -> plannedEvents.add(plannedEvent));
+        eventsFromSecondSemester.stream().forEach(plannedEvent -> plannedEvents.add(plannedEvent));
+
+        return null;
     }
 }

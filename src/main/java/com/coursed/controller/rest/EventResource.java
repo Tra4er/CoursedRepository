@@ -26,4 +26,9 @@ public class EventResource {
     public Collection<PlannedEvent> getAll() {
         return plannedEventService.findAll();
     }
+
+    @GetMapping("/getAllFromCurrentYear")
+    public Collection<PlannedEvent> getAllFromCurrentYear(){
+        return plannedEventService.findAllFromCurrentYear();
+    }
 }

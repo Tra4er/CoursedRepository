@@ -3,11 +3,9 @@
  */
 $(function(){
     fillOnePlan();
-    fillSelect("courseNumberS", courseNumbers);
 });
 
 $('a[name=plan-show]').on('shown.bs.tab', function(e) {
-
 if ($(e.target).attr('id') == 'one-plan') {
         fillOnePlan();
     }
@@ -30,7 +28,6 @@ function getSpecialities() {
 }
 
 function fillOnePlan(){
-// /api/years/getCurrent
     var spec = getSpecialities();
     $("#one-plan-container").html(" ");
     $.getJSON(API + "/years/getCurrent", function(year){
@@ -55,31 +52,34 @@ function htmlFormForEducationPlan(beginYear, endYear, yearId, spec, educationPla
         htmlCode += "<div class='speciality-container col-xs-12' name='" + spec[key2].id + "'><h4 align='center'>" + spec[key2].name + "</h4>";
         var general = "<div class='col-xs-6 group-type-container' name='GENERAL_FORM'><h5 align='center' class='col-xs-12'>" + localGroupUkr['GENERAL_FORM'] + "</h5>";
         var distance = "<div class='col-xs-6 group-type-container' name='DISTANCE_FORM'><h5 align='center' class='col-xs-12'>" + localGroupUkr['DISTANCE_FORM'] + "</h5>";
+        var generalCounter = 0;
+        var distanceCounter = 0;
         $.each(educationPlans, function(key3, plan){
             if (plan.speciality['id'] == spec[key2].id){
                 if (plan.groupType == 'GENERAL_FORM') {
-                    general += "<a href='/disciplines?planId=" + plan.id + "&yearStr=" + yearString + "'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
+                    general += "<a href='/disciplines?planId=" + plan.id + "&yearStr=" + yearString + "' name='" + plan.courseNumber + "'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
+                    generalCounter++;
                 }
                 else if (plan.groupType == 'DISTANCE_FORM')
                 {
-                    distance += "<a href='/disciplines?planId=" + plan.id + "&yearStr=" + yearString + "'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
+                    distance += "<a href='/disciplines?planId=" + plan.id + "&yearStr=" + yearString + "' name='" + plan.courseNumber + "'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
+                    distanceCounter++;
                 }
             }
         });
-        general += "<button type='button' class='btn btn-success col-xs-12 add-plan-btn' data-toggle='modal' data-target='#plan-dialog-simple'><span class='glyphicon glyphicon-plus'></span></button></div>";
-        distance += "<button type='button' class='btn btn-success col-xs-12 add-plan-btn' data-toggle='modal' data-target='#plan-dialog-simple'><span class='glyphicon glyphicon-plus'></span></button></div>";
+        if(distanceCounter < 6){
+            distance += "<button name='"+ yearString +"' type='button' class='btn btn-success col-xs-12 add-plan-btn' data-toggle='modal' data-target='#plan-dialog-simple'><span class='glyphicon glyphicon-plus'></span></button>";
+        };
+        if (generalCounter < 6){
+            general += "<button name='"+ yearString +"' type='button' class='btn btn-success col-xs-12 add-plan-btn' data-toggle='modal' data-target='#plan-dialog-simple'><span class='glyphicon glyphicon-plus'></span></button>";
+        }
+        general += "</div>"
+        distance += "</div>";
         htmlCode += general + distance + "</div>";
     });
     htmlCode += "</div>";
     $("#" + containerId).append(htmlCode);
 }
-
-$('.plan-content-container').on('click', 'input', function () {
-    var pId = "1";
-    var yStr = "blabla"
-    $.get( "/disciplines", { planId : pId, yearString: yStr});
-    // alert('и тут мы переходим на страничку учебного плана либо он открывается в модальном окне');
-});
 
 $('.plan-content-container').on('click', '.add-plan-btn', function () {
     var yearId = $(this).closest('.year-container').attr('name');
@@ -92,7 +92,31 @@ $('.plan-content-container').on('click', '.add-plan-btn', function () {
     $('#modal-body-form-plan-simple .yearId').attr('value', yearId);
     $('#modal-body-form-plan-simple .specialityId').attr('value', specialityId).text(specialityText);
     $('#modal-body-form-plan-simple .groupType').attr('value', groupType).text(localGroupUkr[groupType]);
+
+    $aEl = $(this).closest('.group-type-container').children('a');
+    var myArray = [];
+    $aEl.each(function(i, elem){
+         myArray.push($(elem).attr('name'));
+    });
+    var firstString = $("#courseNumberS > option:first").text();
+    var items = "<option value='0'> " + firstString + "</option>";
+    $.each(courseNumbers, function(i, entity)
+    {
+        if(!in_array(i, myArray)){
+            items += "<option value='" + i + "'>" + entity + "</option>";
+        }
+    });
+    $('#courseNumberS').html(items);
 });
+
+function in_array(value, array)
+{
+    for(var i = 0; i < array.length; i++)
+    {
+        if(array[i] == value) return true;
+    }
+    return false;
+}
 
 $('#courseNumberS').on('change', function(){
    var value = $('#courseNumberS').val();
@@ -101,7 +125,6 @@ $('#courseNumberS').on('change', function(){
     }
     else if (value == 'FIFTH' || value == 'SIXTH'){
         $('#modal-body-form-plan-simple .groupDegree').attr('value', 'MASTER').text(localGroupUkr["MASTER"]);
-
     }
     else
     {
@@ -109,22 +132,18 @@ $('#courseNumberS').on('change', function(){
     }
 });
 
-//ToDo: реализовать сброс, подгрузку курсов
-// Устанавливаем в 0 выпадающие списки как только начинает отображаться окно
-// $('#plan-dialog').on('hidden.bs.modal', function (event) {
-//     // resetSelect('modal-body-form-plan');
-//     $('#modal-body-form-plan').each(function(key, value){
-//          $("#" + value + " :first").attr("selected", "selected");
-//      });
-// });
-
 $('#button-post-plan-simple').on('click', function() {
+    var yearId = $('#modal-body-form-plan-simple .yearId').attr('value');
+    var specialityId = $('#modal-body-form-plan-simple .specialityId').attr('value');
+    var groupType = $('#modal-body-form-plan-simple .groupType').attr('value');
+    var groupDegree = $('#modal-body-form-plan-simple .groupDegree').attr('value');
+    var courseNumber = $('#modal-body-form-plan-simple [name=courseNumber]').val();
 
-    var obj = JSON.stringify({"yearId" : $('#modal-body-form-plan-simple .yearId').attr('value'),
-        "specialityId": $('#modal-body-form-plan-simple .specialityId').attr('value'),
-        "groupType": $('#modal-body-form-plan-simple .groupType').attr('value'),
-        "groupDegree": $('#modal-body-form-plan-simple .groupDegree').attr('value'),
-        "courseNumber": $('#modal-body-form-plan-simple [name=courseNumber]').val()
+    var obj = JSON.stringify({"yearId" : yearId,
+        "specialityId": specialityId,
+        "groupType": groupType,
+        "groupDegree": groupDegree,
+        "courseNumber": courseNumber
         });
 
     $.ajax({
@@ -132,8 +151,9 @@ $('#button-post-plan-simple').on('click', function() {
             url: "api/educationPlan/create",
             contentType: "application/json",
             data: obj,
-            success: function (data) {
+            success: function (plan) {
                 $('#plan-dialog-simple').modal("toggle");
+                addCourseButton(yearId, specialityId, groupType, courseNumber, plan.id);
             },
             error: function (e) {
                 alert('Помилка!');
@@ -142,11 +162,24 @@ $('#button-post-plan-simple').on('click', function() {
         });
 });
 
+// динамическое добавление кнопки
+function addCourseButton (yearId, specialityId, groupType, courseNumber, planId){
+    $groupTypeContainer = $('.plan-content-container .year-container[name=' +yearId+ '] .speciality-container[name='+ specialityId +'] .group-type-container[name='+ groupType +']');
+    $buttonInContainer = $groupTypeContainer.children('button');
+    $aInContainer = $groupTypeContainer.children('a');
+    var yearString = $buttonInContainer.last().attr('name');
+    var htmlInfo = "<a href='/disciplines?planId=" + planId + "&yearStr=" + yearString + "' name='" + courseNumber + "'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[courseNumber] + " курс'/></a>"
+    if ($aInContainer.length == 0)
+    {
+        $buttonInContainer.before(htmlInfo);
+    }
+    else if ($aInContainer.length < 5)
+    {
 
-// Отобразить все учебные планы
-// $('#button-get-all-plans').on('click', function(){
-//     $("#tbodyId").empty();
-//     //fillTable();
-//     //#plans-table
-//     //api/educationPlan/getAll
-// });
+        $aInContainer.last().after(htmlInfo)
+    }
+    else if ($aInContainer.length >= 5)
+    {
+        $buttonInContainer.replaceWith(htmlInfo);
+    }
+}

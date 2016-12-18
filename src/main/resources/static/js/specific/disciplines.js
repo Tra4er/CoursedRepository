@@ -3,7 +3,7 @@
  */
 
 $(function () {
-    var titles = ['Дисципліна', 'Кількіть годин', 'Кількість кредитів', 'Вид семестрової атестації', 'Викладач', 'Cеместер'];
+    var titles = ['№', 'Дисципліна', 'Кількіть годин', 'Кількість кредитів', 'Вид семестрової атестації', 'ПІБ викладачів', 'Cеместер'];
     insertTable(titles, "content-table-disciplines");
     fillTableDisciplinesForPlan();
 });
@@ -14,9 +14,10 @@ function fillTableDisciplinesForPlan() {
             $('.plan-info .groupType').attr('value', r.groupType).text(localGroupUkr[r.groupType]);
             $('.plan-info .groupDegree').attr('value', r.groupDegree).text(localGroupUkr[r.groupDegree]);
             $('.courseNumber').attr('value', r.courseNumber).text(localGroupUkr[r.courseNumber]);
-
+            var count = 0;
             $.each(r.disciplines, function (i, entity) {
                 var htmlRow = "<tr id=" + entity.id + ">";
+                htmlRow += "<td>" + ++count + "</td>";
                 htmlRow += "<td>" + entity.name + "</td>";
                 htmlRow += "<td>" + entity.hours + "</td>";
                 htmlRow += "<td>" + entity.credits + "</td>";
@@ -89,14 +90,14 @@ $('#button-post-discipline').on('click', function () {
 
 $('#content-table-disciplines > tbody').on('click', 'tr > td > .btn-default', function(){
     var discId = $(this).closest('tr').attr("id");
-    var info = $(this).closest('tr').children('td:first').text()
+    var info = $(this).closest('tr').children('td:first').next().text()
 
     $('#teacher-container').html("<h2 id='"+ discId +"'>" + info + "</h2> <br/>");
 
-    $.getJSON("api/user/getAllTeachersWithoutDiscipline", {disciplineId : discId}, function(response){
+    $.getJSON("api/teacher/getAllWithoutDiscipline", {disciplineId : discId}, function(response){
         $.each(response, function(i, teach){
-            var item = "<input type='button' id='" + teach.teacherEntity['id'] + "' class='btn btn-default col-xs-12' value = '"
-                + teach.teacherEntity['lastName'] + " " + teach.teacherEntity['firstName'] + " " + teach.teacherEntity['patronymic'] + "'/>";
+            var item = "<input type='button' id='" + teach.id + "' class='btn btn-default col-xs-12' value = '"
+                + teach.lastName + " " + teach.firstName + " " + teach.patronymic + "'/>";
             $('#teacher-container').append(item);
         })
     });
@@ -119,11 +120,11 @@ $('#teacher-container').on('click', 'input', function(){
 
 function reloadTeachersForDiscipline(disciplineId)
 {
-    $.getJSON('api/user/getAllTeachersWithDiscipline', {disciplineId : disciplineId}, function(response){
+    $.getJSON('api/teacher/getAllWithDiscipline', {disciplineId : disciplineId}, function(response){
         var htmlRow = "";
         if (response.length != 0){
             $.each( response, function (i, teacher) {
-                htmlRow += "<p>" + teacher.teacherEntity['lastName'] + " " + teacher.teacherEntity['firstName'].substring(0,1) + ". " + teacher.teacherEntity['patronymic'].substring(0,1) + ".</p>";
+                htmlRow += "<p>" + teacher.lastName + " " + teacher.firstName.substring(0,1) + ". " + teacher.patronymic.substring(0,1) + ".</p>";
             })
         }
         else {
