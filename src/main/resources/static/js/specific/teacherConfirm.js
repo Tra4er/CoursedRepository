@@ -37,5 +37,14 @@ $('#UnconfirmedTeachers-table > tbody').on('click', 'tr > td > .btn-success', fu
 });
 
 $('#UnconfirmedTeachers-table > tbody').on('click', 'tr > td > .btn-danger', function(){
-    alert('Видалення користувачів на стадії розробки');
+    var myId = $(this).parent().attr("id");
+    var thisButton = $(this).closest('tr');
+    $.get( "api/user/deleteUser", {userId: myId})
+        .done(function(){
+            $(thisButton).remove();
+        })
+        .fail(function () {
+            alert("Помилка!")
+        });
+
 });
