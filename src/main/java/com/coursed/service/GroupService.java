@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Hexray on 26.11.2016.
  */
 public interface GroupService {
-    void create(Group group);
+    Group create(Group group);
     List<Group> findAll();
     List<Group> findAllFromSpeciality(Long specialityId);
     List<Group> findAllFromSemester(Long semesterId);
