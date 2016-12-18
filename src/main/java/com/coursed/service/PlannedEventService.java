@@ -20,4 +20,5 @@ public interface PlannedEventService {
     List<PlannedEvent> findAllByExpirationDate(String date);
     List<PlannedEvent> findAllByEventType(PlannedEventType plannedEventType);
     List<PlannedEvent> findAllBySemester(Semester semester);
+    List<PlannedEvent> findAllFromCurrentYear();
 }
