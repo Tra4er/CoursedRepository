@@ -35,7 +35,11 @@ public class PlannedEventServiceImpl implements PlannedEventService {
 
     @Override
     public PlannedEvent findOne(String eventId) {
-        return plannedEventRepository.findOne(Long.parseLong(eventId));
+        try{
+            return plannedEventRepository.findOne(Long.parseLong(eventId));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Wrong event id.");
+        }
     }
     /**
      *  Returns list of events that have begin date from as in param
@@ -51,7 +55,7 @@ public class PlannedEventServiceImpl implements PlannedEventService {
             beginDate = LocalDateTime.parse(beginDateString);
             expirationDate = LocalDateTime.parse(expirationDateString);
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Wrong date.", e);
+            throw new IllegalArgumentException("Wrong date.");
         }
 
         if(semester == null) { // TODO mb i should go to semester rep and check
