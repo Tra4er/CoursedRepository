@@ -34,9 +34,9 @@ public class PlannedEventServiceImpl implements PlannedEventService {
     private YearService yearService;
 
     @Override
-    public PlannedEvent findOne(String eventId) {
+    public PlannedEvent findOne(Long eventId) {
         try{
-            return plannedEventRepository.findOne(Long.parseLong(eventId));
+            return plannedEventRepository.findOne(eventId);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Wrong event id.");
         }

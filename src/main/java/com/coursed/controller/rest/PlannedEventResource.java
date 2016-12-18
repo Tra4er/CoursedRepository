@@ -15,13 +15,13 @@ import java.util.Collection;
  */
 @RestController
 @RequestMapping("/api/events")
-public class EventResource {
+public class PlannedEventResource {
 
     @Autowired
     private PlannedEventService plannedEventService;
 
     @GetMapping("/getEvent")
-    public PlannedEvent getEvent(@RequestParam String eventId) {
+    public PlannedEvent getEvent(@RequestParam(name = "eventId") Long eventId) {
         return plannedEventService.findOne(eventId);
     }
 
