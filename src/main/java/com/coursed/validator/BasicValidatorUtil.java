@@ -12,10 +12,7 @@ import javax.validation.ValidationException;
  */
 public class BasicValidatorUtil {
 
-    @Autowired
-    private static UserService userService;
-
-    public static void validateEmail(BasicUserRegistrationForm form) throws ValidationException {
+    public static void validateEmail(BasicUserRegistrationForm form, UserService userService) throws ValidationException {
         String reg = "[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z]+(\\.[A-Za-z]+)*(\\.[A-Za-z]{2,5})$";
         if (!form.getEmail().matches(reg)) {
             throw new ValidationException("Wrong characters in email");
@@ -36,7 +33,7 @@ public class BasicValidatorUtil {
     }
 
     public static void validateNames(BasicUserRegistrationForm form) throws ValidationException {
-        String reg = "^[А-Я][а-я]{1,15}";
+        String reg = "^[А-ЯІЄ][а-яіє]{1,15}"; // TODO ukr dictionary
         if (!form.getFirstName().matches(reg)) {
             throw new ValidationException("First name is wrong");
         }

@@ -31,7 +31,7 @@ public class UserStudentRegistrationFormValidator implements Validator {
         LOGGER.debug("Validating {}", target);
         UserStudentDTO form = (UserStudentDTO) target;
         try {
-            BasicValidatorUtil.validateEmail(form);
+            BasicValidatorUtil.validateEmail(form, userService);
             BasicValidatorUtil.validatePasswords(form);
             BasicValidatorUtil.validateNames(form);
             validateNumber(form);
