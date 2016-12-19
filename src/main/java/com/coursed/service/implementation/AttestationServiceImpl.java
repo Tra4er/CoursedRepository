@@ -9,6 +9,7 @@ import com.coursed.repository.DisciplineRepository;
 import com.coursed.repository.StudentRepository;
 import com.coursed.service.AttestationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * Created by Hexray on 19.12.2016.
  */
+@Service
 public class AttestationServiceImpl implements AttestationService {
 
     @Autowired
