@@ -9,7 +9,7 @@ $(function(){
 });
 
 function fillTeachersTable(){
-    $.getJSON("api/user/getAllUnconfirmedTeachers", function(response){
+    $.getJSON("api/users/getAllUnconfirmedTeachers", function(response){
         //Go through the each entity in the response
         $.each(response, function (i, entity) {
             if(entity.teacherEntity != null) {
@@ -27,7 +27,7 @@ function fillTeachersTable(){
 $('#UnconfirmedTeachers-table > tbody').on('click', 'tr > td > .btn-success', function(){
     var myId = $(this).parent().attr("id");
     var thisButton = $(this).closest('tr');
-    $.post( "api/user/confirm-teacher", {userId: myId})
+    $.post( "api/users/confirm-teacher", {userId: myId})
         .done(function(){
             $(thisButton).remove();
         })
@@ -39,7 +39,7 @@ $('#UnconfirmedTeachers-table > tbody').on('click', 'tr > td > .btn-success', fu
 $('#UnconfirmedTeachers-table > tbody').on('click', 'tr > td > .btn-danger', function(){
     var myId = $(this).parent().attr("id");
     var thisButton = $(this).closest('tr');
-    $.get( "api/user/deleteUser", {userId: myId})
+    $.get( "api/users/deleteUser", {userId: myId})
         .done(function(){
             $(thisButton).remove();
         })
