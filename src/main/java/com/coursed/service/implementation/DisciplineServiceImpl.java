@@ -2,6 +2,8 @@ package com.coursed.service.implementation;
 
 import com.coursed.dto.DisciplineDTO;
 import com.coursed.model.*;
+import com.coursed.model.enums.DisciplineType;
+import com.coursed.model.enums.PlannedEventType;
 import com.coursed.repository.*;
 import com.coursed.service.DisciplineService;
 import com.coursed.service.YearService;
@@ -86,16 +88,25 @@ public class DisciplineServiceImpl implements DisciplineService {
         List<Discipline> actualDisciplines = new ArrayList<>();
 
         if (plannedEventId != null) {
-            Semester semester = plannedEventRepository.findOne(plannedEventId).getSemester();
-            for (EducationPlan plan : educationPlans) {
+            PlannedEvent plannedEvent = plannedEventRepository.findOne(plannedEventId);
+            Semester semester = plannedEvent.getSemester();
 
+            for (EducationPlan plan : educationPlans) {
                 List<Discipline> disciplinesFromPlan = plan.getDisciplines();
                 for (Discipline discipline : connectedWithTeacher) {
+
                     if (disciplinesFromPlan.contains(discipline) &&
-                            discipline.getSemesterNumber() == semester.getSemesterNumber())
-                        actualDisciplines.add(discipline);
+                            discipline.getSemesterNumber() == semester.getSemesterNumber()) {
+
+                        if((plannedEvent.getEventType() == PlannedEventType.GRADING_WEEK && discipline.getType() == DisciplineType.CREDIT) ||
+                                (plannedEvent.getEventType() == PlannedEventType.GRADING_WEEK && discipline.getType() == DisciplineType.DIFFERENTIATED_CREDIT) ||
+                                (plannedEvent.getEventType() == PlannedEventType.GRADING_WEEK && discipline.getType() == DisciplineType.COURSE_PROJECT) ||
+                                (plannedEvent.getEventType() == PlannedEventType.EXAMINATION && discipline.getType() == DisciplineType.EXAM))
+                            actualDisciplines.add(discipline);
+                    }
                 }
             }
+
         } else {
             for (EducationPlan plan : educationPlans) {
                 List<Discipline> disciplinesFromPlan = plan.getDisciplines();
