@@ -14,4 +14,5 @@ public interface StudentService {
     User registerStudent(UserStudentDTO userStudentDTO);
     Student findOne(Long id);
     List<Student> findAll();
+    List<Student> findAllFromGroup(Long groupId);
 }

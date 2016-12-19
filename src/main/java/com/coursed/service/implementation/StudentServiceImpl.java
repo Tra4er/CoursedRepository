@@ -1,8 +1,10 @@
 package com.coursed.service.implementation;
 
 import com.coursed.dto.UserStudentDTO;
+import com.coursed.model.Group;
 import com.coursed.model.Student;
 import com.coursed.model.auth.User;
+import com.coursed.repository.GroupRepository;
 import com.coursed.repository.RoleRepository;
 import com.coursed.repository.StudentRepository;
 import com.coursed.repository.UserRepository;
@@ -31,6 +33,9 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private GroupRepository groupRepository;
+
     @Override
     public void create(Student student) {
         studentRepository.save(student);
@@ -49,5 +54,12 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> findAll() {
         return studentRepository.findAll();
+    }
+
+    @Override
+    public List<Student> findAllFromGroup(Long groupId) {
+        Group group = groupRepository.findOne(groupId);
+
+        return group.getStudents();
     }
 }
