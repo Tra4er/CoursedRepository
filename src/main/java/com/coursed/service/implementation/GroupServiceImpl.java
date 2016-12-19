@@ -3,6 +3,7 @@ package com.coursed.service.implementation;
 import com.coursed.model.*;
 import com.coursed.model.enums.CourseNumber;
 import com.coursed.model.enums.SemesterNumber;
+import com.coursed.repository.DisciplineRepository;
 import com.coursed.repository.EducationPlanRepository;
 import com.coursed.repository.GroupRepository;
 import com.coursed.repository.SemesterRepository;
@@ -29,6 +30,9 @@ public class GroupServiceImpl implements GroupService {
 
     @Autowired
     private SemesterRepository semesterRepository;
+
+    @Autowired
+    private DisciplineRepository disciplineRepository;
 
     @Autowired
     private EducationPlanRepository educationPlanRepository;
@@ -83,8 +87,11 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Group> findAllForGrading(Long educationPlanId, SemesterNumber semesterNumber, CourseNumber courseNumber) {
-        EducationPlan educationPlan = educationPlanRepository.findOne(educationPlanId);
+    public List<Group> findAllForGrading(Long disciplineId, SemesterNumber semesterNumber, CourseNumber courseNumber) {
+        Discipline discipline = disciplineRepository.findOne(disciplineId);
+
+        EducationPlan educationPlan = discipline.getEducationPlan();
+//                educationPlanRepository.findOne(educationPlanId);
         Year year = educationPlan.getYear();
 
         Semester semester = year.getSemesters().stream()

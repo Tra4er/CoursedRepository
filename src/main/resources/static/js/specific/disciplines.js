@@ -97,10 +97,11 @@ $('tbody').on('click', 'tr .disc-teach-btn', function(){
     var info = $(this).closest('tr').children('td:first').next().text();
     $('#teacher-container').html("<h2 id='"+ discId +"'>" + info + "</h2> <br/>");
     $.getJSON("api/teacher/getAllWithoutDiscipline", {disciplineId : discId}, function(response){
+        var $tc = $('#teacher-container')
         $.each(response, function(i, teach){
             var item = "<input type='button' id='" + teach.id + "' class='btn btn-default col-xs-12' value = '"
                 + teach.lastName + " " + teach.firstName + " " + teach.patronymic + "'/>";
-            $('#teacher-container').append(item);
+            $tc.append(item);
         })
     });
 });

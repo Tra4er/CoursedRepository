@@ -54,10 +54,10 @@ public class GroupResource {
     @GetMapping("/getAllForGrading")
     private Collection<Group> getGroupsForGrading(@RequestParam(name = "semesterNumber") SemesterNumber semesterNumber,
                                                   @RequestParam(name = "courseNumber") CourseNumber courseNumber,
-                                                  @RequestParam(name = "educationPlanId") Long educationPlanId)
+                                                  @RequestParam(name = "disciplineId") Long disciplineId)
     {
 
-        return groupService.findAllForGrading(educationPlanId, semesterNumber, courseNumber);
+        return groupService.findAllForGrading(disciplineId, semesterNumber, courseNumber);
     }
 
     @GetMapping("/getAllWithoutCurators")
