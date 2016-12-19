@@ -30,6 +30,7 @@ public class ConvertersConfig extends WebMvcConfigurerAdapter {
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         //mapper.configure(MapperFeature.DEFAULT_VIEW_INCLUSION, false);
         mapper.registerModule(new JavaTimeModule());
+        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(mapper);
         return converter;
     }
