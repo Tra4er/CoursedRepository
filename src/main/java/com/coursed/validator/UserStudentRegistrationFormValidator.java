@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.validation.ValidationException;
+
 /**
  * Created by Trach on 12/15/2016.
  */
@@ -35,27 +37,27 @@ public class UserStudentRegistrationFormValidator implements Validator {
             validateNumber(form);
             validateAddress(form);
             validateSemester(form);
-        } catch (Exception e) {
+        } catch (ValidationException e) {
             errors.reject("error.user", e.getMessage());
             LOGGER.debug("Found invalid data for {}: {}", target, e.getMessage());
         }
     }
 
-    private void validateNumber(UserStudentDTO form) throws Exception {
+    private void validateNumber(UserStudentDTO form) throws ValidationException {
         String reg = "^(\\+380)[0-9]{9}";
 //        if (!form.getPhoneNumber().matches(reg)) { // TODO uncomment me when you will add phone number to model
 //            throw new Exception("Wrong phone number");
 //        }
     }
 
-    private void validateAddress(UserStudentDTO form) throws Exception {
+    private void validateAddress(UserStudentDTO form) throws ValidationException {
         String reg = "^(м\\.)\\s^[А-Я][а-я]{1,40}"; // TODO
 //        if (!form.getPhoneNumber().matches(reg)) {
 //            throw new Exception("Wrong phone number");
 //        }
     }
 
-    private void validateSemester(UserStudentDTO form) throws Exception {
+    private void validateSemester(UserStudentDTO form) throws ValidationException {
         String reg = "(FIRST | SECOND)"; // TODO uncomment me when you will add phone number to model
 //        if (!form.getSemester().matches(reg)) {
 //            throw new Exception("Wrong phone number");
