@@ -19,6 +19,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Trach on 12/11/2016.
@@ -120,6 +121,9 @@ public class PlannedEventServiceImpl implements PlannedEventService {
         eventsFromFirstSemester.stream().forEach(plannedEvent -> plannedEvents.add(plannedEvent));
         eventsFromSecondSemester.stream().forEach(plannedEvent -> plannedEvents.add(plannedEvent));
 
-        return plannedEvents;
+        //Order by BeginDate
+        return plannedEvents.stream()
+                .sorted((o1, o2) -> o1.getBeginDate().compareTo(o2.getBeginDate()))
+                .collect(Collectors.toList());
     }
 }
