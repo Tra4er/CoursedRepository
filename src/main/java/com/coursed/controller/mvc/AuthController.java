@@ -67,7 +67,9 @@ public class AuthController {
         LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userStudentDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "auth/login";
+            LOGGER.debug("Validation error.");
+            model.addAttribute("message", "Validation error.");
+            return "auth/badUser";
         }
 
         User registered;
@@ -75,7 +77,8 @@ public class AuthController {
             registered = userService.registerStudent(userStudentDTO);
         } catch(DataIntegrityViolationException e) {
             LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
-            return "auth/login";
+            model.addAttribute("message", "Exception occurred when trying to save the user, assuming duplicate email");
+            return "auth/badUser";
         }
 
         try {
@@ -96,7 +99,9 @@ public class AuthController {
         LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userTeacherDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "auth/login";
+            LOGGER.debug("Validation error.");
+            model.addAttribute("message", "Validation error.");
+            return "auth/badUser";
         }
 
         User registered;
@@ -104,7 +109,8 @@ public class AuthController {
             registered = userService.registerTeacher(userTeacherDTO);
         } catch(DataIntegrityViolationException e) {
             LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
-            return "auth/login";
+            model.addAttribute("message", "Exception occurred when trying to save the user, assuming duplicate email");
+            return "auth/badUser";
         }
 
         try {
