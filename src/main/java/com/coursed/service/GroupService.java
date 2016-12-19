@@ -1,6 +1,8 @@
 package com.coursed.service;
 
 import com.coursed.model.Group;
+import com.coursed.model.enums.CourseNumber;
+import com.coursed.model.enums.SemesterNumber;
 
 import java.util.List;
 
@@ -14,4 +16,5 @@ public interface GroupService {
     List<Group> findAllFromSemester(Long semesterId);
     List<Group> findAllFromSpecialityAndSemester(Long specialityId, Long semesterId);
     List<Group> findAllWithoutCurator(Long semesterId);
+    List<Group> findAllForGrading(Long educationPlanId, SemesterNumber semesterNumber, CourseNumber courseNumber);
 }

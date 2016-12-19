@@ -120,6 +120,6 @@ public class PlannedEventServiceImpl implements PlannedEventService {
         eventsFromFirstSemester.stream().forEach(plannedEvent -> plannedEvents.add(plannedEvent));
         eventsFromSecondSemester.stream().forEach(plannedEvent -> plannedEvents.add(plannedEvent));
 
-        return null;
+        return plannedEvents;
     }
 }

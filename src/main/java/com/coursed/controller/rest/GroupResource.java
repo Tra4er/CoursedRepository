@@ -2,6 +2,8 @@ package com.coursed.controller.rest;
 
 import com.coursed.dto.GroupDTO;
 import com.coursed.model.*;
+import com.coursed.model.enums.CourseNumber;
+import com.coursed.model.enums.SemesterNumber;
 import com.coursed.service.GroupService;
 import com.coursed.service.SemesterService;
 import com.coursed.service.SpecialityService;
@@ -37,18 +39,25 @@ public class GroupResource {
         {
             return groupService.findAllFromSpecialityAndSemester(specialityId, semesterId);
         }
-
-        if(specialityId != null)
+        else if(specialityId != null)
         {
             return groupService.findAllFromSpeciality(specialityId);
         }
-
-        if(semesterId != null)
+        else if(semesterId != null)
         {
             return groupService.findAllFromSemester(semesterId);
         }
 
         return groupService.findAll();
+    }
+
+    @GetMapping("/getAllForGrading")
+    private Collection<Group> getGroupsForGrading(@RequestParam(name = "semesterNumber") SemesterNumber semesterNumber,
+                                                  @RequestParam(name = "courseNumber") CourseNumber courseNumber,
+                                                  @RequestParam(name = "educationPlanId") Long educationPlanId)
+    {
+
+        return groupService.findAllForGrading(educationPlanId, semesterNumber, courseNumber);
     }
 
     @GetMapping("/getAllWithoutCurators")
