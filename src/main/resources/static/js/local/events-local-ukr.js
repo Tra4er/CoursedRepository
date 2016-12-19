@@ -3,8 +3,8 @@
  */
 var plannedEventType = {};
 //EngToUkr
-plannedEventType["ATTESTATION_FIRST"] = "Атестація №1";
-plannedEventType["ATTESTATION_SECOND"] = "Атестація №2";
-plannedEventType["GRADING_WEEK"] = "Залікова сесія";
-plannedEventType["EXAMINATION"] = "Екзаменаційна сесія";
+plannedEventType["ATTESTATION_FIRST"] = "Атестація&nbsp;№1";
+plannedEventType["ATTESTATION_SECOND"] = "Атестація&nbsp;№2";
+plannedEventType["GRADING_WEEK"] = "Залікова&nbsp;сесія";
+plannedEventType["EXAMINATION"] = "Екзаменаційна&nbsp;сесія";
 

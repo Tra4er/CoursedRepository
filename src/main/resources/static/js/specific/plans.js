@@ -148,7 +148,7 @@ $('#button-post-plan-simple').on('click', function() {
 
     $.ajax({
             type: "POST",
-            url: "api/educationPlan/create",
+            url: "api/educationPlans/create",
             contentType: "application/json",
             data: obj,
             success: function (plan) {

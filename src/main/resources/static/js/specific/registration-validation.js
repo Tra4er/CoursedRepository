@@ -33,7 +33,7 @@ function checkEmail(){
     var email = $("#emailField" + person).val();
     var availableEmail = false;
     if(emailRegex.test(email)) {
-        $.ajax({ url: "/api/user/checkEmail", async: false, type: "get", data: "email=" + email})
+        $.ajax({ url: "/api/users/checkEmail", async: false, type: "get", data: "email=" + email})
             .done(function(response) {
                 if(response){
                     $("#checkEmailResult" + person).text("Емейл існує");
