@@ -12,7 +12,7 @@ import java.util.Collection;
  * Created by Hexray on 11.12.2016.
  */
 @RestController
-@RequestMapping("/api/educationPlan")
+@RequestMapping("/api/educationPlans")
 public class EducationPlanResource {
     @Autowired
     private EducationPlanService educationPlanService;

@@ -14,7 +14,7 @@ import java.util.Collection;
  * Created by Hexray on 17.12.2016.
  */
 @RestController
-@RequestMapping("/api/teacher")
+@RequestMapping("/api/teachers")
 public class TeacherResource {
 
     @Autowired

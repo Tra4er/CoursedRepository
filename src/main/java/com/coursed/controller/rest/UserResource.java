@@ -32,7 +32,7 @@ import java.util.Collection;
  * Created by Trach on 11/24/2016.
  */
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class UserResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 

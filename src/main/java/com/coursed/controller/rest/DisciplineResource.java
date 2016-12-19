@@ -16,7 +16,7 @@ import java.util.Optional;
  * Created by Hexray on 11.12.2016.
  */
 @RestController
-@RequestMapping("/api/discipline")
+@RequestMapping("/api/disciplines")
 public class DisciplineResource {
     @Autowired
     private DisciplineService disciplineService;
