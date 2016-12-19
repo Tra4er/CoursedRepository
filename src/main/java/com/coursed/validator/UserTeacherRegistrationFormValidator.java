@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.validation.ValidationException;
+
 /**
  * Created by Trach on 12/16/2016.
  */
@@ -32,7 +34,7 @@ public class UserTeacherRegistrationFormValidator implements Validator {
             BasicValidatorUtil.validateEmail(form);
             BasicValidatorUtil.validatePasswords(form);
             BasicValidatorUtil.validateNames(form);
-        } catch (Exception e) {
+        } catch (ValidationException e) {
             errors.reject("error.user", e.getMessage());
             LOGGER.debug("Found invalid data for {}: {}", target, e.getMessage());
         }
