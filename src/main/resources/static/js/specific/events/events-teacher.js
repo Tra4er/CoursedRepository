@@ -29,13 +29,16 @@
 
 
 
-// $(function(){
-//     $.getJSON('/api/events/getAllFromCurrentYear', function(data){
+$(function(){
+    $.getJSON('/api/events/getAllFromCurrentYear', function(data){
+        $.each(data, function(i, item))
+    });
+// $.getJSON('/api/discipline/getAllActualConnectedWithTeacher', function(){
+//
+// });
+//     $.getJSON('/api/discipline/getAllActualConnectedWithTeacher', {plannedEventId : 8}, function(){
 //
 //     });
-// // $.getJSON('/api/discipline/getAllActualConnectedWithTeacher', {teacherId: 1}, function(){
-// //
-// // });
-// });
+});
 
 

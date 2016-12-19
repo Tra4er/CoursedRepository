@@ -25,9 +25,15 @@
 // }
 
 $(function () {
+    var titles = ['Дата створення', 'Початок', 'Кінець', 'Тип події'];
+    insertTable(titles, "events-table");
+    var entityParams = ['creationDate', 'beginDate', 'expirationDate', 'eventType'];
+    fillTableFrom("events-table", API + "/events/getAll", entityParams);
+
     settingDateTimePiker();
     fillSelect("eventType", plannedEventType);
     fillSelectYear("yearId", API + "/years/getAll");
+
 });
 
 function settingDateTimePiker(){
@@ -38,43 +44,17 @@ function settingDateTimePiker(){
         useCurrent: false,
         locale: 'uk'
     });
-
-    // $('#datetimepicker6').datetimepicker({
-    //     locale: 'uk',
-    // });
-    // $('#datetimepicker7').datetimepicker({
-    //     useCurrent: false, //Important! See issue #1075
-    //     locale: 'uk'
-    // });
-    // $('#datetimepicker4').datetimepicker();
 }
 
 $("#beginDate").on("dp.change", function (e) {
     $('#endDate').data("DateTimePicker").minDate(e.date);
 });
+
 $("#endDate").on("dp.change", function (e) {
     $('#beginDate').data("DateTimePicker").maxDate(e.date);
 });
 
-// $('#info').on('click', function () {
-//     var begin = $("#datetimepicker6").data("DateTimePicker").date();
-//     var end = $("#datetimepicker7").data("DateTimePicker").date();
-//     var infa = JSON.stringify({
-//         begin: begin,
-//         end : end
-//     });
-//     alert(infa);
-//     }
-// );
-
 $('#button-event-post').on('click', function(){
-
-// beginDate;
-// expirationDate;
-// creationDate;
-// eventType;
-// semester_id;
-
     var obj = JSON.stringify({
         "beginDate": $("#beginDate").data("DateTimePicker").date(),
         "expirationDate": $("#endDate").data("DateTimePicker").date(),
