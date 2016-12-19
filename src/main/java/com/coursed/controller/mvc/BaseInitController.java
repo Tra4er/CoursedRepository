@@ -65,6 +65,7 @@ public class BaseInitController {
         user_Zhdanova.setEmail("head@head.com");
         user_Zhdanova.setPassword("123");
         user_Zhdanova.setPatronymic("Григорівна");
+        user_Zhdanova.setPhoneNumber("+380938524565");
         user_Zhdanova.setLastName("Жданова");
         user_Zhdanova.setFirstName("Олена");
 

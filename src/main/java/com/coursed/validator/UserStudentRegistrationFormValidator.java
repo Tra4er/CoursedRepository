@@ -45,9 +45,9 @@ public class UserStudentRegistrationFormValidator implements Validator {
 
     private void validateNumber(UserStudentDTO form) throws ValidationException {
         String reg = "^(\\+380)[0-9]{9}";
-//        if (!form.getPhoneNumber().matches(reg)) { // TODO uncomment me when you will add phone number to model
-//            throw new Exception("Wrong phone number");
-//        }
+        if (!form.getPhoneNumber().matches(reg)) {
+            throw new ValidationException("Wrong phone number");
+        }
     }
 
     private void validateAddress(UserStudentDTO form) throws ValidationException {
@@ -58,7 +58,7 @@ public class UserStudentRegistrationFormValidator implements Validator {
     }
 
     private void validateSemester(UserStudentDTO form) throws ValidationException {
-        String reg = "(FIRST | SECOND)"; // TODO uncomment me when you will add phone number to model
+        String reg = "FIRST|SECOND"; // TODO uncomment me when you will add phone number to model
 //        if (!form.getSemester().matches(reg)) {
 //            throw new Exception("Wrong phone number");
 //        }

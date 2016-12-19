@@ -24,6 +24,7 @@ public class Student {
     private String firstName;
     private String lastName;
     private String patronymic;
+    private String phoneNumber;
     private String address;
     private String gradeBookNumber;
     private Date birthDate;
@@ -99,6 +100,14 @@ public class Student {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getAddress() {

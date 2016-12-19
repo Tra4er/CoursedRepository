@@ -1,17 +1,17 @@
 package com.coursed.dto;
 
 import com.coursed.model.enums.StudentEducationStatus;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Date;
 
 /**
  * Created by Hexray on 10.12.2016.
  */
-public class UserStudentDTO implements BasicUserRegistrationForm {
+public class UserStudentDTO implements BasicUserDTO {
     private String firstName;
     private String lastName;
     private String patronymic;
+    private String phoneNumber;
     private String address;
     private String gradeBookNumber;
     private Date birthDate;
@@ -20,7 +20,6 @@ public class UserStudentDTO implements BasicUserRegistrationForm {
     private String additionalInformation;
     private String parentsInfo;
     private Long groupId;
-    //phoneNumber Todo
 
     private String email;
 
@@ -56,6 +55,14 @@ public class UserStudentDTO implements BasicUserRegistrationForm {
     @Override
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getAddress() {

@@ -1,9 +1,7 @@
 package com.coursed.validator;
 
-import com.coursed.dto.BasicUserRegistrationForm;
+import com.coursed.dto.BasicUserDTO;
 import com.coursed.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.Errors;
 
 import javax.validation.ValidationException;
 
@@ -12,7 +10,7 @@ import javax.validation.ValidationException;
  */
 public class BasicValidatorUtil {
 
-    public static void validateEmail(BasicUserRegistrationForm form, UserService userService) throws ValidationException {
+    public static void validateEmail(BasicUserDTO form, UserService userService) throws ValidationException {
         String reg = "[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z]+(\\.[A-Za-z]+)*(\\.[A-Za-z]{2,5})$";
         if (!form.getEmail().matches(reg)) {
             throw new ValidationException("Wrong characters in email");
@@ -22,7 +20,7 @@ public class BasicValidatorUtil {
         }
     }
 
-    public static void validatePasswords(BasicUserRegistrationForm form) throws ValidationException {
+    public static void validatePasswords(BasicUserDTO form) throws ValidationException {
         String reg = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})";
         if(!form.getPassword().matches(reg)) {
             throw new ValidationException("Password is too simple");
@@ -32,7 +30,7 @@ public class BasicValidatorUtil {
         }
     }
 
-    public static void validateNames(BasicUserRegistrationForm form) throws ValidationException {
+    public static void validateNames(BasicUserDTO form) throws ValidationException {
         String reg = "^[А-ЯІЄ][а-яіє]{1,15}"; // TODO ukr dictionary
         if (!form.getFirstName().matches(reg)) {
             throw new ValidationException("First name is wrong");

@@ -44,7 +44,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerStudent(UserStudentDTO registrationForm) {
-        // TODO check data and throw exceptions
         User user = new User();
         user.setEmail(registrationForm.getEmail());
         user.setPassword(registrationForm.getPassword());
@@ -58,6 +57,7 @@ public class UserServiceImpl implements UserService {
         student.setFirstName(registrationForm.getFirstName());
         student.setLastName(registrationForm.getLastName());
         student.setPatronymic(registrationForm.getPatronymic());
+        student.setPhoneNumber(registrationForm.getPhoneNumber());
         student.setAdditionalInformation(registrationForm.getAdditionalInformation());
         student.setGradeBookNumber(registrationForm.getGradeBookNumber());
         student.setAddress(registrationForm.getAddress());
@@ -106,6 +106,7 @@ public class UserServiceImpl implements UserService {
         teacher.setFirstName(registrationForm.getFirstName());
         teacher.setLastName(registrationForm.getLastName());
         teacher.setPatronymic(registrationForm.getPatronymic());
+        teacher.setPhoneNumber(registrationForm.getPhoneNumber());
 
         user.setTeacherEntity(teacher);
 
