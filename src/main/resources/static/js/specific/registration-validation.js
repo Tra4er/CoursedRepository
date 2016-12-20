@@ -4,7 +4,6 @@ var emailRegex = /^[A-Za-z0-9._]*\@[A-Za-z]*\.[A-Za-z]{2,5}$/;
 var person;
 
 function init(){
-    console.log("Init");
 
     // get person
     $("#registration-student").click(function () {
@@ -28,8 +27,6 @@ function init(){
 }
 
 function checkEmail(){
-    console.log("checkEmail  " + $("#emailField" + person));
-
     var email = $("#emailField" + person).val();
     var availableEmail = false;
     if(emailRegex.test(email)) {
@@ -51,8 +48,6 @@ function checkEmail(){
 }
 
 function checkPassword() {
-    console.log("checkPassword");
-
     var password = $("#passwordField" + person).val();
     if(password == "") {
         $("#emptyPasswordResult" + person).text("Це поле не може бути пустим.");
@@ -64,8 +59,6 @@ function checkPassword() {
 }
 
 function checkConfirmPassword() {
-    console.log("checkConfirmPassword");
-
     var password = $("#passwordField" + person).val();
     var confirmPassword = $("#confirmPasswordField" + person).val();
     if(password != confirmPassword) {
@@ -78,8 +71,6 @@ function checkConfirmPassword() {
 }
 
 function Validate(){
-    console.log("Validate");
-
     if(!checkEmail()){
         $("#emailField" + person).focus();
         return false;

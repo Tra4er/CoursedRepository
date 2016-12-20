@@ -87,6 +87,8 @@ public class AuthController {
             model.addAttribute("emailMessage", registered.getEmail());
         } catch (final Exception ex) {
             LOGGER.warn("Unable to register user", ex);
+            model.addAttribute("message", "Unable to send verification email");
+            return "auth/badUser"; // TODO
         }
 
         return "/auth/verifyYourAccount";
@@ -118,10 +120,10 @@ public class AuthController {
             eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
             model.addAttribute("emailMessage", registered.getEmail());
         } catch (final Exception ex) {
-            LOGGER.warn("Unable to register user", ex);
+            LOGGER.warn("Unable to send verification email", ex);
+            model.addAttribute("message", "Unable to send verification email");
+            return "auth/badUser"; // TODO
         }
-
-        System.out.println(registered.getEmail());
 
         return "/auth/verifyYourAccount";
     }

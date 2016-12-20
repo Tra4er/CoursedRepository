@@ -22,6 +22,7 @@ public class Teacher {
     private String firstName;
     private String lastName;
     private String patronymic;
+    private String phoneNumber;
 
     @JsonIgnore
     @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
@@ -83,6 +84,14 @@ public class Teacher {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public List<FinalGrade> getFinalGrades() {
