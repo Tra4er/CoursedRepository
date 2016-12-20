@@ -31,12 +31,12 @@ public class UserStudentRegistrationFormValidator implements Validator {
         LOGGER.debug("Validating {}", target);
         UserStudentDTO form = (UserStudentDTO) target;
         try {
-            BasicValidatorUtil.validateEmail(form, userService);
-            BasicValidatorUtil.validatePasswords(form);
-            BasicValidatorUtil.validateNames(form);
-            validateNumber(form);
-            validateAddress(form);
-            validateSemester(form);
+//            BasicValidatorUtil.validateEmail(form, userService);
+//            BasicValidatorUtil.validatePasswords(form);
+//            BasicValidatorUtil.validateNames(form);
+//            validateNumber(form);
+//            validateAddress(form);
+//            validateSemester(form);
         } catch (ValidationException e) {
             errors.reject("error.user", e.getMessage());
             LOGGER.debug("Found invalid data for {}: {}", target, e.getMessage());
@@ -60,7 +60,7 @@ public class UserStudentRegistrationFormValidator implements Validator {
     private void validateSemester(UserStudentDTO form) throws ValidationException {
         String reg = "FIRST|SECOND"; // TODO uncomment me when you will add phone number to model
 //        if (!form.getSemester().matches(reg)) {
-//            throw new Exception("Wrong phone number");
+//            throw new Exception("Wrong semester number");
 //        }
     }
 

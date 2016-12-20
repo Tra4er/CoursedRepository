@@ -32,10 +32,10 @@ public class UserTeacherRegistrationFormValidator implements Validator {
         LOGGER.debug("Validating {}", target);
         UserTeacherDTO form = (UserTeacherDTO) target;
         try {
-            BasicValidatorUtil.validateEmail(form, userService);
-            BasicValidatorUtil.validatePasswords(form);
-            BasicValidatorUtil.validateNames(form);
-            validateNumber(form);
+//            BasicValidatorUtil.validateEmail(form, userService);
+//            BasicValidatorUtil.validatePasswords(form);
+//            BasicValidatorUtil.validateNames(form);
+//            validateNumber(form);
         } catch (ValidationException e) {
             errors.reject("error.user", e.getMessage());
             LOGGER.debug("Found invalid data for {}: {}", target, e.getMessage());
