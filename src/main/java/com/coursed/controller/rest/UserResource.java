@@ -8,8 +8,10 @@ import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
 import com.coursed.registration.OnRegistrationCompleteEvent;
 import com.coursed.security.SecurityService;
+import com.coursed.security.error.UserAlreadyExistException;
 import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
+import com.coursed.util.GenericResponse;
 import com.coursed.validator.UserRegistrationFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +57,41 @@ public class UserResource {
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(userRegistrationFormValidator);
     }
+
+    @PostMapping("/registration-student")
+    @ResponseBody
+    public GenericResponse registerStudentAccount(@Valid @RequestBody UserStudentDTO userStudentDTO,
+                                               final HttpServletRequest request) {
+        LOGGER.debug("Registering user account with information: {}", userStudentDTO);
+
+        User registered = userService.registerStudent(userStudentDTO);
+        if (registered == null) {
+            throw new UserAlreadyExistException();
+        }
+
+        final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
+
+        return new GenericResponse("success");
+    }
+
+    @PostMapping("/registration-teacher")
+    @ResponseBody
+    public GenericResponse registerTeacherAccount(@Valid @RequestBody UserTeacherDTO userTeacherDTO,
+                                               final HttpServletRequest request) {
+        LOGGER.debug("Registering user account with information: {}", userTeacherDTO);
+
+        User registered = userService.registerTeacher(userTeacherDTO);
+        if (registered == null) {
+            throw new UserAlreadyExistException();
+        }
+
+        final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
+
+        return new GenericResponse("success");
+    }
+
 
     @GetMapping("/checkEmail")
     private boolean checkEmail(@RequestParam("email") String email) {
@@ -105,27 +142,27 @@ public class UserResource {
 //TODO ADD VALIDATION
 
     @PostMapping("/confirm-teacher")
-    public void confirmTeacher(@RequestParam(name = "userId") Long userId){
+    public void confirmTeacher(@RequestParam(name = "userId") Long userId) {
         userService.makeATeacher(userId);
     }
 
     @GetMapping("/getAllUnconfirmedTeachers")
-    private Collection<User> getAllUnconfirmedTeachers(){
+    private Collection<User> getAllUnconfirmedTeachers() {
         return userService.findAllUnconfirmedTeachers();
     }
 
     @GetMapping("/getAllTeachers") // TODO create separate controller
-    private Collection<User> getAllTeachers(@RequestParam(name = "groupId", required = false) Long groupId){
+    private Collection<User> getAllTeachers(@RequestParam(name = "groupId", required = false) Long groupId) {
         return userService.findAllTeachers(groupId);
     }
 
     @GetMapping("/getAllGroupCurators")
-    private Collection<User> getAllGroupCurators(@RequestParam(name = "groupId") Long groupId){
+    private Collection<User> getAllGroupCurators(@RequestParam(name = "groupId") Long groupId) {
         return userService.findAllGroupCurators(groupId);
     }
 
     @GetMapping("/deleteUser")
-    private void deleteUser(@RequestParam(name = "userId") Long userId){
+    private void deleteUser(@RequestParam(name = "userId") Long userId) {
         userService.deleteUser(userId);
     }
 }

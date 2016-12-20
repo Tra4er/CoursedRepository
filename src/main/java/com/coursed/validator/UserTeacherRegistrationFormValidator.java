@@ -32,7 +32,7 @@ public class UserTeacherRegistrationFormValidator implements Validator {
         LOGGER.debug("Validating {}", target);
         UserTeacherDTO form = (UserTeacherDTO) target;
         try {
-//            BasicValidatorUtil.validateEmail(form, userService);
+            BasicValidatorUtil.validateEmail(form, userService);
 //            BasicValidatorUtil.validatePasswords(form);
 //            BasicValidatorUtil.validateNames(form);
 //            validateNumber(form);
