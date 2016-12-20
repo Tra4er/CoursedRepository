@@ -9,11 +9,11 @@ $(function () {
             if (isEventActual == 'success') {
                 body += '<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse' + id +
                     '" aria-expanded="true" aria-controls="collapseOne">' + plannedEventType[item.eventType] + ' (' +
-                    convertArrayToDateString(item.beginDate) + ' - ' + convertArrayToDateString(item.expirationDate) + ')</a></h4></div><div id="collapse' +
+                    dateToString(item.beginDate) + ' - ' + dateToString(item.expirationDate) + ')</a></h4></div><div id="collapse' +
                     id + '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne"><div class="panel-body"></div></div></div>';
             }
-            else body += plannedEventType[item.eventType] + ' (' + convertArrayToDateString(item.beginDate) +
-                    ' - ' + convertArrayToDateString(item.expirationDate) + ')</div>';
+            else body += plannedEventType[item.eventType] + ' (' + dateToString(item.beginDate) +
+                    ' - ' + dateToString(item.expirationDate) + ')</div>';
             $('#accordion-event').append(body);
         })
     });
@@ -23,7 +23,6 @@ $('#accordion-event').on('show.bs.collapse', '.panel', function (e) {
     var plannedEventId = e.currentTarget.id;
     // var id = $(this).attr('id');
     var $place = $(e.currentTarget).find('.panel-body');
-
     $place.empty();
     $.getJSON('/api/disciplines/getAllActualConnectedWithTeacher', {plannedEventId : plannedEventId}, function(response){
         $.each(response,function(i, item){
@@ -63,102 +62,70 @@ $('#groups-container').on('click', 'input', function(){
     $.getJSON( "api/students/getAllFromGroup", {groupId: groupId})
         .done(function(responce){
             $('#discipline-groups-dialog').modal("hide");
-            $('#accordion-event').addClass('col-xs-3');
+            $('#accordion-event').addClass('col-xs-6');
             var event = plannedEventType[eventType];
-            var htmlTable = '<div class="col-xs-9"><h2>' + discName+ '</h2><table id="event-content-table" class="table table-hover table-striped"><thead><tr><th>№</th><th>ПІБ</th>';
+            var htmlTable = '<div class="col-xs-6"><h2 disciplineId ="'+ discId + '">' + discName+ '</h2><table id="event-content-table" class="table table-hover table-striped"><thead><tr><th>№</th><th>ПІБ</th>';
             htmlTable += '<th>' + event + '</th></tr></thead><tbody>';
             var counter = 0;
             $.each(responce, function(i,student){
-                htmlTable += '<tr><td>'+ ++counter +'</td><td>' + student.lastName + " " + student.firstName + '</td><td>';
-                htmlTable += '<div class="material-switch pull-right"><input id=switch"'+ student.id +'" name="someSwitchOption001" type="checkbox"/><label for="someSwitchOptionSuccess" class="label-success"></label></div></td></tr>'
+                htmlTable += '<tr><td studentId="'+ student.id +'">'+ ++counter +'</td><td>' + student.lastName + " " + student.firstName + '</td><td>';
+                htmlTable += '<div class="material-switch pull-right"><input id="switch'+ student.id +'" name="' + student.id + '" type="checkbox"/><label for="switch'+ student.id +'" class="label-success"></label></div></td></tr>'
             });
-            htmlTable +='</tbody></table></div>';
+            htmlTable +='</tbody></table> <input id="saveFirstAttestationGrade" type="button" class="btn btn-success" value="Зберегти відомість"/></div>';
             $('#accordion-event').after(htmlTable);
-            //fillTableAtestation(responce, discName, discId, eventType);
         })
         .fail(function() {
             alert( "Помилка!" );
         });
 });
 
-//noinspection JSAnnotator
-// function fillTableAtestation(group, discName, discId, eventType) {
-//
-// }
-// $.getJSON('/api/disciplines/getAllActualConnectedWithTeacher', function(){
-//
-// });
+$('#content').on('click', '#saveFirstAttestationGrade', function(e){
+    var obj = [];
+    // var disciplineId = $(this).closest('h2').attr('disciplineId');
+    var disciplineId = $(e.currentTarget).parent().children().first().attr('disciplineId');
+    $('tbody > tr').each(function(i,v){
+        var $td = $(this).children('td');
+        var studentId = $td.first().attr('studentId');
+        var firstTry = $td.last().find('input').prop('checked');
+         // var   firstTry = switchToBool(frstTr);
+        obj[i] = {'firstTry': firstTry, 'studentId': studentId, 'disciplineId': disciplineId, 'secondTry':'false'};
+    }
+    );
+    var string = JSON.stringify(obj);
+    $.ajax({
+        type: "POST",
+        url: "api/attestations/createManyFirst",
+        contentType: "application/json",
+        data: string,
+        success: function (data) {
+            alert('Перша атестація виставлена!')
+        },
+        error: function (e) {
+            alert('Помилка!');
+            console.log(e)
+        }
+    });
+});
 
 function isActuallyEvent(start, end) {
-    if (isPast(start) && isPast(end)) return 'danger';
-    if (isPast(start) && isFuture(end)) return 'success';
+    var startUTC = Date.parse(start);
+    var endUTC = Date.parse(end);
+    var nowUTC = Date.now();
+    if (startUTC < nowUTC && endUTC < nowUTC) return 'danger';
+    else if (startUTC < nowUTC && endUTC > nowUTC) return 'success';
     else return 'info';
 }
 
-// check if date in the past
-function isPast(a) {
-    var now = new Date();
-    var year = now.getUTCFullYear();
-    var month = now.getMonth() + 1;
-    var date = now.getUTCDate();
-    var hours = now.getUTCHours();
-    var minutes = now.getUTCMinutes();
-    if (a[0] < year) return true;
-    else if (a[0] == year) {
-        if (a[1] < month) return true;
-        else if (a[1] == month) {
-            if (a[2] < date) return true;
-            else if (a[2] == date) {
-                if (a[3] < hours) return true;
-                else if (a[3] == hours) {
-                    if (a[4] < minutes) return true;
-                    else return false;
-                }
-                else return false;
-            }
-            else return false;
-        }
-        else return false;
-    }
-    else return false;
+function dateToString(dateISO){
+    var mscUTC = Date.parse(dateISO);
+    var dateObj = new Date(mscUTC);
+    var options = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+    };
+    return dateObj.toLocaleString("uk", options);
 }
-// check if date in the future
-function isFuture(a) {
-    var now = new Date();
-    var year = now.getUTCFullYear();
-    var month = now.getMonth() + 1;
-    var date = now.getUTCDate();
-    var hours = now.getUTCHours();
-    var minutes = now.getUTCMinutes();
-    if (a[0] > year) return true;
-    else if (a[0] == year) {
-        if (a[1] > month) return true;
-        else if (a[1] == month) {
-            if (a[2] > date) return true;
-            else if (a[2] == date) {
-                if (a[3] > hours) return true;
-                else if (a[3] == hours) {
-                    if (a[4] > minutes) return true;
-                    else return false;
-                }
-                else return false;
-            }
-            else return false;
-        }
-        else return false;
-    }
-    else return false;
-}
-
-function convertArrayToDateTimeString(entity) {
-    var dateTimeString = entity[2] + '.' + entity[1] + '.' + entity[0] +
-        ".&nbsp;" + entity[3] + ':' + entity[4];
-    return dateTimeString;
-}
-
-function convertArrayToDateString(entity) {
-    var dateTimeString = entity[2] + '.' + entity[1] + '.' + entity[0];
-    return dateTimeString;
-}
-
 

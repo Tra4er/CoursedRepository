@@ -38,7 +38,10 @@ public class AttestationServiceImpl implements AttestationService {
         for (AttestationDTO attestationDTO : attestationDTOList)
         {
             AttestationGrade at = new AttestationGrade();
-            at.setFirstTry(Boolean.getBoolean(attestationDTO.getFirstTry()));
+            if("false".compareTo(attestationDTO.getFirstTry()) == 0)
+                at.setFirstTry(false);
+            else at.setFirstTry(true);
+
             at.setSecondTry(false);
 
             Student student = studentRepository.findOne(attestationDTO.getStudentId());
