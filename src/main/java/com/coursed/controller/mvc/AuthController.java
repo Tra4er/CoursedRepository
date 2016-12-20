@@ -15,6 +15,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -68,7 +70,7 @@ public class AuthController {
 
         if (bindingResult.hasErrors()) {
             LOGGER.debug("Validation error.");
-            model.addAttribute("message", "Validation error.");
+            model.addAttribute("message", getMessageFromBindingResult(bindingResult));
             return "auth/badUser";
         }
 
@@ -102,7 +104,7 @@ public class AuthController {
 
         if (bindingResult.hasErrors()) {
             LOGGER.debug("Validation error.");
-            model.addAttribute("message", "Validation error.");
+            model.addAttribute("message", getMessageFromBindingResult(bindingResult));
             return "auth/badUser";
         }
 
@@ -154,5 +156,23 @@ public class AuthController {
         LOGGER.debug("Received verification from user: {}", user);
         redAtt.addFlashAttribute("message", "Ви активували свій акаунт. Увійдіть.");
         return "redirect:/login";
+    }
+
+//    NON API
+
+    private String getMessageFromBindingResult(BindingResult bindingResult) {
+        String message = "Validation error";
+        for (Object object : bindingResult.getAllErrors()) {
+            if(object instanceof FieldError) {
+                FieldError fieldError = (FieldError) object;
+                message = fieldError.getDefaultMessage();
+            }
+
+            if(object instanceof ObjectError) {
+                ObjectError objectError = (ObjectError) object;
+                message = objectError.getDefaultMessage();
+            }
+        }
+        return message;
     }
 }
