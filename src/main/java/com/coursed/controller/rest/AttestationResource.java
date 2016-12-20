@@ -7,6 +7,7 @@ import com.coursed.service.AttestationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,6 +27,6 @@ public class AttestationResource {
 
     @PostMapping("/createManyFirst")
     private void createSet(@RequestBody AttestationDTOSet attestationGrades){
-        attestationService.createManyFirst(attestationGrades.getAttestationDTOList());
+        attestationService.createManyFirst(Arrays.asList(attestationGrades.getAttestationDTOArray()));
     }
 }

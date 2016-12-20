@@ -101,6 +101,7 @@ public class DisciplineServiceImpl implements DisciplineService {
                         if((plannedEvent.getEventType() == PlannedEventType.GRADING_WEEK && discipline.getType() == DisciplineType.CREDIT) ||
                                 (plannedEvent.getEventType() == PlannedEventType.GRADING_WEEK && discipline.getType() == DisciplineType.DIFFERENTIATED_CREDIT) ||
                                 (plannedEvent.getEventType() == PlannedEventType.GRADING_WEEK && discipline.getType() == DisciplineType.COURSE_PROJECT) ||
+                                (plannedEvent.getEventType() == PlannedEventType.ATTESTATION_FIRST || plannedEvent.getEventType() == PlannedEventType.ATTESTATION_SECOND)||
                                 (plannedEvent.getEventType() == PlannedEventType.EXAMINATION && discipline.getType() == DisciplineType.EXAM))
                             actualDisciplines.add(discipline);
                     }

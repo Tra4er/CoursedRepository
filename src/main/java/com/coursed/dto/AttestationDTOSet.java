@@ -6,13 +6,13 @@ import java.util.List;
  * Created by Hexray on 20.12.2016.
  */
 public class AttestationDTOSet {
-    private List<AttestationDTO> attestationDTOList;
+    private AttestationDTO[] attestationDTOArray;
 
-    public List<AttestationDTO> getAttestationDTOList() {
-        return attestationDTOList;
+    public AttestationDTO[] getAttestationDTOArray() {
+        return attestationDTOArray;
     }
 
-    public void setAttestationDTOList(List<AttestationDTO> attestationDTOList) {
-        this.attestationDTOList = attestationDTOList;
+    public void setAttestationDTOArray(AttestationDTO[] attestationDTOArray) {
+        this.attestationDTOArray = attestationDTOArray;
     }
 }
