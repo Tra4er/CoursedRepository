@@ -1,6 +1,7 @@
 package com.coursed.controller.rest;
 
 import com.coursed.dto.AttestationDTO;
+import com.coursed.dto.AttestationDTOSet;
 import com.coursed.model.AttestationGrade;
 import com.coursed.service.AttestationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class AttestationResource {
     }
 
     @PostMapping("/createManyFirst")
-    private void createSet(@RequestBody List<AttestationDTO> attestationGrades){
-        attestationService.createManyFirst(attestationGrades);
+    private void createSet(@RequestBody AttestationDTOSet attestationGrades){
+        attestationService.createManyFirst(attestationGrades.getAttestationDTOList());
     }
 }
