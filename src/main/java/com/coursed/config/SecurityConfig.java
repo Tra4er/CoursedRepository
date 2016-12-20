@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 
 @Configuration
@@ -18,17 +19,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private AuthenticationFailureHandler authenticationFailureHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/registration-student", "/registration-teacher", "/registration-confirm", "/test", "/valve", "/api/**").permitAll()//TODO: check only for 'hasRole("REGISTERED")
+                .antMatchers("/login*","/registration-student", "/registration-teacher", "/registration-confirm", "/test", "/valve", "/api/**").permitAll()//TODO: check only for 'hasRole("REGISTERED")
                 .antMatchers("/", "/**").hasAnyRole("REGISTERED", "STUDENT", "TEACHER", "ADMIN")
                 .antMatchers("/css/**", "/js/**", "/fonts/**").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .failureUrl("/login?error")
+                .failureUrl("/login?error=true")
+                .failureHandler(authenticationFailureHandler)
                 .usernameParameter("email")
                 .permitAll()
                 .and()

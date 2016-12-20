@@ -51,7 +51,9 @@
                             <input type="password" name="password" id="passwordField" class="form-control input-lg"
                                    placeholder="Пароль"/>
                         </div>
-                        <div th:if="${param.error}" class="alert alert error">Невірний емейл або пароль.</div>
+                        <div th:if="${param.error != null}">
+                            <div th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']}" class="alert alert error">Повідомлення про помилку.</div>
+                        </div>
                         <div class="col-xs-12">
                             <input type="submit" value="Увійти" class="btn btn-primary btn-block btn-lg"/>
                         </div>
