@@ -13,6 +13,8 @@ import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
 import com.coursed.util.GenericResponse;
 import com.coursed.validator.UserRegistrationFormValidator;
+import com.coursed.validator.UserStudentRegistrationFormValidator;
+import com.coursed.validator.UserTeacherRegistrationFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,11 +53,19 @@ public class UserResource {
     private ApplicationEventPublisher eventPublisher;
 
     @Autowired
-    private UserRegistrationFormValidator userRegistrationFormValidator;
+    private UserStudentRegistrationFormValidator userStudentRegistrationFormValidator;
 
-    @InitBinder("userForm")
-    public void initBinder(WebDataBinder binder) {
-        binder.addValidators(userRegistrationFormValidator);
+    @Autowired
+    private UserTeacherRegistrationFormValidator userTeacherRegistrationFormValidator;
+
+    @InitBinder("userStudentDTO")
+    public void initStudentBinder(WebDataBinder binder) {
+        binder.addValidators(userStudentRegistrationFormValidator);
+    }
+
+    @InitBinder("userTeacherDTO")
+    public void initTeacherBinder(WebDataBinder binder) {
+        binder.addValidators(userTeacherRegistrationFormValidator);
     }
 
     @PostMapping("/registration-student")
