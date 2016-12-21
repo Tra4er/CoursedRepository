@@ -81,10 +81,15 @@ public class UserResource {
                                                final HttpServletRequest request) {
         LOGGER.debug("Registering user account with information: {}", userTeacherDTO);
 
+        System.out.println(userTeacherDTO.getEmail());
+
         User registered = userService.registerTeacher(userTeacherDTO);
         if (registered == null) {
+            System.out.println("Exception");
             throw new UserAlreadyExistException();
         }
+
+        System.out.println(registered.getEmail());
 
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));

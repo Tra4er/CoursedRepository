@@ -66,7 +66,7 @@ function sendRegistrationAjaxPost(element, url, modalId) {
         contentType: "application/json",
         data: JSON.stringify(element.serializeObject()),
         success: function (data) {
-            // alert("Успішно");
+            alert("Успішно");
             $('#' + modalId).modal("toggle");
             addItem(data);
         },
