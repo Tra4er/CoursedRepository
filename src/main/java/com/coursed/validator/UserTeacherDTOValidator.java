@@ -1,6 +1,5 @@
 package com.coursed.validator;
 
-import com.coursed.dto.UserStudentDTO;
 import com.coursed.dto.UserTeacherDTO;
 import com.coursed.service.UserService;
 import org.slf4j.Logger;
@@ -16,9 +15,9 @@ import javax.validation.ValidationException;
  * Created by Trach on 12/16/2016.
  */
 @Component
-public class UserTeacherRegistrationFormValidator implements Validator {
+public class UserTeacherDTOValidator implements Validator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserTeacherRegistrationFormValidator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserTeacherDTOValidator.class);
 
     @Autowired
     private UserService userService;

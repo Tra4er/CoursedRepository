@@ -15,9 +15,9 @@ import javax.validation.ValidationException;
  * Created by Trach on 12/15/2016.
  */
 @Component
-public class UserStudentRegistrationFormValidator implements Validator {
+public class UserStudentDTOValidator implements Validator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserStudentRegistrationFormValidator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserStudentDTOValidator.class);
 
     @Autowired
     private UserService userService;

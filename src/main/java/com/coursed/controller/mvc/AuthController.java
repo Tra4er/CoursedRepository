@@ -5,8 +5,8 @@ import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
 import com.coursed.registration.OnRegistrationCompleteEvent;
 import com.coursed.service.UserService;
-import com.coursed.validator.UserStudentRegistrationFormValidator;
-import com.coursed.validator.UserTeacherRegistrationFormValidator;
+import com.coursed.validator.UserStudentDTOValidator;
+import com.coursed.validator.UserTeacherDTOValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,19 +39,19 @@ public class AuthController {
     private ApplicationEventPublisher eventPublisher;
 
     @Autowired
-    private UserStudentRegistrationFormValidator userStudentRegistrationFormValidator;
+    private UserStudentDTOValidator userStudentDTOValidator;
 
     @Autowired
-    private UserTeacherRegistrationFormValidator userTeacherRegistrationFormValidator;
+    private UserTeacherDTOValidator userTeacherDTOValidator;
 
     @InitBinder("studentForm")
     public void initStudentBinder(WebDataBinder binder) {
-        binder.addValidators(userStudentRegistrationFormValidator);
+        binder.addValidators(userStudentDTOValidator);
     }
 
     @InitBinder("teacherForm")
     public void initTeacherBinder(WebDataBinder binder) {
-        binder.addValidators(userTeacherRegistrationFormValidator);
+        binder.addValidators(userTeacherDTOValidator);
     }
 
     @GetMapping("/login")

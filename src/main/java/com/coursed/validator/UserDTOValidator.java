@@ -13,9 +13,9 @@ import org.springframework.validation.Validator;
  * Created by Trach on 11/16/2016.
  */
 @Component
-public class UserRegistrationFormValidator implements Validator {
+public class UserDTOValidator implements Validator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserRegistrationFormValidator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDTOValidator.class);
 
     @Autowired
     private UserService userService;
