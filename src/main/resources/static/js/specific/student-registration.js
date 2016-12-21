@@ -48,18 +48,20 @@ $("#yearId").on('change', function () {
 $('#button-student-post').click(function () {
     // if (Validate()) {
         var form = $('#registration-student-form');
-        sendRegistrationAjaxPost(form, API + '/users/registration-student', 'Myform');
+        var result = $("#student-request-server-status");
+        sendRegistrationAjaxPost(form, API + '/users/registration-student', 'Myform', result);
     // }
 });
 
 $('#button-teacher-post').click(function () {
     // if (Validate()) {
         var form = $('#registration-teacher-form');
-        sendRegistrationAjaxPost(form, API + '/users/registration-teacher', 'Myform');
+        var result = $("#teacher-request-server-status");
+        sendRegistrationAjaxPost(form, API + '/users/registration-teacher', 'Myform', result);
     // }
 });
 
-function sendRegistrationAjaxPost(element, url, modalId) {
+function sendRegistrationAjaxPost(element, url, modalId, resultElement) {
     $.ajax({
         type: 'POST',
         url: url,
@@ -81,6 +83,7 @@ function sendRegistrationAjaxPost(element, url, modalId) {
         console.log(data);
         console.log(data.responseJSON.error);
         console.log(data.responseJSON);
+        resultElement.text(data.responseJSON.error);
         // if (data.responseJSON.error.indexOf("MailError") > -1) {
         //     window.location.href = "<c:url value=" / emailError.html
         //     "></c:url>";
