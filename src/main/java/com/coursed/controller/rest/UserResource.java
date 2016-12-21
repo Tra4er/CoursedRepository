@@ -81,15 +81,11 @@ public class UserResource {
                                                final HttpServletRequest request) {
         LOGGER.debug("Registering user account with information: {}", userTeacherDTO);
 
-        System.out.println(userTeacherDTO.getEmail());
-
         User registered = userService.registerTeacher(userTeacherDTO);
         if (registered == null) {
             System.out.println("Exception");
             throw new UserAlreadyExistException();
         }
-
-        System.out.println(registered.getEmail());
 
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
@@ -107,44 +103,6 @@ public class UserResource {
     private User getUser(@RequestParam("email") String email) {
         return userService.getUserByEmail(email).get();
     }
-//    @PostMapping("/registrations")
-//    public String registration(@Valid @ModelAttribute("userForm") UserDTO userForm,
-//                               @RequestBody(required = false) StudentDTO studentForm,
-//                               @RequestBody(required = false) TeacherDTO teacherForm,
-//                               BindingResult bindingResult, final HttpServletRequest request) {
-//
-//        LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userForm, bindingResult);
-//
-//        if (bindingResult.hasErrors()) {
-//            return "auth/registration";
-//        }
-//
-//        if(studentForm == null && teacherForm == null)
-//            throw new RuntimeException("No entity except User has been found in registration request");
-//
-//        User registered;
-//        try{
-//            if(studentForm != null)
-//                registered = userService.registerStudent(userForm, studentForm);
-//            else
-//                registered = userService.registerTeacher(userForm, teacherForm);
-//        } catch(DataIntegrityViolationException e) {
-//            LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
-//            return "auth/registration";
-//        }
-//
-//        try {
-//            final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-//            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
-//        } catch (final Exception ex) {
-//            LOGGER.warn("Unable to register user", ex);
-//        }
-//
-//        securityService.autoLogin(userForm.getEmail(), userForm.getPassword()); // TODO read about
-//
-//        return "/auth/verifyYourAccount";
-//    }
-//TODO ADD VALIDATION
 
     @PostMapping("/confirm-teacher")
     public void confirmTeacher(@RequestParam(name = "userId") Long userId) {

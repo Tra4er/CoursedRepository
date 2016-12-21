@@ -62,7 +62,7 @@ public class AuthController {
         return "auth/login";
     }
 
-    @PostMapping("/registration-student")
+    @PostMapping("/old/registration-student")
     public String regsterStudent(@Valid @ModelAttribute("studentForm") UserStudentDTO userStudentDTO,
                              BindingResult bindingResult, final HttpServletRequest request, Model model) {
 
@@ -96,7 +96,7 @@ public class AuthController {
         return "/auth/verifyYourAccount";
     }
 
-    @PostMapping("/registration-teacher")
+    @PostMapping("/old/registration-teacher")
     public String registerTeacher(@Valid @ModelAttribute("teacherForm") UserTeacherDTO userTeacherDTO,
                              BindingResult bindingResult, final HttpServletRequest request, Model model) {
 
@@ -127,6 +127,11 @@ public class AuthController {
             return "auth/badUser"; // TODO
         }
 
+        return "/auth/verifyYourAccount";
+    }
+
+    @GetMapping("/verifyYourAccount")
+    public String verifyYourAccount() {
         return "/auth/verifyYourAccount";
     }
 

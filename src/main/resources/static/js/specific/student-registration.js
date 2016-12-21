@@ -68,34 +68,38 @@ function sendRegistrationAjaxPost(element, url, modalId) {
         success: function (data) {
             alert("Успішно");
             $('#' + modalId).modal("toggle");
-            addItem(data);
+            if(data.message == "success") {
+                window.location.href = "http://localhost:8080/verifyYourAccount"; // TODO
+            }
         },
         error: function (data) {
             alert("Помилка!");
             console.log(data)
         }
     }).fail(function (data) { // TODO
-        // if (data.responseJSON.error.indexOf("MailError") > -1) {
-        //     window.location.href = "<c:url value=" / emailError.html
-        //     "></c:url>";
-        // }
-        // else if (data.responseJSON.error.indexOf("InternalError") > -1) {
-        //     window.location.href = "<c:url value=" / login.html
-        //     "></c:url>" +
-        //     "?message=" + data.responseJSON.message;
-        // }
-        // else if (data.responseJSON.error == "UserAlreadyExist") {
-        //     $("#emailError").show().html(data.responseJSON.message);
-        // }
-        // else {
-        //     var errors = $.parseJSON(data.responseJSON.message);
-        //     $.each(errors, function (index, item) {
-        //         $("#" + item.field + "Error").show().html(item.defaultMessage);
-        //     });
-        //     errors = $.parseJSON(data.responseJSON.error);
-        //     $.each(errors, function (index, item) {
-        //         $("#globalError").show().append(item.defaultMessage + "<br>");
-        //     });
-        // }
+        console.log(data.responseJSON.error);
+        console.log(data.responseJSON);
+        if (data.responseJSON.error.indexOf("MailError") > -1) {
+            window.location.href = "<c:url value=" / emailError.html
+            "></c:url>";
+        }
+        else if (data.responseJSON.error.indexOf("InternalError") > -1) {
+            window.location.href = "<c:url value=" / login.html
+            "></c:url>" +
+            "?message=" + data.responseJSON.message;
+        }
+        else if (data.responseJSON.error == "UserAlreadyExist") {
+            $("#emailError").show().html(data.responseJSON.message);
+        }
+        else {
+            var errors = $.parseJSON(data.responseJSON.message);
+            $.each(errors, function (index, item) {
+                $("#" + item.field + "Error").show().html(item.defaultMessage);
+            });
+            errors = $.parseJSON(data.responseJSON.error);
+            $.each(errors, function (index, item) {
+                $("#globalError").show().append(item.defaultMessage + "<br>");
+            });
+        }
     });
 }
