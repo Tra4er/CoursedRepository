@@ -78,6 +78,7 @@ function sendRegistrationAjaxPost(element, url, modalId) {
         }
     }).fail(function (data) { // TODO
         console.log("mine");
+        console.log(data);
         console.log(data.responseJSON.error);
         console.log(data.responseJSON);
         // if (data.responseJSON.error.indexOf("MailError") > -1) {

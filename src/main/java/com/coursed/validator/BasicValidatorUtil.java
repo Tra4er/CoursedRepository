@@ -1,6 +1,7 @@
 package com.coursed.validator;
 
 import com.coursed.dto.BasicUserDTO;
+import com.coursed.security.error.UserAlreadyExistException;
 import com.coursed.service.UserService;
 
 import javax.validation.ValidationException;
@@ -16,7 +17,7 @@ public class BasicValidatorUtil {
             throw new ValidationException("Wrong characters in email");
         }
         if (userService.getUserByEmail(form.getEmail()).isPresent()) {
-            throw new ValidationException("Email exists");
+            throw new UserAlreadyExistException("Email exists");
         }
     }
 
