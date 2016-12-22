@@ -47,60 +47,48 @@ $("#yearId").on('change', function () {
 
 $('#button-student-post').click(function () {
     // if (Validate()) {
+        var sendButton = $('#button-student-post');
         var form = $('#registration-student-form');
         var result = $("#student-request-server-status");
-        sendRegistrationAjaxPost(form, API + '/users/registration-student', 'Myform', result);
+        sendButton.button('loading');
+        sendRegistrationAjaxPost(form, API + '/users/registration-student', 'Myform', result, sendButton);
     // }
 });
 
 $('#button-teacher-post').click(function () {
     // if (Validate()) {
+        var sendButton = $('#button-teacher-post');
         var form = $('#registration-teacher-form');
         var result = $("#teacher-request-server-status");
-        sendRegistrationAjaxPost(form, API + '/users/registration-teacher', 'Myform', result);
+        sendButton.button('loading');
+        sendRegistrationAjaxPost(form, API + '/users/registration-teacher', 'Myform', result, sendButton);
     // }
 });
 
-function sendRegistrationAjaxPost(element, url, modalId, resultElement) {
+function sendRegistrationAjaxPost(element, url, modalId, resultElement, sendButton) {
     $.ajax({
         type: 'POST',
         url: url,
         contentType: "application/json",
         data: JSON.stringify(element.serializeObject()),
         success: function (data) {
-            alert("Успішно");
-            $('#' + modalId).modal("toggle");
-            if(data.message == "success") {
-                window.location.href = "http://localhost:8080/verifyYourAccount"; // TODO
-            }
+            // alert("Успішно");
+            // $('#' + modalId).modal("toggle");
         },
         error: function (data) {
-            alert("Помилка!");
+            // alert("Помилка!");
             // console.log(data)
         }
+    }).done(function (data) {
+        $('#' + modalId).modal("toggle");
+        if (data.message == "success") {
+            window.location.href = "http://localhost:8080/verifyYourAccount"; // TODO
+        }
+    //    sendButton.button('reset');
     }).fail(function (data) { // TODO
         resultElement.text(data.responseJSON.message);
-        // if (data.responseJSON.error.indexOf("MailError") > -1) {
-        //     window.location.href = "<c:url value=" / emailError.html
-        //     "></c:url>";
-        // }
-        // else if (data.responseJSON.error.indexOf("InternalError") > -1) {
-        //     window.location.href = "<c:url value=" / login.html
-        //     "></c:url>" +
-        //     "?message=" + data.responseJSON.message;
-        // }
-        // else if (data.responseJSON.error == "UserAlreadyExist") {
-        //     $("#emailError").show().html(data.responseJSON.message);
-        // }
-        // else {
-        //     var errors = $.parseJSON(data.responseJSON.message);
-        //     $.each(errors, function (index, item) {
-        //         $("#" + item.field + "Error").show().html(item.defaultMessage);
-        //     });
-        //     errors = $.parseJSON(data.responseJSON.error);
-        //     $.each(errors, function (index, item) {
-        //         $("#globalError").show().append(item.defaultMessage + "<br>");
-        //     });
-        // }
+        sendButton.button('reset');
+    }).complete(function () {
+        $('#button-teacher-post').button('reset');
     });
 }
