@@ -8,6 +8,7 @@ import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
 import com.coursed.repository.*;
+import com.coursed.security.error.UserAlreadyExistException;
 import com.coursed.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerStudent(UserStudentDTO registrationForm) {
+        if (emailExist(registrationForm.getEmail())) {
+            throw new UserAlreadyExistException("There is an account with that email address: " + registrationForm.getEmail());
+        }
+
         User user = new User();
         user.setEmail(registrationForm.getEmail());
         user.setPassword(registrationForm.getPassword());
@@ -92,6 +97,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerTeacher(UserTeacherDTO registrationForm) { // TODO move to teacherService
+        if (emailExist(registrationForm.getEmail())) {
+            throw new UserAlreadyExistException("There is an account with that email address: " + registrationForm.getEmail());
+        }
 
         User user = new User();
         user.setEmail(registrationForm.getEmail());
@@ -223,7 +231,9 @@ public class UserServiceImpl implements UserService {
         Role role = roleRepository.findByName("ROLE_TEACHER");
         if (role != null) {
             connectUserWithRole(userId, role.getId());
-        } else throw new RuntimeException("There no base role ROLE_TEACHER");
+        } else {
+            throw new RuntimeException("There no base role ROLE_TEACHER");
+        }
 
     }
 
@@ -239,4 +249,9 @@ public class UserServiceImpl implements UserService {
         return tokenRepository.findByToken(VerificationToken);
     }
 
+//    NON API
+
+    private boolean emailExist(String email) {
+        return userRepository.findOneByEmail(email).isPresent();
+    }
 }

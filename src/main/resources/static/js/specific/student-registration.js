@@ -79,11 +79,7 @@ function sendRegistrationAjaxPost(element, url, modalId, resultElement) {
             // console.log(data)
         }
     }).fail(function (data) { // TODO
-        console.log("mine");
-        console.log(data);
-        console.log(data.responseJSON.error);
-        console.log(data.responseJSON);
-        resultElement.text(data.responseJSON.error);
+        resultElement.text(data.responseJSON.message);
         // if (data.responseJSON.error.indexOf("MailError") > -1) {
         //     window.location.href = "<c:url value=" / emailError.html
         //     "></c:url>";

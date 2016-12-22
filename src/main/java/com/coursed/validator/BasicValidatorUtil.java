@@ -11,36 +11,36 @@ import javax.validation.ValidationException;
  */
 public class BasicValidatorUtil {
 
-    public static void validateEmail(BasicUserDTO form, UserService userService) throws ValidationException {
+    public static void validateEmail(BasicUserDTO form, UserService userService) throws ValidationException, UserAlreadyExistException {
         String reg = "[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z]+(\\.[A-Za-z]+)*(\\.[A-Za-z]{2,5})$";
         if (!form.getEmail().matches(reg)) {
-            throw new ValidationException("Wrong characters in email");
+            throw new ValidationException("WrongCharactersInEmail");
         }
         if (userService.getUserByEmail(form.getEmail()).isPresent()) {
-            throw new UserAlreadyExistException("Email exists");
+            throw new UserAlreadyExistException();
         }
     }
 
     public static void validatePasswords(BasicUserDTO form) throws ValidationException {
         String reg = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})";
         if(!form.getPassword().matches(reg)) {
-            throw new ValidationException("Password is too simple");
+            throw new ValidationException("PasswordIsTooSimple");
         }
         if (!form.getPassword().equals(form.getConfirmPassword())) {
-            throw new ValidationException("Passwords do not match");
+            throw new ValidationException("PasswordsDoNotMatch");
         }
     }
 
     public static void validateNames(BasicUserDTO form) throws ValidationException {
         String reg = "^[А-ЯІЄ][а-яіє]{1,15}"; // TODO ukr dictionary
         if (!form.getFirstName().matches(reg)) {
-            throw new ValidationException("First name is wrong");
+            throw new ValidationException("FirstNameIsWrong");
         }
         if (!form.getLastName().matches(reg)) {
-            throw new ValidationException("Last name is wrong");
+            throw new ValidationException("LastNameIsWrong");
         }
         if (!form.getPatronymic().matches(reg)) {
-            throw new ValidationException("Patronymic is wrong");
+            throw new ValidationException("PatronymicSsWrong");
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.coursed.validator;
 
 import com.coursed.dto.UserStudentDTO;
+import com.coursed.security.error.UserAlreadyExistException;
 import com.coursed.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,23 +31,18 @@ public class UserStudentDTOValidator implements Validator {
     public void validate(Object target, Errors errors) {
         LOGGER.debug("Validating {}", target);
         UserStudentDTO form = (UserStudentDTO) target;
-        try {
 //            BasicValidatorUtil.validateEmail(form, userService);
 //            BasicValidatorUtil.validatePasswords(form);
 //            BasicValidatorUtil.validateNames(form);
 //            validateNumber(form);
 //            validateAddress(form);
 //            validateSemester(form);
-        } catch (ValidationException e) {
-            errors.reject("error.user", e.getMessage());
-            LOGGER.debug("Found invalid data for {}: {}", target, e.getMessage());
-        }
     }
 
     private void validateNumber(UserStudentDTO form) throws ValidationException {
         String reg = "^(\\+380)[0-9]{9}";
         if (!form.getPhoneNumber().matches(reg)) {
-            throw new ValidationException("Wrong phone number");
+            throw new ValidationException("WrongPhoneNumber");
         }
     }
 
@@ -60,7 +56,7 @@ public class UserStudentDTOValidator implements Validator {
     private void validateSemester(UserStudentDTO form) throws ValidationException {
         String reg = "FIRST|SECOND"; // TODO uncomment me when you will add phone number to model
 //        if (!form.getSemester().matches(reg)) {
-//            throw new Exception("Wrong semester number");
+//            throw new Exception("WrongSemesterNumber");
 //        }
     }
 

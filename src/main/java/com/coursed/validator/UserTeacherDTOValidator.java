@@ -1,6 +1,7 @@
 package com.coursed.validator;
 
 import com.coursed.dto.UserTeacherDTO;
+import com.coursed.security.error.UserAlreadyExistException;
 import com.coursed.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,22 +31,16 @@ public class UserTeacherDTOValidator implements Validator {
     public void validate(Object target, Errors errors) {
         LOGGER.debug("Validating {}", target);
         UserTeacherDTO form = (UserTeacherDTO) target;
-        try {
-            BasicValidatorUtil.validateEmail(form, userService);
-            BasicValidatorUtil.validatePasswords(form);
-//            BasicValidatorUtil.validateNames(form);
-//            validateNumber(form);
-        } catch (ValidationException e) {
-            System.out.println("Exception");
-            errors.reject("error.user", e.getMessage());
-            LOGGER.debug("Found invalid data for {}: {}", target, e.getMessage());
-        }
+        BasicValidatorUtil.validateEmail(form, userService);
+//        BasicValidatorUtil.validatePasswords(form);
+//      BasicValidatorUtil.validateNames(form);
+//      validateNumber(form);
     }
 
     private void validateNumber(UserTeacherDTO form) throws ValidationException {
         String reg = "^(\\+380)[0-9]{9}";
         if (!form.getPhoneNumber().matches(reg)) {
-            throw new ValidationException("Wrong phone number");
+            throw new ValidationException("WrongPhoneNumber");
         }
     }
 
