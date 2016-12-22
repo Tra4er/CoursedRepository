@@ -34,14 +34,7 @@ public class UserTeacherDTOValidator implements Validator {
         BasicValidatorUtil.validateEmail(form, userService);
 //        BasicValidatorUtil.validatePasswords(form);
 //      BasicValidatorUtil.validateNames(form);
-//      validateNumber(form);
-    }
-
-    private void validateNumber(UserTeacherDTO form) throws ValidationException {
-        String reg = "^(\\+380)[0-9]{9}";
-        if (!form.getPhoneNumber().matches(reg)) {
-            throw new ValidationException("WrongPhoneNumber");
-        }
+//      BasicValidatorUtil.validateNumber(form);
     }
 
 }

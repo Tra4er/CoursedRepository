@@ -1,6 +1,7 @@
 package com.coursed.validator;
 
-import com.coursed.dto.BasicUserDTO;
+import com.coursed.dto.BasicPersonDTO;
+import com.coursed.dto.UserStudentDTO;
 import com.coursed.security.error.UserAlreadyExistException;
 import com.coursed.service.UserService;
 
@@ -11,7 +12,7 @@ import javax.validation.ValidationException;
  */
 public class BasicValidatorUtil {
 
-    public static void validateEmail(BasicUserDTO form, UserService userService) throws ValidationException, UserAlreadyExistException {
+    public static void validateEmail(BasicPersonDTO form, UserService userService) throws ValidationException, UserAlreadyExistException {
         String reg = "[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z]+(\\.[A-Za-z]+)*(\\.[A-Za-z]{2,5})$";
         if (!form.getEmail().matches(reg)) {
             throw new ValidationException("WrongCharactersInEmail");
@@ -21,7 +22,7 @@ public class BasicValidatorUtil {
         }
     }
 
-    public static void validatePasswords(BasicUserDTO form) throws ValidationException {
+    public static void validatePasswords(BasicPersonDTO form) throws ValidationException {
         String reg = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})";
         if(!form.getPassword().matches(reg)) {
             throw new ValidationException("PasswordIsTooSimple");
@@ -31,7 +32,7 @@ public class BasicValidatorUtil {
         }
     }
 
-    public static void validateNames(BasicUserDTO form) throws ValidationException {
+    public static void validateNames(BasicPersonDTO form) throws ValidationException {
         String reg = "^[А-ЯІЄ][а-яіє]{1,15}"; // TODO ukr dictionary
         if (!form.getFirstName().matches(reg)) {
             throw new ValidationException("FirstNameIsWrong");
@@ -41,6 +42,13 @@ public class BasicValidatorUtil {
         }
         if (!form.getPatronymic().matches(reg)) {
             throw new ValidationException("PatronymicSsWrong");
+        }
+    }
+
+    public void validateNumber(BasicPersonDTO form) throws ValidationException {
+        String reg = "^(\\+380)[0-9]{9}";
+        if (!form.getPhoneNumber().matches(reg)) {
+            throw new ValidationException("WrongPhoneNumber");
         }
     }
 }

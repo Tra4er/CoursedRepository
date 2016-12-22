@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by Hexray on 10.12.2016.
  */
-public class UserStudentDTO implements BasicUserDTO {
+public class UserStudentDTO implements BasicPersonDTO {
     private String firstName;
     private String lastName;
     private String patronymic;
@@ -57,10 +57,12 @@ public class UserStudentDTO implements BasicUserDTO {
         this.patronymic = patronymic;
     }
 
+    @Override
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
+    @Override
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }

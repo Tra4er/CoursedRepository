@@ -3,7 +3,7 @@ package com.coursed.dto;
 /**
  * Created by Trach on 12/16/2016.
  */
-public interface BasicUserDTO {
+public interface BasicPersonDTO {
     String getEmail();
 
     void setEmail(String email);
@@ -27,4 +27,8 @@ public interface BasicUserDTO {
     String getPatronymic();
 
     void setPatronymic(String patronymic);
+
+    void setPhoneNumber(String phoneNumber);
+
+    String getPhoneNumber();
 }

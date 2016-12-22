@@ -3,7 +3,7 @@ package com.coursed.dto;
 /**
  * Created by Hexray on 10.12.2016.
  */
-public class UserTeacherDTO implements BasicUserDTO {
+public class UserTeacherDTO implements BasicPersonDTO {
     private String firstName;
     private String lastName;
     private String patronymic;
@@ -48,10 +48,12 @@ public class UserTeacherDTO implements BasicUserDTO {
         this.patronymic = patronymic;
     }
 
+    @Override
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
+    @Override
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
