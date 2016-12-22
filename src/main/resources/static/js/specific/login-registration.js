@@ -85,7 +85,7 @@ function sendRegistrationAjaxPost(element, url, modalId, resultElement, sendButt
             window.location.href = "http://localhost:8080/verifyYourAccount"; // TODO
         }
     //    sendButton.button('reset');
-    }).fail(function (data) { // TODO
+    }).fail(function (data) {
         resultElement.text(data.responseJSON.message);
         sendButton.button('reset');
     }).complete(function () {

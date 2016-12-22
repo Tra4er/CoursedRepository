@@ -17,8 +17,8 @@
             src="../../static/js/shared/fill-functions.js"></script>
     <script th:defer="true" th:src="@{/js/local/students-local-ukr.js}"
             src="../../static/js/local/students-local-ukr.js"></script>
-    <script th:defer="true" th:src="@{/js/specific/student-registration.js}"
-            src="../../static/js/specific/student-registration.js"></script>
+    <script th:defer="true" th:src="@{/js/specific/login-registration.js}"
+            src="../../static/js/specific/login-registration.js"></script>
     <meta charset="UTF-8"/>
     <title>CoursEd</title>
 </head>
@@ -144,7 +144,7 @@
                                 <div class="form-group">
                                     <input type="password" name="password" id="passwordFieldStudent"
                                            class="form-control" placeholder="Пароль"/>
-                                    <div id="emptyPasswordResultStudent" class="alert-danger"></div>
+                                    <div id="passwordResultStudent" class="alert-danger"></div>
                                 </div>
                             <!--</div>-->
                             <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
@@ -212,7 +212,7 @@
                                     <input type="password" name="password" id="passwordFieldTeacher"
                                            class="form-control"
                                            placeholder="Пароль"/>
-                                    <div id="emptyPasswordResultTeacher" class="alert-danger"></div>
+                                    <div id="passwordResultTeacher" class="alert-danger"></div>
                                 </div>
                             <!--</div>-->
                             <!--<div class="col-xs-6 col-sm-6 col-md-6">-->

@@ -1,6 +1,7 @@
 $(document).ready(init);
 
-var emailRegex = /^[A-Za-z0-9._]*\@[A-Za-z]*\.[A-Za-z]{2,5}$/;
+var emailRegex = /^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*\@[A-Za-z]*\.[A-Za-z]{2,5}$/;
+var passRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})/;
 var person;
 
 function init(){
@@ -17,19 +18,26 @@ function init(){
     $("#emailFieldStudent").focusout(checkEmail);
     $("#passwordFieldStudent").focusout(checkPassword);
     $("#confirmPasswordFieldStudent").focusout(checkConfirmPassword);
-    $("#registration-student-form").submit(Validate);
 
     // Teacher check
     $("#emailFieldTeacher").focusout(checkEmail);
     $("#passwordFieldTeacher").focusout(checkPassword);
     $("#confirmPasswordFieldTeacher").focusout(checkConfirmPassword);
-    $("#registration-teacher-form").submit(Validate);
+}
+
+function checkFirstName() {
 }
 
 function checkEmail(){
     var email = $("#emailField" + person).val();
     var availableEmail = false;
-    if(emailRegex.test(email)) {
+    if(email == "") {
+        $("#checkEmailResult" + person).text("Це поле не може бути пустим.");
+        availableEmail = false;
+    } else if(!emailRegex.test(email)) {
+        $("#checkEmailResult" + person).text("Емейл введено невірно.");
+        availableEmail = false;
+    } else { // Passed regex test
         $.ajax({ url: "/api/users/checkEmail", async: false, type: "get", data: "email=" + email})
             .done(function(response) {
                 if(response){
@@ -40,9 +48,6 @@ function checkEmail(){
                     availableEmail = true;
                 }
             });
-    } else {
-        $("#checkEmailResult" + person).text("Емейл введено невірно.");
-        availableEmail = false;
     }
     return availableEmail;
 }
@@ -50,10 +55,13 @@ function checkEmail(){
 function checkPassword() {
     var password = $("#passwordField" + person).val();
     if(password == "") {
-        $("#emptyPasswordResult" + person).text("Це поле не може бути пустим.");
+        $("#passwordResult" + person).text("Це поле не може бути пустим.");
         return false;
-    } else {
-        $("#emptyPasswordResult" + person).text("");
+    } else if (!passRegex.test(password)) {
+        $("#passwordResult" + person).text("Занадто простий пароль.");
+        return false;
+    } else { // Passed regex test
+        $("#passwordResult" + person).text("");
         return true;
     }
 }

@@ -33,7 +33,7 @@ public class BasicValidatorUtil {
     }
 
     public static void validateNames(BasicPersonDTO form) throws ValidationException {
-        String reg = "^[А-ЯІЄ][а-яіє]{1,15}"; // TODO ukr dictionary
+        String reg = "^[А-ЯІЄҐ][а-яієґ]{1,15}";
         if (!form.getFirstName().matches(reg)) {
             throw new ValidationException("FirstNameIsWrong");
         }
