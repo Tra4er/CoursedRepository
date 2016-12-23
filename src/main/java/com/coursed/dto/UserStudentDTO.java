@@ -21,6 +21,11 @@ public class UserStudentDTO implements BasicPersonDTO {
     private String parentsInfo;
     private Long groupId;
 
+//    TODO
+    private Long semesterId;
+    private Long specialityId;
+    private Long yearId;
+
     private String email;
 
     private String password;
@@ -129,6 +134,30 @@ public class UserStudentDTO implements BasicPersonDTO {
 
     public void setGroupId(Long groupId) {
         this.groupId = groupId;
+    }
+
+    public Long getSemesterId() {
+        return semesterId;
+    }
+
+    public void setSemesterId(Long semesterId) {
+        this.semesterId = semesterId;
+    }
+
+    public Long getSpecialityId() {
+        return specialityId;
+    }
+
+    public void setSpecialityId(Long specialityId) {
+        this.specialityId = specialityId;
+    }
+
+    public Long getYearId() {
+        return yearId;
+    }
+
+    public void setYearId(Long yearId) {
+        this.yearId = yearId;
     }
 
     @Override

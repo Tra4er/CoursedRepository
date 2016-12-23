@@ -88,7 +88,5 @@ function sendRegistrationAjaxPost(element, url, modalId, resultElement, sendButt
     }).fail(function (data) {
         resultElement.text(data.responseJSON.message);
         sendButton.button('reset');
-    }).complete(function () {
-        $('#button-teacher-post').button('reset');
     });
 }
