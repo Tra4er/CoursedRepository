@@ -52,7 +52,9 @@
                                    placeholder="Пароль"/>
                         </div>
                         <div th:if="${param.error != null}">
-                            <div th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']}" class="alert alert error">Повідомлення про помилку.</div>
+                            <div th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']}" class="alert alert error">
+                                Повідомлення про помилку.
+                            </div>
                         </div>
                         <div class="col-xs-12">
                             <input type="submit" value="Увійти" class="btn btn-primary btn-block btn-lg"/>
@@ -98,9 +100,10 @@
                         <div class="form-group">
                             <input class="form-control" type="text" name="birthDate" placeholder="Дата народження"/>
                         </div>
-                        <div class="form-group input-group">
-                            <div class="input-group-addon">+380</div>
-                            <input type="text" class="form-control" name="phoneNumber" placeholder="Контактний телефон"/>
+                        <div class="form-group">
+                            <input id="phoneNumber-student" type="text" value="+380" class="form-control"
+                                   name="phoneNumber" placeholder="Контактний телефон"/>
+                            <div id="result-phoneNumber-student" class="alert-danger"></div>
                         </div>
                         <div class="form-group">
                             <input class="form-control" type="text" name="address" placeholder="Адреса"/>
@@ -125,48 +128,21 @@
                             <input class="form-control" type="text" name="additionalInformation"
                                    placeholder="Додаткова інформація (Захоплення, вміння та навички)"/>
                         </div>
-                        <!--<div class="row">-->
-                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <div class="form-group">
-                                    <input type="email" name="email" id="emailFieldStudent" class="form-control"
-                                           placeholder="Email" value="" autocomplete="off"/>
-                                    <div id="checkEmailResultStudent" class="alert-danger"></div>
-                                </div>
-                            <!--</div>-->
-                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <!--<div class="form-group">-->
-                                    <!---->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <div class="form-group">
-                                    <input type="password" name="password" id="passwordFieldStudent"
-                                           class="form-control" placeholder="Пароль"/>
-                                    <div id="passwordResultStudent" class="alert-danger"></div>
-                                </div>
-                            <!--</div>-->
-                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <!--<div class="form-group">-->
-                                    <!---->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <div class="form-group">
-                                    <input type="password" name="confirmPassword" id="confirmPasswordFieldStudent"
-                                           class="form-control" placeholder="Підтвердіть пароль"/>
-                                    <div id="confirmPasswordResultStudent" class="alert-danger"></div>
-                                </div>
-                            <!--</div>-->
-                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <!--<div class="form-group">-->
-                                    <!---->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                        <div class="form-group">
+                            <input id="emailField-student" type="email" name="email" class="form-control"
+                                   placeholder="Email" value="" autocomplete="off"/>
+                            <div id="result-emailField-student" class="alert-danger"></div>
+                        </div>
+                        <div class="form-group">
+                            <input id="passwordField-student" type="password" name="password"
+                                   class="form-control" placeholder="Пароль"/>
+                            <div id="result-passwordField-student" class="alert-danger"></div>
+                        </div>
+                        <div class="form-group">
+                            <input id="confirmPasswordField-student" type="password" name="confirmPassword"
+                                   class="form-control" placeholder="Підтвердіть пароль"/>
+                            <div id="result-confirmPasswordField-student" class="alert-danger"></div>
+                        </div>
                         <div class="form-group alert-danger">
                             <div id="student-request-server-status"></div>
                         </div>
@@ -188,53 +164,27 @@
                         <div class="form-group">
                             <input class="form-control" type="text" name="patronymic" placeholder="По-батькові"/>
                         </div>
-                        <div class="form-group input-group">
-                            <div class="input-group-addon">+380</div>
-                            <input type="text" class="form-control" name="phoneNumber" placeholder="Контактний телефон"/>
+                        <div class="form-group">
+                            <input id="phoneNumber-teacher" type="text" value="+380" class="form-control"
+                                   name="phoneNumber" placeholder="Контактний телефон"/>
+                            <div id="result-phoneNumber-teacher" class="alert-danger"></div>
                         </div>
-                        <!--<div class="row">-->
-                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <div class="form-group">
-                                    <input type="email" name="email" id="emailFieldTeacher" class="form-control"
-                                           placeholder="Email" value="" autocomplete="off"/>
-                                    <div id="checkEmailResultTeacher" class="alert-danger"></div>
-                                </div>
-                            <!--</div>-->
-                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <!--<div class="form-group">-->
-                                    <!---->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <div class="form-group">
-                                    <input type="password" name="password" id="passwordFieldTeacher"
-                                           class="form-control"
-                                           placeholder="Пароль"/>
-                                    <div id="passwordResultTeacher" class="alert-danger"></div>
-                                </div>
-                            <!--</div>-->
-                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <!--<div class="form-group">-->
-                                    <!---->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <div class="form-group">
-                                    <input type="password" name="confirmPassword" id="confirmPasswordFieldTeacher"
-                                           class="form-control" placeholder="Підтвердіть пароль"/>
-                                    <div id="confirmPasswordResultTeacher" class="alert-danger"></div>
-                                </div>
-                            <!--</div>-->
-                            <!--<div class="col-xs-6 col-sm-6 col-md-6">-->
-                                <!--<div class="form-group">-->
-                                    <!---->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                        <div class="form-group">
+                            <input id="emailField-teacher" type="email" name="email" class="form-control"
+                                   placeholder="Email" value="" autocomplete="off"/>
+                            <div id="result-emailField-teacher" class="alert-danger"></div>
+                        </div>
+                        <div class="form-group">
+                            <input id="passwordField-teacher" type="password" name="password"
+                                   class="form-control"
+                                   placeholder="Пароль"/>
+                            <div id="result-passwordField-teacher" class="alert-danger"></div>
+                        </div>
+                        <div class="form-group">
+                            <input id="confirmPasswordField-teacher" type="password" name="confirmPassword"
+                                   class="form-control" placeholder="Підтвердіть пароль"/>
+                            <div id="result-confirmPasswordField-teacher" class="alert-danger"></div>
+                        </div>
                         <div class="form-group alert-danger">
                             <div id="teacher-request-server-status"></div>
                         </div>
