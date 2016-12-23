@@ -41,7 +41,7 @@ public class BasicValidatorUtil {
             throw new ValidationException("LastNameIsWrong");
         }
         if (!form.getPatronymic().matches(reg)) {
-            throw new ValidationException("PatronymicSsWrong");
+            throw new ValidationException("PatronymicIsWrong");
         }
     }
 
