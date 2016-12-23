@@ -65,15 +65,18 @@
                     <form id="registration-student-form" method="post">
                         <h2>Створіть акаунт студента</h2>
                         <div class="form-group">
-                            <input id="lastNameField-student" class="form-control" type="text" name="lastName" placeholder="Прізвище"/>
+                            <input id="lastNameField-student" class="form-control" type="text" name="lastName"
+                                   placeholder="Прізвище"/>
                             <div id="result-lastNameField-student" class="alert-danger"></div>
                         </div>
                         <div class="form-group">
-                            <input id="firstNameField-student" class="form-control" type="text" name="firstName" placeholder="Ім'я"/>
+                            <input id="firstNameField-student" class="form-control" type="text" name="firstName"
+                                   placeholder="Ім'я"/>
                             <div id="result-firstNameField-student" class="alert-danger"></div>
                         </div>
                         <div class="form-group">
-                            <input id="patronymicField-student" class="form-control" type="text" name="patronymic" placeholder="По-батькові"/>
+                            <input id="patronymicField-student" class="form-control" type="text" name="patronymic"
+                                   placeholder="По-батькові"/>
                             <div id="result-patronymicField-student" class="alert-danger"></div>
                         </div>
                         <div class="form-group">
@@ -159,15 +162,18 @@
                     <form id="registration-teacher-form" method="post">
                         <h2>Створіть акаунт викладача</h2>
                         <div class="form-group">
-                            <input id="lastNameField-teacher" class="form-control" type="text" name="lastName" placeholder="Прізвище"/>
+                            <input id="lastNameField-teacher" class="form-control" type="text" name="lastName"
+                                   placeholder="Прізвище"/>
                             <div id="result-lastNameField-teacher" class="alert-danger"></div>
                         </div>
                         <div class="form-group">
-                            <input id="firstNameField-teacher" class="form-control" type="text" name="firstName" placeholder="Ім'я"/>
+                            <input id="firstNameField-teacher" class="form-control" type="text" name="firstName"
+                                   placeholder="Ім'я"/>
                             <div id="result-firstNameField-teacher" class="alert-danger"></div>
                         </div>
                         <div class="form-group">
-                            <input id="patronymicField-teacher" class="form-control" type="text" name="patronymic" placeholder="По-батькові"/>
+                            <input id="patronymicField-teacher" class="form-control" type="text" name="patronymic"
+                                   placeholder="По-батькові"/>
                             <div id="result-patronymicField-teacher" class="alert-danger"></div>
                         </div>
                         <div class="form-group">
@@ -199,6 +205,22 @@
                                    class="btn btn-success btn-block btn-lg"/>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="emailSentMessage" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="text-center well">Ваш обліковий запис збережений!</h1>
+                </div>
+                <div class="modal-body">
+                    <h2 class="text-center">Ми відправили вам повідомлення із підтвердженям.</h2>
+                </div>
+                <div class="modal-footer">
+                    <a id="emailSentMessage-doneButton" th:href="@{/login}"
+                       class="text-center btn btn-success btn-block btn-lg">Зрозуміло</a>
                 </div>
             </div>
         </div>

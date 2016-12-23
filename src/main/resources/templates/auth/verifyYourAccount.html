@@ -7,8 +7,18 @@
     <title>Підтвердіть свій акаунт</title>
 </head>
 <body>
-<h1 class="text-center well">Ваш обліковий запис збережений!</h1>
-<h5>Ми відправили вам повідомлення із підтвердженям.</h5>
-<a th:href="@{/login}" class="text-center btn btn-success btn-block btn-lg">Перейти до аутентифікації</a>
+<div class="container">
+    <div class="jumbotron">
+        <div class="form-group">
+            <h1 class="text-center well">Ваш обліковий запис збережений!</h1>
+        </div>
+        <div class="form-group">
+            <h2 class="text-center">Ми відправили вам повідомлення із підтвердженям.</h2>
+        </div>
+        <div class="form-group">
+            <a th:href="@{/login}" class="text-center btn btn-success btn-block btn-lg">Перейти до аутентифікації</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

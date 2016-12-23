@@ -35,7 +35,7 @@ $("#specialityId").on('change', function () {
     fillGroups()
 });
 
-$("#semesterId").on('change', function () {
+$("#semesterId").on('change', function () { // TODO should not do this on every swap
     fillGroups()
 });
 
@@ -82,9 +82,9 @@ function sendRegistrationAjaxPost(element, url, modalId, resultElement, sendButt
     }).done(function (data) {
         $('#' + modalId).modal("toggle");
         if (data.message == "success") {
-            window.location.href = "http://localhost:8080/verifyYourAccount"; // TODO
+            sendButton.button('reset');
+            $("#emailSentMessage").modal({backdrop: "static", keyboard : false});
         }
-    //    sendButton.button('reset');
     }).fail(function (data) {
         resultElement.text(data.responseJSON.message);
         sendButton.button('reset');

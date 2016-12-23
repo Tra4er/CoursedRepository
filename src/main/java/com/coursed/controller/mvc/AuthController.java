@@ -162,6 +162,11 @@ public class AuthController {
         return "redirect:/login";
     }
 
+    @GetMapping("/forgotPassword")
+    public String forgotPassword() {
+        return "/auth/forgotPassword";
+    }
+
 //    NON API
 
     private String getMessageFromBindingResult(BindingResult bindingResult) {
