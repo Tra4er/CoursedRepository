@@ -1,6 +1,17 @@
 /**
  * Created by Алена on 01.12.2016.
  */
+
+var person;
+
+// get person
+$("#registration-student").click(function () {
+    person = "student";
+});
+$("#registration-teacher").click(function () {
+    person = "teacher";
+});
+
 $("#registration-student").on('click', function () {
     fillSelectYear("yearId", API + "/years/getAll");
     fillSelectFrom("specialityId", API + "/specialities/getAll", "fullName");
@@ -83,6 +94,8 @@ function sendRegistrationAjaxPost(element, url, modalId, resultElement, sendButt
         $('#' + modalId).modal("toggle");
         if (data.message == "success") {
             sendButton.button('reset');
+            $("#userEmail-modal").text($("#emailField-" + person).val());
+            $("#userEmail-modal").href = $("#emailField-" + person).val();
             $("#emailSentMessage").modal({backdrop: "static", keyboard : false});
         }
     }).fail(function (data) {
