@@ -58,21 +58,21 @@ $("#yearId").on('change', function () {
 
 $('#button-student-post').click(function () {
     // if (Validate()) {
-        var sendButton = $('#button-student-post');
-        var form = $('#registration-student-form');
-        var result = $("#student-request-server-status");
-        sendButton.button('loading');
-        sendRegistrationAjaxPost(form, API + '/users/registration-student', 'Myform', result, sendButton);
+    var sendButton = $('#button-student-post');
+    var form = $('#registration-student-form');
+    var result = $("#student-request-server-status");
+    sendButton.button('loading');
+    sendRegistrationAjaxPost(form, API + '/users/registration-student', 'Myform', result, sendButton);
     // }
 });
 
 $('#button-teacher-post').click(function () {
     // if (Validate()) {
-        var sendButton = $('#button-teacher-post');
-        var form = $('#registration-teacher-form');
-        var result = $("#teacher-request-server-status");
-        sendButton.button('loading');
-        sendRegistrationAjaxPost(form, API + '/users/registration-teacher', 'Myform', result, sendButton);
+    var sendButton = $('#button-teacher-post');
+    var form = $('#registration-teacher-form');
+    var result = $("#teacher-request-server-status");
+    sendButton.button('loading');
+    sendRegistrationAjaxPost(form, API + '/users/registration-teacher', 'Myform', result, sendButton);
     // }
 });
 
@@ -95,7 +95,7 @@ function sendRegistrationAjaxPost(element, url, modalId, resultElement, sendButt
         if (data.message == "success") {
             sendButton.button('reset');
             $("#userEmail-modal").text($("#emailField-" + person).val());
-            $("#userEmail-modal").href = $("#emailField-" + person).val();
+            $("#userEmail-modal").attr("href", "mailto:" + $("#emailField-" + person).val());
             $("#emailSentMessage").modal({backdrop: "static", keyboard : false});
         }
     }).fail(function (data) {

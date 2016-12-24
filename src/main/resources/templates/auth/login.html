@@ -10,7 +10,8 @@
             src="../../static/js/frameworks/jquery-3.1.1.js"></script>
     <script th:defer="true" th:src="@{/js/frameworks/bootstrap.min.js}"
             src="../../static/js/frameworks/bootstrap.min.js"></script>
-    <script th:defer="true" th:src="@{/js/specific/registration-validation.js}"></script>
+    <script th:defer="true" th:src="@{/js/specific/registration-validation.js}"
+            src="../../static/js/specific/registration-validation.js"></script>
     <script th:defer="true" th:src="@{/js/shared/scripts-core.js}"
             src="../../static/js/shared/scripts-core.js"></script>
     <script th:defer="true" th:src="@{/js/shared/fill-functions.js}"
@@ -58,6 +59,10 @@
                         </div>
                         <div class="col-xs-12">
                             <input type="submit" value="Увійти" class="btn btn-primary btn-block btn-lg"/>
+                        </div>
+                        <br/>
+                        <div class="col-sm-4">
+                            <a th:href="@{/forgotPassword}">Забули пароль?</a>
                         </div>
                     </form>
                 </div>
