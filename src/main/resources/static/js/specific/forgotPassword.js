@@ -11,7 +11,7 @@ $(document).ready(function () {
 function sendResetAjax() {
     $.ajax({
         type: 'POST',
-        url: API + "/users/resetPassword",
+        url: "/api/users/resetPassword",
         data: "email=" + $("#emailField-reset").val()
     }).done(function (data) {
         $('#emailField-reset-button').button('reset');

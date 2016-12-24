@@ -8,7 +8,7 @@ $(function(){
 });
 
 function fillCuratorsTable() {
-    $.getJSON(API + "/groups/getAll" , function(response){
+    $.getJSON("/api/groups/getAll" , function(response){
         $.each(response, function (i, entity) {
             var htmlRow = "<tr id=" + entity.id + ">";
              htmlRow +="<td>" + entity.speciality['groupsName'] + "-" + entity.number + "</td>";

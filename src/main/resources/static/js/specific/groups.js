@@ -7,13 +7,13 @@ $(document).ready(function () {
     insertTable(titles, "content-table");
 
     var entityParams = ['id', 'number', 'groupType', 'groupDegree', 'courseNumber'];
-    fillLocalizedTableFrom("content-table", API + "/groups/getAll", entityParams, localGroupUkr);
+    fillLocalizedTableFrom("content-table", "/api/groups/getAll", entityParams, localGroupUkr);
 
     fillSelect("courseNumber", courseNumbers);
     fillSelect("groupType", groupType);
     fillSelect("groupDegree", groupDegree);
-    fillSelectYear("yearId", API + "/years/getAll");
-    fillSelectFrom("specialityId", API + "/specialities/getAll", "fullName");
+    fillSelectYear("yearId", "/api/years/getAll");
+    fillSelectFrom("specialityId", "/api/specialities/getAll", "fullName");
 
 });
 

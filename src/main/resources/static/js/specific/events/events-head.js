@@ -21,18 +21,18 @@
 //     var titles = ['id', 'Тип', 'Дата початку', 'Дата завершення'];
 //     insertTable(titles, "content-table");
 //     var entityParams = ['id', 'eventType', 'beginDate', 'expirationDate'];
-//     fillTableFromWithLinks("content-table", API + "/events/getAll", entityParams, "eventType");
+//     fillTableFromWithLinks("content-table", "/api/events/getAll", entityParams, "eventType");
 // }
 
 $(function () {
     var titles = ['Дата створення', 'Початок', 'Кінець', 'Тип події'];
     insertTable(titles, "events-table");
     var entityParams = ['creationDate', 'beginDate', 'expirationDate', 'eventType'];
-    fillTableFrom("events-table", API + "/events/getAll", entityParams);
+    fillTableFrom("events-table", "/api/events/getAll", entityParams);
 
     settingDateTimePiker();
     fillSelect("eventType", plannedEventType);
-    fillSelectYear("yearId", API + "/years/getAll");
+    fillSelectYear("yearId", "/api/years/getAll");
 
 });
 

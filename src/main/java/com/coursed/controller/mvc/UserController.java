@@ -20,7 +20,7 @@ import java.util.Calendar;
  * Created by Trach on 12/24/2016.
  */
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
@@ -45,7 +45,7 @@ public class UserController {
             LOGGER.debug("Invalid token received: {}", token);
             String message = "Invalid token received: " + token;
             redAtt.addFlashAttribute("message", message);
-            return "redirect:/user/badUser";
+            return "redirect:/users/badUser";
         }
 
         User user = verificationToken.getUser();
@@ -54,7 +54,7 @@ public class UserController {
             LOGGER.debug("Verification token expired for user: {}", user);
             String messageValue = "Verification token expired for user: " + user.getEmail();
             redAtt.addFlashAttribute("message", messageValue);
-            return "redirect:/user/badUser";
+            return "redirect:/users/badUser";
         }
 
         user.setEnabled(true);

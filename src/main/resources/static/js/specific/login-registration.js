@@ -13,8 +13,8 @@ $("#registration-teacher").click(function () {
 });
 
 $("#registration-student").on('click', function () {
-    fillSelectYear("yearId", API + "/years/getAll");
-    fillSelectFrom("specialityId", API + "/specialities/getAll", "fullName");
+    fillSelectYear("yearId", "/api/years/getAll");
+    fillSelectFrom("specialityId", "/api/specialities/getAll", "fullName");
     fillSelect("studentEducationStatus", studentEducationStatus)
 });
 
@@ -25,7 +25,7 @@ function fillGroups() {
 
     if ($("#specialityId > option:selected").attr("value") != '0'
         && $("#semesterId > option:selected").attr("value") != '0') {
-        $.getJSON(API + "/groups/getAll/", {
+        $.getJSON("/api/groups/getAll/", {
             specialityId: $("#specialityId > option:selected").attr("value"),
             semesterId: $("#semesterId > option:selected").attr("value")
         }, function (response) {
@@ -46,7 +46,7 @@ $("#specialityId").on('change', function () {
     fillGroups()
 });
 
-$("#semesterId").on('change', function () { // TODO should not do this on every swap
+$("#semesterId").on('change', function () {
     fillGroups()
 });
 
@@ -62,7 +62,7 @@ $('#button-student-post').click(function () {
     var form = $('#registration-student-form');
     var result = $("#student-request-server-status");
     sendButton.button('loading');
-    sendRegistrationAjaxPost(form, API + '/users/registration-student', 'Myform', result, sendButton);
+    sendRegistrationAjaxPost(form, '/api/users/registration-student', 'Myform', result, sendButton);
     // }
 });
 
@@ -72,7 +72,7 @@ $('#button-teacher-post').click(function () {
     var form = $('#registration-teacher-form');
     var result = $("#teacher-request-server-status");
     sendButton.button('loading');
-    sendRegistrationAjaxPost(form, API + '/users/registration-teacher', 'Myform', result, sendButton);
+    sendRegistrationAjaxPost(form, '/api/users/registration-teacher', 'Myform', result, sendButton);
     // }
 });
 

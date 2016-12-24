@@ -5,7 +5,7 @@ $(document).ready(function () {
     var titles = ['id', 'Рік початку', 'Рік завершення'];
     insertTable(titles, "content-table");
     var entityParams = ['id', 'beginYear', 'endYear'];
-    fillTableFrom("content-table", API + "/years/getAll", entityParams);
+    fillTableFrom("content-table", "/api/years/getAll", entityParams);
 });
 
 //It sends serialized

@@ -30,7 +30,7 @@ function getSpecialities() {
 function fillOnePlan(){
     var spec = getSpecialities();
     $("#one-plan-container").html(" ");
-    $.getJSON(API + "/years/getCurrent", function(year){
+    $.getJSON("/api/years/getCurrent", function(year){
         htmlFormForEducationPlan(year.beginYear, year.endYear, year.id, spec, year.educationPlans, 'one-plan-container');
     });
 }
@@ -38,7 +38,7 @@ function fillOnePlan(){
 function fillPlans() {
     var spec = getSpecialities();
     $("#all-plans-container").html(" ");
-    $.getJSON(API + "/years/getAll", function(responseYears){
+    $.getJSON("/api/years/getAll", function(responseYears){
         $.each(responseYears, function (key1, year) {
             htmlFormForEducationPlan(year.beginYear, year.endYear, year.id, spec, year.educationPlans, 'all-plans-container');
         });
