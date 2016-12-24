@@ -31,11 +31,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-//    @GetMapping("/verifyAccount")
-//    public String verifyYourAccount() {
-//        return "/auth/verifyYourAccount";
-//    }
-
     @GetMapping("/confirmRegistration")
     public String confirmRegistration(@RequestParam("token") String token, RedirectAttributes redAtt) {
         LOGGER.debug("Receiving confirmation token: {}", token);
@@ -64,11 +59,6 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/forgotPassword")
-    public String forgotPassword() {
-        return "/auth/forgotPassword";
-    }
-
     @RequestMapping(value = "/changePasswordPass", method = RequestMethod.GET)
     public String showChangePasswordPage(@RequestParam("id") Long id, @RequestParam("token") String token,
                                          RedirectAttributes redAtt) {
@@ -80,5 +70,13 @@ public class UserController {
         return "redirect:/updatePassword";
     }
 
+    @GetMapping("/forgotPassword")
+    public String forgotPassword() {
+        return "/auth/forgotPassword";
+    }
 
+    @GetMapping("/updatePassword")
+    public String updatePassword() {
+        return "/auth/updatePassword";
+    }
 }
