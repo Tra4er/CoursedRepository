@@ -7,4 +7,5 @@ package com.coursed.security;
 public interface SecurityService {
     String findLoggedInUsername();
     void autoLogin(String username, String password);
+    String validatePasswordResetToken(Long id, String token);
 }

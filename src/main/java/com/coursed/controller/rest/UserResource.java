@@ -107,7 +107,7 @@ public class UserResource {
 
     @PostMapping("/resetPassword")
     @ResponseBody
-    public GenericResponse resetPassword(@RequestParam String email, HttpServletRequest request) {
+    public GenericResponse sendResetPasswordEmail(@RequestParam String email, HttpServletRequest request) {
 
         System.out.println("Reset user: " + email);
         Optional<User> user = userService.getUserByEmail(email);
@@ -162,7 +162,7 @@ public class UserResource {
     //    NON API
     private SimpleMailMessage constructResetTokenEmail(
             String contextPath, String token, User user) {
-        String url = contextPath + "/user/changePassword?id=" + user.getId() + "&token=" + token;
+        String url = contextPath + "/users/changePassword?id=" + user.getId() + "&token=" + token;
         String message = "Відновлення паролю";
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(user.getEmail());
