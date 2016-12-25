@@ -14,29 +14,27 @@
     <script th:defer="true" th:src="@{/js/shared/events.js}" src="../../static/js/shared/events.js"></script>
 </head>
 <body>
-    <div layout:fragment="content">
-        <h2>Заплановані події</h2>
-        <div class="panel-group" id="accordion-event" role="tablist" aria-multiselectable="true">
-        </div>
+<div layout:fragment="content">
+    <h2>Заплановані події</h2>
+    <div class="panel-group" id="accordion-event" role="tablist" aria-multiselectable="true"></div>
+    <div id="discipline-groups-dialog" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Вибрати групу: </h4>
+                </div>
+                <div class="modal-body">
+                    <div id="groups-container">
 
-        <div id="discipline-groups-dialog" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Вибрати групу: </h4>
                     </div>
-                    <div class="modal-body">
-                        <div id="groups-container">
-
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
-</html>
+</html>>

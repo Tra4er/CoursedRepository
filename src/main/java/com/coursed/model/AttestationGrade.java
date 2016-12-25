@@ -1,5 +1,7 @@
 package com.coursed.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -13,6 +15,7 @@ public class AttestationGrade {
     private Boolean firstTry;
     private Boolean secondTry;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="student_id")
     private Student student;

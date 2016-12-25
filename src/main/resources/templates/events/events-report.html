@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorator="shared/general-layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Звіт по групі</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.css}" href="../../static/css/bootstrap-datetimepicker.css"/>
+    <script th:defer="true" th:src="@{/js/shared/fill-functions.js}" src="../../static/js/shared/fill-functions.js"></script>
+    <!--<script th:defer="true" th:src="@{/js/shared/events.js}" src="../../static/js/shared/events.js"></script>-->
+    <script th:defer="true" th:src="@{/js/specific/events/events-report.js}" src="../../static/js/specific/events/events-report.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <table id="report-table" class="table table-hover table-striped">
+        <thead>
+        <tr></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+</body>
+</html>

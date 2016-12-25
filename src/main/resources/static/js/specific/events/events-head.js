@@ -98,3 +98,33 @@ $('#button-event-post').on('click', function () {
         }
     });
 });
+
+$('#events-table > tbody').on('click', 'tr > td > .btn', function(){
+    var eventId = $(this).attr("id");
+    var info = $(this).text();
+    $('#groups-container').html("<h2 id='"+ eventId +"'>" + info + "</h2><br/>");
+
+    $.getJSON("api/groups/getAllFromSemesterFromPlannedEvent", {plannedEventId: eventId}, function(response){
+        $.each(response, function(i, group){
+            var item = "<a href='/events/report?eventId=" + eventId + "'><input type='button' id='" + group.id + "' class='btn btn-default col-xs-12' value = '"
+                + group.speciality['groupsName'] + "-" + group.number;
+            if (group.groupType == 'DISTANCE_FORM') item+= " (" + localGroupUkr["DISTANCE_FORM"] + ")'/></a>"
+            else item+= "'/></a>";
+            $('#groups-container').append(item);
+        })
+    });
+});
+
+// $('#groups-container').on('click', 'input', function(){
+//     var eventId = $(this).parent().children('h2:first').attr('id');
+//     var groupId= $(this).attr('id');
+//     $.get( "api/students/getAllFromGroup", {groupId: groupId})
+//         .done(function(data){
+//             $('#curator-dialog').modal("hide");
+//             // reloadCuratorsForGroup(gId);
+//             alert( data );
+//         })
+//         .fail(function() {
+//             alert( "Помилка!" );
+//         });
+// });

@@ -5,7 +5,7 @@ $(function () {
             var id = item.id;
             var isEventActual = isActuallyEvent(item.beginDate, item.expirationDate);
             var body = '<div class="panel panel-' + isEventActual + '" id ="' + id + '" eventType="' +
-            item.eventType + '"><div class="panel-heading" role="tab" id="heading' + id + '"><h4 class="panel-title">';
+                item.eventType + '"><div class="panel-heading" role="tab" id="heading' + id + '"><h4 class="panel-title">';
             if (isEventActual == 'success') {
                 body += '<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse' + id +
                     '" aria-expanded="true" aria-controls="collapseOne">' + plannedEventType[item.eventType] + ' (' +
@@ -13,7 +13,7 @@ $(function () {
                     id + '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne"><div class="panel-body"></div></div></div>';
             }
             else body += plannedEventType[item.eventType] + ' (' + dateToString(item.beginDate) +
-                    ' - ' + dateToString(item.expirationDate) + ')</div>';
+                ' - ' + dateToString(item.expirationDate) + ')</div>';
             $('#accordion-event').append(body);
         })
     });
@@ -50,7 +50,7 @@ $('#accordion-event').on('click', '.discipline-button', function (e){
         })
         $('#groups-container').append(items);
     });
-     $('#discipline-groups-dialog').modal('show');
+    $('#discipline-groups-dialog').modal('show');
 });
 
 $('#groups-container').on('click', 'input', function(){
@@ -61,10 +61,11 @@ $('#groups-container').on('click', 'input', function(){
     var groupId= $(this).attr('id');
     $.getJSON( "api/students/getAllFromGroup", {groupId: groupId})
         .done(function(responce){
+            $('.atest-content').html('');
             $('#discipline-groups-dialog').modal("hide");
             $('#accordion-event').addClass('col-xs-6');
             var event = plannedEventType[eventType];
-            var htmlTable = '<div class="col-xs-6"><h2 disciplineId ="'+ discId + '">' + discName+ '</h2><table id="event-content-table" class="table table-hover table-striped"><thead><tr><th>№</th><th>ПІБ</th>';
+            var htmlTable = '<div class="col-xs-6 atest-content"><h2 disciplineId ="'+ discId + '">' + discName+ '</h2><table id="event-content-table" class="table table-hover table-striped"><thead><tr><th>№</th><th>ПІБ</th>';
             htmlTable += '<th>' + event + '</th></tr></thead><tbody>';
             var counter = 0;
             $.each(responce, function(i,student){
@@ -84,12 +85,12 @@ $('#content').on('click', '#saveFirstAttestationGrade', function(e){
     // var disciplineId = $(this).closest('h2').attr('disciplineId');
     var disciplineId = $(e.currentTarget).parent().children().first().attr('disciplineId');
     $('tbody > tr').each(function(i,v){
-        var $td = $(this).children('td');
-        var studentId = $td.first().attr('studentId');
-        var firstTry = $td.last().find('input').prop('checked');
-         // var   firstTry = switchToBool(frstTr);
-        obj[i] = {'firstTry': firstTry, 'studentId': studentId, 'disciplineId': disciplineId, 'secondTry':'false'};
-    }
+            var $td = $(this).children('td');
+            var studentId = $td.first().attr('studentId');
+            var firstTry = $td.last().find('input').prop('checked');
+            // var   firstTry = switchToBool(frstTr);
+            obj[i] = {'firstTry': firstTry, 'studentId': studentId, 'disciplineId': disciplineId, 'secondTry':'false'};
+        }
     );
     var string = JSON.stringify(obj);
     $.ajax({

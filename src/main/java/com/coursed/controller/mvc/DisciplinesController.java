@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class DisciplinesController {
 
     @GetMapping("/disciplines")
-    public String getPage(Model model/*, @RequestParam(name = "planId") Long planId*/)
+    public String getPage()
     {
-        //model.addAttribute("planId", planId);
         return "disciplines";
     }
 }
