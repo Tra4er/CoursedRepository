@@ -80,4 +80,9 @@ public class GroupResource {
         teacherService.setAsCurator(teacherId, groupId);
     }
 
+    @GetMapping
+    private Collection<Group> getGroupsFromSemesterFromPlannedEvent(@RequestParam(name = "plannedEventId")Long plannedEventId) {
+        return groupService.findAllFromSemesterFromPlannedEvent(plannedEventId);
+    }
+
 }

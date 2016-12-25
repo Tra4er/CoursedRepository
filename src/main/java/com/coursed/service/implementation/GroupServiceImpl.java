@@ -3,11 +3,7 @@ package com.coursed.service.implementation;
 import com.coursed.model.*;
 import com.coursed.model.enums.CourseNumber;
 import com.coursed.model.enums.SemesterNumber;
-import com.coursed.repository.DisciplineRepository;
-import com.coursed.repository.EducationPlanRepository;
-import com.coursed.repository.GroupRepository;
-import com.coursed.repository.SemesterRepository;
-import com.coursed.repository.SpecialityRepository;
+import com.coursed.repository.*;
 import com.coursed.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +32,9 @@ public class GroupServiceImpl implements GroupService {
 
     @Autowired
     private EducationPlanRepository educationPlanRepository;
+
+    @Autowired
+    private PlannedEventRepository plannedEventRepository;
 
     @Override
     public Group create(Group group) {
@@ -103,5 +102,12 @@ public class GroupServiceImpl implements GroupService {
                 .collect(Collectors.toList());
 
         return groups;
+    }
+
+    @Override
+    public List<Group> findAllFromSemesterFromPlannedEvent(Long plannedEventId) {
+        PlannedEvent plannedEvent = plannedEventRepository.findOne(plannedEventId);
+        Semester semester = plannedEvent.getSemester();
+        return semester.getGroups();
     }
 }
