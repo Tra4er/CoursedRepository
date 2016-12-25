@@ -15,12 +15,14 @@
     <script th:defer="true" th:src="@{/js/local/events-local-ukr.js}"
             src="../../static/js/local/events-local-ukr.js"></script>
     <script th:defer="true" th:src="@{/js/specific/events/events-head.js}"
-            src="../../static/js/specific/groups.js"></script>
+            src="../../static/js/specific/events-head.js"></script>
+    <script th:defer="true" th:src="@{/js/shared/events.js}" src="../../static/js/shared/events.js"></script>
 
     <script th:defer="true" th:src="@{/js/moment/moment.js}" src="../../static/js/moment/moment.js"></script>
     <script th:defer="true" th:src="@{/js/moment/uk.js}" src="../../static/js/moment/uk.js"></script>
     <script th:defer="true" th:src="@{/js/moment/bootstrap-datetimepicker.js}"
             src="../../static/js/moment/bootstrap-datetimepicker.js"></script>
+
 </head>
 <body>
 <div layout:fragment="content">
@@ -107,7 +109,26 @@
         </div>
     </div>
 
-    <button id="btnModal" type="button" class="btn btn-info" data-toggle="modal"
+    <div id="events-groups-dialog" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Вибрати групу: </h4>
+                </div>
+                <div class="modal-body">
+                    <div id="groups-container">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="btnModal" type="button" class="btn btn-primary" data-toggle="modal"
             data-target="#add-event-dialog">Створити подію
     </button>
 </div>
