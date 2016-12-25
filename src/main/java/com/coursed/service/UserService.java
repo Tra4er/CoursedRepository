@@ -18,7 +18,6 @@ public interface UserService {
     void saveRegisteredUser(User user);
     User getUserById(Long id);
     Optional<User> getUserByEmail(String email);
-    List<User> findAll();
     List<User> findAllUnconfirmedTeachers();
     List<User> findAllTeachers(Long groupId);
     List<User> findAllGroupCurators(Long groupId);

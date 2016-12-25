@@ -1,6 +1,7 @@
 package com.coursed.repository;
 
 import com.coursed.model.auth.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,22 @@ import java.util.Set;
 public interface UserRepository extends CrudRepository<User, Long> {
     Optional<User> findOneByEmail(String email);
     List<User> findAll();
+
+
+//    @Query("SELECT users FROM User users INNER JOIN users.roles " +
+//            "WHERE role_id = SELECT role.id FROM Role role WHERE role.name = 'ROLE_TEACHER'")
+    //AND role_id IN SELECT r.id FROM Role r WHERE r.name = 'ROLE_TEACHER'
+    @Query("SELECT DISTINCT u FROM User AS u LEFT JOIN FETCH u.roles WHERE u.isATeacher = true AND role_id != 3")
+    List<User> findAllUnconfirmedTeachers();
+
+//    @Query("SELECT dis FROM Discipline dis INNER JOIN dis.teachers WHERE teacher_id = :teacherid")
+
+//    Role role = roleRepository.findByName("ROLE_TEACHER");
+//
+//    //TODO transfer to JPQL
+//        return userRepository.findAll().stream()
+//                .filter(User::isATeacher)
+//                .filter(user -> !(user.getRoles().contains(role)))
+//            .collect(Collectors.toList());
 }
+

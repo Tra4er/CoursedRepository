@@ -24,9 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Collection;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by Trach on 11/24/2016.
@@ -138,6 +136,26 @@ public class UserResource {
     public void confirmTeacher(@RequestParam(name = "userId") Long userId) {
         userService.makeATeacher(userId);
     }
+
+    //TODO: solve n+1 JPA problem via avoiding traversal of unfetched entities when JSON is creating
+//    @GetMapping("/getAllUnconfirmedTeachers")
+//    private Set<Object> getAllUnconfirmedTeachers() {
+//
+//        Set<Object> json = new HashSet<>();
+//
+//        List<User> UnconfirmedTeachers = userService.findAllUnconfirmedTeachers();
+//
+//        for (User user : UnconfirmedTeachers) {
+//            Map<String, Object> value = new HashMap<>();
+//
+//            value.put("id", user.getId());
+//            value.put("email", user.getEmail());
+//
+//            json.add(value);
+//        }
+//
+//        return json;
+//    }
 
     @GetMapping("/getAllUnconfirmedTeachers")
     private Collection<User> getAllUnconfirmedTeachers() {

@@ -52,4 +52,10 @@ public class DisciplineResource {
 
         return disciplineService.getAllActualConnectedWithTeacher(user.get().getTeacherEntity().getId(), plannedEventId);
     }
+
+    @GetMapping("/getAllDisciplinesFromPlannedEvent")
+    private Collection<Discipline> getAllDisciplinesFromPlannedEvent(@RequestParam(name = "plannedEventId")Long plannedEventId)
+    {
+        return disciplineService.getAllDisciplinesFromPlannedEvent(plannedEventId);
+    }
 }

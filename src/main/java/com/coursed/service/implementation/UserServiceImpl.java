@@ -156,19 +156,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findOneByEmail(email);
     }
 
-    @Override
-    public List<User> findAll() {
-        LOGGER.debug("Getting all users");
-        return userRepository.findAll();
-    }
 
     @Override
     public List<User> findAllUnconfirmedTeachers() {
-        Role role = roleRepository.findByName("ROLE_TEACHER");
-        return findAll().stream()
-                .filter(User::isATeacher)
-                .filter(user -> !(user.getRoles().contains(role)))
-                .collect(Collectors.toList());
+        return userRepository.findAllUnconfirmedTeachers();
     }
 
     @Override
@@ -177,13 +168,13 @@ public class UserServiceImpl implements UserService {
 
 
         if (groupId == null) {
-            return findAll().stream()
+            return userRepository.findAll().stream()
                     .filter(User::isATeacher)
                     .filter(user -> user.getRoles().contains(role))
                     .collect(Collectors.toList());
         } else {
             Group exceptThisGroup = groupRepository.findOne(groupId);
-            return findAll().stream()
+            return userRepository.findAll().stream()
                     .filter(User::isATeacher)
                     .filter(user -> user.getRoles().contains(role))
                     .filter(user -> !(user.getTeacherEntity().getCuratedGroups().contains(exceptThisGroup)))

@@ -16,7 +16,7 @@ public class Teacher {
     @GeneratedValue
     private Long id;
     @JsonBackReference("user-teacher")
-    @OneToOne(mappedBy = "teacherEntity")
+    @OneToOne(mappedBy = "teacherEntity", fetch = FetchType.LAZY)
     private User user;
 
     private String firstName;

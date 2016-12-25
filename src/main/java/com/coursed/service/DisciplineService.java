@@ -13,4 +13,5 @@ public interface DisciplineService {
     Discipline create(DisciplineDTO disciplineDTO);
     void connectWithTeacher(Long disciplineId, Long teacherId);
     List<Discipline> getAllActualConnectedWithTeacher(Long teacherId, Long plannedEventId);
+    List<Discipline> getAllDisciplinesFromPlannedEvent(Long plannedEventId);
 }
