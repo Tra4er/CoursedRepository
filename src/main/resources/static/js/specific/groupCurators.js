@@ -32,7 +32,7 @@ function fillCuratorsTable() {
 
 $('#groupCurators-table > tbody').on('click', 'tr > td > .btn-default', function(){
     var grId = $(this).attr("id");
-    var info = $(this).closest('tr').children('td:first').text()
+    var info = $(this).closest('tr').children('td:first').text();
     $('#teacher-container').html("<h2 id='"+ grId +"'> група " + info + "</h2> <br/>");
 
     $.getJSON("api/users/getAllTeachers", {groupId: grId}, function(response){

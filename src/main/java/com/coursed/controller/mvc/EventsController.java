@@ -38,6 +38,15 @@ public class EventsController {
         return "/auth/badUser"; // TODO redirect:error page
     }
 
+    @GetMapping("/events/report") // TODO config access to rest
+    public String eventReport(RedirectAttributes redAtt, Authentication authentication) {
+        if(hasRole("ROLE_HEAD") || hasRole("ROLE_SECRETARY")) {
+            return "/events/events-report";
+        }
+        redAtt.addFlashAttribute("message", "You do not have access to this page.");
+        return "/auth/badUser"; // TODO redirect:error page
+    }
+
     @GetMapping("/events/{eventId}")
     public String getEvent(@PathVariable String eventId, Model model) {
         model.addAttribute("eventId", eventId);
