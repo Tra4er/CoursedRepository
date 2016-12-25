@@ -74,19 +74,12 @@ public class DisciplineServiceImpl implements DisciplineService {
 
     @Override
     public List<Discipline> getAllActualConnectedWithTeacher(Long teacherId, Long plannedEventId) {
-        List<Discipline> disciplineList = disciplineRepository.findAll();
-        Teacher teacher = teacherRepository.findOne(teacherId);
-
         Year currentYear = yearService.getCurrent();
         List<EducationPlan> educationPlans = currentYear.getEducationPlans();
 
-        //// TODO: 18.12.2016  transfer to jpa to improve performance
-        List<Discipline> connectedWithTeacher = disciplineList.stream()
-                .filter(discipline -> discipline.getTeachers().contains(teacher))
-                .collect(Collectors.toList());
+        List<Discipline> connectedWithTeacher = disciplineRepository.getAllActualConnectedWithTeacher(teacherId);
 
         List<Discipline> actualDisciplines = new ArrayList<>();
-
         if (plannedEventId != null) {
             PlannedEvent plannedEvent = plannedEventRepository.findOne(plannedEventId);
             Semester semester = plannedEvent.getSemester();
@@ -102,8 +95,9 @@ public class DisciplineServiceImpl implements DisciplineService {
                                 (plannedEvent.getEventType() == PlannedEventType.GRADING_WEEK && discipline.getType() == DisciplineType.DIFFERENTIATED_CREDIT) ||
                                 (plannedEvent.getEventType() == PlannedEventType.GRADING_WEEK && discipline.getType() == DisciplineType.COURSE_PROJECT) ||
                                 (plannedEvent.getEventType() == PlannedEventType.ATTESTATION_FIRST || plannedEvent.getEventType() == PlannedEventType.ATTESTATION_SECOND)||
-                                (plannedEvent.getEventType() == PlannedEventType.EXAMINATION && discipline.getType() == DisciplineType.EXAM))
+                                (plannedEvent.getEventType() == PlannedEventType.EXAMINATION && discipline.getType() == DisciplineType.EXAM)) {
                             actualDisciplines.add(discipline);
+                        }
                     }
                 }
             }
