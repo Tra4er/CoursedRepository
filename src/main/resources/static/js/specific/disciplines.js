@@ -10,7 +10,7 @@ $(function () {
 });
 
 function fillTableDisciplinesForPlan() {
-    $.get("api/educationPlans/getOne", {educationPlanId: $.urlParam('planId')}, function (r) {
+    $.get("/api/educationPlans/getOne", {educationPlanId: $.urlParam('planId')}, function (r) {
             $('.specialityId').attr('value', r.speciality['id']).text(r.speciality['fullName']);
             $('.plan-info .groupType').attr('value', r.groupType).text(localGroupUkr[r.groupType]);
             $('.plan-info .groupDegree').attr('value', r.groupDegree).text(localGroupUkr[r.groupDegree]);
@@ -55,7 +55,7 @@ $('#button-post-discipline').on('click', function () {
 
     $.ajax({
         type: "POST",
-        url: "api/disciplines/create",
+        url: "/api/disciplines/create",
         contentType: "application/json",
         data: obj,
         success: function (data) {
@@ -96,7 +96,7 @@ $('tbody').on('click', 'tr .disc-teach-btn', function(){
     var discId = $(this).closest('tr').attr("id");
     var info = $(this).closest('tr').children('td:first').next().text();
     $('#teacher-container').html("<h2 id='"+ discId +"'>" + info + "</h2> <br/>");
-    $.getJSON("api/teachers/getAllWithoutDiscipline", {disciplineId : discId}, function(response){
+    $.getJSON("/api/teachers/getAllWithoutDiscipline", {disciplineId : discId}, function(response){
         var $tc = $('#teacher-container');
         $.each(response, function(i, teach){
             var item = "<input type='button' id='" + teach.id + "' class='btn btn-default col-xs-12' value = '"
@@ -109,7 +109,7 @@ $('tbody').on('click', 'tr .disc-teach-btn', function(){
 $('#teacher-container').on('click', 'input', function(){
     var discId = $(this).parent().children('h2').first().attr('id');
     var tId= $(this).attr('id');
-    $.post( "api/disciplines/connectTeacherWithDiscipline", {disciplineId: discId, teacherId: tId})
+    $.post( "/api/disciplines/connectTeacherWithDiscipline", {disciplineId: discId, teacherId: tId})
         .done(function(){
             $('#teacher-discipline-dialog').modal("hide");
             reloadTeachersForDiscipline(discId);
@@ -121,7 +121,7 @@ $('#teacher-container').on('click', 'input', function(){
 
 function reloadTeachersForDiscipline(disciplineId)
 {
-    $.getJSON('api/teachers/getAllWithDiscipline', {disciplineId : disciplineId}, function(response){
+    $.getJSON('/api/teachers/getAllWithDiscipline', {disciplineId : disciplineId}, function(response){
         var htmlRow = "";
         if (response.length != 0){
             $.each( response, function (i, teacher) {

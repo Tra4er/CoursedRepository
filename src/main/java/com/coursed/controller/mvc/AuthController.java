@@ -4,6 +4,7 @@ import com.coursed.dto.*;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
 import com.coursed.registration.OnRegistrationCompleteEvent;
+import com.coursed.security.SecurityService;
 import com.coursed.service.UserService;
 import com.coursed.validator.UserStudentDTOValidator;
 import com.coursed.validator.UserTeacherDTOValidator;
@@ -34,6 +35,9 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private SecurityService securityService;
 
     @Autowired
     private ApplicationEventPublisher eventPublisher;
@@ -127,39 +131,6 @@ public class AuthController {
         }
 
         return "/auth/verifyYourAccount";
-    }
-
-    @GetMapping("/verifyYourAccount")
-    public String verifyYourAccount() {
-        return "/auth/verifyYourAccount";
-    }
-
-    @GetMapping("/registration-confirm")
-    public String confirmRegistration(Model model, @RequestParam("token") String token, RedirectAttributes redAtt) {
-        LOGGER.debug("Receiving confirmation token: {}", token);
-
-        VerificationToken verificationToken = userService.getVerificationToken(token);
-        if (verificationToken == null) { // TODO
-            LOGGER.debug("Invalid token received: {}", token);
-            String message = "Invalid token received: " + token;
-            model.addAttribute("message", message);
-            return "/auth/badUser";
-        }
-
-        User user = verificationToken.getUser();
-        Calendar cal = Calendar.getInstance();
-        if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-            LOGGER.debug("Verification token expired for user: {}", user);
-            String messageValue = "Verification token expired for user: " + user.getEmail();
-            model.addAttribute("message", messageValue);
-            return "/auth/badUser";
-        }
-
-        user.setEnabled(true);
-        userService.saveRegisteredUser(user);
-        LOGGER.debug("Received verification from user: {}", user);
-        redAtt.addFlashAttribute("message", "Ви активували свій акаунт. Увійдіть.");
-        return "redirect:/login";
     }
 
 //    NON API

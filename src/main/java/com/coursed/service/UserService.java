@@ -1,6 +1,7 @@
 package com.coursed.service;
 
 import com.coursed.dto.*;
+import com.coursed.model.auth.PasswordResetToken;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
@@ -14,10 +15,9 @@ import java.util.Optional;
 public interface UserService {
     User registerStudent(UserStudentDTO registrationForm);
     User registerTeacher(UserTeacherDTO registrationForm);
-    void saveRegisteredUser(final User user);
+    void saveRegisteredUser(User user);
     User getUserById(Long id);
     Optional<User> getUserByEmail(String email);
-    List<User> findAll();
     List<User> findAllUnconfirmedTeachers();
     List<User> findAllTeachers(Long groupId);
     List<User> findAllGroupCurators(Long groupId);
@@ -25,6 +25,12 @@ public interface UserService {
     void connectUserWithRole(Long userId, Long roleId);
     void connectUserWithRole(User user, Role role);
     void makeATeacher(Long userId);
-    void createVerificationTokenForUser(final User user, final String token);
-    VerificationToken getVerificationToken(final String VerificationToken);
+    void createVerificationTokenForUser(User user, String token);
+    VerificationToken getVerificationToken(String VerificationToken);
+    VerificationToken generateNewVerificationToken(String token);
+    void createPasswordResetTokenForUser(User user, String token);
+    PasswordResetToken getPasswordResetToken(String token);
+    User getUserByPasswordResetToken(String token);
+    void changeUserPassword(User user, String password);
+    boolean checkIfValidOldPassword(User user, String password);
 }

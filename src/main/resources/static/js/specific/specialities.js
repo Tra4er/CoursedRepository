@@ -6,7 +6,7 @@ $(document).ready(function () {
     insertTable(titles, "content-table");
 
     var entityParams = ['id', 'fullName', 'groupsName'];
-    fillTableFrom("content-table", API + "/specialities/getAll", entityParams);
+    fillTableFrom("content-table", "/api/specialities/getAll", entityParams);
 });
 
 //It sends serialized

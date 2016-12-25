@@ -4,6 +4,7 @@ import com.coursed.dto.*;
 import com.coursed.model.Group;
 import com.coursed.model.Student;
 import com.coursed.model.Teacher;
+import com.coursed.model.auth.PasswordResetToken;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -39,6 +41,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private VerificationTokenRepository tokenRepository;
+
+    @Autowired
+    private PasswordResetTokenRepository passwordTokenRepository;
 
     @Autowired
     private DisciplineRepository disciplineRepository;
@@ -151,16 +156,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.findOneByEmail(email);
     }
 
-    @Override
-    public List<User> findAll() {
-        LOGGER.debug("Getting all users");
-        return userRepository.findAll();
-    }
 
     @Override
     public List<User> findAllUnconfirmedTeachers() {
         Role role = roleRepository.findByName("ROLE_TEACHER");
-        return findAll().stream()
+
+        //TODO transfer to JPQL
+        return userRepository.findAll().stream()
                 .filter(User::isATeacher)
                 .filter(user -> !(user.getRoles().contains(role)))
                 .collect(Collectors.toList());
@@ -172,13 +174,13 @@ public class UserServiceImpl implements UserService {
 
 
         if (groupId == null) {
-            return findAll().stream()
+            return userRepository.findAll().stream()
                     .filter(User::isATeacher)
                     .filter(user -> user.getRoles().contains(role))
                     .collect(Collectors.toList());
         } else {
             Group exceptThisGroup = groupRepository.findOne(groupId);
-            return findAll().stream()
+            return userRepository.findAll().stream()
                     .filter(User::isATeacher)
                     .filter(user -> user.getRoles().contains(role))
                     .filter(user -> !(user.getTeacherEntity().getCuratedGroups().contains(exceptThisGroup)))
@@ -239,14 +241,49 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void createVerificationTokenForUser(final User user, final String token) {
+    public void createVerificationTokenForUser(User user, String token) {
         final VerificationToken myToken = new VerificationToken(token, user);
         tokenRepository.save(myToken);
     }
 
     @Override
-    public VerificationToken getVerificationToken(final String VerificationToken) {
+    public VerificationToken getVerificationToken(String VerificationToken) {
         return tokenRepository.findByToken(VerificationToken);
+    }
+
+    @Override
+    public VerificationToken generateNewVerificationToken(String existingVerificationToken) {
+        VerificationToken vToken = tokenRepository.findByToken(existingVerificationToken);
+        vToken.updateToken(UUID.randomUUID().toString());
+        vToken = tokenRepository.save(vToken);
+        return vToken;
+    }
+
+    @Override
+    public void createPasswordResetTokenForUser(User user, String token) {
+        final PasswordResetToken myToken = new PasswordResetToken(token, user);
+        passwordTokenRepository.save(myToken);
+    }
+
+    @Override
+    public PasswordResetToken getPasswordResetToken(String token) {
+        return passwordTokenRepository.findByToken(token);
+    }
+
+    @Override
+    public User getUserByPasswordResetToken(String token) {
+        return passwordTokenRepository.findByToken(token).getUser();
+    }
+
+    @Override
+    public void changeUserPassword(final User user, final String password) {
+        user.setPassword(new BCryptPasswordEncoder().encode(password));
+        userRepository.save(user);
+    }
+
+    @Override
+    public boolean checkIfValidOldPassword(final User user, final String oldPassword) {
+        return new BCryptPasswordEncoder().matches(oldPassword, user.getPassword());
     }
 
 //    NON API

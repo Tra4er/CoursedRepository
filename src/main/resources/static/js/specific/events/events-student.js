@@ -11,8 +11,8 @@ function init(){
 }
 function fillTable(){
     var entityParams = ['id', 'beginDate', 'expirationDate', 'eventType'];
-    // fillTableFrom("content-table", API + "/events/getAll", entityParams);
-    var requestAddress = API + "/events/getAll";
+    // fillTableFrom("content-table", "/api/events/getAll", entityParams);
+    var requestAddress = "/api/events/getAll";
     $.getJSON(requestAddress, function(response){
         //Go through the each entity in the response
         $.each(response, function (i, entity) {

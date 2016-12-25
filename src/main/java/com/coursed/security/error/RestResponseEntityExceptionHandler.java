@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailParseException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -53,7 +54,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler({ ValidationException.class })
     public ResponseEntity<Object> handleValidation(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("400 Status Code");
-        final GenericResponse bodyOfResponse = new GenericResponse("Введені дані невірні.", ex.getMessage());
+        final GenericResponse bodyOfResponse = new GenericResponse("Введені дані не пройшли валідацію.", ex.getMessage());
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler({ MailParseException.class })
+    public ResponseEntity<Object> handleMailParser(final RuntimeException ex, final WebRequest request) {
+        LOGGER.error("400 Status Code");
+        final GenericResponse bodyOfResponse = new GenericResponse("Введений емейл є невірним.", ex.getMessage());
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 

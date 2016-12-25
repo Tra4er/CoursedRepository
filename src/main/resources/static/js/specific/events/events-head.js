@@ -21,7 +21,7 @@
 //     var titles = ['id', 'Тип', 'Дата початку', 'Дата завершення'];
 //     insertTable(titles, "content-table");
 //     var entityParams = ['id', 'eventType', 'beginDate', 'expirationDate'];
-//     fillTableFromWithLinks("content-table", API + "/events/getAll", entityParams, "eventType");
+//     fillTableFromWithLinks("content-table", "/api/events/getAll", entityParams, "eventType");
 // }
 
 $(function () {
@@ -33,7 +33,7 @@ $(function () {
 
     settingDateTimePiker();
     fillSelect("eventType", plannedEventType);
-    fillSelectYear("yearId", API + "/years/getAll");
+    fillSelectYear("yearId", "/api/years/getAll");
 
 });
 

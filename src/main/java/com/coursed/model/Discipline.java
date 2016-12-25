@@ -135,4 +135,12 @@ public class Discipline {
     public void setFinalGrades(List<FinalGrade> finalGrades) {
         this.finalGrades = finalGrades;
     }
+
+    @Override
+    public String toString() {
+        return "Discipline{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

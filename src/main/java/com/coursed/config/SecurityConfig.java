@@ -26,7 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/login*", "/verifyYourAccount","/registration-student", "/registration-teacher", "/registration-confirm", "/test", "/valve", "/api/**").permitAll()//TODO: check only for 'hasRole("REGISTERED")
+                .antMatchers("/login*", "/verifyYourAccount", "/users/confirmRegistration", "/users/forgotPassword",
+                            "/users/changePasswordPass", "/users/updatePassword", "/test", "/valve", "/users/badUser",
+                            "/api/**").permitAll()//TODO: check only for 'hasRole("REGISTERED")
                 .antMatchers("/", "/**").hasAnyRole("REGISTERED", "STUDENT", "TEACHER", "ADMIN")
                 .antMatchers("/css/**", "/js/**", "/fonts/**").permitAll()
                 .and()
