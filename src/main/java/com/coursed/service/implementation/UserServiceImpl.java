@@ -159,13 +159,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAllUnconfirmedTeachers() {
-        Role role = roleRepository.findByName("ROLE_TEACHER");
-
-        //TODO transfer to JPQL
-        return userRepository.findAll().stream()
-                .filter(User::isATeacher)
-                .filter(user -> !(user.getRoles().contains(role)))
-                .collect(Collectors.toList());
+        return userRepository.findAllUnconfirmedTeachers();
     }
 
     @Override

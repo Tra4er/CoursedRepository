@@ -18,7 +18,7 @@ public class Student {
     @GeneratedValue
     private Long id;
     @JsonBackReference("user-student")
-    @OneToOne(mappedBy = "studentEntity")
+    @OneToOne(mappedBy = "studentEntity", fetch = FetchType.LAZY)
     private User user;
 
     private String firstName;
@@ -40,10 +40,10 @@ public class Student {
     @JoinColumn(name="edgroup_id")
     private Group group;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<FinalGrade> finalGrades;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<AttestationGrade> attestationGrades;
 
     public Student() {
