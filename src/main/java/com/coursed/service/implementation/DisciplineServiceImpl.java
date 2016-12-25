@@ -114,4 +114,23 @@ public class DisciplineServiceImpl implements DisciplineService {
 
         return actualDisciplines;
     }
+
+    @Override
+    public List<Discipline> getAllDisciplinesFromPlannedEvent(Long plannedEventId) {
+        PlannedEvent plannedEvent = plannedEventRepository.findOne(plannedEventId);
+
+        Semester semester = plannedEvent.getSemester();
+        List<EducationPlan> educationPlans = semester.getYear().getEducationPlans();
+
+        List<Discipline> neededDisciplines = new ArrayList<>();
+
+        for (EducationPlan plan : educationPlans) {
+            List<Discipline> disciplinesFromPlan = plan.getDisciplines();
+            for (Discipline discipline : disciplinesFromPlan)
+                if(discipline.getSemesterNumber() == semester.getSemesterNumber())
+                    neededDisciplines.add(discipline);
+        }
+
+        return neededDisciplines;
+    }
 }
