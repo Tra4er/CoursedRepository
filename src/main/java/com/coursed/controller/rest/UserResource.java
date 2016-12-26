@@ -19,6 +19,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -118,7 +120,15 @@ public class UserResource {
         String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         SimpleMailMessage simpleMailMessage = constructResetTokenEmail(appUrl, token, user.get());
         mailSender.send(simpleMailMessage);
-        System.out.println("success");
+        return new GenericResponse("success");
+    }
+
+    @RequestMapping(value = "/user/savePassword", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('READ_PRIVILEGE')")
+    @ResponseBody
+    public GenericResponse savePassword(@RequestParam("password") String password) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        userService.changeUserPassword(user, password);
         return new GenericResponse("success");
     }
 
@@ -172,7 +182,7 @@ public class UserResource {
         return userService.findAllGroupCurators(groupId);
     }
 
-    @GetMapping("/deleteUser")
+    @GetMapping("/deleteUser") // TODO delete method
     private void deleteUser(@RequestParam(name = "userId") Long userId) {
         userService.deleteUser(userId);
     }
@@ -185,7 +195,7 @@ public class UserResource {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(user.getEmail());
         email.setSubject("Відновлення паролю");
-        email.setText(message + " rn" + url);
+        email.setText(message + url);
         email.setFrom(env.getProperty("support.email"));
         return email;
     }
