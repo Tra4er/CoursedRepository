@@ -54,8 +54,9 @@ public class DisciplineResource {
     }
 
     @GetMapping("/getAllDisciplinesFromPlannedEvent")
-    private Collection<Discipline> getAllDisciplinesFromPlannedEvent(@RequestParam(name = "plannedEventId")Long plannedEventId)
+    private Collection<Discipline> getAllDisciplinesFromPlannedEvent(@RequestParam(name = "plannedEventId")Long plannedEventId,
+                                                                     @RequestParam(name = "groupId")Long groupId)
     {
-        return disciplineService.getAllDisciplinesFromPlannedEvent(plannedEventId);
+        return disciplineService.getAllDisciplinesFromPlannedEvent(plannedEventId, groupId);
     }
 }
