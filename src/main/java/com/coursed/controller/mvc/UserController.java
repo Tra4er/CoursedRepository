@@ -7,6 +7,8 @@ import com.coursed.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Calendar;
+import java.util.Collection;
 
 /**
  * Created by Trach on 12/24/2016.
@@ -76,7 +79,25 @@ public class UserController {
     }
 
     @GetMapping("/updatePassword")
-    public String updatePassword() {
-        return "/auth/updatePassword";
+    public String updatePassword(RedirectAttributes redAtt) {
+        if(hasRole("READ_PRIVILEGE")) {
+            return "/auth/updatePassword";
+        }
+        redAtt.addFlashAttribute("message", "You do not have access to this page.");
+        return "/auth/badUser";
+    }
+
+    // ============== NON-API ============
+    private boolean hasRole(String role) {
+        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
+                SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        boolean hasRole = false;
+        for (GrantedAuthority authority : authorities) {
+            hasRole = authority.getAuthority().equals(role);
+            if (hasRole) {
+                break;
+            }
+        }
+        return hasRole;
     }
 }
