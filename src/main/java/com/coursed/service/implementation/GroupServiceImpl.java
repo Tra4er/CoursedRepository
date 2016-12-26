@@ -110,4 +110,9 @@ public class GroupServiceImpl implements GroupService {
         Semester semester = plannedEvent.getSemester();
         return semester.getGroups();
     }
+
+    @Override
+    public Group findOne(Long groupId) {
+        return groupRepository.findOne(groupId);
+    }
 }

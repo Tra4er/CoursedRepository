@@ -85,4 +85,9 @@ public class GroupResource {
         return groupService.findAllFromSemesterFromPlannedEvent(plannedEventId);
     }
 
+    @GetMapping("/getOne")
+    private Group getOne(@RequestParam(name = "groupId")Long groupId) {
+        return groupService.findOne(groupId);
+    }
+
 }
