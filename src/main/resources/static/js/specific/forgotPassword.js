@@ -1,17 +1,12 @@
 /**
  * Created by Trach on 12/23/2016.
  */
-$(document).ready(function () {
-    $('#emailField-reset-button').click(function () {
-        $('#emailField-reset-button').button('loading');
-        sendResetAjax();
-    });
-});
 
-function sendResetAjax() {
+$('#emailField-reset-button').click(function () {
+    $('#emailField-reset-button').button('loading');
     $.ajax({
         type: 'POST',
-        url: "/api/users/resetPassword",
+        url: "/api/users/sendResetPasswordToken",
         data: "email=" + $("#emailField-reset").val()
     }).done(function (data) {
         $('#emailField-reset-button').button('reset');
@@ -22,4 +17,4 @@ function sendResetAjax() {
         $('#emailField-reset-button').button('reset');
         $("#emailField-reset-request-server-status").text(data.responseJSON.message);
     });
-};
+});

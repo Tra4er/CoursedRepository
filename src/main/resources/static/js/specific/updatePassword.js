@@ -3,10 +3,11 @@
  */
 
 $("#passwordField-reset-button").click(function () {
+    console.log("Sending update info")
     $('#passwordField-reset-button').button('loading');
     $.ajax({
         type: 'POST',
-        url: "/api/users/updatePassword",
+        url: "/api/users/savePassword",
         data: "password=" + $("#passwordField-reset").val()
     }).done(function (data) {
         $('#passwordField-reset-button').button('reset');

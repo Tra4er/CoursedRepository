@@ -105,9 +105,9 @@ public class UserResource {
         return new GenericResponse("success");
     }
 
-    @PostMapping("/resetPassword")
+    @PostMapping("/sendResetPasswordToken")
     @ResponseBody
-    public GenericResponse sendResetPasswordEmail(@RequestParam String email, HttpServletRequest request) {
+    public GenericResponse sendResetPasswordToken(@RequestParam String email, HttpServletRequest request) {
 
         System.out.println("Reset user: " + email);
         Optional<User> user = userService.getUserByEmail(email);
@@ -117,7 +117,7 @@ public class UserResource {
 
         String token = UUID.randomUUID().toString();
         userService.createPasswordResetTokenForUser(user.get(), token);
-        String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        String appUrl = " http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         SimpleMailMessage simpleMailMessage = constructResetTokenEmail(appUrl, token, user.get());
         mailSender.send(simpleMailMessage);
         return new GenericResponse("success");
@@ -127,6 +127,7 @@ public class UserResource {
     @PreAuthorize("hasRole('READ_PRIVILEGE')")
     @ResponseBody
     public GenericResponse savePassword(@RequestParam("password") String password) {
+        System.out.println("In save Pass");
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         userService.changeUserPassword(user, password);
         return new GenericResponse("success");
