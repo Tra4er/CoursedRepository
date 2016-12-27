@@ -123,7 +123,7 @@ public class UserResource {
         return new GenericResponse("success");
     }
 
-    @RequestMapping(value = "/user/savePassword", method = RequestMethod.POST)
+    @PostMapping("/savePassword")
     @PreAuthorize("hasRole('READ_PRIVILEGE')")
     @ResponseBody
     public GenericResponse savePassword(@RequestParam("password") String password) {

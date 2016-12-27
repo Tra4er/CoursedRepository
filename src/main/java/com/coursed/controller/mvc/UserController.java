@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,15 +63,15 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @RequestMapping(value = "/changePasswordPass", method = RequestMethod.GET)
-    public String showChangePasswordPage(@RequestParam("id") Long id, @RequestParam("token") String token,
+    @GetMapping("/changePassword")
+    public String verifyTokenForChangePass(@RequestParam("id") Long id, @RequestParam("token") String token,
                                          RedirectAttributes redAtt) {
         final String result = securityService.validatePasswordResetToken(id, token);
         if (result != null) {
             redAtt.addAttribute("message", "Пароль не може бути змінений через: " + result); // TODO
-            return "redirect:/badUser";
+            return "redirect:/users/badUser";
         }
-        return "redirect:/updatePassword";
+        return "redirect:/users/updatePassword";
     }
 
     @GetMapping("/forgotPassword")
@@ -80,11 +81,16 @@ public class UserController {
 
     @GetMapping("/updatePassword")
     public String updatePassword(RedirectAttributes redAtt) {
-        if(hasRole("READ_PRIVILEGE")) {
+//        if(hasRole("READ_PRIVILEGE")) {
             return "/auth/updatePassword";
-        }
-        redAtt.addFlashAttribute("message", "You do not have access to this page.");
-        return "/auth/badUser";
+//        }
+//        redAtt.addFlashAttribute("message", "You do not have access to this page.");
+//        return "/auth/badUser";
+    }
+
+    @GetMapping
+    public String getBadUser() {
+        return "auth/badUser";
     }
 
     // ============== NON-API ============
