@@ -18,4 +18,5 @@ public interface GroupService {
     List<Group> findAllWithoutCurator(Long semesterId);
     List<Group> findAllForGrading(Long educationPlanId, SemesterNumber semesterNumber, CourseNumber courseNumber);
     List<Group> findAllFromSemesterFromPlannedEvent(Long plannedEventId);
+    Group findOne(Long groupId);
 }

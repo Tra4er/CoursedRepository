@@ -34,6 +34,9 @@ public class DisciplineServiceImpl implements DisciplineService {
     @Autowired
     private PlannedEventRepository plannedEventRepository;
 
+    @Autowired
+    private GroupRepository groupRepository;
+
     @Override
     public List<Discipline> findAll() {
         return disciplineRepository.findAll();
@@ -116,11 +119,15 @@ public class DisciplineServiceImpl implements DisciplineService {
     }
 
     @Override
-    public List<Discipline> getAllDisciplinesFromPlannedEvent(Long plannedEventId) {
+    public List<Discipline> getAllDisciplinesFromPlannedEvent(Long plannedEventId, Long groupId) {
         PlannedEvent plannedEvent = plannedEventRepository.findOne(plannedEventId);
+        Group group = groupRepository.findOne(groupId);
 
         Semester semester = plannedEvent.getSemester();
-        List<EducationPlan> educationPlans = semester.getYear().getEducationPlans();
+        List<EducationPlan> educationPlans = semester.getYear().getEducationPlans()
+                .stream().filter(educationPlan -> educationPlan.getCourseNumber() == group.getCourseNumber())
+                .collect(Collectors.toList());
+
 
         List<Discipline> neededDisciplines = new ArrayList<>();
 

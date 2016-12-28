@@ -43,4 +43,9 @@ public class PlannedEventResource {
     private PlannedEvent create(@RequestBody PlannedEventDTO plannedEventDTO){
         return plannedEventService.create(plannedEventDTO);
     }
+
+    @GetMapping("/getOne")
+    private PlannedEvent getOne(@RequestParam(name = "plannedEventId")Long plannedEventId) {
+        return plannedEventService.findOne(plannedEventId);
+    }
 }
