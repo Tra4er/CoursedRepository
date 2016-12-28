@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Created by Trach on 12/24/2016.
@@ -63,32 +66,35 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/changePassword")
-    public String verifyTokenForChangePass(@RequestParam("id") Long id, @RequestParam("token") String token,
-                                         RedirectAttributes redAtt) {
-        final String result = securityService.validatePasswordResetToken(id, token);
-        if (result != null) {
-            redAtt.addAttribute("message", "Пароль не може бути змінений через: " + result); // TODO
-            return "redirect:/users/badUser";
-        }
-        return "redirect:/users/updatePassword";
-    }
-
     @GetMapping("/forgotPassword")
     public String forgotPassword() {
         return "/auth/forgotPassword";
     }
 
+    @GetMapping("/changePassword")
+    public String verifyTokenForChangePass(@RequestParam("id") Long id, @RequestParam("token") String token,
+                                           RedirectAttributes redAtt) {
+        final String result = securityService.validatePasswordResetToken(id, token);
+        if (result != null) {
+            redAtt.addFlashAttribute("message", "Пароль не може бути змінений через: " + result); // TODO
+            return "redirect:/users/badUser";
+        }
+        return "redirect:/users/updatePassword";
+    }
+
     @GetMapping("/updatePassword")
     public String updatePassword(RedirectAttributes redAtt) {
-//        if(hasRole("READ_PRIVILEGE")) {
+        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
+                SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        System.out.println(authorities);
+//        if (hasRole("READ_PRIVILEGE")) {
             return "/auth/updatePassword";
 //        }
 //        redAtt.addFlashAttribute("message", "You do not have access to this page.");
-//        return "/auth/badUser";
+//        return "redirect:/users/badUser";
     }
 
-    @GetMapping
+    @GetMapping("/badUser")
     public String getBadUser() {
         return "auth/badUser";
     }
