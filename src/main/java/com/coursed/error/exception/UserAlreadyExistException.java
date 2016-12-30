@@ -1,4 +1,4 @@
-package com.coursed.security.error;
+package com.coursed.error.exception;
 
 /**
  * Created by Trach on 12/20/2016.

@@ -1,7 +1,6 @@
 package com.coursed.validator;
 
 import com.coursed.dto.UserStudentDTO;
-import com.coursed.security.error.UserAlreadyExistException;
 import com.coursed.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

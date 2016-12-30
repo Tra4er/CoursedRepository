@@ -1,4 +1,4 @@
-package com.coursed.security.error;
+package com.coursed.error.handler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

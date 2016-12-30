@@ -1,7 +1,6 @@
 package com.coursed.validator;
 
 import com.coursed.dto.UserTeacherDTO;
-import com.coursed.security.error.UserAlreadyExistException;
 import com.coursed.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
-import javax.validation.ValidationException;
 
 /**
  * Created by Trach on 12/16/2016.

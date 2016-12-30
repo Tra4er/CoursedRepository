@@ -1,5 +1,7 @@
-package com.coursed.security.error;
+package com.coursed.error.handler;
 
+import com.coursed.error.exception.UserAlreadyExistException;
+import com.coursed.error.exception.UserNotFoundException;
 import com.coursed.util.GenericResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
