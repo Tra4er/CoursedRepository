@@ -1,5 +1,6 @@
 package com.coursed.error.handler;
 
+import com.coursed.error.exception.InvalidOldPasswordException;
 import com.coursed.error.exception.UserAlreadyExistException;
 import com.coursed.error.exception.UserNotFoundException;
 import com.coursed.util.GenericResponse;
@@ -64,6 +65,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     public ResponseEntity<Object> handleMailParser(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("400 Status Code");
         final GenericResponse bodyOfResponse = new GenericResponse("Введений емейл є невірним.", ex.getMessage());
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler({ InvalidOldPasswordException.class })
+    public ResponseEntity<Object> handleInvalidOldPassword(final RuntimeException ex, final WebRequest request) {
+        logger.error("400 Status Code", ex);
+        final GenericResponse bodyOfResponse = new GenericResponse("Старий пароль який ви ввели є невірним.", "InvalidOldPassword");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 

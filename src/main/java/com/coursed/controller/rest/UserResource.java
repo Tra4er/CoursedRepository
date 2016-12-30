@@ -2,6 +2,7 @@ package com.coursed.controller.rest;
 
 import com.coursed.controller.mvc.AuthController;
 import com.coursed.dto.*;
+import com.coursed.error.exception.InvalidOldPasswordException;
 import com.coursed.model.auth.User;
 import com.coursed.registration.OnRegistrationCompleteEvent;
 import com.coursed.security.SecurityService;
