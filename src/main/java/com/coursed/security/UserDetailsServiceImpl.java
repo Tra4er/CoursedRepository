@@ -37,8 +37,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
 
-        User user = userRepository.findOneByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with email=%s was not found", email)));
+        User user = userRepository.findOneByEmail(email);
+        if(user == null) {
+            throw new UsernameNotFoundException(String.format("User with email=%s was not found", email));
+        }
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         for (Role role : user.getRoles()) {

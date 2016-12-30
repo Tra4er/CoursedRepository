@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
+    public User getUserByEmail(String email) {
         LOGGER.debug("Getting user by email={}", email.replaceFirst("@.*", "@***"));
         return userRepository.findOneByEmail(email);
     }
@@ -283,6 +283,6 @@ public class UserServiceImpl implements UserService {
 //    NON API
 
     private boolean emailExist(String email) {
-        return userRepository.findOneByEmail(email).isPresent();
+        return userRepository.findOneByEmail(email) != null;
     }
 }

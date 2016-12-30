@@ -48,9 +48,9 @@ public class DisciplineResource {
         if(principal == null)
             throw new IllegalArgumentException("You haven`t logged in to retrieve principal");
 
-        Optional<User> user = userService.getUserByEmail(principal.getName());
+        User user = userService.getUserByEmail(principal.getName());
 
-        return disciplineService.getAllActualConnectedWithTeacher(user.get().getTeacherEntity().getId(), plannedEventId);
+        return disciplineService.getAllActualConnectedWithTeacher(user.getTeacherEntity().getId(), plannedEventId);
     }
 
     @GetMapping("/getAllDisciplinesFromPlannedEvent")

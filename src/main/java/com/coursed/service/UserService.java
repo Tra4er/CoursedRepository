@@ -17,7 +17,7 @@ public interface UserService {
     User registerTeacher(UserTeacherDTO registrationForm);
     void saveRegisteredUser(User user);
     User getUserById(Long id);
-    Optional<User> getUserByEmail(String email);
+    User getUserByEmail(String email);
     List<User> findAllUnconfirmedTeachers();
     List<User> findAllTeachers(Long groupId);
     List<User> findAllGroupCurators(Long groupId);

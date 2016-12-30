@@ -119,19 +119,20 @@ public class UserResource {
     public GenericResponse sendResetPasswordToken(@RequestParam String email, HttpServletRequest request) {
 
         System.out.println("Reset user: " + email);
-        Optional<User> user = userService.getUserByEmail(email);
-        if (!user.isPresent()) {
+        User user = userService.getUserByEmail(email);
+        if (user == null) {
             throw new UserNotFoundException();
         }
 
         String token = UUID.randomUUID().toString();
-        userService.createPasswordResetTokenForUser(user.get(), token);
+        userService.createPasswordResetTokenForUser(user, token);
         String appUrl = " http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-        SimpleMailMessage simpleMailMessage = constructResetTokenEmail(appUrl, token, user.get());
+        SimpleMailMessage simpleMailMessage = constructResetTokenEmail(appUrl, token, user);
         mailSender.send(simpleMailMessage);
         return new GenericResponse("success");
     }
 
+//  In case user forgot his password and resets it by sending resetToken to email.
     @PostMapping("/savePassword")
     @ResponseBody
     public GenericResponse savePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
@@ -140,14 +141,26 @@ public class UserResource {
         return new GenericResponse("success");
     }
 
+    //  In case user remembers his password and wont to update it.
+//    @PostMapping("/updatePassword")
+//    @ResponseBody
+//    public GenericResponse changeUserPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
+//        final User user = userService.getUserByEmail(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
+//        if (!userService.checkIfValidOldPassword(user, passwordDTO.getOldPassword())) {
+//            throw new InvalidOldPasswordException();
+//        }
+//        userService.changeUserPassword(user, passwordDTO.getNewPassword());
+//        return new GenericResponse("success");
+//    }
+
     @GetMapping("/checkEmail")
     private boolean checkEmail(@RequestParam("email") String email) {
-        return userService.getUserByEmail(email).isPresent();
+        return userService.getUserByEmail(email) != null;
     }
 
     @GetMapping("/getUser")
     private User getUser(@RequestParam("email") String email) {
-        return userService.getUserByEmail(email).get();
+        return userService.getUserByEmail(email);
     }
 
     @PostMapping("/confirm-teacher")
