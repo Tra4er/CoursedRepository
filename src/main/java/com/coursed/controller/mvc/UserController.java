@@ -79,14 +79,20 @@ public class UserController {
             redAtt.addFlashAttribute("message", "Пароль не може бути змінений через: " + result); // TODO
             return "redirect:/users/badUser";
         }
+        redAtt.addAttribute("by", "email");
         return "redirect:/users/updatePassword";
     }
 
     @GetMapping("/updatePassword")
-    public String updatePassword(RedirectAttributes redAtt) {
-        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
-                SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        return "/auth/updatePassword";
+    public String updatePassword(@RequestParam(value = "by", required = false) String message) {
+        if (message != null) {
+            if (message.equals("email")) {
+                return "/auth/savePassword";
+            } else if (message.equals("oldPassword")) {
+                return "/auth/updatePassword";
+            }
+        }
+        return "redirect:/users/badUser";
     }
 
     @GetMapping("/badUser")
@@ -95,16 +101,16 @@ public class UserController {
     }
 
     // ============== NON-API ============
-    private boolean hasRole(String role) {
-        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
-                SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        boolean hasRole = false;
-        for (GrantedAuthority authority : authorities) {
-            hasRole = authority.getAuthority().equals(role);
-            if (hasRole) {
-                break;
-            }
-        }
-        return hasRole;
-    }
+//    private boolean hasRole(String role) {
+//        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
+//                SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+//        boolean hasRole = false;
+//        for (GrantedAuthority authority : authorities) {
+//            hasRole = authority.getAuthority().equals(role);
+//            if (hasRole) {
+//                break;
+//            }
+//        }
+//        return hasRole;
+//    }
 }

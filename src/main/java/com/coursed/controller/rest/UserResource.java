@@ -142,16 +142,16 @@ public class UserResource {
     }
 
     //  In case user remembers his password and wont to update it.
-//    @PostMapping("/updatePassword")
-//    @ResponseBody
-//    public GenericResponse changeUserPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
-//        final User user = userService.getUserByEmail(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
-//        if (!userService.checkIfValidOldPassword(user, passwordDTO.getOldPassword())) {
-//            throw new InvalidOldPasswordException();
-//        }
-//        userService.changeUserPassword(user, passwordDTO.getNewPassword());
-//        return new GenericResponse("success");
-//    }
+    @PostMapping("/updatePassword")
+    @ResponseBody
+    public GenericResponse changeUserPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
+        final User user = userService.getUserByEmail(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
+        if (!userService.checkIfValidOldPassword(user, passwordDTO.getOldPassword())) {
+            throw new InvalidOldPasswordException();
+        }
+        userService.changeUserPassword(user, passwordDTO.getNewPassword());
+        return new GenericResponse("success");
+    }
 
     @GetMapping("/checkEmail")
     private boolean checkEmail(@RequestParam("email") String email) {

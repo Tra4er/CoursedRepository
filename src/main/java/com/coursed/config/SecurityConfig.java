@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/login*", "/users/confirmRegistration", "/users/forgotPassword", "/users/changePassword",
-                        "/users/updatePassword", "/test", "/valve", "/users/badUser",
+                        "/test", "/valve", "/users/badUser",
                         "/api/**").permitAll()//TODO: check only for 'hasRole("REGISTERED")
                 .antMatchers("/", "/**").hasAnyRole("REGISTERED", "STUDENT", "TEACHER", "ADMIN")
                 .antMatchers("/css/**", "/js/**", "/fonts/**").permitAll()
