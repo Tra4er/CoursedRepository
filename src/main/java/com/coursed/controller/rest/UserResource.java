@@ -10,6 +10,7 @@ import com.coursed.security.error.UserNotFoundException;
 import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
 import com.coursed.util.GenericResponse;
+import com.coursed.validator.PasswordDTOValidator;
 import com.coursed.validator.UserStudentDTOValidator;
 import com.coursed.validator.UserTeacherDTOValidator;
 import org.slf4j.Logger;
@@ -60,6 +61,9 @@ public class UserResource {
     @Autowired
     private UserTeacherDTOValidator userTeacherDTOValidator;
 
+    @Autowired
+    private PasswordDTOValidator passwordDTOValidator;
+
     @InitBinder("userStudentDTO")
     public void initStudentBinder(WebDataBinder binder) {
         binder.addValidators(userStudentDTOValidator);
@@ -68,6 +72,11 @@ public class UserResource {
     @InitBinder("userTeacherDTO")
     public void initTeacherBinder(WebDataBinder binder) {
         binder.addValidators(userTeacherDTOValidator);
+    }
+
+    @InitBinder("passwordDTO")
+    public void initPasswordBinder(WebDataBinder binder) {
+        binder.addValidators(passwordDTOValidator);
     }
 
     @PostMapping("/registration-student")
@@ -124,12 +133,10 @@ public class UserResource {
     }
 
     @PostMapping("/savePassword")
-    @PreAuthorize("hasRole('READ_PRIVILEGE')")
     @ResponseBody
-    public GenericResponse savePassword(@RequestParam("password") String password) {
-        System.out.println("In save Pass");
+    public GenericResponse savePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        userService.changeUserPassword(user, password);
+        userService.changeUserPassword(user, passwordDTO.getNewPassword());
         return new GenericResponse("success");
     }
 

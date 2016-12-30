@@ -86,12 +86,7 @@ public class UserController {
     public String updatePassword(RedirectAttributes redAtt) {
         Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
                 SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        System.out.println(authorities);
-//        if (hasRole("READ_PRIVILEGE")) {
-            return "/auth/updatePassword";
-//        }
-//        redAtt.addFlashAttribute("message", "You do not have access to this page.");
-//        return "redirect:/users/badUser";
+        return "/auth/updatePassword";
     }
 
     @GetMapping("/badUser")
