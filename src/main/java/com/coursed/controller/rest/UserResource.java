@@ -164,7 +164,7 @@ public class UserResource {
     @PostMapping("/updatePassword")
     @ResponseBody
     public GenericResponse changeUserPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
-        final User user = userService.getUserByEmail(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
+        final User user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         if (!userService.checkIfValidOldPassword(user, passwordDTO.getOldPassword())) {
             throw new InvalidOldPasswordException();
         }
