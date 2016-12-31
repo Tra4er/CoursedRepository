@@ -3,11 +3,14 @@ package com.coursed.controller.rest;
 import com.coursed.controller.mvc.AuthController;
 import com.coursed.dto.*;
 import com.coursed.error.exception.InvalidOldPasswordException;
+import com.coursed.error.exception.InvalidPasswordResetTokenException;
+import com.coursed.model.auth.PasswordResetToken;
 import com.coursed.model.auth.User;
 import com.coursed.registration.OnRegistrationCompleteEvent;
 import com.coursed.security.SecurityService;
 import com.coursed.error.exception.UserAlreadyExistException;
 import com.coursed.error.exception.UserNotFoundException;
+import com.coursed.service.PasswordResetTokenService;
 import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
 import com.coursed.util.GenericResponse;
@@ -45,6 +48,9 @@ public class UserResource {
 
     @Autowired
     private SecurityService securityService;
+
+    @Autowired
+    private PasswordResetTokenService passwordResetTokenService;
 
     @Autowired
     private ApplicationEventPublisher eventPublisher;
@@ -136,7 +142,20 @@ public class UserResource {
     @PostMapping("/savePassword")
     @ResponseBody
     public GenericResponse savePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String token = passwordDTO.getToken();
+        LOGGER.debug("Validating password reset token: " + token);
+        PasswordResetToken passToken = passwordResetTokenService.getByToken(token);
+        if ((passToken == null)) {
+            throw new InvalidPasswordResetTokenException("InvalidToken");
+        }
+
+        Calendar cal = Calendar.getInstance();
+        if ((passToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+            throw new InvalidPasswordResetTokenException("Expired");
+        }
+
+        User user = passwordResetTokenService.getUserByToken(token);
+
         userService.changeUserPassword(user, passwordDTO.getNewPassword());
         return new GenericResponse("success");
     }

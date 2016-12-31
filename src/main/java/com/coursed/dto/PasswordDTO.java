@@ -5,11 +5,21 @@ package com.coursed.dto;
  */
 public class PasswordDTO {
 
+    private String token;
+
     private String oldPassword;
 
     private String newPassword;
 
     private String confirmPassword;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getOldPassword() {
         return oldPassword;

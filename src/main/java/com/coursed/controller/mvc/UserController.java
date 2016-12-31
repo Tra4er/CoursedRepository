@@ -1,8 +1,10 @@
 package com.coursed.controller.mvc;
 
+import com.coursed.model.auth.PasswordResetToken;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
 import com.coursed.security.SecurityService;
+import com.coursed.service.PasswordResetTokenService;
 import com.coursed.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +39,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordResetTokenService passwordResetTokenService;
 
     @GetMapping("/confirmRegistration")
     public String confirmRegistration(@RequestParam("token") String token, RedirectAttributes redAtt) {
@@ -74,11 +79,21 @@ public class UserController {
     @GetMapping("/changePassword")
     public String verifyTokenForChangePass(@RequestParam("id") Long id, @RequestParam("token") String token,
                                            RedirectAttributes redAtt) {
-        final String result = securityService.validatePasswordResetToken(id, token);
-        if (result != null) {
-            redAtt.addFlashAttribute("message", "Пароль не може бути змінений через: " + result); // TODO
+        System.out.println("Validating token");
+        LOGGER.debug("Validating password reset token: " + token + " and id: " + id);
+        final PasswordResetToken passToken = passwordResetTokenService.getByToken(token);
+        if ((passToken == null) || (passToken.getUser().getId() != id)) {
+            redAtt.addFlashAttribute("message", "InvalidToken");
             return "redirect:/users/badUser";
         }
+
+        final Calendar cal = Calendar.getInstance();
+        if ((passToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+            redAtt.addFlashAttribute("message", "InvalidToken");
+            return "redirect:/users/badUser";
+        }
+
+        redAtt.addFlashAttribute("token", token);
         redAtt.addAttribute("by", "email");
         return "redirect:/users/updatePassword";
     }
