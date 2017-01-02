@@ -50,7 +50,7 @@ public class UserController {
         VerificationToken verificationToken = userService.getVerificationToken(token);
         if (verificationToken == null) { // TODO
             LOGGER.debug("Invalid token received: {}", token);
-            String message = "Invalid token received: " + token;
+            String message = "InvalidTokenReceived: " + token;
             redAtt.addFlashAttribute("message", message);
             return "redirect:/users/badUser";
         }
@@ -59,7 +59,8 @@ public class UserController {
         Calendar cal = Calendar.getInstance();
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
             LOGGER.debug("Verification token expired for user: {}", user);
-            String messageValue = "Verification token expired for user: " + user.getEmail();
+            String messageValue = "VerificationTokenExpired";
+            redAtt.addFlashAttribute("token", token);
             redAtt.addFlashAttribute("message", messageValue);
             return "redirect:/users/badUser";
         }
@@ -88,7 +89,7 @@ public class UserController {
 
         Calendar cal = Calendar.getInstance();
         if ((passToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-            redAtt.addFlashAttribute("message", "InvalidToken");
+            redAtt.addFlashAttribute("message", "Expired");
             return "redirect:/users/badUser";
         }
 
