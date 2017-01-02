@@ -123,13 +123,11 @@ public class UserResource {
 
     @GetMapping("/resendRegistrationToken")
     @ResponseBody
-    public GenericResponse resendRegistrationToken(final HttpServletRequest request,
-                                                   @RequestParam("token") String existingToken) {
+    public GenericResponse resendRegistrationToken(@RequestParam String existingToken, HttpServletRequest request) {
         VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
         User user = userService.getUserByVerificationToken(newToken.getToken());
         mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), newToken, user));
-        return new GenericResponse(
-                "Ми надішлемо лист з новим ключем реєстрації для облікового запису електронної пошти", null);
+        return new GenericResponse("success");
     }
 
     @PostMapping("/sendResetPasswordToken")
@@ -242,8 +240,8 @@ public class UserResource {
 
     private SimpleMailMessage constructResendVerificationTokenEmail(String contextPath, VerificationToken newToken,
                                                                     User user) {
-        String confirmationUrl = contextPath + "/registrationConfirm.html?token=" + newToken.getToken();
-        String message = "Ми надішлемо лист з новим ключем реєстрації для облікового запису електронної пошти";
+        String confirmationUrl = contextPath + "/users/confirmRegistration?token=" + newToken.getToken();
+        String message = "Ми згенерували для вас новий ключ для підтвердження вашого E-Mail:";
         return constructEmail("Повторна відправка листа з підтвердженям", message + " \r\n" + confirmationUrl, user);
     }
 

@@ -3,7 +3,18 @@
 <head>
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
     <meta charset="UTF-8"/>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Невірні дані користувача</title>
+
+    <script th:defer="true" th:src="@{/js/frameworks/jquery-3.1.1.js}"
+            src="../../static/js/frameworks/jquery-3.1.1.js"></script>
+    <script th:defer="true" th:src="@{/js/frameworks/bootstrap.min.js}"
+            src="../../static/js/frameworks/bootstrap.min.js"></script>
+    <script th:defer="true" th:src="@{/js/shared/scripts-core.js}"
+            src="../../static/js/shared/scripts-core.js"></script>
+    <script th:defer="true" th:src="@{/js/specific/badUser.js}"
+            src="../../static/js/specific/badUser.js"></script>
 </head>
 <body>
 <div class="container">
@@ -18,14 +29,14 @@
                     <div th:case="'VerificationTokenExpired'">
                         <div class="alert alert-danger">Ваш ключ для актвації акаунта більше не дійсний. Щоб ми вислали
                             вам
-                            новий ключ натисніть <span id="resendVerificationToken-button" type="submit"
+                            новий ключ натисніть <span id="resendRegistrationToken-button" type="submit"
                                                        class="text-center btn btn-primary btn-block btn-lg">Сюди</span>
                         </div>
-                        <div th:text="${token}" hidden="hidden"></div>
+                        <div id="resendRegistrationToken-token" th:text="${token}"></div>
                     </div>
                     <div th:case="*" th:text="${message}"></div>
                 </div>
-                <div id="badUser-request-result"></div>
+                <div id="badUser-request-result" class="alert-warning"></div>
             </div>
             <div class="form-group">
                 <a th:href="@{/login}" class="text-center btn btn-success btn-block btn-lg">Перейти до
