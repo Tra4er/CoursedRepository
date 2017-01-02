@@ -79,15 +79,14 @@ public class UserController {
     @GetMapping("/changePassword")
     public String verifyTokenForChangePass(@RequestParam("id") Long id, @RequestParam("token") String token,
                                            RedirectAttributes redAtt) {
-        System.out.println("Validating token");
         LOGGER.debug("Validating password reset token: " + token + " and id: " + id);
-        final PasswordResetToken passToken = passwordResetTokenService.getByToken(token);
+        PasswordResetToken passToken = passwordResetTokenService.getByToken(token);
         if ((passToken == null) || (passToken.getUser().getId() != id)) {
             redAtt.addFlashAttribute("message", "InvalidToken");
             return "redirect:/users/badUser";
         }
 
-        final Calendar cal = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance();
         if ((passToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
             redAtt.addFlashAttribute("message", "InvalidToken");
             return "redirect:/users/badUser";

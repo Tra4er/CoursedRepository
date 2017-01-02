@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     private GroupRepository groupRepository;
 
     @Autowired
-    private VerificationTokenRepository tokenRepository;
+    private VerificationTokenRepository verificationTokenRepository;
 
     @Autowired
     private PasswordResetTokenRepository passwordTokenRepository;
@@ -236,20 +236,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createVerificationTokenForUser(User user, String token) {
         final VerificationToken myToken = new VerificationToken(token, user);
-        tokenRepository.save(myToken);
+        verificationTokenRepository.save(myToken);
     }
 
     @Override
     public VerificationToken getVerificationToken(String VerificationToken) {
-        return tokenRepository.findByToken(VerificationToken);
+        return verificationTokenRepository.findByToken(VerificationToken);
     }
 
     @Override
     public VerificationToken generateNewVerificationToken(String existingVerificationToken) {
-        VerificationToken vToken = tokenRepository.findByToken(existingVerificationToken);
+        VerificationToken vToken = verificationTokenRepository.findByToken(existingVerificationToken);
         vToken.updateToken(UUID.randomUUID().toString());
-        vToken = tokenRepository.save(vToken);
+        vToken = verificationTokenRepository.save(vToken);
         return vToken;
+    }
+
+    @Override
+    public User getUserByVerificationToken(String token) {
+        return verificationTokenRepository.findByToken(token).getUser();
     }
 
     @Override

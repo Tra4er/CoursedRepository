@@ -18,7 +18,7 @@ import java.util.Date;
 public class TokensPurgeTask {
 
     @Autowired
-    private VerificationTokenRepository tokenRepository;
+    private VerificationTokenRepository verificationTokenRepository;
 
     @Autowired
     private PasswordResetTokenRepository passwordTokenRepository;
@@ -29,6 +29,6 @@ public class TokensPurgeTask {
         Date now = Date.from(Instant.now());
 
         passwordTokenRepository.deleteAllExpiredSince(now);
-        tokenRepository.deleteAllExpiredSince(now);
+//        verificationTokenRepository.deleteAllExpiredAndActivatedSince(now); // TODO
     }
 }

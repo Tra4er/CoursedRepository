@@ -28,6 +28,7 @@ public interface UserService {
     void createVerificationTokenForUser(User user, String token);
     VerificationToken getVerificationToken(String VerificationToken);
     VerificationToken generateNewVerificationToken(String token);
+    User getUserByVerificationToken(String token);
     void createPasswordResetTokenForUser(User user, String token);
     PasswordResetToken getPasswordResetToken(String token);
     User getUserByPasswordResetToken(String token);

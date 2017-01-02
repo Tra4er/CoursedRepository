@@ -21,8 +21,11 @@ public interface VerificationTokenRepository extends CrudRepository<Verification
 
     void deleteByExpiryDateLessThan(Date now);
 
-    // TODO not tested
     @Modifying
     @Query("delete from VerificationToken t where t.expiryDate <= ?1")
     void deleteAllExpiredSince(Date now);
+
+    @Modifying
+    @Query("delete from VerificationToken t where t.expiryDate <= ?1 and t.user.enabled = true")
+    void deleteAllExpiredAndActivatedSince(Date now);
 }

@@ -6,6 +6,7 @@ import com.coursed.error.exception.InvalidOldPasswordException;
 import com.coursed.error.exception.InvalidPasswordResetTokenException;
 import com.coursed.model.auth.PasswordResetToken;
 import com.coursed.model.auth.User;
+import com.coursed.model.auth.VerificationToken;
 import com.coursed.registration.OnRegistrationCompleteEvent;
 import com.coursed.security.SecurityService;
 import com.coursed.error.exception.UserAlreadyExistException;
@@ -120,11 +121,21 @@ public class UserResource {
         return new GenericResponse("success");
     }
 
+    @GetMapping("/resendRegistrationToken")
+    @ResponseBody
+    public GenericResponse resendRegistrationToken(final HttpServletRequest request,
+                                                   @RequestParam("token") String existingToken) {
+        VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
+        User user = userService.getUserByVerificationToken(newToken.getToken());
+        mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), newToken, user));
+        return new GenericResponse(
+                "Ми надішлемо лист з новим ключем реєстрації для облікового запису електронної пошти", null);
+    }
+
     @PostMapping("/sendResetPasswordToken")
     @ResponseBody
     public GenericResponse sendResetPasswordToken(@RequestParam String email, HttpServletRequest request) {
 
-        System.out.println("Reset user: " + email);
         User user = userService.getUserByEmail(email);
         if (user == null) {
             throw new UserNotFoundException();
@@ -228,6 +239,23 @@ public class UserResource {
     }
 
     //    NON API
+
+    private SimpleMailMessage constructResendVerificationTokenEmail(String contextPath, VerificationToken newToken,
+                                                                    User user) {
+        String confirmationUrl = contextPath + "/registrationConfirm.html?token=" + newToken.getToken();
+        String message = "Ми надішлемо лист з новим ключем реєстрації для облікового запису електронної пошти";
+        return constructEmail("Повторна відправка листа з підтвердженям", message + " \r\n" + confirmationUrl, user);
+    }
+
+    private SimpleMailMessage constructEmail(String subject, String body, User user) {
+        final SimpleMailMessage email = new SimpleMailMessage();
+        email.setSubject(subject);
+        email.setText(body);
+        email.setTo(user.getEmail());
+        email.setFrom(env.getProperty("support.email"));
+        return email;
+    }
+
     private SimpleMailMessage constructResetTokenEmail(
             String contextPath, String token, User user) {
         String url = contextPath + "/users/changePassword?id=" + user.getId() + "&token=" + token;
@@ -238,5 +266,9 @@ public class UserResource {
         email.setText(message + url);
         email.setFrom(env.getProperty("support.email"));
         return email;
+    }
+
+    private String getAppUrl(HttpServletRequest request) {
+        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
 }
