@@ -1,6 +1,7 @@
 package com.coursed.error.handler;
 
 import com.coursed.error.exception.InvalidOldPasswordException;
+import com.coursed.error.exception.TokenNotFoundException;
 import com.coursed.error.exception.UserAlreadyExistException;
 import com.coursed.error.exception.UserNotFoundException;
 import com.coursed.util.GenericResponse;
@@ -37,7 +38,6 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     protected ResponseEntity<Object> handleBindException(final BindException ex, final HttpHeaders headers,
                                                          final HttpStatus status, final WebRequest request) {
         LOGGER.error("400 Status Code", ex);
-        System.out.println("HERE");
         final BindingResult result = ex.getBindingResult();
         final GenericResponse bodyOfResponse = new GenericResponse(result.getFieldErrors(), result.getGlobalErrors());
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
@@ -48,7 +48,6 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
                                                                   final HttpHeaders headers, final HttpStatus status,
                                                                   final WebRequest request) {
         LOGGER.error("400 Status Code", ex);
-        System.out.println("HERE1");
         final BindingResult result = ex.getBindingResult();
         final GenericResponse bodyOfResponse = new GenericResponse(result.getFieldErrors(), result.getGlobalErrors());
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
@@ -70,7 +69,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler({ InvalidOldPasswordException.class })
     public ResponseEntity<Object> handleInvalidOldPassword(final RuntimeException ex, final WebRequest request) {
-        logger.error("400 Status Code", ex);
+        LOGGER.error("400 Status Code", ex);
         final GenericResponse bodyOfResponse = new GenericResponse("Старий пароль який ви ввели є невірним.", "InvalidOldPassword");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
@@ -80,6 +79,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     public ResponseEntity<Object> handleUserNotFound(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("404 Status Code", ex);
         final GenericResponse bodyOfResponse = new GenericResponse("Користувача із цим емейлом не існує.", "UserNotFound");
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler({ TokenNotFoundException.class })
+    public ResponseEntity<Object> handleTokenNotFound(final RuntimeException ex, final WebRequest request) {
+        LOGGER.error("404 Status Code", ex);
+        final GenericResponse bodyOfResponse = new GenericResponse("Не вдалось знайти ключ для даного користувача.",
+                "TokenNotFound");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 

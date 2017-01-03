@@ -2,18 +2,16 @@ package com.coursed.controller.rest;
 
 import com.coursed.controller.mvc.AuthController;
 import com.coursed.dto.*;
-import com.coursed.error.exception.InvalidOldPasswordException;
-import com.coursed.error.exception.InvalidPasswordResetTokenException;
+import com.coursed.error.exception.*;
 import com.coursed.model.auth.PasswordResetToken;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
 import com.coursed.registration.OnRegistrationCompleteEvent;
 import com.coursed.security.SecurityService;
-import com.coursed.error.exception.UserAlreadyExistException;
-import com.coursed.error.exception.UserNotFoundException;
 import com.coursed.service.PasswordResetTokenService;
 import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
+import com.coursed.service.VerificationTokenService;
 import com.coursed.util.GenericResponse;
 import com.coursed.validator.PasswordDTOValidator;
 import com.coursed.validator.UserStudentDTOValidator;
@@ -49,6 +47,9 @@ public class UserResource {
 
     @Autowired
     private SecurityService securityService;
+
+    @Autowired
+    private VerificationTokenService verificationTokenService;
 
     @Autowired
     private PasswordResetTokenService passwordResetTokenService;
@@ -121,12 +122,27 @@ public class UserResource {
         return new GenericResponse("success");
     }
 
-    @GetMapping("/resendRegistrationToken")
+    @GetMapping("/sendNewRegistrationToken")
     @ResponseBody
-    public GenericResponse resendRegistrationToken(@RequestParam String existingToken, HttpServletRequest request) {
+    public GenericResponse sendNewRegistrationToken(@RequestParam String existingToken, HttpServletRequest request) {
         VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
         User user = userService.getUserByVerificationToken(newToken.getToken());
         mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), newToken, user));
+        return new GenericResponse("success");
+    }
+
+    @GetMapping("/resendRegistrationToken")
+    @ResponseBody
+    public GenericResponse resendRegistrationToken(@RequestParam String email, HttpServletRequest request) {
+        User user = userService.getUserByEmail(email);
+        if(user == null) {
+            throw new UserNotFoundException();
+        }
+        VerificationToken token = verificationTokenService.getByUser(user);
+        if(token == null) {
+            throw new TokenNotFoundException();
+        }
+        mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), token, user));
         return new GenericResponse("success");
     }
 
@@ -238,9 +254,9 @@ public class UserResource {
 
     //    NON API
 
-    private SimpleMailMessage constructResendVerificationTokenEmail(String contextPath, VerificationToken newToken,
+    private SimpleMailMessage constructResendVerificationTokenEmail(String contextPath, VerificationToken token,
                                                                     User user) {
-        String confirmationUrl = contextPath + "/users/confirmRegistration?token=" + newToken.getToken();
+        String confirmationUrl = contextPath + "/users/confirmRegistration?token=" + token.getToken();
         String message = "Ми згенерували для вас новий ключ для підтвердження вашого E-Mail:";
         return constructEmail("Повторна відправка листа з підтвердженям", message + " \r\n" + confirmationUrl, user);
     }

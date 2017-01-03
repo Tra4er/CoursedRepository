@@ -29,10 +29,10 @@
                     <div th:case="'VerificationTokenExpired'">
                         <div class="alert alert-danger">Ваш ключ для актвації акаунта більше не дійсний. Щоб ми вислали
                             вам
-                            новий ключ натисніть <span id="resendRegistrationToken-button" type="submit"
+                            новий ключ натисніть <span id="sendNewRegistrationToken-button" type="submit"
                                                        class="text-center btn btn-primary btn-block btn-lg">Сюди</span>
                         </div>
-                        <div id="resendRegistrationToken-token" th:text="${token}"></div>
+                        <div id="sendNewRegistrationToken-token" th:text="${token}"></div>
                     </div>
                     <div th:case="*" th:text="${message}"></div>
                 </div>

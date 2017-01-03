@@ -2,22 +2,22 @@
  * Created by Trach on 1/2/2017.
  */
 $(document).ready(function () {
-    $("#resendRegistrationToken-button").click(resendVerificationToken);
+    $("#sendNewRegistrationToken-button").click(sendNewVerificationToken);
 });
 
-function resendVerificationToken() {
-    $("#resendRegistrationToken-button").button('loading');
+function sendNewVerificationToken() {
+    $("#sendNewRegistrationToken-button").button('loading');
     $.ajax({
         type: 'GET',
-        url: "/api/users/resendRegistrationToken",
-        data: "existingToken=" + $("#resendRegistrationToken-token").val()
+        url: "/api/users/sendNewRegistrationToken",
+        data: "existingToken=" + $("#sendNewRegistrationToken-token").val()
     }).done(function (data) {
-        $("#resendRegistrationToken-button").button('reset');
+        $("#sendNewRegistrationToken-button").button('reset');
         if (data.message == "success") {
             $("#badUser-request-result").text("Перевірте пошту, знову :)");
         }
     }).fail(function (data) {
-        $('#resendRegistrationToken-button').button('reset');
+        $('#sendNewRegistrationToken-button').button('reset');
         $("#badUser-request-result").text("Ти знову облажався: " + data.responseJSON.message);
     });
 };
