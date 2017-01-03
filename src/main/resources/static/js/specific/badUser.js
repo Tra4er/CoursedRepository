@@ -10,7 +10,7 @@ function sendNewVerificationToken() {
     $.ajax({
         type: 'GET',
         url: "/api/users/sendNewRegistrationToken",
-        data: "existingToken=" + $("#sendNewRegistrationToken-token").val()
+        data: "existingToken=" + $("#sendNewRegistrationToken-token").val() // TODO Test
     }).done(function (data) {
         $("#sendNewRegistrationToken-button").button('reset');
         if (data.message == "success") {

@@ -6,7 +6,7 @@
     <meta charset="UTF-8"/>
     <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
     <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>Відновлення паролю</title>
+    <title>e-Mail</title>
 
     <script th:defer="true" th:src="@{/js/frameworks/jquery-3.1.1.js}"
             src="../../static/js/frameworks/jquery-3.1.1.js"></script>
@@ -14,8 +14,8 @@
             src="../../static/js/frameworks/bootstrap.min.js"></script>
     <script th:defer="true" th:src="@{/js/shared/scripts-core.js}"
             src="../../static/js/shared/scripts-core.js"></script>
-    <script th:defer="true" th:src="@{/js/specific/forgotPassword.js}"
-            src="../../static/js/specific/forgotPassword.js"></script>
+    <script th:defer="true" th:src="@{/js/specific/sendEmail.js}"
+            src="../../static/js/specific/sendEmail.js"></script>
 </head>
 <body>
 <div class="container">
@@ -27,22 +27,20 @@
                 <small>E-кафедра АСОІУ</small>
             </h2>
             <hr/>
-            <h2 align="center">Відновлення паролю</h2>
+            <h2 id="userProblem" align="center" th:text="${userProblem}"></h2>
             <div class="form-group">
-                <h4>Введіть свій емейл щоб ми могли відправити вам лист із посиланням на процедуру відновлення
-                    паролю.
-                </h4>
+                <h4>Введіть свій емейл щоб ми могли відправити вам лист із новими даними.</h4>
             </div>
             <div class="form-group">
-                <input id="emailField-reset" name="email" type="email" placeholder="Емейл" class="form-control input-lg"
+                <input id="emailField" name="email" type="email" placeholder="Емейл" class="form-control input-lg"
                        autofocus="autofocus"/>
             </div>
             <div class="form-group">
-                <div id="emailField-reset-request-server-status" class="alert-warning"></div>
+                <div id="emailField-send-request-server-status" class="alert-warning"></div>
             </div>
             <div class="row">
                 <div class="col-sm-8">
-                    <button id="emailField-reset-button" type="submit"
+                    <button id="emailField-send-button" type="submit"
                             class="text-center btn btn-primary btn-block btn-lg">Відправити</button>
                 </div>
                 <div class="col-sm-4">

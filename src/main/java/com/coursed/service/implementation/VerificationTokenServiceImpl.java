@@ -5,10 +5,12 @@ import com.coursed.model.auth.VerificationToken;
 import com.coursed.repository.VerificationTokenRepository;
 import com.coursed.service.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by Trach on 1/3/2017.
  */
+@Service
 public class VerificationTokenServiceImpl implements VerificationTokenService {
 
     @Autowired

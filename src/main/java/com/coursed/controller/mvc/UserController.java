@@ -73,8 +73,15 @@ public class UserController {
     }
 
     @GetMapping("/forgotPassword")
-    public String forgotPassword() {
-        return "/auth/forgotPassword";
+    public String forgotPassword(Model model) {
+        model.addAttribute("userProblem", "ForgotPassword");
+        return "/auth/sendEmail";
+    }
+
+    @GetMapping("/resendRegistrationToken")
+    public String resendRegistrationToken(Model model) {
+        model.addAttribute("userProblem", "ResendRegistrationToken");
+        return "/auth/sendEmail";
     }
 
     @GetMapping("/changePassword")

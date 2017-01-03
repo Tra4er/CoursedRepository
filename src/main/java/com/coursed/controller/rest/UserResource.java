@@ -146,7 +146,7 @@ public class UserResource {
         return new GenericResponse("success");
     }
 
-    @PostMapping("/sendResetPasswordToken")
+    @GetMapping("/sendResetPasswordToken")
     @ResponseBody
     public GenericResponse sendResetPasswordToken(@RequestParam String email, HttpServletRequest request) {
 
