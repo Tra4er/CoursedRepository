@@ -1,9 +1,6 @@
 package com.coursed.error.handler;
 
-import com.coursed.error.exception.InvalidOldPasswordException;
-import com.coursed.error.exception.TokenNotFoundException;
-import com.coursed.error.exception.UserAlreadyExistException;
-import com.coursed.error.exception.UserNotFoundException;
+import com.coursed.error.exception.*;
 import com.coursed.util.GenericResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,36 +50,43 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    @ExceptionHandler({ ValidationException.class })
+    @ExceptionHandler({ValidationException.class})
     public ResponseEntity<Object> handleValidation(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("400 Status Code");
         final GenericResponse bodyOfResponse = new GenericResponse("Введені дані не пройшли валідацію.", ex.getMessage());
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    @ExceptionHandler({ MailParseException.class })
+    @ExceptionHandler({MailParseException.class})
     public ResponseEntity<Object> handleMailParser(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("400 Status Code");
         final GenericResponse bodyOfResponse = new GenericResponse("Введений емейл є невірним.", ex.getMessage());
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    @ExceptionHandler({ InvalidOldPasswordException.class })
+    @ExceptionHandler({InvalidOldPasswordException.class})
     public ResponseEntity<Object> handleInvalidOldPassword(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("400 Status Code", ex);
         final GenericResponse bodyOfResponse = new GenericResponse("Старий пароль який ви ввели є невірним.", "InvalidOldPassword");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
+    @ExceptionHandler({ReCaptchaInvalidException.class})
+    public ResponseEntity<Object> handleReCaptchaInvalid(final RuntimeException ex, final WebRequest request) {
+        logger.error("400 Status Code", ex);
+        final GenericResponse bodyOfResponse = new GenericResponse("Помилка підтвердження на людяність.", "InvalidReCaptcha");
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
     // 404
-    @ExceptionHandler({ UserNotFoundException.class })
+    @ExceptionHandler({UserNotFoundException.class})
     public ResponseEntity<Object> handleUserNotFound(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("404 Status Code", ex);
         final GenericResponse bodyOfResponse = new GenericResponse("Користувача із цим емейлом не існує.", "UserNotFound");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
-    @ExceptionHandler({ TokenNotFoundException.class })
+    @ExceptionHandler({TokenNotFoundException.class})
     public ResponseEntity<Object> handleTokenNotFound(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("404 Status Code", ex);
         final GenericResponse bodyOfResponse = new GenericResponse("Не вдалось знайти ключ для даного користувача.",
@@ -91,7 +95,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     // 409
-    @ExceptionHandler({ UserAlreadyExistException.class })
+    @ExceptionHandler({UserAlreadyExistException.class})
     public ResponseEntity<Object> handleUserAlreadyExist(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("409 Status Code", ex);
         System.out.println("HERE3");
@@ -99,10 +103,20 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
-    @ExceptionHandler({ Exception.class })
+    //    500
+    @ExceptionHandler({ReCaptchaUnavailableException.class})
+    public ResponseEntity<Object> handleReCaptchaUnavailable(final RuntimeException ex, final WebRequest request) {
+        logger.error("500 Status Code", ex);
+        final GenericResponse bodyOfResponse = new GenericResponse("Реєстрація неможлива в даний момент. Спробуйте пізніше.",
+                "InvalidReCaptcha");
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+    }
+
+    @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("500 Status Code", ex);
         final GenericResponse bodyOfResponse = new GenericResponse("Сталась помилка", "InternalError");
         return new ResponseEntity<Object>(bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }

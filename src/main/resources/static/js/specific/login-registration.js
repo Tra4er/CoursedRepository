@@ -2,6 +2,17 @@
  * Created by Алена on 01.12.2016.
  */
 
+$(document).ready(function () {
+    // var sitekey = $("#g-recaptcha").attr("data-sitekey");
+    // console.log(sitekey)
+    // var CaptchaCallback1 = function () {
+    //     grecaptcha.render('studentCaptcha', {'sitekey': sitekey, 'callback' : verifyCallback});
+    // };
+    // var CaptchaCallback2 = function () {
+    //     grecaptcha.render('teacherCaptcha', {'sitekey': sitekey, 'callback' : verifyCallback});
+    // };
+});
+
 var person;
 
 // get person
@@ -96,9 +107,13 @@ function sendRegistrationAjaxPost(element, url, modalId, resultElement, sendButt
             sendButton.button('reset');
             $("#userEmail-modal").text($("#emailField-" + person).val());
             $("#userEmail-modal").attr("href", "mailto:" + $("#emailField-" + person).val());
-            $("#emailSentMessage").modal({backdrop: "static", keyboard : false});
+            $("#emailSentMessage").modal({backdrop: "static", keyboard: false});
         }
     }).fail(function (data) {
+        grecaptcha.reset();
+        if (data.responseJSON.error == "InvalidReCaptcha") {
+            $("#captchaError").show().html(data.responseJSON.message);
+        }
         resultElement.text(data.responseJSON.message);
         sendButton.button('reset');
     });

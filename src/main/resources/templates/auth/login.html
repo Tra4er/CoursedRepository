@@ -20,8 +20,11 @@
             src="../../static/js/local/students-local-ukr.js"></script>
     <script th:defer="true" th:src="@{/js/specific/login-registration.js}"
             src="../../static/js/specific/login-registration.js"></script>
+
     <meta charset="UTF-8"/>
     <title>CoursEd</title>
+
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
 <div class="container">
@@ -52,6 +55,11 @@
                             <input type="password" name="password" id="passwordField" class="form-control input-lg"
                                    placeholder="Пароль"/>
                         </div>
+                        <!--CAPTCHA-->
+                        <div class="form-group">
+                            <!--Doesn't work on login in this version-->
+                            <!--<div id="g-recaptcha" class="g-recaptcha" th:attr="data-sitekey=${@captchaSettings.getSite()}"></div>-->
+                        </div>
                         <div th:if="${param.error != null}">
                             <div th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']}" class="alert alert error">
                                 Повідомлення про помилку.
@@ -63,7 +71,8 @@
                         <br/>
                         <div class="col-sm-4">
                             <a th:href="@{/users/forgotPassword}">Забули пароль?</a>
-                            <a th:href="@{/users/resendRegistrationToken}">Відправте мені повідомлення із подтвердженням ще раз.</a>
+                            <a th:href="@{/users/resendRegistrationToken}">Відправте мені повідомлення із подтвердженням
+                                ще раз.</a>
                         </div>
                     </form>
                 </div>
@@ -155,6 +164,12 @@
                                    class="form-control" placeholder="Підтвердіть пароль"/>
                             <div id="result-confirmPasswordField-student" class="alert-danger"></div>
                         </div>
+                        <!--CAPTCHA-->
+                        <div class="form-group">
+                            <!--<div class="g-recaptcha" th:attr="data-sitekey=${@captchaSettings.getSite()}"></div>-->
+                            <!--<div class="g-recaptcha" data-sitekey="6LeUchAUAAAAAIsCg6noPEcWwx5-Oi51zgW4OiO9"></div>-->
+                            <div id="studentCaptcha"></div>
+                        </div>
                         <div class="form-group alert-danger">
                             <div id="student-request-server-status"></div>
                         </div>
@@ -202,6 +217,12 @@
                             <input id="confirmPasswordField-teacher" type="password" name="confirmPassword"
                                    class="form-control" placeholder="Підтвердіть пароль"/>
                             <div id="result-confirmPasswordField-teacher" class="alert-danger"></div>
+                        </div>
+                        <!--CAPTCHA-->
+                        <div class="form-group">
+                            <div class="g-recaptcha" th:attr="data-sitekey=${@captchaSettings.getSite()}"></div>
+                            <!--<div class="g-recaptcha" data-sitekey="6LeUchAUAAAAAIsCg6noPEcWwx5-Oi51zgW4OiO9"></div>-->
+                            <!--<div id="teacherCaptcha"></div>-->
                         </div>
                         <div class="form-group alert-danger">
                             <div id="teacher-request-server-status"></div>

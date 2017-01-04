@@ -1,5 +1,6 @@
 package com.coursed.controller.rest;
 
+import com.coursed.captcha.CaptchaService;
 import com.coursed.controller.mvc.AuthController;
 import com.coursed.dto.*;
 import com.coursed.error.exception.*;
@@ -49,6 +50,9 @@ public class UserResource {
     private SecurityService securityService;
 
     @Autowired
+    private CaptchaService captchaService;
+
+    @Autowired
     private VerificationTokenService verificationTokenService;
 
     @Autowired
@@ -91,6 +95,9 @@ public class UserResource {
     @ResponseBody
     public GenericResponse registerStudentAccount(@Valid @RequestBody UserStudentDTO userStudentDTO,
                                                   final HttpServletRequest request) {
+        String response = request.getParameter("g-recaptcha-response");
+        captchaService.processResponse(response);
+
         LOGGER.debug("Registering user account with information: {}", userStudentDTO);
 
         User registered = userService.registerStudent(userStudentDTO);
@@ -108,6 +115,9 @@ public class UserResource {
     @ResponseBody
     public GenericResponse registerTeacherAccount(@Valid @RequestBody UserTeacherDTO userTeacherDTO,
                                                   final HttpServletRequest request) {
+        String response = request.getParameter("g-recaptcha-response");
+        captchaService.processResponse(response);
+
         LOGGER.debug("Registering user account with information: {}", userTeacherDTO);
 
         User registered = userService.registerTeacher(userTeacherDTO);

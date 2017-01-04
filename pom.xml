@@ -108,6 +108,13 @@
 			<version>1.4.0.RELEASE</version>
 		</dependency>
 
+		<!--GOOGLE-->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>19.0</version>
+		</dependency>
+
 		<!--Logger-->
 		<dependency>
 			<groupId>org.slf4j</groupId>
