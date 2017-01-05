@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by Hexray on 10.12.2016.
  */
-public class UserStudentDTO implements BasicPersonDTO {
+public class UserStudentDTO extends CaptchaDTO implements BasicPersonDTO {
     private String firstName;
     private String lastName;
     private String patronymic;

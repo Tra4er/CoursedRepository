@@ -82,7 +82,7 @@ public class UserResource {
 
     @InitBinder("userStudentDTO")
     public void initStudentBinder(WebDataBinder binder) {
-        binder.addValidators(userStudentDTOValidator);
+        binder.addValidators(recaptchaResponseDTOValidator, userStudentDTOValidator);
     }
 
     @InitBinder("userTeacherDTO")
@@ -119,11 +119,6 @@ public class UserResource {
     @ResponseBody
     public GenericResponse registerTeacherAccount(@Valid @RequestBody UserTeacherDTO userTeacherDTO,
                                                   final HttpServletRequest request) {
-
-        System.out.println(userTeacherDTO);
-//        String response = userTeacherDTO.getCaptchaResponse();
-//        captchaService.processResponse(response);
-
         LOGGER.debug("Registering user account with information: {}", userTeacherDTO);
 
         User registered = userService.registerTeacher(userTeacherDTO);
