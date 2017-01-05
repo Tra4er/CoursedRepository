@@ -3,14 +3,6 @@
  */
 
 $(document).ready(function () {
-    // var sitekey = $("#g-recaptcha").attr("data-sitekey");
-    // console.log(sitekey)
-    // var CaptchaCallback1 = function () {
-    //     grecaptcha.render('studentCaptcha', {'sitekey': sitekey, 'callback' : verifyCallback});
-    // };
-    // var CaptchaCallback2 = function () {
-    //     grecaptcha.render('teacherCaptcha', {'sitekey': sitekey, 'callback' : verifyCallback});
-    // };
 });
 
 var person;
