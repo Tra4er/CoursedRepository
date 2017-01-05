@@ -15,6 +15,7 @@ import com.coursed.service.UserService;
 import com.coursed.service.VerificationTokenService;
 import com.coursed.util.GenericResponse;
 import com.coursed.validator.PasswordDTOValidator;
+import com.coursed.validator.RecaptchaResponseDTOValidator;
 import com.coursed.validator.UserStudentDTOValidator;
 import com.coursed.validator.UserTeacherDTOValidator;
 import org.slf4j.Logger;
@@ -76,6 +77,9 @@ public class UserResource {
     @Autowired
     private PasswordDTOValidator passwordDTOValidator;
 
+    @Autowired
+    private RecaptchaResponseDTOValidator recaptchaResponseDTOValidator;
+
     @InitBinder("userStudentDTO")
     public void initStudentBinder(WebDataBinder binder) {
         binder.addValidators(userStudentDTOValidator);
@@ -83,7 +87,7 @@ public class UserResource {
 
     @InitBinder("userTeacherDTO")
     public void initTeacherBinder(WebDataBinder binder) {
-        binder.addValidators(userTeacherDTOValidator);
+        binder.addValidators(recaptchaResponseDTOValidator, userTeacherDTOValidator);
     }
 
     @InitBinder("passwordDTO")
@@ -115,8 +119,10 @@ public class UserResource {
     @ResponseBody
     public GenericResponse registerTeacherAccount(@Valid @RequestBody UserTeacherDTO userTeacherDTO,
                                                   final HttpServletRequest request) {
-        String response = request.getParameter("g-recaptcha-response");
-        captchaService.processResponse(response);
+
+        System.out.println(userTeacherDTO);
+//        String response = userTeacherDTO.getCaptchaResponse();
+//        captchaService.processResponse(response);
 
         LOGGER.debug("Registering user account with information: {}", userTeacherDTO);
 

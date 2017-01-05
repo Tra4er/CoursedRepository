@@ -3,7 +3,7 @@ package com.coursed.dto;
 /**
  * Created by Hexray on 10.12.2016.
  */
-public class UserTeacherDTO implements BasicPersonDTO {
+public class UserTeacherDTO extends CaptchaDTO implements BasicPersonDTO {
     private String firstName;
     private String lastName;
     private String patronymic;
@@ -86,5 +86,19 @@ public class UserTeacherDTO implements BasicPersonDTO {
     @Override
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    @Override
+    public String toString() {
+        return "UserTeacherDTO{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                ", captcha='" + getCaptchaResponse() + '\'' +
+                '}';
     }
 }

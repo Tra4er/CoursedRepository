@@ -22,6 +22,7 @@ public class UserStudentDTOValidator implements Validator {
     @Autowired
     private UserService userService;
 
+    @Override
     public boolean supports(Class clazz) {
         return UserStudentDTO.class.isAssignableFrom(clazz);
     }
