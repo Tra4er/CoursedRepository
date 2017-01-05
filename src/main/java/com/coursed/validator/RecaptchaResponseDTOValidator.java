@@ -30,6 +30,6 @@ public class RecaptchaResponseDTOValidator implements Validator {
     public void validate(Object target, Errors errors) {
         LOGGER.debug("Validating {}", target);
         CaptchaDTO form = (CaptchaDTO) target;
-        captchaService.processResponse(form.getCaptchaResponse());
+//        captchaService.processResponse(form.getCaptchaResponse());
     }
 }

@@ -99,9 +99,6 @@ public class UserResource {
     @ResponseBody
     public GenericResponse registerStudentAccount(@Valid @RequestBody UserStudentDTO userStudentDTO,
                                                   final HttpServletRequest request) {
-        String response = request.getParameter("g-recaptcha-response");
-        captchaService.processResponse(response);
-
         LOGGER.debug("Registering user account with information: {}", userStudentDTO);
 
         User registered = userService.registerStudent(userStudentDTO);
