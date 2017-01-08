@@ -25,7 +25,6 @@
     <title>CoursEd</title>
     <!--TODO load captcha on nav-tab click (once)-->
     <script type="text/javascript">
-        console.log("Captcha init")
         var recaptchaCallback = function () {
             if ($("#captchaNeeded").text() === "captchaNeeded" || $("#captchaNeeded").text() === "captchaError") {
                 grecaptcha.render("loginRecaptcha", {

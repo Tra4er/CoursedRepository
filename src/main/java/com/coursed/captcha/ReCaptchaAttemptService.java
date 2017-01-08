@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 @Service("reCaptchaAttemptService")
 public class ReCaptchaAttemptService {
 
-    private final int MAX_ATTEMPT = 4;
+    public static final int MAX_ATTEMPT = 4;
     private LoadingCache<String, Integer> attemptsCache;
 
     public ReCaptchaAttemptService() {

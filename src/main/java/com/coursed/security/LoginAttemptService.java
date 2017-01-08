@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class LoginAttemptService {
 
-    private final int MAX_ATTEMPT_TILL_BLOCK = 5; // TODO
-    private final int MAX_ATTEMPT_TILL_CAPTCHA = 1;
+    public static final int MAX_ATTEMPT_TILL_BLOCK = 5; // TODO
+    public static final int MAX_ATTEMPT_TILL_CAPTCHA = 1;
 
     private LoadingCache<String, Integer> attemptsCache;
 

@@ -65,7 +65,7 @@ public class SecurityServiceImpl implements SecurityService {
     public String validatePasswordResetToken(Long id, String token) {
         LOGGER.debug("Validating password reset token: " + token + " and id: " + id);
         final PasswordResetToken passToken = passwordTokenRepository.findByToken(token);
-        if ((passToken == null) || (passToken.getUser().getId() != id)) {
+        if ((passToken == null) || (!passToken.getUser().getId().equals(id))) {
             return "InvalidToken";
         }
 

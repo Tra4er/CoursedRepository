@@ -89,7 +89,7 @@ public class UserController {
                                            RedirectAttributes redAtt) {
         LOGGER.debug("Validating password reset token: " + token + " and id: " + id);
         PasswordResetToken passToken = passwordResetTokenService.getByToken(token);
-        if ((passToken == null) || (passToken.getUser().getId() != id)) {
+        if ((passToken == null) || (!passToken.getUser().getId().equals(id))) {
             redAtt.addFlashAttribute("message", "InvalidToken");
             return "redirect:/users/badUser";
         }

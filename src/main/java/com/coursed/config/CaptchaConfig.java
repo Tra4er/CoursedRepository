@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
  * Created by Trach on 1/4/2017.
  */
 @Configuration
-@ComponentScan(basePackages = {"org.baeldung.captcha"})
+@ComponentScan(basePackages = {"com.coursed.captcha"})
 public class CaptchaConfig {
     @Bean
     public ClientHttpRequestFactory clientHttpRequestFactory() {
