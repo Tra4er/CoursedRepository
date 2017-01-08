@@ -15,7 +15,9 @@ import java.util.concurrent.TimeUnit;
 public class LoginAttemptService {
 
     private final int MAX_ATTEMPT_TILL_BLOCK = 7;
-    private final int MAX_ATTEMPT_TILL_CAPTCHA = 3;
+//    private final int MAX_ATTEMPT_TILL_CAPTCHA = 3;
+    private final int MAX_ATTEMPT_TILL_CAPTCHA = 1;
+
     private LoadingCache<String, Integer> attemptsCache;
 
     public LoginAttemptService() {

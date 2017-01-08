@@ -4,6 +4,7 @@ import com.coursed.dto.*;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
 import com.coursed.registration.OnRegistrationCompleteEvent;
+import com.coursed.security.LoginAttemptService;
 import com.coursed.security.SecurityService;
 import com.coursed.service.UserService;
 import com.coursed.validator.UserStudentDTOValidator;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Calendar;
 
@@ -38,6 +41,9 @@ public class AuthController {
 
     @Autowired
     private SecurityService securityService;
+
+    @Autowired
+    private LoginAttemptService loginAttemptService;
 
     @Autowired
     private ApplicationEventPublisher eventPublisher;
@@ -59,9 +65,16 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String getLoginPage(Model model, @RequestParam(required = false) String error) {
+    public String getLoginPage(@RequestParam(required = false) String error, final HttpServletRequest request,
+                               final HttpSession session) {
         LOGGER.debug("Getting login page, error={}", error);
-        model.addAttribute("error", error);
+
+        String userIp = getUserIp(request);
+
+        if(loginAttemptService.isCaptchaNeeded(userIp) && error == null){
+            session.setAttribute("SPRING_SECURITY_LAST_EXCEPTION", "captchaNeeded");
+            return "redirect:/login?error=true";
+        }
         return "auth/login";
     }
 
@@ -134,6 +147,14 @@ public class AuthController {
     }
 
 //    NON API
+
+    private String getUserIp(final HttpServletRequest request) {
+        final String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader == null) {
+            return request.getRemoteAddr();
+        }
+        return xfHeader.split(",")[0];
+    }
 
     private String getMessageFromBindingResult(BindingResult bindingResult) {
         String message = "Validation error";
