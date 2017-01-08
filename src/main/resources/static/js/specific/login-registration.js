@@ -65,7 +65,7 @@ $('#button-student-post').click(function () {
     var form = $('#registration-student-form');
     var result = $("#student-request-server-status");
     sendButton.button('loading');
-    sendRegistrationAjaxPost(form, '/api/users/registration-student', 'Myform', result, sendButton);
+    sendRegistrationAjaxPost(form, '/api/students', 'Myform', result, sendButton);
     // }
 });
 
@@ -75,7 +75,7 @@ $('#button-teacher-post').click(function () {
     var form = $('#registration-teacher-form');
     var result = $("#teacher-request-server-status");
     sendButton.button('loading');
-    sendRegistrationAjaxPost(form, '/api/users/registration-teacher', 'Myform', result, sendButton);
+    sendRegistrationAjaxPost(form, '/api/teachers', 'Myform', result, sendButton);
     // }
 });
 
