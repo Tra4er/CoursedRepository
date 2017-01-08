@@ -47,15 +47,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         String userIp = getUserIp();
 
         if(loginAttemptService.isCaptchaNeeded(userIp)){
-            System.out.println("Captcha neeeded");
             if(request.getParameter("g-recaptcha-response") != null) {
                 try {
                     captchaService.processResponse(request.getParameter("g-recaptcha-response"));
                 } catch (Exception e) {
                     throw new RuntimeException("captchaError");
                 }
+
+            } else {
+                throw new RuntimeException("captchaNeeded");
             }
-            throw new RuntimeException("captchaNeeded");
         }
 
         boolean enabled = true;
