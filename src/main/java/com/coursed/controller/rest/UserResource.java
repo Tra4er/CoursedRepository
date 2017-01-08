@@ -23,6 +23,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -97,8 +99,8 @@ public class UserResource {
 
     @PostMapping("/registration-student")
     @ResponseBody
-    public GenericResponse registerStudentAccount(@Valid @RequestBody UserStudentDTO userStudentDTO,
-                                                  final HttpServletRequest request) {
+    public ResponseEntity<GenericResponse> registerStudentAccount(@Valid @RequestBody UserStudentDTO userStudentDTO,
+                                                 final HttpServletRequest request) {
         LOGGER.debug("Registering user account with information: {}", userStudentDTO);
 
         User registered = userService.registerStudent(userStudentDTO);
@@ -109,12 +111,12 @@ public class UserResource {
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
 
-        return new GenericResponse("success");
+        return new ResponseEntity<>(new GenericResponse("success"), HttpStatus.CREATED);
     }
 
     @PostMapping("/registration-teacher")
     @ResponseBody
-    public GenericResponse registerTeacherAccount(@Valid @RequestBody UserTeacherDTO userTeacherDTO,
+    public ResponseEntity<GenericResponse> registerTeacherAccount(@Valid @RequestBody UserTeacherDTO userTeacherDTO,
                                                   final HttpServletRequest request) {
         LOGGER.debug("Registering user account with information: {}", userTeacherDTO);
 
@@ -127,21 +129,23 @@ public class UserResource {
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
 
-        return new GenericResponse("success");
+        return new ResponseEntity<>(new GenericResponse("success"), HttpStatus.CREATED);
     }
 
     @GetMapping("/sendNewRegistrationToken")
     @ResponseBody
-    public GenericResponse sendNewRegistrationToken(@RequestParam String existingToken, HttpServletRequest request) {
+    public ResponseEntity<GenericResponse> sendNewRegistrationToken(@RequestParam String existingToken,
+                                                                    final HttpServletRequest request) {
         VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
         User user = userService.getUserByVerificationToken(newToken.getToken());
         mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), newToken, user));
-        return new GenericResponse("success");
+        return new ResponseEntity<>(new GenericResponse("success"), HttpStatus.OK);
     }
 
     @GetMapping("/resendRegistrationToken")
     @ResponseBody
-    public GenericResponse resendRegistrationToken(@RequestParam String email, HttpServletRequest request) {
+    public ResponseEntity<GenericResponse> resendRegistrationToken(@RequestParam String email,
+                                                                   final HttpServletRequest request) {
         User user = userService.getUserByEmail(email);
         if(user == null) {
             throw new UserNotFoundException();
@@ -151,12 +155,12 @@ public class UserResource {
             throw new TokenNotFoundException();
         }
         mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), token, user));
-        return new GenericResponse("success");
+        return new ResponseEntity<>(new GenericResponse("success"), HttpStatus.OK);
     }
 
     @GetMapping("/sendResetPasswordToken")
     @ResponseBody
-    public GenericResponse sendResetPasswordToken(@RequestParam String email, HttpServletRequest request) {
+    public ResponseEntity<GenericResponse> sendResetPasswordToken(@RequestParam String email, final HttpServletRequest request) {
 
         User user = userService.getUserByEmail(email);
         if (user == null) {
@@ -168,13 +172,13 @@ public class UserResource {
         String appUrl = " http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         SimpleMailMessage simpleMailMessage = constructResetTokenEmail(appUrl, token, user);
         mailSender.send(simpleMailMessage);
-        return new GenericResponse("success");
+        return new ResponseEntity<>(new GenericResponse("success"), HttpStatus.OK);
     }
 
 //  In case user forgot his password and resets it by sending resetToken to email.
     @PostMapping("/savePassword")
     @ResponseBody
-    public GenericResponse savePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
+    public ResponseEntity<GenericResponse> savePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
         String token = passwordDTO.getToken();
         LOGGER.debug("Validating password reset token: " + token);
         PasswordResetToken passToken = passwordResetTokenService.getByToken(token);
@@ -190,19 +194,19 @@ public class UserResource {
         User user = passwordResetTokenService.getUserByToken(token);
 
         userService.changeUserPassword(user, passwordDTO.getNewPassword());
-        return new GenericResponse("success");
+        return new ResponseEntity<>(new GenericResponse("success"), HttpStatus.OK);
     }
 
     //  In case user remembers his password and wont to update it.
     @PostMapping("/updatePassword")
     @ResponseBody
-    public GenericResponse changeUserPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
+    public ResponseEntity<GenericResponse> changeUserPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
         final User user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         if (!userService.checkIfValidOldPassword(user, passwordDTO.getOldPassword())) {
             throw new InvalidOldPasswordException();
         }
         userService.changeUserPassword(user, passwordDTO.getNewPassword());
-        return new GenericResponse("success");
+        return new ResponseEntity<>(new GenericResponse("success"), HttpStatus.OK);
     }
 
     @GetMapping("/checkEmail")
