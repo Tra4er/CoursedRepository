@@ -18,32 +18,10 @@ public class AuthenticationFailureEventListener implements ApplicationListener<A
     @Autowired
     private LoginAttemptService loginAttemptService;
 
-    @Autowired
-    private CaptchaService captchaService;
-
-    @Autowired
-    private HttpServletRequest request;
-
     public void onApplicationEvent(AuthenticationFailureBadCredentialsEvent e) {
-
-        String clientIP = getClientIP();
-
         WebAuthenticationDetails auth = (WebAuthenticationDetails)
                 e.getAuthentication().getDetails();
 
         loginAttemptService.loginFailed(auth.getRemoteAddress());
-
-        if(loginAttemptService.isBlocked(clientIP)){ // TODO
-//            captchaService.processResponse(request);
-        }
     }
-
-    private String getClientIP() {
-        final String xfHeader = request.getHeader("X-Forwarded-For");
-        if (xfHeader == null) {
-            return request.getRemoteAddr();
-        }
-        return xfHeader.split(",")[0];
-    }
-
 }

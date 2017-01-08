@@ -1,5 +1,6 @@
 package com.coursed.security;
 
+import com.coursed.captcha.CaptchaService;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 import com.coursed.repository.UserRepository;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,10 +30,34 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private LoginAttemptService loginAttemptService;
+
+    @Autowired
+    private CaptchaService captchaService;
+
+    @Autowired
+    private HttpServletRequest request;
+
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         LOGGER.debug("Authenticating user with email={}", email.replaceFirst("@.*", "@***"));
+
+        String userIp = getUserIp();
+
+        if(loginAttemptService.isCaptchaNeeded(userIp)){
+            System.out.println("Captcha neeeded");
+            if(request.getParameter("g-recaptcha-response") != null) {
+                try {
+                    captchaService.processResponse(request.getParameter("g-recaptcha-response"));
+                } catch (Exception e) {
+                    throw new RuntimeException("captchaError");
+                }
+            }
+            throw new RuntimeException("captchaNeeded");
+        }
+
         boolean enabled = true;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
@@ -50,4 +76,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 user.getPassword(), user.isEnabled(), accountNonExpired, credentialsNonExpired,
                 accountNonLocked, grantedAuthorities);
     }
+
+//    NON API
+
+    private String getUserIp() {
+        final String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader == null) {
+            return request.getRemoteAddr();
+        }
+        return xfHeader.split(",")[0];
+    }
+
 }

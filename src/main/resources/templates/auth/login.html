@@ -27,18 +27,21 @@
     <script type="text/javascript">
         console.log("Captcha init")
         var recaptchaCallback = function () {
-            grecaptcha.render("loginRecaptcha", {
-                sitekey: $("#siteKey").text(),
-            });
-            grecaptcha.render("studentRecaptcha", {
-                sitekey: $("#siteKey").text(),
-            });
-            grecaptcha.render("teacherRecaptcha", {
-                sitekey: $("#siteKey").text(),
-            });
+            if ($("#captchaNeeded").text() === "captchaNeeded" || $("#captchaNeeded").text() === "captchaError") {
+                grecaptcha.render("loginRecaptcha", {
+                    sitekey: $("#siteKey").text(),
+                });
+            }
+//            grecaptcha.render("studentRecaptcha", {
+//                sitekey: $("#siteKey").text(),
+//            });
+//            grecaptcha.render("teacherRecaptcha", {
+//                sitekey: $("#siteKey").text(),
+//            });
         }
     </script>
-    <script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&amp;render=explicit" async="async" defer="defer"></script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&amp;render=explicit" async="async"
+            defer="defer"></script>
 </head>
 <body>
 <div class="container">
@@ -72,12 +75,22 @@
                                    placeholder="Пароль"/>
                         </div>
                         <div class="form-group">
-                            Doesn't work on login in this version
                             <div id="loginRecaptcha"></div>
                         </div>
                         <div th:if="${param.error != null}">
-                            <div th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']}" class="alert alert error">
-                                Повідомлення про помилку.
+                            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} == 'captchaNeeded'">
+                                <div id="captchaNeeded" th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']}"
+                                     hidden="hidden"></div>
+                            </div>
+                            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} == 'captchaError'">
+                                <div id="captchaNeeded" th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']}"
+                                     hidden="hidden"></div>
+                                <div class="alert alert error">Помилка підтвердження на людяність.</div>
+                            </div>
+                            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != 'captchaNeeded' and ${session['SPRING_SECURITY_LAST_EXCEPTION']} != 'captchaError'">
+                                <div th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']}" class="alert alert error">
+                                    Повідомлення про помилку.
+                                </div>
                             </div>
                         </div>
                         <div class="col-xs-12">

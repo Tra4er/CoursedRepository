@@ -14,7 +14,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class LoginAttemptService {
 
-    private final int MAX_ATTEMPT = 5;
+    private final int MAX_ATTEMPT_TILL_BLOCK = 7;
+    private final int MAX_ATTEMPT_TILL_CAPTCHA = 3;
     private LoadingCache<String, Integer> attemptsCache;
 
     public LoginAttemptService() {
@@ -44,7 +45,15 @@ public class LoginAttemptService {
 
     public boolean isBlocked(final String key) {
         try {
-            return attemptsCache.get(key) >= MAX_ATTEMPT;
+            return attemptsCache.get(key) >= MAX_ATTEMPT_TILL_BLOCK;
+        } catch (final ExecutionException e) {
+            return false;
+        }
+    }
+
+    public boolean isCaptchaNeeded(final String key) {
+        try {
+            return attemptsCache.get(key) >= MAX_ATTEMPT_TILL_CAPTCHA;
         } catch (final ExecutionException e) {
             return false;
         }

@@ -39,6 +39,10 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
             errorMessage = "Профіль не активований. Час на активацію вийшов.";
         } else if (exception.getMessage().equalsIgnoreCase("blocked")) {
             errorMessage = "Профіль заблокований.";
+        } else if (exception.getMessage().equalsIgnoreCase("captchaNeeded")) {
+            errorMessage = "captchaNeeded";
+        } else if (exception.getMessage().equalsIgnoreCase("captchaError")) {
+            errorMessage = "captchaError";
         }
 
         request.getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, errorMessage);
