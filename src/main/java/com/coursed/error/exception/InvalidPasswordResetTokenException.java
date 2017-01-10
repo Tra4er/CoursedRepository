@@ -5,7 +5,7 @@ package com.coursed.error.exception;
  */
 public class InvalidPasswordResetTokenException extends RuntimeException {
 
-    private static final long serialVersionUID = 5861310537366287163L;
+    private static final long serialVersionUID = 8100136769936386778L;
 
     public InvalidPasswordResetTokenException() {
         super();

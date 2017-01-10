@@ -5,7 +5,7 @@ package com.coursed.error.exception;
  */
 public final class UserNotFoundException extends RuntimeException {
 
-    private static final long serialVersionUID = 5861310537366287163L;
+    private static final long serialVersionUID = -3805783614840050848L;
 
     public UserNotFoundException() {
         super();

@@ -5,7 +5,7 @@ package com.coursed.error.exception;
  */
 public class ReCaptchaUnavailableException extends RuntimeException {
 
-    private static final long serialVersionUID = 5861310537366287163L;
+    private static final long serialVersionUID = -3314955148586174072L;
 
     public ReCaptchaUnavailableException() {
         super();

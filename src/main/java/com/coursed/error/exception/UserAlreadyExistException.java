@@ -5,7 +5,7 @@ package com.coursed.error.exception;
  */
 public class UserAlreadyExistException extends RuntimeException {
 
-    private static final long serialVersionUID = 5861310537366287163L; // TODO
+    private static final long serialVersionUID = -8556145462545616146L;
 
     public UserAlreadyExistException() {
         super();

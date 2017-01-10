@@ -5,7 +5,7 @@ package com.coursed.error.exception;
  */
 public class RegistrationException extends RuntimeException {
 
-    private static final long serialVersionUID = 5861310537366287163L;
+    private static final long serialVersionUID = -6504315179892760999L;
 
     public RegistrationException() {
         super();

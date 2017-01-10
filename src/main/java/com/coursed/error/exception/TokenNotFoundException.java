@@ -5,7 +5,7 @@ package com.coursed.error.exception;
  */
 public class TokenNotFoundException extends RuntimeException {
 
-    private static final long serialVersionUID = 5861310537356687163L;
+    private static final long serialVersionUID = 875731845132588318L;
 
     public TokenNotFoundException() {
         super();
