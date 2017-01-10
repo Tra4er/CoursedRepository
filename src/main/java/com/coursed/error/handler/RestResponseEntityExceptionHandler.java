@@ -112,6 +112,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
+    @ExceptionHandler({RegistrationException.class})
+    public ResponseEntity<Object> handleRegistrationError(final RuntimeException ex, final WebRequest request) {
+        LOGGER.error("500 Status Code: " + ex.getMessage());
+        final GenericResponse bodyOfResponse = new GenericResponse("Щось пішло не так. Ми не змогли зареєструвати ваш профіль.",
+                "RegistrationFailed");
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+    }
+
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("500 Status Code: " + ex.getMessage());

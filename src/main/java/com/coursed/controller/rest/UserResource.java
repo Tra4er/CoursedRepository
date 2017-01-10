@@ -105,7 +105,7 @@ public class UserResource {
 
         User registered = userService.registerStudent(userStudentDTO);
         if (registered == null) {
-            throw new UserAlreadyExistException("There is an account with this email.");
+            throw new RegistrationException("Something went wrong while registering account.");
         }
 
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
@@ -122,7 +122,7 @@ public class UserResource {
 
         User registered = userService.registerTeacher(userTeacherDTO);
         if (registered == null) {
-            throw new UserAlreadyExistException("There is an account with this email.");
+            throw new RegistrationException("Something went wrong while registering account.");
         }
 
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
