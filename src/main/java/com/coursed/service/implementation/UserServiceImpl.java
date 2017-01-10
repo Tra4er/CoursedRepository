@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User registerStudent(UserStudentDTO registrationForm) {
         if (emailExist(registrationForm.getEmail())) {
-            throw new UserAlreadyExistException();
+            throw new UserAlreadyExistException("Trying to save new account but there is already one with this email.");
         }
 
         User user = new User();
@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User registerTeacher(UserTeacherDTO registrationForm) { // TODO move to teacherService
         if (emailExist(registrationForm.getEmail())) { // TODO not sure if this is necessary
-            throw new UserAlreadyExistException();
+            throw new UserAlreadyExistException("Trying to save new account but there is already one with this email.");
         }
 
         User user = new User();

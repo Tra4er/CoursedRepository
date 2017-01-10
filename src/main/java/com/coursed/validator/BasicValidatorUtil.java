@@ -17,7 +17,7 @@ public class BasicValidatorUtil {
             throw new ValidationException("WrongCharactersInEmail");
         }
         if (userService.getUserByEmail(form.getEmail()) != null) {
-            throw new UserAlreadyExistException();
+            throw new UserAlreadyExistException("There is an account with this email.");
         }
     }
 
