@@ -1,19 +1,17 @@
 package com.coursed.controller.rest;
 
 import com.coursed.captcha.CaptchaService;
-import com.coursed.controller.mvc.AuthController;
 import com.coursed.dto.*;
 import com.coursed.error.exception.*;
 import com.coursed.model.auth.PasswordResetToken;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
-import com.coursed.registration.OnRegistrationCompleteEvent;
 import com.coursed.security.SecurityService;
 import com.coursed.service.PasswordResetTokenService;
 import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
 import com.coursed.service.VerificationTokenService;
-import com.coursed.util.GenericResponse;
+import com.coursed.util.OldGenericResponse;
 import com.coursed.validator.PasswordDTOValidator;
 import com.coursed.validator.RecaptchaResponseDTOValidator;
 import com.coursed.validator.UserStudentDTOValidator;
@@ -89,18 +87,18 @@ public class UserResource {
 
     @GetMapping("/sendNewRegistrationToken")
     @ResponseBody
-    public ResponseEntity<GenericResponse> sendNewRegistrationToken(@RequestParam String existingToken,
-                                                                    final HttpServletRequest request) {
+    public ResponseEntity<OldGenericResponse> sendNewRegistrationToken(@RequestParam String existingToken,
+                                                                       final HttpServletRequest request) {
         VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
         User user = userService.getUserByVerificationToken(newToken.getToken());
         mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), newToken, user));
-        return new ResponseEntity<>(new GenericResponse("success"), HttpStatus.OK);
+        return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.OK);
     }
 
     @GetMapping("/resendRegistrationToken")
     @ResponseBody
-    public ResponseEntity<GenericResponse> resendRegistrationToken(@RequestParam String email,
-                                                                   final HttpServletRequest request) {
+    public ResponseEntity<OldGenericResponse> resendRegistrationToken(@RequestParam String email,
+                                                                      final HttpServletRequest request) {
         User user = userService.getUserByEmail(email);
         if(user == null) {
             throw new UserNotFoundException();
@@ -110,12 +108,12 @@ public class UserResource {
             throw new TokenNotFoundException();
         }
         mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), token, user));
-        return new ResponseEntity<>(new GenericResponse("success"), HttpStatus.OK);
+        return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.OK);
     }
 
     @GetMapping("/sendResetPasswordToken")
     @ResponseBody
-    public ResponseEntity<GenericResponse> sendResetPasswordToken(@RequestParam String email, final HttpServletRequest request) {
+    public ResponseEntity<OldGenericResponse> sendResetPasswordToken(@RequestParam String email, final HttpServletRequest request) {
 
         User user = userService.getUserByEmail(email);
         if (user == null) {
@@ -127,13 +125,13 @@ public class UserResource {
         String appUrl = " http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         SimpleMailMessage simpleMailMessage = constructResetTokenEmail(appUrl, token, user);
         mailSender.send(simpleMailMessage);
-        return new ResponseEntity<>(new GenericResponse("success"), HttpStatus.OK);
+        return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.OK);
     }
 
 //  In case user forgot his password and resets it by sending resetToken to email.
     @PostMapping("/savePassword")
     @ResponseBody
-    public ResponseEntity<GenericResponse> savePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
+    public ResponseEntity<OldGenericResponse> savePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
         String token = passwordDTO.getToken();
         LOGGER.debug("Validating password reset token: " + token);
         PasswordResetToken passToken = passwordResetTokenService.getByToken(token);
@@ -149,19 +147,19 @@ public class UserResource {
         User user = passwordResetTokenService.getUserByToken(token);
 
         userService.changeUserPassword(user, passwordDTO.getNewPassword());
-        return new ResponseEntity<>(new GenericResponse("success"), HttpStatus.OK);
+        return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.OK);
     }
 
     //  In case user remembers his password and wont to update it.
     @PostMapping("/updatePassword")
     @ResponseBody
-    public ResponseEntity<GenericResponse> changeUserPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
+    public ResponseEntity<OldGenericResponse> changeUserPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
         final User user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         if (!userService.checkIfValidOldPassword(user, passwordDTO.getOldPassword())) {
             throw new InvalidOldPasswordException();
         }
         userService.changeUserPassword(user, passwordDTO.getNewPassword());
-        return new ResponseEntity<>(new GenericResponse("success"), HttpStatus.OK);
+        return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.OK);
     }
 
     @GetMapping("/checkEmail")

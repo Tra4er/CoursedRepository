@@ -8,34 +8,77 @@ import org.springframework.validation.ObjectError;
 import java.util.List;
 
 /**
- * Created by Trach on 12/20/2016.
+ * Created by Trach on 1/12/2017.
  */
 public class GenericResponse {
 
+    private String code;
+    private String status;
     private String message;
-    private String error;
+    private String data;
 
-    public GenericResponse(String message) {
-        super();
-        this.message = message;
-    }
-
-    public GenericResponse(String message, String error) {
-        super();
-        this.message = message;
-        this.error = error;
-    }
-
-    public GenericResponse(List<FieldError> fieldErrors, List<ObjectError> globalErrors) {
+    /**
+     *
+     * @param code HTTP status code
+     * @param status "success", "fail", "error"
+     * @param globalErrors Use only for "fail" or "error" statuses. Short error description. Example: "UserAlreadyExist"
+     * @param fieldErrors Use for response body or to describe your error.
+     */
+    // TODO TEST
+    public GenericResponse(String code, String status, List<ObjectError> globalErrors, List<FieldError> fieldErrors) {
         super();
         final ObjectMapper mapper = new ObjectMapper();
         try {
-            this.message = mapper.writeValueAsString(fieldErrors);
-            this.error = mapper.writeValueAsString(globalErrors);
+            this.code = code;
+            this.status = status;
+            this.message = mapper.writeValueAsString(globalErrors);
+            this.data = mapper.writeValueAsString(fieldErrors);
         } catch (final JsonProcessingException e) {
+            this.code = "";
+            this.status = "";
             this.message = "";
-            this.error = "";
+            this.data = "";
         }
+    }
+
+    /**
+     *
+     * @param code HTTP status code
+     * @param status "success", "fail", "error"
+     * @param message Use only for "fail" or "error" statuses. Short error description. Example: "UserAlreadyExist"
+     */
+    public GenericResponse(String code, String status, String message) {
+        this(code, status, message, null);
+    }
+
+    /**
+     *
+     * @param code HTTP status code
+     * @param status "success", "fail", "error"
+     * @param message Use only for "fail" or "error" statuses. Short error description. Example: "UserAlreadyExist"
+     * @param data Use for response body or to describe your error.
+     */
+    public GenericResponse(String code, String status, String message, String data) {
+        this.code = code;
+        this.status = status;
+        this.message = message;
+        this.data = data;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getMessage() {
@@ -46,11 +89,21 @@ public class GenericResponse {
         this.message = message;
     }
 
-    public String getError() {
-        return error;
+    public String getData() {
+        return data;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "GenericResponse{" +
+                "code='" + code + '\'' +
+                ", status='" + status + '\'' +
+                ", message='" + message + '\'' +
+                ", data='" + data + '\'' +
+                '}';
     }
 }

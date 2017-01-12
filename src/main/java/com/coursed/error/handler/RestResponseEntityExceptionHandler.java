@@ -1,7 +1,7 @@
 package com.coursed.error.handler;
 
 import com.coursed.error.exception.*;
-import com.coursed.util.GenericResponse;
+import com.coursed.util.OldGenericResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -36,7 +36,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
                                                          final HttpStatus status, final WebRequest request) {
         LOGGER.error("400 Status Code: " + ex.getMessage());
         final BindingResult result = ex.getBindingResult();
-        final GenericResponse bodyOfResponse = new GenericResponse(result.getFieldErrors(), result.getGlobalErrors());
+        final OldGenericResponse bodyOfResponse = new OldGenericResponse(result.getFieldErrors(), result.getGlobalErrors());
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
@@ -46,35 +46,35 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
                                                                   final WebRequest request) {
         LOGGER.error("400 Status Code: " + ex.getMessage());
         final BindingResult result = ex.getBindingResult();
-        final GenericResponse bodyOfResponse = new GenericResponse(result.getFieldErrors(), result.getGlobalErrors());
+        final OldGenericResponse bodyOfResponse = new OldGenericResponse(result.getFieldErrors(), result.getGlobalErrors());
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler({ValidationException.class})
     public ResponseEntity<Object> handleValidation(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("400 Status Code: " + ex.getMessage());
-        final GenericResponse bodyOfResponse = new GenericResponse("Введені дані не пройшли валідацію.", ex.getMessage());
+        final OldGenericResponse bodyOfResponse = new OldGenericResponse("Введені дані не пройшли валідацію.", ex.getMessage());
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler({MailParseException.class})
     public ResponseEntity<Object> handleMailParser(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("400 Status Code: " + ex.getMessage());
-        final GenericResponse bodyOfResponse = new GenericResponse("Введений емейл є невірним.", ex.getMessage()); // TODO "emailExc"
+        final OldGenericResponse bodyOfResponse = new OldGenericResponse("Введений емейл є невірним.", ex.getMessage()); // TODO "emailExc"
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler({InvalidOldPasswordException.class})
     public ResponseEntity<Object> handleInvalidOldPassword(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("400 Status Code: " + ex.getMessage());
-        final GenericResponse bodyOfResponse = new GenericResponse("Старий пароль який ви ввели є невірним.", "InvalidOldPassword");
+        final OldGenericResponse bodyOfResponse = new OldGenericResponse("Старий пароль який ви ввели є невірним.", "InvalidOldPassword");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler({ReCaptchaInvalidException.class})
     public ResponseEntity<Object> handleReCaptchaInvalid(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("400 Status Code: " + ex.getMessage());
-        final GenericResponse bodyOfResponse = new GenericResponse("Помилка підтвердження на людяність.", "InvalidReCaptcha");
+        final OldGenericResponse bodyOfResponse = new OldGenericResponse("Помилка підтвердження на людяність.", "InvalidReCaptcha");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
@@ -82,14 +82,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler({UserNotFoundException.class})
     public ResponseEntity<Object> handleUserNotFound(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("404 Status Code: " + ex.getMessage());
-        final GenericResponse bodyOfResponse = new GenericResponse("Користувача із цим емейлом не існує.", "UserNotFound");
+        final OldGenericResponse bodyOfResponse = new OldGenericResponse("Користувача із цим емейлом не існує.", "UserNotFound");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler({TokenNotFoundException.class})
     public ResponseEntity<Object> handleTokenNotFound(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("404 Status Code: " + ex.getMessage());
-        final GenericResponse bodyOfResponse = new GenericResponse("Не вдалось знайти ключ для даного користувача.",
+        final OldGenericResponse bodyOfResponse = new OldGenericResponse("Не вдалось знайти ключ для даного користувача.",
                 "TokenNotFound");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
@@ -98,7 +98,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler({UserAlreadyExistException.class})
     public ResponseEntity<Object> handleUserAlreadyExist(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("409 Status Code: " + ex.getMessage());
-        final GenericResponse bodyOfResponse = new GenericResponse("Профіль для даного емейлу вже існує. Введіть інший емейл.",
+        final OldGenericResponse bodyOfResponse = new OldGenericResponse("Профіль для даного емейлу вже існує. Введіть інший емейл.",
                 "UserAlreadyExist");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
@@ -107,7 +107,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler({ReCaptchaUnavailableException.class})
     public ResponseEntity<Object> handleReCaptchaUnavailable(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("500 Status Code: " + ex.getMessage());
-        final GenericResponse bodyOfResponse = new GenericResponse("Реєстрація неможлива в даний момент. Спробуйте пізніше.",
+        final OldGenericResponse bodyOfResponse = new OldGenericResponse("Реєстрація неможлива в даний момент. Спробуйте пізніше.",
                 "InvalidReCaptcha");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
@@ -115,7 +115,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler({RegistrationException.class})
     public ResponseEntity<Object> handleRegistrationError(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("500 Status Code: " + ex.getMessage());
-        final GenericResponse bodyOfResponse = new GenericResponse("Щось пішло не так. Ми не змогли зареєструвати ваш профіль.",
+        final OldGenericResponse bodyOfResponse = new OldGenericResponse("Щось пішло не так. Ми не змогли зареєструвати ваш профіль.",
                 "RegistrationFailed");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
@@ -123,7 +123,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("500 Status Code: " + ex.getMessage());
-        final GenericResponse bodyOfResponse = new GenericResponse("Сталась помилка", "InternalError");
+        final OldGenericResponse bodyOfResponse = new OldGenericResponse("Сталась помилка", "InternalError");
         return new ResponseEntity<>(bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
