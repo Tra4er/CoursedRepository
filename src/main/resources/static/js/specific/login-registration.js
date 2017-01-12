@@ -28,7 +28,7 @@ function fillGroups() {
 
     if ($("#specialityId > option:selected").attr("value") != '0'
         && $("#semesterId > option:selected").attr("value") != '0') {
-        $.getJSON("/api/groups/getAll/", {
+        $.getJSON("/api/groups/getAll", {
             specialityId: $("#specialityId > option:selected").attr("value"),
             semesterId: $("#semesterId > option:selected").attr("value")
         }, function (response) {

@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailParseException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -73,9 +74,17 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler({ReCaptchaInvalidException.class})
     public ResponseEntity<Object> handleReCaptchaInvalid(final RuntimeException ex, final WebRequest request) {
-        logger.error("400 Status Code", ex);
+        LOGGER.error("400 Status Code", ex);
         final GenericResponse bodyOfResponse = new GenericResponse("Помилка підтвердження на людяність.", "InvalidReCaptcha");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    // 403
+    @ExceptionHandler({AccessDeniedException.class})
+    public ResponseEntity<Object> handleAccessDenied(final RuntimeException ex, final WebRequest request) {
+        LOGGER.error("403 Status Code: " + ex.getMessage());
+        final GenericResponse bodyOfResponse = new GenericResponse("Ви не маєте доступу до даного ресурсу", "AccessDenied");
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }
 
     // 404
