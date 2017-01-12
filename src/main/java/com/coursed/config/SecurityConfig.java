@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +14,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -27,8 +29,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/login*", "/users/confirmRegistration", "/users/forgotPassword", "/users/changePassword",
-                        "/users/updatePassword", "/users/resendRegistrationToken", "/test", "/valve", "/users/badUser",
-                        "/api/**").permitAll()//TODO: check only for 'hasRole("REGISTERED")
+                        "/users/updatePassword", "/users/resendRegistrationToken", "/test", "/valve", "/users/badUser"
+                        ).permitAll()
+                // REST
+                .antMatchers("/api/years/getAll", "/api/specialities/getAll", "/api/groups/getAll", "/api/students",
+                        "/api/teachers", "/api/users/checkEmail", "/api/users/sendNewRegistrationToken",
+                        "/api/users/savePassword", "/api/users/sendResetPasswordToken", "/api/users/resendRegistrationToken",
+                        "/api/users/registration-student", "/api/users/registration-teacher", "/api/years/getSemestersFromYear/*"
+                ).permitAll() // TODO config resources for anonymous using @PreAuthorize("hasRole('SOME_ROLE')")
                 .antMatchers("/", "/**").hasAnyRole("REGISTERED", "STUDENT", "TEACHER", "ADMIN")
                 .antMatchers("/css/**", "/js/**", "/fonts/**").permitAll()
                 .and()

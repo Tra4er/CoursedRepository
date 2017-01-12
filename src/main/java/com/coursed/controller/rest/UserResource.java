@@ -41,7 +41,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/users")
 public class UserResource {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserResource.class);
 
     @Autowired
     private UserService userService;
@@ -82,53 +82,9 @@ public class UserResource {
     @Autowired
     private RecaptchaResponseDTOValidator recaptchaResponseDTOValidator;
 
-    @InitBinder("userStudentDTO")
-    public void initStudentBinder(WebDataBinder binder) {
-        binder.addValidators(recaptchaResponseDTOValidator, userStudentDTOValidator);
-    }
-
-    @InitBinder("userTeacherDTO")
-    public void initTeacherBinder(WebDataBinder binder) {
-        binder.addValidators(recaptchaResponseDTOValidator, userTeacherDTOValidator);
-    }
-
     @InitBinder("passwordDTO")
     public void initPasswordBinder(WebDataBinder binder) {
         binder.addValidators(passwordDTOValidator);
-    }
-
-    @PostMapping("/registration-student")
-    @ResponseBody
-    public ResponseEntity<GenericResponse> registerStudentAccount(@Valid @RequestBody UserStudentDTO userStudentDTO,
-                                                 final HttpServletRequest request) {
-        LOGGER.debug("Registering user account with information: {}", userStudentDTO);
-
-        User registered = userService.registerStudent(userStudentDTO);
-        if (registered == null) {
-            throw new RegistrationException("Something went wrong while registering account.");
-        }
-
-        final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
-
-        return new ResponseEntity<>(new GenericResponse("success"), HttpStatus.CREATED);
-    }
-
-    @PostMapping("/registration-teacher")
-    @ResponseBody
-    public ResponseEntity<GenericResponse> registerTeacherAccount(@Valid @RequestBody UserTeacherDTO userTeacherDTO,
-                                                  final HttpServletRequest request) {
-        LOGGER.debug("Registering user account with information: {}", userTeacherDTO);
-
-        User registered = userService.registerTeacher(userTeacherDTO);
-        if (registered == null) {
-            throw new RegistrationException("Something went wrong while registering account.");
-        }
-
-        final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
-
-        return new ResponseEntity<>(new GenericResponse("success"), HttpStatus.CREATED);
     }
 
     @GetMapping("/sendNewRegistrationToken")

@@ -28,7 +28,7 @@ function fillGroups() {
 
     if ($("#specialityId > option:selected").attr("value") != '0'
         && $("#semesterId > option:selected").attr("value") != '0') {
-        $.getJSON("/api/groups/getAll/", {
+        $.getJSON("/api/groups/getAll", {
             specialityId: $("#specialityId > option:selected").attr("value"),
             semesterId: $("#semesterId > option:selected").attr("value")
         }, function (response) {
@@ -65,7 +65,7 @@ $('#button-student-post').click(function () {
     var form = $('#registration-student-form');
     var result = $("#student-request-server-status");
     sendButton.button('loading');
-    sendRegistrationAjaxPost(form, '/api/users/registration-student', 'Myform', result, sendButton);
+    sendRegistrationAjaxPost(form, '/api/students', 'Myform', result, sendButton);
     // }
 });
 
@@ -75,7 +75,7 @@ $('#button-teacher-post').click(function () {
     var form = $('#registration-teacher-form');
     var result = $("#teacher-request-server-status");
     sendButton.button('loading');
-    sendRegistrationAjaxPost(form, '/api/users/registration-teacher', 'Myform', result, sendButton);
+    sendRegistrationAjaxPost(form, '/api/teachers', 'Myform', result, sendButton);
     // }
 });
 
