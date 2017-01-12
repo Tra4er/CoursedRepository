@@ -8,9 +8,8 @@ $(document).ready(function () {
 function sendNewVerificationToken() {
     $("#sendNewRegistrationToken-button").button('loading');
     $.ajax({
-        type: 'GET',
-        url: "/api/users/sendNewRegistrationToken",
-        data: "existingToken=" + $("#sendNewRegistrationToken-token").val() // TODO Test
+        type: 'POST',
+        url: "/api/users/" + $("#username").text() + "/sendNewRegistrationToken?existingToken=" + $("#sendNewRegistrationToken-token").text()
     }).done(function (data) {
         $("#sendNewRegistrationToken-button").button('reset');
         if (data.message == "success") {

@@ -7,10 +7,10 @@ $(document).ready(function () {
     var userProblem = $("#userProblem").text();
     switch(userProblem) {
         case 'ForgotPassword' :
-            sendProblemTo = "/api/users/sendResetPasswordToken";
+            sendProblemTo = "/sendResetPasswordToken";
             break;
         case 'ResendRegistrationToken' :
-            sendProblemTo = "/api/users/resendRegistrationToken";
+            sendProblemTo = "/resendRegistrationToken";
             break;
     }
 
@@ -20,9 +20,8 @@ $(document).ready(function () {
 function sendEmail() {
     $('#emailField-send-button').button('loading');
     $.ajax({
-        type: 'GET',
-        url: sendProblemTo,
-        data: "email=" + $("#emailField").val()
+        type: 'POST',
+        url: "/api/users/" + $("#emailField").val() + sendProblemTo
     }).done(function (data) {
         $('#emailField-send-button').button('reset');
         if (data.message == "success") {

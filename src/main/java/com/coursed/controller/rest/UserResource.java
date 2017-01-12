@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.util.*;
 
 /**
@@ -85,19 +86,19 @@ public class UserResource {
         binder.addValidators(passwordDTOValidator);
     }
 
-    @GetMapping("/sendNewRegistrationToken")
+    @PostMapping("/{username}/sendNewRegistrationToken")
     @ResponseBody
-    public ResponseEntity<OldGenericResponse> sendNewRegistrationToken(@RequestParam String existingToken,
+    public ResponseEntity<OldGenericResponse> sendNewRegistrationToken(@PathVariable("username") String email, @RequestParam String existingToken,
                                                                        final HttpServletRequest request) {
         VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
-        User user = userService.getUserByVerificationToken(newToken.getToken());
+        User user = userService.getUserByEmail(email);
         mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), newToken, user));
         return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.OK);
     }
 
-    @GetMapping("/resendRegistrationToken")
+    @PostMapping("/{username}/resendRegistrationToken")
     @ResponseBody
-    public ResponseEntity<OldGenericResponse> resendRegistrationToken(@RequestParam String email,
+    public ResponseEntity<OldGenericResponse> resendRegistrationToken(@PathVariable("username") String email,
                                                                       final HttpServletRequest request) {
         User user = userService.getUserByEmail(email);
         if(user == null) {
@@ -111,9 +112,10 @@ public class UserResource {
         return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.OK);
     }
 
-    @GetMapping("/sendResetPasswordToken")
+    @PostMapping("/{username}/sendResetPasswordToken")
     @ResponseBody
-    public ResponseEntity<OldGenericResponse> sendResetPasswordToken(@RequestParam String email, final HttpServletRequest request) {
+    public ResponseEntity<OldGenericResponse> sendResetPasswordToken(@PathVariable("username") String email,
+                                                                     final HttpServletRequest request) {
 
         User user = userService.getUserByEmail(email);
         if (user == null) {
@@ -221,7 +223,7 @@ public class UserResource {
 
     private SimpleMailMessage constructResendVerificationTokenEmail(String contextPath, VerificationToken token,
                                                                     User user) {
-        String confirmationUrl = contextPath + "/users/confirmRegistration?token=" + token.getToken();
+        String confirmationUrl = contextPath + "/users/confirmRegistration?email=" + user.getEmail() + "&token=" + token.getToken();
         String message = "Ми згенерували для вас новий ключ для підтвердження вашого E-Mail:";
         return constructEmail("Повторна відправка листа з підтвердженям", message + " \r\n" + confirmationUrl, user);
     }
