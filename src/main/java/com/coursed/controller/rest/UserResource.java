@@ -11,6 +11,7 @@ import com.coursed.service.PasswordResetTokenService;
 import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
 import com.coursed.service.VerificationTokenService;
+import com.coursed.util.GenericResponse;
 import com.coursed.util.OldGenericResponse;
 import com.coursed.validator.PasswordDTOValidator;
 import com.coursed.validator.RecaptchaResponseDTOValidator;
@@ -131,7 +132,7 @@ public class UserResource {
     }
 
 //  In case user forgot his password and resets it by sending resetToken to email.
-    @PostMapping("/savePassword")
+    @PutMapping("/savePassword")
     @ResponseBody
     public ResponseEntity<OldGenericResponse> savePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
         String token = passwordDTO.getToken();
@@ -162,11 +163,6 @@ public class UserResource {
         }
         userService.changeUserPassword(user, passwordDTO.getNewPassword());
         return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.OK);
-    }
-
-    @GetMapping("/checkEmail")
-    private boolean checkEmail(@RequestParam("email") String email) {
-        return userService.getUserByEmail(email) != null;
     }
 
     @GetMapping("/getUser")

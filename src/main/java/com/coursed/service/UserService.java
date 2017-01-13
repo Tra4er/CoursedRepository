@@ -5,6 +5,7 @@ import com.coursed.model.auth.PasswordResetToken;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,7 @@ public interface UserService {
     void saveRegisteredUser(User user);
     User getUserById(Long id);
     User getUserByEmail(String email);
+    boolean checkIfUserExists(String email);
     List<User> findAllUnconfirmedTeachers();
     List<User> findAllTeachers(Long groupId);
     List<User> findAllGroupCurators(Long groupId);

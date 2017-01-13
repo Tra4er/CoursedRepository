@@ -109,17 +109,9 @@ function checkEmail(){
     } else if(!emailRegex.test(email)) {
         resultMessage.text("Емейл введено невірно.");
         availableEmail = false;
-    } else { // Passed regex test
-        $.ajax({ url: "/api/users/checkEmail", async: false, type: "get", data: "email=" + email})
-            .done(function(response) {
-                if(response){
-                    resultMessage.text("Емейл існує");
-                    availableEmail = false;
-                } else {
-                    resultMessage.text("");
-                    availableEmail = true;
-                }
-            });
+    } else {
+        resultMessage.text("");
+        availableEmail = true;
     }
     return availableEmail;
 }

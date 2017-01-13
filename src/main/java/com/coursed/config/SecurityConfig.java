@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         ).permitAll()
                 // REST
                 .antMatchers("/api/years/getAll", "/api/specialities/getAll", "/api/groups/getAll", "/api/students",
-                        "/api/teachers", "/api/users/checkEmail", "/api/users/*/sendNewRegistrationToken",
+                        "/api/teachers", "/api/users", "/api/users/*/sendNewRegistrationToken",
                         "/api/users/savePassword", "/api/users/*/sendResetPasswordToken", "/api/users/*/resendRegistrationToken",
                         "/api/users/registration-student", "/api/users/registration-teacher", "/api/years/getSemestersFromYear/*"
                 ).permitAll() // TODO config resources for anonymous using @PreAuthorize("hasRole('SOME_ROLE')")

@@ -12,10 +12,10 @@ import java.util.List;
  */
 public class GenericResponse {
 
-    private String code;
+    private Integer code;
     private String status;
     private String message;
-    private String data;
+    private Object data;
 
     /**
      *
@@ -25,7 +25,7 @@ public class GenericResponse {
      * @param fieldErrors Use for response body or to describe your error.
      */
     // TODO TEST
-    public GenericResponse(String code, String status, List<ObjectError> globalErrors, List<FieldError> fieldErrors) {
+    public GenericResponse(Integer code, String status, List<ObjectError> globalErrors, List<FieldError> fieldErrors) {
         super();
         final ObjectMapper mapper = new ObjectMapper();
         try {
@@ -34,9 +34,9 @@ public class GenericResponse {
             this.message = mapper.writeValueAsString(globalErrors);
             this.data = mapper.writeValueAsString(fieldErrors);
         } catch (final JsonProcessingException e) {
-            this.code = "";
-            this.status = "";
-            this.message = "";
+            this.code = 500;
+            this.status = "error";
+            this.message = "Internal Error";
             this.data = "";
         }
     }
@@ -45,10 +45,10 @@ public class GenericResponse {
      *
      * @param code HTTP status code
      * @param status "success", "fail", "error"
-     * @param message Use only for "fail" or "error" statuses. Short error description. Example: "UserAlreadyExist"
+     * @param data Use for response body or to describe your error.
      */
-    public GenericResponse(String code, String status, String message) {
-        this(code, status, message, null);
+    public GenericResponse(Integer code, String status, Object data) {
+        this(code, status, null, data);
     }
 
     /**
@@ -58,18 +58,18 @@ public class GenericResponse {
      * @param message Use only for "fail" or "error" statuses. Short error description. Example: "UserAlreadyExist"
      * @param data Use for response body or to describe your error.
      */
-    public GenericResponse(String code, String status, String message, String data) {
+    public GenericResponse(Integer code, String status, String message, Object data) {
         this.code = code;
         this.status = status;
         this.message = message;
         this.data = data;
     }
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 
@@ -89,11 +89,11 @@ public class GenericResponse {
         this.message = message;
     }
 
-    public String getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Object data) {
         this.data = data;
     }
 

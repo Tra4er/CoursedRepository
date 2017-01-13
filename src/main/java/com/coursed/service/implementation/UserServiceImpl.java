@@ -155,6 +155,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findOneByEmail(email);
     }
 
+    @Override
+    public boolean checkIfUserExists(String email) {
+        return userRepository.findOneByEmail(email) == null ? false : true;
+    }
 
     @Override
     public List<User> findAllUnconfirmedTeachers() {
