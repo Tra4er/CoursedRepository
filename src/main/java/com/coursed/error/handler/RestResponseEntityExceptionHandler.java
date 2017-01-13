@@ -18,6 +18,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.mail.MessagingException;
+import javax.net.ssl.SSLHandshakeException;
 import javax.validation.ValidationException;
 
 /**
@@ -118,6 +119,15 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         LOGGER.error("500 Status Code: " + ex.getMessage());
         final GenericResponse bodyOfResponse = new GenericResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error",
                 "InvalidReCaptcha", "Реєстрація неможлива в даний момент. Спробуйте пізніше.");
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+    }
+
+
+    @ExceptionHandler({MessagingException.class, SSLHandshakeException.class})
+    public ResponseEntity<Object> handleMessagingError(final RuntimeException ex, final WebRequest request) {
+        LOGGER.error("500 Status Code: " + ex.getMessage());
+        final GenericResponse bodyOfResponse = new GenericResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error",
+                "SendingEmailFailed", "Щось пішло не так. Ми не змогли відправити вам листа на емейл.");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
