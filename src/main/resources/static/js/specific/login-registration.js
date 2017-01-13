@@ -85,28 +85,28 @@ function sendRegistrationAjaxPost(element, url, modalId, resultElement, sendButt
         url: url,
         contentType: "application/json",
         data: JSON.stringify(element.serializeObject()),
-        success: function (data) {
+        success: function (response) {
             // alert("Успішно");
             // $('#' + modalId).modal("toggle");
         },
-        error: function (data) {
+        error: function (response) {
             // alert("Помилка!");
-            // console.log(data)
+            // console.log(response)
         }
-    }).done(function (data) {
+    }).done(function (response) {
         $('#' + modalId).modal("toggle");
-        if (data.status == "success") {
+        if (response.status == "success") {
             sendButton.button('reset');
             $("#userEmail-modal").text($("#emailField-" + person).val());
             $("#userEmail-modal").attr("href", "mailto:" + $("#emailField-" + person).val());
             $("#emailSentMessage").modal({backdrop: "static", keyboard: false});
         }
-    }).fail(function (data) {
+    }).fail(function (response) {
         grecaptcha.reset();
-        if (data.responseJSON.status == "InvalidReCaptcha") {
-            $("#captchaError").show().html(data.responseJSON.data);
+        if (response.responseJSON.status == "InvalidReCaptcha") {
+            $("#captchaError").show().html(response.responseJSON.data);
         }
-        resultElement.text(data.responseJSON.data);
+        resultElement.text(response.responseJSON.data);
         sendButton.button('reset');
     });
 }

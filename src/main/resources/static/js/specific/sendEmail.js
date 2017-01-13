@@ -13,23 +13,21 @@ $(document).ready(function () {
             sendProblemTo = "/resendRegistrationToken";
             break;
     }
-
-    $('#emailField-send-button').click(sendEmail);
 });
 
-function sendEmail() {
+$('#emailField-send-button').click(function () {
     $('#emailField-send-button').button('loading');
     $.ajax({
         type: 'POST',
         url: "/api/account" + sendProblemTo,
         data: "email=" + $("#emailField").val()
-    }).done(function (data) {
+    }).done(function (response) {
         $('#emailField-send-button').button('reset');
-        if (data.status == "success") {
+        if (response.status == "success") {
             $("#emailField-send-request-server-status").text("Перевірте пошту.");
         }
-    }).fail(function (data) {
+    }).fail(function (response) {
         $('#emailField-send-button').button('reset');
-        $("#emailField-send-request-server-status").text(data.responseJSON.message);
+        $("#emailField-send-request-server-status").text(response.responseJSON.data);
     });
-};
+});

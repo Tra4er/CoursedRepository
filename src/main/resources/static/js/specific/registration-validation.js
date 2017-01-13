@@ -1,5 +1,3 @@
-$(document).ready(init);
-
 var namesRegex = /^[А-ЯІЄҐ][а-яієґ]{1,15}/;
 var emailRegex = /^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*\@[A-Za-z]*\.[A-Za-z]{2,5}$/;
 var passRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})/;
@@ -9,18 +7,17 @@ var person;
 var emptyError = "Це поле не може бути пустим.";
 var incorrectError = "Некоректно введене поле.";
 
-function init(){
+// get person
+$("#registration-student").click(function () {
+    person = "student";
+});
+$("#registration-teacher").click(function () {
+    person = "teacher";
+});
 
-    // get person
-    $("#registration-student").click(function () {
-        person = "student";
-    });
-    $("#registration-teacher").click(function () {
-        person = "teacher";
-    });
+$(document).ready(function (){
 
     // Student check
-
     $("#firstNameField-student").focusout(checkFirstName);
     $("#lastNameField-student").focusout(checkLastName);
     $("#patronymicField-student").focusout(checkPatronymic);
@@ -37,7 +34,7 @@ function init(){
     $("#emailField-teacher").focusout(checkEmail);
     $("#passwordField-teacher").focusout(checkPassword);
     $("#confirmPasswordField-teacher").focusout(checkConfirmPassword);
-}
+});
 
 function checkFirstName() {
     var name = $("#firstNameField-" + person).val();

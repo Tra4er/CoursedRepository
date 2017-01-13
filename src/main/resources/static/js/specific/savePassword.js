@@ -1,6 +1,9 @@
 /**
  * Created by Trach on 12/30/2016.
  */
+$(document).ready(function () {
+});
+
 $("#passwordField-save-button").click(function () {
     $('#passwordField-save-button').button('loading');
     $.ajax({
@@ -8,13 +11,13 @@ $("#passwordField-save-button").click(function () {
         url: "/api/account/savePassword",
         contentType: "application/json",
         data: JSON.stringify($("#savePassword-form").serializeObject()),
-    }).done(function (data) {
+    }).done(function (response) {
         $('#passwordField-save-button').button('reset');
-        if (data.status == "success") {
+        if (response.status == "success") {
             $("#savePassword-request-server-status").text("Пароль змінено.");
         }
-    }).fail(function (data) {
+    }).fail(function (response) {
         $('#emailField-save-button').button('reset');
-        $("#emailField-save-request-server-status").text(data.responseJSON.message);
+        $("#emailField-save-request-server-status").text(response.responseJSON.data);
     });
 })
