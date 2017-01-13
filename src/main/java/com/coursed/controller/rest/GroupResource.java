@@ -8,7 +8,10 @@ import com.coursed.service.GroupService;
 import com.coursed.service.SemesterService;
 import com.coursed.service.SpecialityService;
 import com.coursed.service.TeacherService;
+import com.coursed.util.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -30,6 +33,30 @@ public class GroupResource {
 
     @Autowired
     private TeacherService teacherService;
+
+    @GetMapping
+    private ResponseEntity<GenericResponse> get(@RequestParam(name = "specialityId", required = false) Long specialityId,
+                                                @RequestParam(name = "semesterId", required = false) Long semesterId) {
+
+        if(specialityId != null && semesterId != null)
+        {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    groupService.findAllFromSpecialityAndSemester(specialityId, semesterId)), HttpStatus.OK);
+        }
+        else if(specialityId != null)
+        {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    groupService.findAllFromSpeciality(specialityId)), HttpStatus.OK);
+        }
+        else if(semesterId != null)
+        {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    groupService.findAllFromSemester(semesterId)), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                groupService.findAll()), HttpStatus.OK);
+    }
 
     @GetMapping("/getAll")
     private Collection<Group> getGroups(@RequestParam(name = "specialityId", required = false) Long specialityId,

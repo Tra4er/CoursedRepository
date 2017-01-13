@@ -8,7 +8,7 @@ function fillSelectYear(selectId, requestAddress) {
         var firstString = $("#" + selectId + " > option:first").text();
         var htmlElements = "<option value='0'> " + firstString + "</option>";
         //Go through the each entity in the response
-        $.each(response, function (i, year) {
+        $.each(response.data, function (i, year) {
             htmlElements += "<option value='" + year.id + "'>" + year.beginYear + "-" + year.endYear + "</option>";
         });
         $("#" + selectId).html(htmlElements);
@@ -50,7 +50,7 @@ function fillSelectFrom(selectId, requestAddress, param) {
         var firstString = $("#" + selectId + " > option:first").text();
         var htmlElements = "<option value='0'> " + firstString + "</option>";
         //Go through the each entity in the response
-        $.each(response, function (i, entity) {
+        $.each(response.data, function (i, entity) {
             htmlElements += "<option value='" + entity.id + "'>" + entity[param] + "</option>";
         });
         $("#" + selectId).html(htmlElements);

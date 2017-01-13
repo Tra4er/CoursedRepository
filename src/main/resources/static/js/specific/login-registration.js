@@ -16,8 +16,8 @@ $("#registration-teacher").click(function () {
 });
 
 $("#registration-student").on('click', function () {
-    fillSelectYear("yearId", "/api/years/getAll");
-    fillSelectFrom("specialityId", "/api/specialities/getAll", "fullName");
+    fillSelectYear("yearId", "/api/years");
+    fillSelectFrom("specialityId", "/api/specialities", "fullName");
     fillSelect("studentEducationStatus", studentEducationStatus)
 });
 
@@ -28,11 +28,11 @@ function fillGroups() {
 
     if ($("#specialityId > option:selected").attr("value") != '0'
         && $("#semesterId > option:selected").attr("value") != '0') {
-        $.getJSON("/api/groups/getAll", {
+        $.getJSON("/api/groups", {
             specialityId: $("#specialityId > option:selected").attr("value"),
             semesterId: $("#semesterId > option:selected").attr("value")
         }, function (response) {
-            $.each(response, function (i, entity) {
+            $.each(response.data, function (i, entity) {
                 var myVar = "";
                 if (entity.groupType == 'DISTANCE_FORM') myVar = " (заочна)";
                 items += "<option value='" + entity.id + "'>" + entity.number + myVar + "</option>";
@@ -95,7 +95,7 @@ function sendRegistrationAjaxPost(element, url, modalId, resultElement, sendButt
         }
     }).done(function (data) {
         $('#' + modalId).modal("toggle");
-        if (data.message == "success") {
+        if (data.status == "success") {
             sendButton.button('reset');
             $("#userEmail-modal").text($("#emailField-" + person).val());
             $("#userEmail-modal").attr("href", "mailto:" + $("#emailField-" + person).val());

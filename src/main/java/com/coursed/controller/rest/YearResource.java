@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sun.net.www.content.text.Generic;
 
 import java.util.Collection;
 
@@ -22,17 +23,25 @@ public class YearResource {
     @Autowired
     private YearService yearService;
 
-//    @GetMapping
-//    @ResponseBody
-//    public ResponseEntity<GenericResponse> get() {
-//        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-//                yearService.findAll()), HttpStatus.OK);
-//    }
+    @GetMapping
+    public ResponseEntity<GenericResponse> get() {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                yearService.findAll()), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/semesters")
+    public ResponseEntity<GenericResponse> getSemestersT(@PathVariable(value="id") Long yearId) { // TODO method signature
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                yearService.findOne(yearId).getSemesters()), HttpStatus.OK);
+    }
+
+    // OLD
 
     @GetMapping("/getAll")
     private Collection<Year> getYears() {
         return yearService.findAll();
     }
+
 
     //TODO: transfer into semesterResource, todo2: change to parameters
     @GetMapping("/getSemestersFromYear/{id}")
