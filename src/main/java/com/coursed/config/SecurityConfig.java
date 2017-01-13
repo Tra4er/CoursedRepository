@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,10 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/users/updatePassword", "/users/resendRegistrationToken", "/test", "/valve", "/users/badUser"
                         ).permitAll()
                 // REST
-                .antMatchers("/api/years/getAll", "/api/specialities/getAll", "/api/groups/getAll", "/api/students",
-                        "/api/teachers", "/api/users", "/api/account/*", "/api/users/*/sendNewRegistrationToken",
-                        "/api/users/savePassword", "/api/users/*/sendResetPasswordToken", "/api/users/*/resendRegistrationToken",
-                        "/api/users/registration-student", "/api/users/registration-teacher", "/api/years/getSemestersFromYear/*"
+                .antMatchers(HttpMethod.POST, "/api/students", "/api/teachers").permitAll()
+//                .antMatchers(HttpMethod.GET, "/api/years", "/api/specialities", "/api/groups").permitAll()
+                .antMatchers("/api/account/*", "/api/years/getAll", "/api/specialities/getAll", "/api/groups/getAll",
+                        "/api/years/getSemestersFromYear/*"
                 ).permitAll() // TODO config resources for anonymous using @PreAuthorize("hasRole('SOME_ROLE')")
                 .antMatchers("/", "/**").hasAnyRole("REGISTERED", "STUDENT", "TEACHER", "ADMIN")
                 .antMatchers("/css/**", "/js/**", "/fonts/**").permitAll()

@@ -4,8 +4,11 @@ import com.coursed.dto.YearDTO;
 import com.coursed.model.Semester;
 import com.coursed.model.Year;
 import com.coursed.service.YearService;
+import com.coursed.util.GenericResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -18,6 +21,13 @@ import java.util.Collection;
 public class YearResource {
     @Autowired
     private YearService yearService;
+
+//    @GetMapping
+//    @ResponseBody
+//    public ResponseEntity<GenericResponse> get() {
+//        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+//                yearService.findAll()), HttpStatus.OK);
+//    }
 
     @GetMapping("/getAll")
     private Collection<Year> getYears() {
