@@ -6,12 +6,12 @@ $("#passwordField-update-button").click(function () {
     $('#passwordField-update-button').button('loading');
     $.ajax({
         type: 'POST',
-        url: "/api/users/updatePassword",
+        url: "/api/account/updatePassword",
         contentType: "application/json",
         data: JSON.stringify($("#updatePassword-form").serializeObject()),
     }).done(function (data) {
         $('#passwordField-update-button').button('reset');
-        if (data.message == "success") {
+        if (data.status == "success") {
             $("#updatePassword-request-server-status").text("Пароль змінено.");
         }
     }).fail(function (data) {

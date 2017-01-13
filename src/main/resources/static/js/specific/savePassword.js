@@ -5,12 +5,12 @@ $("#passwordField-save-button").click(function () {
     $('#passwordField-save-button').button('loading');
     $.ajax({
         type: 'POST',
-        url: "/api/users/savePassword",
+        url: "/api/account/savePassword",
         contentType: "application/json",
         data: JSON.stringify($("#savePassword-form").serializeObject()),
     }).done(function (data) {
         $('#passwordField-save-button').button('reset');
-        if (data.message == "success") {
+        if (data.status == "success") {
             $("#savePassword-request-server-status").text("Пароль змінено.");
         }
     }).fail(function (data) {

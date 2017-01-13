@@ -1,8 +1,12 @@
 package com.coursed.controller.rest;
 
 import com.coursed.captcha.CaptchaService;
+import com.coursed.dto.PasswordDTO;
+import com.coursed.error.exception.InvalidOldPasswordException;
+import com.coursed.error.exception.InvalidPasswordResetTokenException;
 import com.coursed.error.exception.TokenNotFoundException;
 import com.coursed.error.exception.UserNotFoundException;
+import com.coursed.model.auth.PasswordResetToken;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
 import com.coursed.security.SecurityService;
@@ -25,10 +29,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.Calendar;
 import java.util.UUID;
 
 /**
@@ -125,6 +132,40 @@ public class AccountResource {
         String appUrl = " http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         SimpleMailMessage simpleMailMessage = constructResetTokenEmail(appUrl, token, user);
         mailSender.send(simpleMailMessage);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
+    }
+
+    //  In case user forgot his password and resets it by sending resetToken to email.
+    @PostMapping("/savePassword")
+    @ResponseBody
+    public ResponseEntity<GenericResponse> savePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
+        String token = passwordDTO.getToken();
+        LOGGER.debug("Validating password reset token: " + token);
+        PasswordResetToken passToken = passwordResetTokenService.getByToken(token);
+        if ((passToken == null)) {
+            throw new InvalidPasswordResetTokenException("InvalidToken");
+        }
+
+        Calendar cal = Calendar.getInstance();
+        if ((passToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+            throw new InvalidPasswordResetTokenException("Expired");
+        }
+
+        User user = passwordResetTokenService.getUserByToken(token);
+
+        userService.changeUserPassword(user, passwordDTO.getNewPassword());
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
+    }
+
+    //  In case user remembers his password and wont to update it.
+    @PostMapping("/updatePassword")
+    @ResponseBody
+    public ResponseEntity<GenericResponse> changeUserPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
+        final User user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        if (!userService.checkIfValidOldPassword(user, passwordDTO.getOldPassword())) {
+            throw new InvalidOldPasswordException();
+        }
+        userService.changeUserPassword(user, passwordDTO.getNewPassword());
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
     }
 
