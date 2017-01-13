@@ -29,21 +29,21 @@ public class YearResource {
                 yearService.findAll()), HttpStatus.OK);
     }
 
+    @PostMapping
+    public ResponseEntity<GenericResponse> post(@RequestBody YearDTO yearDTO) { // TODO @Valid
+        Year year = yearService.create(yearDTO);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", year.getId()), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}/semesters")
-    public ResponseEntity<GenericResponse> getSemestersT(@PathVariable(value="id") Long yearId) { // TODO method signature
+    public ResponseEntity<GenericResponse> getSemesters(@PathVariable(value="id") Long yearId) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                 yearService.findOne(yearId).getSemesters()), HttpStatus.OK);
     }
 
-    // OLD
-
-    @PostMapping("/create")
-    private Year createYear(@RequestBody YearDTO yearDTO) {
-       return yearService.create(yearDTO);
-    }
-
-    @GetMapping("/getCurrent")
-    private Year getCurrentYear() {
-        return yearService.getCurrent();
+    @GetMapping("/current")
+    private ResponseEntity<GenericResponse> getCurrentYear() {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", yearService.getCurrent()),
+                HttpStatus.OK);
     }
 }

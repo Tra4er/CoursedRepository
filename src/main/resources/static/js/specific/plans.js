@@ -30,7 +30,8 @@ function getSpecialities() {
 function fillOnePlan(){
     var spec = getSpecialities();
     $("#one-plan-container").html(" ");
-    $.getJSON("/api/years/getCurrent", function(year){
+    $.getJSON("/api/years/current", function(response){
+        var year = response.data;
         htmlFormForEducationPlan(year.beginYear, year.endYear, year.id, spec, year.educationPlans, 'one-plan-container');
     });
 }
