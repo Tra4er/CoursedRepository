@@ -45,37 +45,11 @@ public class StudentResource {
     private UserService userService;
 
     @Autowired
-    private TeacherService teacherService;
-
-    @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    private CaptchaService captchaService;
-
-    @Autowired
-    private VerificationTokenService verificationTokenService;
-
-    @Autowired
-    private PasswordResetTokenService passwordResetTokenService;
-
-    @Autowired
     private ApplicationEventPublisher eventPublisher;
-
-    @Autowired
-    private JavaMailSender mailSender;
-
-    @Autowired
-    private Environment env;
 
     @Autowired
     private UserStudentDTOValidator userStudentDTOValidator;
 
-    @Autowired
-    private UserTeacherDTOValidator userTeacherDTOValidator;
-
-    @Autowired
-    private PasswordDTOValidator passwordDTOValidator;
 
     @Autowired
     private RecaptchaResponseDTOValidator recaptchaResponseDTOValidator;
@@ -83,6 +57,16 @@ public class StudentResource {
     @InitBinder("userStudentDTO")
     public void initStudentBinder(WebDataBinder binder) {
         binder.addValidators(recaptchaResponseDTOValidator, userStudentDTOValidator);
+    }
+
+    @GetMapping
+    public ResponseEntity<GenericResponse> get(@RequestParam(name = "groupId", required = false) Long groupId) {
+        if(groupId != null) {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    studentService.findAllFromGroup(groupId)), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", studentService.findAll()),
+                HttpStatus.OK);
     }
 
     @PostMapping
@@ -105,13 +89,4 @@ public class StudentResource {
                 HttpStatus.CREATED);
     }
 
-    @GetMapping("/getAll")
-    public List<Student> getAll() {
-        return studentService.findAll();
-    }
-
-    @GetMapping("/getAllFromGroup")
-    public List<Student> getAllFromGroup(@RequestParam(name = "groupId") Long groupId) {
-        return studentService.findAllFromGroup(groupId);
-    }
 }

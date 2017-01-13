@@ -51,8 +51,8 @@ function fillHeaderTable () {
 function fillRowsReport(disciplines, teachers){
     var $tableBody = $('table > tbody');
     var studentNumber = 0;
-    $.get('/api/students/getAllFromGroup', {groupId: $.urlParam('groupId')})
-        .done(function(data){
+    $.get('/api/students', {groupId: $.urlParam('groupId')})
+        .done(function(response){
             var allARow = 0;
             var allNARow = 0;
             var disciplinesCountA = [];
@@ -61,7 +61,7 @@ function fillRowsReport(disciplines, teachers){
                 disciplinesCountA.push(0);
                 disciplinesCountNA.push(0);
             }
-            $.each(data, function(i, student){
+            $.each(response.data, function(i, student){
                 var countA = 0;
                 var countNA = 0;
                 var htmlRow = '<tr class="'+ student.id  + '"><td>' + ++studentNumber + '</td><td>'+ student.lastName +'</td>';

@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/users/updatePassword", "/users/resendRegistrationToken", "/test", "/valve", "/users/badUser"
                         ).permitAll()
                 // REST
+                .antMatchers("/api/**").permitAll() // TODO for testing, delete after
                 .antMatchers(HttpMethod.POST, "/api/students", "/api/teachers").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/years", "/api/years/*/semesters", "/api/specialities", "/api/groups").permitAll()
                 .antMatchers("/api/account/*").permitAll()
