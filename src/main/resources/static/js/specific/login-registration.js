@@ -103,10 +103,10 @@ function sendRegistrationAjaxPost(element, url, modalId, resultElement, sendButt
         }
     }).fail(function (data) {
         grecaptcha.reset();
-        if (data.responseJSON.error == "InvalidReCaptcha") {
-            $("#captchaError").show().html(data.responseJSON.message);
+        if (data.responseJSON.status == "InvalidReCaptcha") {
+            $("#captchaError").show().html(data.responseJSON.data);
         }
-        resultElement.text(data.responseJSON.message);
+        resultElement.text(data.responseJSON.data);
         sendButton.button('reset');
     });
 }
