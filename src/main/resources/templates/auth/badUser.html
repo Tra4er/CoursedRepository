@@ -25,9 +25,6 @@
                 <h1 class="text-center well">Щось пішло не так.</h1>
             </div>
             <div class="form-group">
-                <div id="username" th:text="${username}" th:unless="${username} == null"></div>
-            </div>
-            <div class="form-group">
                 <div th:switch="${message}">
                     <div th:case="'VerificationTokenExpired'">
                         <div class="alert alert-danger">Ваш ключ для актвації акаунта більше не дійсний. Щоб ми вислали

@@ -9,7 +9,8 @@ function sendNewVerificationToken() {
     $("#sendNewRegistrationToken-button").button('loading');
     $.ajax({
         type: 'POST',
-        url: "/api/users/" + $("#username").text() + "/sendNewRegistrationToken?existingToken=" + $("#sendNewRegistrationToken-token").text()
+        url: "/api/account/sendNewRegistrationToken",
+        data: "existingToken=" + $("#sendNewRegistrationToken-token").text()
     }).done(function (data) {
         $("#sendNewRegistrationToken-button").button('reset');
         if (data.message == "success") {

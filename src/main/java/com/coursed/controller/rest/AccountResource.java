@@ -1,9 +1,8 @@
 package com.coursed.controller.rest;
 
 import com.coursed.captcha.CaptchaService;
-import com.coursed.dto.*;
-import com.coursed.error.exception.*;
-import com.coursed.model.auth.PasswordResetToken;
+import com.coursed.error.exception.TokenNotFoundException;
+import com.coursed.error.exception.UserNotFoundException;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
 import com.coursed.security.SecurityService;
@@ -11,7 +10,6 @@ import com.coursed.service.PasswordResetTokenService;
 import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
 import com.coursed.service.VerificationTokenService;
-import com.coursed.util.GenericResponse;
 import com.coursed.util.OldGenericResponse;
 import com.coursed.validator.PasswordDTOValidator;
 import com.coursed.validator.RecaptchaResponseDTOValidator;
@@ -26,22 +24,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.websocket.server.PathParam;
-import java.util.*;
+import java.util.UUID;
 
 /**
- * Created by Trach on 11/24/2016.
+ * Created by Trach on 1/13/2017.
  */
 @RestController
-@RequestMapping("/api/users")
-public class UserResource {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserResource.class);
+@RequestMapping("/api/account")
+public class AccountResource {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountResource.class);
 
     @Autowired
     private UserService userService;
@@ -87,88 +83,48 @@ public class UserResource {
         binder.addValidators(passwordDTOValidator);
     }
 
-//  In case user forgot his password and resets it by sending resetToken to email.
-    @PutMapping("/savePassword")
+    @PostMapping("/sendNewRegistrationToken")
     @ResponseBody
-    public ResponseEntity<OldGenericResponse> savePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
-        String token = passwordDTO.getToken();
-        LOGGER.debug("Validating password reset token: " + token);
-        PasswordResetToken passToken = passwordResetTokenService.getByToken(token);
-        if ((passToken == null)) {
-            throw new InvalidPasswordResetTokenException("InvalidToken");
-        }
-
-        Calendar cal = Calendar.getInstance();
-        if ((passToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-            throw new InvalidPasswordResetTokenException("Expired");
-        }
-
-        User user = passwordResetTokenService.getUserByToken(token);
-
-        userService.changeUserPassword(user, passwordDTO.getNewPassword());
+    public ResponseEntity<OldGenericResponse> sendNewRegistrationToken(@RequestParam String existingToken,
+                                                                       final HttpServletRequest request) {
+        VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
+        User user = userService.getUserByVerificationToken(newToken.getToken());
+        mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), newToken, user));
         return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.OK);
     }
 
-    //  In case user remembers his password and wont to update it.
-    @PostMapping("/updatePassword")
+    @PostMapping("/resendRegistrationToken")
     @ResponseBody
-    public ResponseEntity<OldGenericResponse> changeUserPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
-        final User user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-        if (!userService.checkIfValidOldPassword(user, passwordDTO.getOldPassword())) {
-            throw new InvalidOldPasswordException();
+    public ResponseEntity<OldGenericResponse> resendRegistrationToken(@RequestParam("email") String email,
+                                                                      final HttpServletRequest request) {
+        User user = userService.getUserByEmail(email);
+        if(user == null) {
+            throw new UserNotFoundException();
         }
-        userService.changeUserPassword(user, passwordDTO.getNewPassword());
+        VerificationToken token = verificationTokenService.getByUser(user);
+        if(token == null) {
+            throw new TokenNotFoundException();
+        }
+        mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), token, user));
         return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.OK);
     }
 
-    @GetMapping("/getUser")
-    private User getUser(@RequestParam("email") String email) {
-        return userService.getUserByEmail(email);
-    }
+    @PostMapping("/sendResetPasswordToken")
+    @ResponseBody
+    public ResponseEntity<OldGenericResponse> sendResetPasswordToken(@RequestParam("email") String email,
+                                                                     final HttpServletRequest request) {
 
-    @PostMapping("/confirm-teacher")
-    public void confirmTeacher(@RequestParam(name = "userId") Long userId) {
-        userService.makeATeacher(userId);
-    }
+        User user = userService.getUserByEmail(email);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
 
-    //TODO: solve n+1 JPA problem via avoiding traversal of unfetched entities when JSON is creating
-//    @GetMapping("/getAllUnconfirmedTeachers")
-//    private Set<Object> getAllUnconfirmedTeachers() {
-//
-//        Set<Object> json = new HashSet<>();
-//
-//        List<User> UnconfirmedTeachers = userService.findAllUnconfirmedTeachers();
-//
-//        for (User user : UnconfirmedTeachers) {
-//            Map<String, Object> value = new HashMap<>();
-//
-//            value.put("id", user.getId());
-//            value.put("email", user.getEmail());
-//
-//            json.add(value);
-//        }
-//
-//        return json;
-//    }
-
-    @GetMapping("/getAllUnconfirmedTeachers")
-    private Collection<User> getAllUnconfirmedTeachers() {
-        return userService.findAllUnconfirmedTeachers();
-    }
-
-    @GetMapping("/getAllTeachers") // TODO create separate controller
-    private Collection<User> getAllTeachers(@RequestParam(name = "groupId", required = false) Long groupId) {
-        return userService.findAllTeachers(groupId);
-    }
-
-    @GetMapping("/getAllGroupCurators")
-    private Collection<User> getAllGroupCurators(@RequestParam(name = "groupId") Long groupId) {
-        return userService.findAllGroupCurators(groupId);
-    }
-
-    @GetMapping("/deleteUser") // TODO delete method
-    private void deleteUser(@RequestParam(name = "userId") Long userId) {
-        userService.deleteUser(userId);
+        String token = UUID.randomUUID().toString();
+        userService.createPasswordResetTokenForUser(user, token);
+        String appUrl = " http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        SimpleMailMessage simpleMailMessage = constructResetTokenEmail(appUrl, token, user);
+        mailSender.send(simpleMailMessage);
+        return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.OK);
     }
 
     //    NON API

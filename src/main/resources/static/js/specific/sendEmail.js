@@ -21,7 +21,8 @@ function sendEmail() {
     $('#emailField-send-button').button('loading');
     $.ajax({
         type: 'POST',
-        url: "/api/users/" + $("#emailField").val() + sendProblemTo
+        url: "/api/account" + sendProblemTo,
+        data: "email=" + $("#emailField").val()
     }).done(function (data) {
         $('#emailField-send-button').button('reset');
         if (data.message == "success") {
