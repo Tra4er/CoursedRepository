@@ -33,7 +33,7 @@ $(function () {
 
     settingDateTimePiker();
     fillSelect("eventType", plannedEventType);
-    fillSelectYear("yearId", "/api/years/getAll");
+    fillSelectYear("yearId", "/api/years");
 
 });
 

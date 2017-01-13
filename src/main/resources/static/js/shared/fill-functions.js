@@ -73,8 +73,8 @@ $("#yearId").on('change', function () {
     var items = "<option value='0'> " + firstString + "</option>";
     var sem = "";
     if ($("#yearId > option:selected").attr("value") != '0') {
-        $.getJSON("api/years/getSemestersFromYear/" + $("#yearId > option:selected").attr("value"), function (response) {
-            $.each(response, function (i, entity) {
+        $.getJSON("api/years/" + $("#yearId > option:selected").attr("value") + "/semesters", function (response) {
+            $.each(response.data, function (i, entity) {
                 //ToDo that is because we fill semesters in two different pages
                 if (typeof localStudentUkr != 'undefined')
                     sem = localStudent(entity['semesterNumber']);

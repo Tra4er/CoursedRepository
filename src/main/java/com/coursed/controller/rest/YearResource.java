@@ -37,20 +37,6 @@ public class YearResource {
 
     // OLD
 
-    @GetMapping("/getAll")
-    private Collection<Year> getYears() {
-        return yearService.findAll();
-    }
-
-
-    //TODO: transfer into semesterResource, todo2: change to parameters
-    @GetMapping("/getSemestersFromYear/{id}")
-    private Collection<Semester> getSemesters(@PathVariable(value="id") Long yearId) {
-        ObjectMapper mapper = new ObjectMapper();
-
-        return yearService.findOne(yearId).getSemesters();
-    }
-
     @PostMapping("/create")
     private Year createYear(@RequestBody YearDTO yearDTO) {
        return yearService.create(yearDTO);

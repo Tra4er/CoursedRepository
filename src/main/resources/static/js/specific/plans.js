@@ -38,8 +38,8 @@ function fillOnePlan(){
 function fillPlans() {
     var spec = getSpecialities();
     $("#all-plans-container").html(" ");
-    $.getJSON("/api/years/getAll", function(responseYears){
-        $.each(responseYears, function (key1, year) {
+    $.getJSON("/api/years", function(responseYears){
+        $.each(responseYears.data, function (key1, year) {
             htmlFormForEducationPlan(year.beginYear, year.endYear, year.id, spec, year.educationPlans, 'all-plans-container');
         });
     });

@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // REST
                 .antMatchers(HttpMethod.POST, "/api/students", "/api/teachers").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/years", "/api/years/*/semesters", "/api/specialities", "/api/groups").permitAll()
-                .antMatchers("/api/account/*").permitAll() // TODO config resources for anonymous using @PreAuthorize("hasRole('SOME_ROLE')")
+                .antMatchers("/api/account/*").permitAll()
                 .antMatchers("/", "/**").hasAnyRole("REGISTERED", "STUDENT", "TEACHER", "ADMIN")
                 .antMatchers("/css/**", "/js/**", "/fonts/**").permitAll()
                 .and()

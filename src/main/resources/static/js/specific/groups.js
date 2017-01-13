@@ -12,7 +12,7 @@ $(document).ready(function () {
     fillSelect("courseNumber", courseNumbers);
     fillSelect("groupType", groupType);
     fillSelect("groupDegree", groupDegree);
-    fillSelectYear("yearId", "/api/years/getAll");
+    fillSelectYear("yearId", "/api/years");
     fillSelectFrom("specialityId", "/api/specialities/getAll", "fullName");
 
 });
