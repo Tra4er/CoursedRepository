@@ -8,6 +8,7 @@ import com.coursed.model.auth.User;
 import com.coursed.registration.OnRegistrationCompleteEvent;
 import com.coursed.security.SecurityService;
 import com.coursed.service.*;
+import com.coursed.util.GenericResponse;
 import com.coursed.util.OldGenericResponse;
 import com.coursed.validator.PasswordDTOValidator;
 import com.coursed.validator.RecaptchaResponseDTOValidator;
@@ -86,8 +87,8 @@ public class StudentResource {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<OldGenericResponse> registerStudentAccount(@Valid @RequestBody UserStudentDTO userStudentDTO,
-                                                                     final HttpServletRequest request) {
+    public ResponseEntity<GenericResponse> registerStudentAccount(@Valid @RequestBody UserStudentDTO userStudentDTO,
+                                                                  final HttpServletRequest request) {
         LOGGER.debug("Registering user account with information: {}", userStudentDTO);
 
         System.err.println("Saving Student");
@@ -100,7 +101,8 @@ public class StudentResource {
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
 
-        return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.CREATED);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", registered.getId()),
+                HttpStatus.CREATED);
     }
 
     @GetMapping("/getAll")

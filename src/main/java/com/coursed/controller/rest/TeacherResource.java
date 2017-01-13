@@ -11,6 +11,7 @@ import com.coursed.service.PasswordResetTokenService;
 import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
 import com.coursed.service.VerificationTokenService;
+import com.coursed.util.GenericResponse;
 import com.coursed.util.OldGenericResponse;
 import com.coursed.validator.PasswordDTOValidator;
 import com.coursed.validator.RecaptchaResponseDTOValidator;
@@ -86,7 +87,7 @@ public class TeacherResource {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<OldGenericResponse> registerTeacherAccount(@Valid @RequestBody UserTeacherDTO userTeacherDTO,
+    public ResponseEntity<GenericResponse> registerTeacherAccount(@Valid @RequestBody UserTeacherDTO userTeacherDTO,
                                                                      final HttpServletRequest request) {
         LOGGER.debug("Registering user account with information: {}", userTeacherDTO);
 
@@ -99,7 +100,7 @@ public class TeacherResource {
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
 
-        return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.CREATED);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", registered.getId()), HttpStatus.CREATED);
     }
 
     @GetMapping("/getAllWithDiscipline")
