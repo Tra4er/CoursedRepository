@@ -21,6 +21,39 @@ public class GenericResponse {
      *
      * @param code HTTP status code
      * @param status "success", "fail", "error"
+     */
+    public GenericResponse(Integer code, String status) {
+        this(code, status, "", null);
+    }
+
+    /**
+     *
+     * @param code HTTP status code
+     * @param status "success", "fail", "error"
+     * @param data Use for response body or to describe your error.
+     */
+    public GenericResponse(Integer code, String status, Object data) {
+        this(code, status, "", data);
+    }
+
+    /**
+     *
+     * @param code HTTP status code
+     * @param status "success", "fail", "error"
+     * @param message Use only for "fail" or "error" statuses. Short error description. Example: "UserAlreadyExist"
+     * @param data Use for response body or to describe your error.
+     */
+    public GenericResponse(Integer code, String status, String message, Object data) {
+        this.code = code;
+        this.status = status;
+        this.message = message;
+        this.data = data;
+    }
+
+    /**
+     *
+     * @param code HTTP status code
+     * @param status "success", "fail", "error"
      * @param globalErrors Use only for "fail" or "error" statuses. Short error description. Example: "UserAlreadyExist"
      * @param fieldErrors Use for response body or to describe your error.
      */
@@ -39,30 +72,6 @@ public class GenericResponse {
             this.message = "Internal Error";
             this.data = "";
         }
-    }
-
-    /**
-     *
-     * @param code HTTP status code
-     * @param status "success", "fail", "error"
-     * @param data Use for response body or to describe your error.
-     */
-    public GenericResponse(Integer code, String status, Object data) {
-        this(code, status, null, data);
-    }
-
-    /**
-     *
-     * @param code HTTP status code
-     * @param status "success", "fail", "error"
-     * @param message Use only for "fail" or "error" statuses. Short error description. Example: "UserAlreadyExist"
-     * @param data Use for response body or to describe your error.
-     */
-    public GenericResponse(Integer code, String status, String message, Object data) {
-        this.code = code;
-        this.status = status;
-        this.message = message;
-        this.data = data;
     }
 
     public Integer getCode() {

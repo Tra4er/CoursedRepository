@@ -1,6 +1,6 @@
 CoursedRepository
 =================
-System for punishing students.
+System for organizing education in university.
 
 Frameworks and Tools
 -----------------------------------

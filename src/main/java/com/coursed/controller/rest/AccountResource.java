@@ -10,6 +10,7 @@ import com.coursed.service.PasswordResetTokenService;
 import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
 import com.coursed.service.VerificationTokenService;
+import com.coursed.util.GenericResponse;
 import com.coursed.util.OldGenericResponse;
 import com.coursed.validator.PasswordDTOValidator;
 import com.coursed.validator.RecaptchaResponseDTOValidator;
@@ -85,17 +86,17 @@ public class AccountResource {
 
     @PostMapping("/sendNewRegistrationToken")
     @ResponseBody
-    public ResponseEntity<OldGenericResponse> sendNewRegistrationToken(@RequestParam String existingToken,
+    public ResponseEntity<GenericResponse> sendNewRegistrationToken(@RequestParam String existingToken,
                                                                        final HttpServletRequest request) {
         VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
         User user = userService.getUserByVerificationToken(newToken.getToken());
         mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), newToken, user));
-        return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
     }
 
     @PostMapping("/resendRegistrationToken")
     @ResponseBody
-    public ResponseEntity<OldGenericResponse> resendRegistrationToken(@RequestParam("email") String email,
+    public ResponseEntity<GenericResponse> resendRegistrationToken(@RequestParam("email") String email,
                                                                       final HttpServletRequest request) {
         User user = userService.getUserByEmail(email);
         if(user == null) {
@@ -106,12 +107,12 @@ public class AccountResource {
             throw new TokenNotFoundException();
         }
         mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), token, user));
-        return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
     }
 
     @PostMapping("/sendResetPasswordToken")
     @ResponseBody
-    public ResponseEntity<OldGenericResponse> sendResetPasswordToken(@RequestParam("email") String email,
+    public ResponseEntity<GenericResponse> sendResetPasswordToken(@RequestParam("email") String email,
                                                                      final HttpServletRequest request) {
 
         User user = userService.getUserByEmail(email);
@@ -124,7 +125,7 @@ public class AccountResource {
         String appUrl = " http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         SimpleMailMessage simpleMailMessage = constructResetTokenEmail(appUrl, token, user);
         mailSender.send(simpleMailMessage);
-        return new ResponseEntity<>(new OldGenericResponse("success"), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
     }
 
     //    NON API

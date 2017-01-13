@@ -25,7 +25,7 @@ function sendEmail() {
         data: "email=" + $("#emailField").val()
     }).done(function (data) {
         $('#emailField-send-button').button('reset');
-        if (data.message == "success") {
+        if (data.status == "success") {
             $("#emailField-send-request-server-status").text("Перевірте пошту.");
         }
     }).fail(function (data) {

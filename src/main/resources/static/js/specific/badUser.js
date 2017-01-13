@@ -13,7 +13,7 @@ function sendNewVerificationToken() {
         data: "existingToken=" + $("#sendNewRegistrationToken-token").text()
     }).done(function (data) {
         $("#sendNewRegistrationToken-button").button('reset');
-        if (data.message == "success") {
+        if (data.status == "success") {
             $("#badUser-request-result").text("Перевірте пошту, знову :)");
         }
     }).fail(function (data) {
