@@ -70,7 +70,6 @@ public class StudentResource {
     }
 
     @PostMapping
-    @ResponseBody
     public ResponseEntity<GenericResponse> registerStudentAccount(@Valid @RequestBody UserStudentDTO userStudentDTO,
                                                                   final HttpServletRequest request) {
         LOGGER.debug("Registering user account with information: {}", userStudentDTO);

@@ -48,34 +48,10 @@ public class TeacherResource {
     private TeacherService teacherService;
 
     @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    private CaptchaService captchaService;
-
-    @Autowired
-    private VerificationTokenService verificationTokenService;
-
-    @Autowired
-    private PasswordResetTokenService passwordResetTokenService;
-
-    @Autowired
     private ApplicationEventPublisher eventPublisher;
 
     @Autowired
-    private JavaMailSender mailSender;
-
-    @Autowired
-    private Environment env;
-
-    @Autowired
-    private UserStudentDTOValidator userStudentDTOValidator;
-
-    @Autowired
     private UserTeacherDTOValidator userTeacherDTOValidator;
-
-    @Autowired
-    private PasswordDTOValidator passwordDTOValidator;
 
     @Autowired
     private RecaptchaResponseDTOValidator recaptchaResponseDTOValidator;
@@ -85,8 +61,26 @@ public class TeacherResource {
         binder.addValidators(recaptchaResponseDTOValidator, userTeacherDTOValidator);
     }
 
+    @GetMapping
+    public ResponseEntity<GenericResponse> get(@RequestParam(name = "disciplineId", required = false) Long disciplineId,
+                                               @RequestParam(name = "withDiscipline") Boolean withDiscipline) {
+        if(disciplineId != null && withDiscipline) {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    teacherService.findAllTeachersWithDiscipline(disciplineId)), HttpStatus.OK);
+        }
+        if(disciplineId != null && !withDiscipline) {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    teacherService.findAllTeachersWithoutDiscipline(disciplineId)), HttpStatus.OK);
+        }
+        if(disciplineId != null) {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    teacherService.findAllTeachersWithDiscipline(disciplineId)), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", teacherService.findAll()),
+                HttpStatus.OK);
+    }
+
     @PostMapping
-    @ResponseBody
     public ResponseEntity<GenericResponse> registerTeacherAccount(@Valid @RequestBody UserTeacherDTO userTeacherDTO,
                                                                      final HttpServletRequest request) {
         LOGGER.debug("Registering user account with information: {}", userTeacherDTO);
@@ -100,16 +94,8 @@ public class TeacherResource {
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
 
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", registered.getId()), HttpStatus.CREATED);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", registered.getId()),
+                HttpStatus.CREATED);
     }
 
-    @GetMapping("/getAllWithDiscipline")
-    Collection<Teacher> getAllTeachersWithDiscipline(@RequestParam(name = "disciplineId") Long disciplineId){
-        return teacherService.findAllTeachersWithDiscipline(disciplineId);
-    }
-
-    @GetMapping("/getAllWithoutDiscipline")
-    Collection<Teacher> getAllTeachersWithoutDiscipline(@RequestParam(name = "disciplineId") Long disciplineId){
-        return teacherService.findAllTeachersWithoutDiscipline(disciplineId);
-    }
 }
