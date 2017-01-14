@@ -3,7 +3,7 @@ package com.coursed.dto;
 /**
  * Created by Hexray on 10.12.2016.
  */
-public class UserTeacherDTO extends CaptchaDTO implements BasicPersonDTO {
+public class UserTeacherDTO extends CaptchaDTO implements BasicPerson {
     private String firstName;
     private String lastName;
     private String patronymic;

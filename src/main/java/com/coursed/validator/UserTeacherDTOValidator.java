@@ -29,10 +29,10 @@ public class UserTeacherDTOValidator implements Validator {
     public void validate(Object target, Errors errors) {
         LOGGER.debug("Validating {}", target);
         UserTeacherDTO form = (UserTeacherDTO) target;
-        BasicValidatorUtil.validateEmail(form, userService);
-//        BasicValidatorUtil.validatePasswords(form);
-//      BasicValidatorUtil.validateNames(form);
-//      BasicValidatorUtil.validateNumber(form);
+        BasicPersonValidatorUtil.validateEmail(form, userService);
+//        BasicPersonValidatorUtil.validatePasswords(form);
+//      BasicPersonValidatorUtil.validateNames(form);
+//      BasicPersonValidatorUtil.validateNumber(form);
     }
 
 }

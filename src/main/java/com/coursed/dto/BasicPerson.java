@@ -3,7 +3,7 @@ package com.coursed.dto;
 /**
  * Created by Trach on 12/16/2016.
  */
-public interface BasicPersonDTO {
+public interface BasicPerson {
     String getEmail();
 
     void setEmail(String email);
