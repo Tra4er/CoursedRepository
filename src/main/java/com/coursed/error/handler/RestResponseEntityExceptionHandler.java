@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailParseException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -87,6 +88,15 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
+    // 403
+    @ExceptionHandler({AccessDeniedException.class})
+    public ResponseEntity<Object> handleAccessDenied(final RuntimeException ex, final WebRequest request) {
+        LOGGER.error("403 Status Code: " + ex.getMessage());
+        final GenericResponse bodyOfResponse = new GenericResponse(HttpStatus.FORBIDDEN.value(), "fail",
+                "AccessDenied", "Вам закритий доступ до даного ресурсу.");
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.FORBIDDEN, request);
+    }
+
     // 404
     @ExceptionHandler({UserNotFoundException.class})
     public ResponseEntity<Object> handleUserNotFound(final RuntimeException ex, final WebRequest request) {
@@ -118,7 +128,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     public ResponseEntity<Object> handleReCaptchaUnavailable(final RuntimeException ex, final WebRequest request) {
         LOGGER.error("500 Status Code: " + ex.getMessage());
         final GenericResponse bodyOfResponse = new GenericResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error",
-                "InvalidReCaptcha", "Реєстрація неможлива в даний момент. Спробуйте пізніше.");
+                "ReCaptchaUnavailable", "Реєстрація неможлива в даний момент. Спробуйте пізніше.");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
@@ -141,7 +151,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
-        LOGGER.error("500 Status Code: " + ex.getMessage());
+        LOGGER.error("500 Status Code: " + ex);
         final GenericResponse bodyOfResponse = new GenericResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error",
                 "InternalError", "Сталась помилка");
         return new ResponseEntity<>(bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);

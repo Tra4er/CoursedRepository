@@ -29,6 +29,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -92,7 +93,6 @@ public class AccountResource {
     }
 
     @PostMapping("/sendNewRegistrationToken")
-    @ResponseBody
     public ResponseEntity<GenericResponse> sendNewRegistrationToken(@RequestParam String existingToken,
                                                                        final HttpServletRequest request) {
         VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
@@ -102,7 +102,6 @@ public class AccountResource {
     }
 
     @PostMapping("/resendRegistrationToken")
-    @ResponseBody
     public ResponseEntity<GenericResponse> resendRegistrationToken(@RequestParam("email") String email,
                                                                       final HttpServletRequest request) {
         User user = userService.getUserByEmail(email);
@@ -118,7 +117,6 @@ public class AccountResource {
     }
 
     @PostMapping("/sendResetPasswordToken")
-    @ResponseBody
     public ResponseEntity<GenericResponse> sendResetPasswordToken(@RequestParam("email") String email,
                                                                      final HttpServletRequest request) {
 
@@ -137,7 +135,6 @@ public class AccountResource {
 
     //  In case user forgot his password and resets it by sending resetToken to email.
     @PostMapping("/savePassword")
-    @ResponseBody
     public ResponseEntity<GenericResponse> savePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
         String token = passwordDTO.getToken();
         LOGGER.debug("Validating password reset token: " + token);
@@ -159,7 +156,7 @@ public class AccountResource {
 
     //  In case user remembers his password and wont to update it.
     @PostMapping("/updatePassword")
-    @ResponseBody
+    @PreAuthorize("hasRole('REGISTERED')")
     public ResponseEntity<GenericResponse> changeUserPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
         final User user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         if (!userService.checkIfValidOldPassword(user, passwordDTO.getOldPassword())) {
