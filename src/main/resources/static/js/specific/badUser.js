@@ -17,6 +17,6 @@ $("#sendNewRegistrationToken-button").click(function () {
         }
     }).fail(function (response) {
         $('#sendNewRegistrationToken-button').button('reset');
-        $("#badUser-request-result").text("Ти знову облажався: " + response.responseJSON.data);
+        $("#badUser-request-result").text("Ти знову облажався: " + response.data);
     });
 });

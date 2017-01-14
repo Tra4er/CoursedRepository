@@ -29,16 +29,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                // Public
                 .antMatchers("/login*", "/users/confirmRegistration", "/users/forgotPassword", "/users/changePassword",
                         "/users/updatePassword", "/users/resendRegistrationToken", "/test", "/valve", "/users/badUser"
                         ).permitAll()
+                .antMatchers("/css/**", "/js/**", "/fonts/**").permitAll()
                 // REST
                 .antMatchers("/api/**").permitAll() // TODO for testing, delete after
                 .antMatchers(HttpMethod.POST, "/api/students", "/api/teachers").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/years", "/api/years/*/semesters", "/api/specialities", "/api/groups").permitAll()
                 .antMatchers("/api/account/*").permitAll()
+                // Authenticated
                 .antMatchers("/", "/**").hasAnyRole("REGISTERED", "STUDENT", "TEACHER", "ADMIN")
-                .antMatchers("/css/**", "/js/**", "/fonts/**").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")

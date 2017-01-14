@@ -35,6 +35,12 @@ public class YearResource {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", year.getId()), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<GenericResponse> getById(@PathVariable(value="id") Long yearId) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                yearService.findOne(yearId)), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}/semesters")
     public ResponseEntity<GenericResponse> getSemesters(@PathVariable(value="id") Long yearId) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",

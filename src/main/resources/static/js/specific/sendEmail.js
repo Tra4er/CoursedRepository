@@ -28,6 +28,6 @@ $('#emailField-send-button').click(function () {
         }
     }).fail(function (response) {
         $('#emailField-send-button').button('reset');
-        $("#emailField-send-request-server-status").text(response.responseJSON.data);
+        $("#emailField-send-request-server-status").text(response.data);
     });
 });

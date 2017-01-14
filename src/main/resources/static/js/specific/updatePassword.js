@@ -18,6 +18,6 @@ $("#passwordField-update-button").click(function () {
         }
     }).fail(function (response) {
         $('#emailField-update-button').button('reset');
-        $("#emailField-update-request-server-status").text(response.responseJSON.data);
+        $("#emailField-update-request-server-status").text(response.data);
     });
 })

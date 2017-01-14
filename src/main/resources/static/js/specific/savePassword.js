@@ -18,6 +18,6 @@ $("#passwordField-save-button").click(function () {
         }
     }).fail(function (response) {
         $('#emailField-save-button').button('reset');
-        $("#emailField-save-request-server-status").text(response.responseJSON.data);
+        $("#emailField-save-request-server-status").text(response.data);
     });
 })

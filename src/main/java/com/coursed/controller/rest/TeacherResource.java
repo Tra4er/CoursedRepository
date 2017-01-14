@@ -25,11 +25,13 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.util.Collection;
 
 /**
@@ -61,9 +63,10 @@ public class TeacherResource {
         binder.addValidators(recaptchaResponseDTOValidator, userTeacherDTOValidator);
     }
 
+//    @PreAuthorize("hasRole(HEAD)")
     @GetMapping
     public ResponseEntity<GenericResponse> get(@RequestParam(name = "disciplineId", required = false) Long disciplineId,
-                                               @RequestParam(name = "withDiscipline") Boolean withDiscipline) {
+                                               @RequestParam(name = "withDiscipline", required = false) Boolean withDiscipline) {
         if(disciplineId != null && withDiscipline) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                     teacherService.findAllTeachersWithDiscipline(disciplineId)), HttpStatus.OK);
@@ -71,10 +74,6 @@ public class TeacherResource {
         if(disciplineId != null && !withDiscipline) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                     teacherService.findAllTeachersWithoutDiscipline(disciplineId)), HttpStatus.OK);
-        }
-        if(disciplineId != null) {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    teacherService.findAllTeachersWithDiscipline(disciplineId)), HttpStatus.OK);
         }
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", teacherService.findAll()),
                 HttpStatus.OK);
@@ -94,8 +93,14 @@ public class TeacherResource {
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
 
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", registered.getId()),
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.CREATED.value(), "success", registered.getId()),
                 HttpStatus.CREATED);
     }
+
+//    @GetMapping("{username}")
+//    public ResponseEntity<GenericResponse> getByUsername(@PathVariable("username") String username) {
+//        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+//                teacherService.findOneByEmail(username)), HttpStatus.OK);
+//    }
 
 }

@@ -52,22 +52,10 @@ public class AccountResource {
     private UserService userService;
 
     @Autowired
-    private TeacherService teacherService;
-
-    @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    private CaptchaService captchaService;
-
-    @Autowired
     private VerificationTokenService verificationTokenService;
 
     @Autowired
     private PasswordResetTokenService passwordResetTokenService;
-
-    @Autowired
-    private ApplicationEventPublisher eventPublisher;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -76,16 +64,7 @@ public class AccountResource {
     private Environment env;
 
     @Autowired
-    private UserStudentDTOValidator userStudentDTOValidator;
-
-    @Autowired
-    private UserTeacherDTOValidator userTeacherDTOValidator;
-
-    @Autowired
     private PasswordDTOValidator passwordDTOValidator;
-
-    @Autowired
-    private RecaptchaResponseDTOValidator recaptchaResponseDTOValidator;
 
     @InitBinder("passwordDTO")
     public void initPasswordBinder(WebDataBinder binder) {
