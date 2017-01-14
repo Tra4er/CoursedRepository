@@ -32,7 +32,7 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
     }
 
     @Override
-    public User getUserByToken(String token) { // TODO
+    public User getUserByToken(String token) {
         return verificationTokenRepository.findByToken(token).getUser();
     }
 

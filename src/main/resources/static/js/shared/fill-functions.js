@@ -16,33 +16,6 @@ function fillSelectYear(selectId, requestAddress) {
 
 }
 
-// markedColumn is a column in which text will be links
-// Also you must add in 'params' "id"!!!
-function fillTableFromWithLinks(tableId, requestAddress, params, markedColumn) { // TODO mess with order!!!
-    $.getJSON(requestAddress, function(response){
-        //Go through the each entity in the response
-        $.each(response, function (i, entity) {
-            var htmlRow = "<tr>";
-            var id;
-            //Go through the each parameter in the entity
-            $.each(entity, function (paramName, paramValue) {
-                //If a parameter belongs to params array(argument of function)
-                if($.inArray(paramName, params) !== -1) {
-                    //Then we add the value of this parameter to the row
-                    if(paramName === "id") {
-                        id = paramValue;
-                    }
-                    if(paramName === markedColumn) {
-                        paramValue = "<a href='http://localhost:8080/events/" + id + "'>" + paramValue + "</a>";
-                    }
-                    htmlRow += ("<td>" + paramValue + "</td>");
-                }
-            });
-            htmlRow += "</tr>";
-            $("#" + tableId + "> tbody").append(htmlRow);
-        });
-    });
-}
 
 // Fills select-list 'selectId' using getJSON and using alias 'param'
 function fillSelectFrom(selectId, requestAddress, param) {

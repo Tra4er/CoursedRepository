@@ -41,7 +41,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         String recipientAddress = user.getEmail();
         String subject = "Підтвердження реєстрації на CoursEd";
         String confirmationUrl
-                = event.getAppUrl() + "/users/confirmRegistration?email=" + recipientAddress + "&token=" + token;
+                = event.getAppUrl() + "/users/confirmRegistration?token=" + token;
         String message = "Щоб підтвердити свій E-Mail, перейдіть по цьому посиланню: ";
 
         SimpleMailMessage email = new SimpleMailMessage();

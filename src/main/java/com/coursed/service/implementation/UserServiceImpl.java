@@ -100,8 +100,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerTeacher(UserTeacherDTO registrationForm) { // TODO move to teacherService
-        if (emailExist(registrationForm.getEmail())) { // TODO not sure if this is necessary
+    public User registerTeacher(UserTeacherDTO registrationForm) {
+        if (emailExist(registrationForm.getEmail())) {
             throw new UserAlreadyExistException("Trying to save new account but there is already one with this email.");
         }
 
@@ -238,7 +238,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void createVerificationTokenForUser(User user, String token) {
+    public void createVerificationTokenForUser(User user, String token) { // TODO
         final VerificationToken myToken = new VerificationToken(token, user);
         verificationTokenRepository.save(myToken);
     }

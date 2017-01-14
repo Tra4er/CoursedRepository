@@ -47,7 +47,7 @@ public class UserStudentDTOValidator implements Validator {
     }
 
     private void validateSemester(UserStudentDTO form) throws ValidationException {
-        String reg = "FIRST|SECOND"; // TODO uncomment me when you will add phone number to model
+        String reg = "FIRST|SECOND"; // TODO
 //        if (!form.getSemester().matches(reg)) {
 //            throw new Exception("WrongSemesterNumber");
 //        }

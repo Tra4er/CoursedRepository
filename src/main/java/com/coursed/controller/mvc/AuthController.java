@@ -106,7 +106,7 @@ public class AuthController {
         } catch (final Exception ex) {
             LOGGER.warn("Unable to register user", ex);
             model.addAttribute("message", "Unable to send verification email");
-            return "auth/badUser"; // TODO
+            return "auth/badUser";
         }
 
         return "/auth/verifyYourAccount";
@@ -140,7 +140,7 @@ public class AuthController {
         } catch (final Exception ex) {
             LOGGER.warn("Unable to send verification email", ex);
             model.addAttribute("message", "Unable to send verification email");
-            return "auth/badUser"; // TODO
+            return "auth/badUser";
         }
 
         return "/auth/verifyYourAccount";

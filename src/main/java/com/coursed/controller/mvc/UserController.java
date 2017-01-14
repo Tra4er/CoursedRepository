@@ -44,14 +44,13 @@ public class UserController {
     private PasswordResetTokenService passwordResetTokenService;
 
     @GetMapping("/confirmRegistration")
-    public String confirmRegistration(@RequestParam("email") String email, @RequestParam("token") String token, RedirectAttributes redAtt) {
+    public String confirmRegistration(@RequestParam("token") String token, RedirectAttributes redAtt) {
         LOGGER.debug("Receiving confirmation token: {}", token);
 
         VerificationToken verificationToken = userService.getVerificationToken(token);
-        if (verificationToken == null) { // TODO
+        if (verificationToken == null) {
             LOGGER.debug("Invalid token received: {}", token);
             String message = "InvalidTokenReceived: " + token;
-            redAtt.addFlashAttribute("username", email);
             redAtt.addFlashAttribute("message", message);
             return "redirect:/users/badUser";
         }
@@ -62,7 +61,6 @@ public class UserController {
             LOGGER.debug("Verification token expired for user: {}", user);
             String messageValue = "VerificationTokenExpired";
             redAtt.addFlashAttribute("token", token);
-            redAtt.addFlashAttribute("username", email);
             redAtt.addFlashAttribute("message", messageValue);
             return "redirect:/users/badUser";
         }

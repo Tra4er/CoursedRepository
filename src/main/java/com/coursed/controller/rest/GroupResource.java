@@ -20,7 +20,7 @@ import java.util.Collection;
  * Created by Hexray on 27.11.2016.
  */
 @RestController
-@RequestMapping("/api/groups") // TODO group(s)?
+@RequestMapping("/api/groups")
 public class GroupResource {
     @Autowired
     private GroupService groupService;

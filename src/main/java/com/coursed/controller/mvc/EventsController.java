@@ -23,9 +23,9 @@ import java.util.Collection;
 public class EventsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(EventsController.class);
 
-    @GetMapping("/events") // TODO config access to rest
+    @GetMapping("/events")
     public String events(RedirectAttributes redAtt, Authentication authentication) {
-        if(hasRole("ROLE_HEAD") || hasRole("ROLE_SECRETARY")) { // TODO add more roles if needed
+        if(hasRole("ROLE_HEAD") || hasRole("ROLE_SECRETARY")) {
             return "/events/events-head";
         }
         if(hasRole("ROLE_TEACHER")) {
@@ -38,7 +38,7 @@ public class EventsController {
         return "/auth/badUser"; // TODO redirect:error page
     }
 
-    @GetMapping("/events/report") // TODO config access to rest
+    @GetMapping("/events/report")
     public String eventReport(RedirectAttributes redAtt, Authentication authentication) {
         if(hasRole("ROLE_HEAD") || hasRole("ROLE_SECRETARY")) {
             return "/events/events-report";

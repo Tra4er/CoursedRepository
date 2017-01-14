@@ -42,11 +42,6 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public User registerStudent(UserStudentDTO registrationForm) {
-        return null; //TODO
-    }
-
-    @Override
     public Student findOne(Long id) {
         return studentRepository.findOne(id);
     }

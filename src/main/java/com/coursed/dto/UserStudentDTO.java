@@ -21,7 +21,6 @@ public class UserStudentDTO extends CaptchaDTO implements BasicPerson {
     private String parentsInfo;
     private Long groupId;
 
-//    TODO
     private Long semesterId;
     private Long specialityId;
     private Long yearId;
