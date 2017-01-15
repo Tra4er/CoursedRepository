@@ -1,6 +1,5 @@
 package com.coursed.controller.rest;
 
-import com.coursed.captcha.CaptchaService;
 import com.coursed.dto.PasswordDTO;
 import com.coursed.error.exception.InvalidOldPasswordException;
 import com.coursed.error.exception.InvalidPasswordResetTokenException;
@@ -9,21 +8,14 @@ import com.coursed.error.exception.UserNotFoundException;
 import com.coursed.model.auth.PasswordResetToken;
 import com.coursed.model.auth.User;
 import com.coursed.model.auth.VerificationToken;
-import com.coursed.security.SecurityService;
 import com.coursed.service.PasswordResetTokenService;
-import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
 import com.coursed.service.VerificationTokenService;
 import com.coursed.util.GenericResponse;
-import com.coursed.util.OldGenericResponse;
 import com.coursed.validator.PasswordDTOValidator;
-import com.coursed.validator.RecaptchaResponseDTOValidator;
-import com.coursed.validator.UserStudentDTOValidator;
-import com.coursed.validator.UserTeacherDTOValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -83,7 +75,7 @@ public class AccountResource {
     @PostMapping("/resendRegistrationToken")
     public ResponseEntity<GenericResponse> resendRegistrationToken(@RequestParam("email") String email,
                                                                       final HttpServletRequest request) {
-        User user = userService.getUserByEmail(email);
+        User user = userService.getByEmail(email);
         if(user == null) {
             throw new UserNotFoundException();
         }
@@ -99,7 +91,7 @@ public class AccountResource {
     public ResponseEntity<GenericResponse> sendResetPasswordToken(@RequestParam("email") String email,
                                                                      final HttpServletRequest request) {
 
-        User user = userService.getUserByEmail(email);
+        User user = userService.getByEmail(email);
         if (user == null) {
             throw new UserNotFoundException();
         }
@@ -137,7 +129,7 @@ public class AccountResource {
     @PostMapping("/updatePassword")
     @PreAuthorize("hasRole('REGISTERED')")
     public ResponseEntity<GenericResponse> changeUserPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
-        final User user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        final User user = userService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         if (!userService.checkIfValidOldPassword(user, passwordDTO.getOldPassword())) {
             throw new InvalidOldPasswordException();
         }

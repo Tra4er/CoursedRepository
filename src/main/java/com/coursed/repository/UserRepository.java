@@ -31,7 +31,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 //    Role role = roleRepository.findByName("ROLE_TEACHER");
 //
 //    //TODO transfer to JPQL
-//        return userRepository.findAll().stream()
+//        return userRepository.getCuratorsOfGroup().stream()
 //                .filter(User::isATeacher)
 //                .filter(user -> !(user.getRoles().contains(role)))
 //            .collect(Collectors.toList());

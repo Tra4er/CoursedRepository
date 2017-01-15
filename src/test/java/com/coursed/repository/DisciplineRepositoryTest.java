@@ -22,7 +22,7 @@ public class DisciplineRepositoryTest {
     @Test
     public void getAllActualDisciplinesConnectedWithTeacher(){
 //        System.out.println("=============All");
-//        disciplineRepository.findAll().stream().forEach(System.out::println);
+//        disciplineRepository.getCuratorsOfGroup().stream().forEach(System.out::println);
 //        System.out.println("=============NEXT");
 
         Long teacherId = 4L;

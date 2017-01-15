@@ -17,12 +17,12 @@ public interface UserService {
     User registerStudent(UserStudentDTO registrationForm);
     User registerTeacher(UserTeacherDTO registrationForm);
     void saveRegisteredUser(User user);
-    User getUserById(Long id);
-    User getUserByEmail(String email);
+    User getById(Long id);
+    User getByEmail(String email);
     boolean checkIfUserExists(String email);
-    List<User> findAllUnconfirmedTeachers();
-    List<User> findAllTeachers(Long groupId);
-    List<User> findAllGroupCurators(Long groupId);
+    List<User> getAllUnconfirmedTeachers();
+    List<User> getAllTeachers(Long groupId);
+    List<User> getAllGroupCurators(Long groupId);
     void deleteUser(Long userId);
     void connectUserWithRole(Long userId, Long roleId);
     void connectUserWithRole(User user, Role role);

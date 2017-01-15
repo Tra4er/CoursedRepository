@@ -1,34 +1,24 @@
 package com.coursed.controller.rest;
 
-import com.coursed.captcha.CaptchaService;
 import com.coursed.dto.UserStudentDTO;
 import com.coursed.error.exception.UserAlreadyExistException;
-import com.coursed.model.Student;
 import com.coursed.model.auth.User;
 import com.coursed.registration.OnRegistrationCompleteEvent;
-import com.coursed.security.SecurityService;
 import com.coursed.service.*;
 import com.coursed.util.GenericResponse;
-import com.coursed.util.OldGenericResponse;
-import com.coursed.validator.PasswordDTOValidator;
 import com.coursed.validator.RecaptchaResponseDTOValidator;
 import com.coursed.validator.UserStudentDTOValidator;
-import com.coursed.validator.UserTeacherDTOValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Created by Trach on 12/13/2016.
@@ -65,9 +55,9 @@ public class StudentResource {
     public ResponseEntity<GenericResponse> get(@RequestParam(name = "groupId", required = false) Long groupId) {
         if(groupId != null) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    studentService.findAllFromGroup(groupId)), HttpStatus.OK);
+                    studentService.getAllFromGroup(groupId)), HttpStatus.OK);
         }
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", studentService.findAll()),
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", studentService.getAll()),
                 HttpStatus.OK);
     }
 
@@ -92,7 +82,7 @@ public class StudentResource {
     @GetMapping("{id}")
     public ResponseEntity<GenericResponse> getByUsername(@PathVariable("id") Long id) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                studentService.findOne(id)), HttpStatus.OK);
+                studentService.getById(id)), HttpStatus.OK);
     }
 
 }

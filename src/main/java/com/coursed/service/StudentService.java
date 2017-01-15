@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface StudentService {
     void create(Student student);
-    Student findOne(Long id);
-    List<Student> findAll();
-    List<Student> findAllFromGroup(Long groupId);
+    Student getById(Long id);
+    List<Student> getAll();
+    List<Student> getAllFromGroup(Long groupId);
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * Created by Hexray on 11.12.2016.
@@ -48,7 +47,7 @@ public class DisciplineResource {
         if(principal == null)
             throw new IllegalArgumentException("You haven`t logged in to retrieve principal");
 
-        User user = userService.getUserByEmail(principal.getName());
+        User user = userService.getByEmail(principal.getName());
 
         return disciplineService.getAllActualConnectedWithTeacher(user.getTeacherEntity().getId(), plannedEventId);
     }

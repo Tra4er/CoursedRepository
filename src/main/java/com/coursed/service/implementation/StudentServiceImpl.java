@@ -42,17 +42,17 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student findOne(Long id) {
+    public Student getById(Long id) {
         return studentRepository.findOne(id);
     }
 
     @Override
-    public List<Student> findAll() {
+    public List<Student> getAll() {
         return studentRepository.findAll();
     }
 
     @Override
-    public List<Student> findAllFromGroup(Long groupId) {
+    public List<Student> getAllFromGroup(Long groupId) {
         Group group = groupRepository.findOne(groupId);
 
         return group.getStudents();

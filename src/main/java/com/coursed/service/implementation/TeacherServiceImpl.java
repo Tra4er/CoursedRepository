@@ -40,17 +40,17 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher findOne(Long id) {
+    public Teacher getById(Long id) {
         return teacherRepository.findOne(id);
     }
 
     @Override
-    public List<Teacher> findAll() {
+    public List<Teacher> getAll() {
         return teacherRepository.findAll();
     }
 
     @Override
-    public List<Teacher> findAll(Long groupId) {
+    public List<Teacher> getCuratorsOfGroup(Long groupId) {
         Group group = groupRepository.findOne(groupId);
 
         return teacherRepository.findAll().stream()
@@ -71,7 +71,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Teacher> findAllTeachersWithoutDiscipline(Long disciplineId) {
+    public List<Teacher> getAllTeachersWithoutDiscipline(Long disciplineId) {
         Role role = roleRepository.findByName("ROLE_TEACHER");
 
         Discipline discipline = disciplineRepository.findOne(disciplineId);
@@ -82,7 +82,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Teacher> findAllTeachersWithDiscipline(Long disciplineId) {
+    public List<Teacher> getAllTeachersWithDiscipline(Long disciplineId) {
         Role role = roleRepository.findByName("ROLE_TEACHER");
 
         Discipline discipline = disciplineRepository.findOne(disciplineId);

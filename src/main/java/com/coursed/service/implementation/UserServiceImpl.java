@@ -144,13 +144,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(Long id) {
+    public User getById(Long id) {
         LOGGER.debug("Getting user={}", id);
         return userRepository.findOne(id);
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public User getByEmail(String email) {
         LOGGER.debug("Getting user by email={}", email.replaceFirst("@.*", "@***"));
         return userRepository.findOneByEmail(email);
     }
@@ -161,12 +161,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllUnconfirmedTeachers() {
+    public List<User> getAllUnconfirmedTeachers() {
         return userRepository.findAllUnconfirmedTeachers();
     }
 
     @Override
-    public List<User> findAllTeachers(Long groupId) {
+    public List<User> getAllTeachers(Long groupId) {
         Role role = roleRepository.findByName("ROLE_TEACHER");
 
 
@@ -186,7 +186,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllGroupCurators(Long groupId) {
+    public List<User> getAllGroupCurators(Long groupId) {
         List<Teacher> teachers = groupRepository.findOne(groupId).getCurators();
         List<User> users = new ArrayList<>();
 

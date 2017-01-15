@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -28,7 +27,7 @@ public class UserResource {
     @GetMapping("{username}")
     public ResponseEntity<GenericResponse> getByUsername(@PathVariable("username") String username) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                userService.getUserByEmail(username)), HttpStatus.OK);
+                userService.getByEmail(username)), HttpStatus.OK);
     }
 
     // OLD
@@ -44,7 +43,7 @@ public class UserResource {
 //
 //        Set<Object> json = new HashSet<>();
 //
-//        List<User> UnconfirmedTeachers = userService.findAllUnconfirmedTeachers();
+//        List<User> UnconfirmedTeachers = userService.getAllUnconfirmedTeachers();
 //
 //        for (User user : UnconfirmedTeachers) {
 //            Map<String, Object> value = new HashMap<>();
@@ -60,12 +59,12 @@ public class UserResource {
 
     @GetMapping("/getAllUnconfirmedTeachers")
     private Collection<User> getAllUnconfirmedTeachers() {
-        return userService.findAllUnconfirmedTeachers();
+        return userService.getAllUnconfirmedTeachers();
     }
 
     @GetMapping("/getAllGroupCurators")
     private Collection<User> getAllGroupCurators(@RequestParam(name = "groupId") Long groupId) {
-        return userService.findAllGroupCurators(groupId);
+        return userService.getAllGroupCurators(groupId);
     }
 
     @GetMapping("/deleteUser") // TODO delete method

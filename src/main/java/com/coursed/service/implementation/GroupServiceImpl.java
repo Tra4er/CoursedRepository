@@ -5,6 +5,8 @@ import com.coursed.model.enums.CourseNumber;
 import com.coursed.model.enums.SemesterNumber;
 import com.coursed.repository.*;
 import com.coursed.service.GroupService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ import java.util.stream.Collectors;
 @Service
 public class GroupServiceImpl implements GroupService {
 //    TODO LOGGER
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GroupServiceImpl.class);
 
     @Autowired
     private GroupRepository groupRepository;
@@ -90,7 +94,7 @@ public class GroupServiceImpl implements GroupService {
         Discipline discipline = disciplineRepository.findOne(disciplineId);
 
         EducationPlan educationPlan = discipline.getEducationPlan();
-//                educationPlanRepository.findOne(educationPlanId);
+//                educationPlanRepository.getById(educationPlanId);
         Year year = educationPlan.getYear();
 
         Semester semester = year.getSemesters().stream()

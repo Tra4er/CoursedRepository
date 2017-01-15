@@ -39,7 +39,7 @@ public class UserDTOValidator implements Validator {
     }
 
     private void validateEmail(Errors errors, UserDTO form) {
-        if (userService.getUserByEmail(form.getEmail()) != null) {
+        if (userService.getByEmail(form.getEmail()) != null) {
             errors.rejectValue("email", "error.user","Email exists");
         }
     }

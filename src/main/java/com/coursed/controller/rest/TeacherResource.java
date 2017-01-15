@@ -57,17 +57,17 @@ public class TeacherResource {
                                                @RequestParam(name = "withDiscipline", required = false) Boolean withDiscipline) {
         if (groupId != null) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    teacherService.findAll(groupId)), HttpStatus.OK);
+                    teacherService.getCuratorsOfGroup(groupId)), HttpStatus.OK);
         }
         if (disciplineId != null && withDiscipline) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    teacherService.findAllTeachersWithDiscipline(disciplineId)), HttpStatus.OK);
+                    teacherService.getAllTeachersWithDiscipline(disciplineId)), HttpStatus.OK);
         }
         if (disciplineId != null && !withDiscipline) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    teacherService.findAllTeachersWithoutDiscipline(disciplineId)), HttpStatus.OK);
+                    teacherService.getAllTeachersWithoutDiscipline(disciplineId)), HttpStatus.OK);
         }
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", teacherService.findAll()),
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", teacherService.getAll()),
                 HttpStatus.OK);
     }
 
@@ -93,7 +93,7 @@ public class TeacherResource {
     @GetMapping("{id}")
     public ResponseEntity<GenericResponse> getByUsername(@PathVariable("id") Long id) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                teacherService.findOne(id)), HttpStatus.OK);
+                teacherService.getById(id)), HttpStatus.OK);
     }
 
 }

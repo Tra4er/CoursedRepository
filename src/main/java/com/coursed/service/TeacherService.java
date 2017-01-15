@@ -9,10 +9,10 @@ import java.util.List;
  */
 public interface TeacherService {
     void create(Teacher teacher);
-    Teacher findOne(Long id);
-    List<Teacher> findAll();
-    List<Teacher> findAll(Long groupId);
+    Teacher getById(Long id);
+    List<Teacher> getAll();
+    List<Teacher> getCuratorsOfGroup(Long groupId);
     void setAsCurator(Long teacherId, Long groupId);
-    List<Teacher> findAllTeachersWithoutDiscipline(Long disciplineId);
-    List<Teacher> findAllTeachersWithDiscipline(Long disciplineId);
+    List<Teacher> getAllTeachersWithoutDiscipline(Long disciplineId);
+    List<Teacher> getAllTeachersWithDiscipline(Long disciplineId);
 }
