@@ -11,7 +11,7 @@ public interface TeacherService {
     void create(Teacher teacher);
     Teacher getById(Long id);
     List<Teacher> getAll();
-    List<Teacher> getCuratorsOfGroup(Long groupId);
+    List<Teacher> getAllCuratorsOfGroup(Long groupId);
     void setAsCurator(Long teacherId, Long groupId);
     List<Teacher> getAllTeachersWithoutDiscipline(Long disciplineId);
     List<Teacher> getAllTeachersWithDiscipline(Long disciplineId);

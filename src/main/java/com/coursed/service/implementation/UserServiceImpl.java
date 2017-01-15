@@ -156,6 +156,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
     public boolean checkIfUserExists(String email) {
         return userRepository.findOneByEmail(email) == null ? false : true;
     }

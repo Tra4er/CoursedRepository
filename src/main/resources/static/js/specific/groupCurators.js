@@ -35,7 +35,7 @@ $('#groupCurators-table > tbody').on('click', 'tr > td > .btn-default', function
     var info = $(this).closest('tr').children('td:first').text();
     $('#teacher-container').html("<h2 id='"+ grId +"'> група " + info + "</h2> <br/>");
 
-    $.getJSON("api/teachers", {groupId: grId}, function(response){
+    $.getJSON("api/teachers", {curatorsOfGroupId: grId}, function(response){
         $.each(response.data, function(i, teach){
             var item = "<input type='button' id='" + teach.teacherEntity['id'] + "' class='btn btn-default col-xs-12' value = '"
                 + teach.teacherEntity['lastName'] + " " + teach.teacherEntity['firstName'] + " " + teach.teacherEntity['patronymic'] + "'/>";
@@ -59,10 +59,10 @@ $('#teacher-container').on('click', 'input', function(){
 
 
 function reloadCuratorsForGroup(grId){
-    $.getJSON('api/users/getAllGroupCurators', {groupId: grId}, function(response){
+    $.getJSON('api/users', {curatorsOfGroup: grId}, function(response){
             var htmlRow = "";
-            if (response.length != 0){
-                $.each( response, function (i, curator) {
+            if (response.data.length != 0){
+                $.each( response.data, function (i, curator) {
                     htmlRow += "<p>" + curator.teacherEntity['lastName'] + "</p>";
                 })
             }

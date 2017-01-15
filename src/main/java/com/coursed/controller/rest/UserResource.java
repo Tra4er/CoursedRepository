@@ -23,6 +23,16 @@ public class UserResource {
     @Autowired
     private UserService userService;
 
+    @GetMapping
+    public ResponseEntity<GenericResponse> get(@RequestParam(value = "curatorsOfGroup", required = false) Long groupId) {
+        if (groupId != null) {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    userService.getAllGroupCurators(groupId)), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                userService.getAll()), HttpStatus.OK);
+    }
+
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping("{username}")
     public ResponseEntity<GenericResponse> getByUsername(@PathVariable("username") String username) {
@@ -60,11 +70,6 @@ public class UserResource {
     @GetMapping("/getAllUnconfirmedTeachers")
     private Collection<User> getAllUnconfirmedTeachers() {
         return userService.getAllUnconfirmedTeachers();
-    }
-
-    @GetMapping("/getAllGroupCurators")
-    private Collection<User> getAllGroupCurators(@RequestParam(name = "groupId") Long groupId) {
-        return userService.getAllGroupCurators(groupId);
     }
 
     @GetMapping("/deleteUser") // TODO delete method

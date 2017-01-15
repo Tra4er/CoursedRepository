@@ -52,12 +52,12 @@ public class TeacherResource {
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping
-    public ResponseEntity<GenericResponse> get(@RequestParam(name = "groupId", required = false) Long groupId,
-                                               @RequestParam(name = "disciplineId", required = false) Long disciplineId,
-                                               @RequestParam(name = "withDiscipline", required = false) Boolean withDiscipline) {
+    public ResponseEntity<GenericResponse> get(@RequestParam(value = "curatorsOfGroup", required = false) Long groupId,
+                                               @RequestParam(value = "disciplineId", required = false) Long disciplineId,
+                                               @RequestParam(value = "withDiscipline", required = false) Boolean withDiscipline) {
         if (groupId != null) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    teacherService.getCuratorsOfGroup(groupId)), HttpStatus.OK);
+                    teacherService.getAllCuratorsOfGroup(groupId)), HttpStatus.OK);
         }
         if (disciplineId != null && withDiscipline) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",

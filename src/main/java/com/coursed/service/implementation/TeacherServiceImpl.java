@@ -50,7 +50,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Teacher> getCuratorsOfGroup(Long groupId) {
+    public List<Teacher> getAllCuratorsOfGroup(Long groupId) {
         Group group = groupRepository.findOne(groupId);
 
         return teacherRepository.findAll().stream()
