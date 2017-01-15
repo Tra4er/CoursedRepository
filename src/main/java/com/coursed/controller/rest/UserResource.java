@@ -2,9 +2,13 @@ package com.coursed.controller.rest;
 
 import com.coursed.model.auth.User;
 import com.coursed.service.UserService;
+import com.coursed.util.GenericResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -20,10 +24,14 @@ public class UserResource {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/getUser")
-    private User getUser(@RequestParam("email") String email) {
-        return userService.getUserByEmail(email);
+    //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
+    @GetMapping("{username}")
+    public ResponseEntity<GenericResponse> getByUsername(@PathVariable("username") String username) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                userService.getUserByEmail(username)), HttpStatus.OK);
     }
+
+    // OLD
 
     @PostMapping("/confirm-teacher")
     public void confirmTeacher(@RequestParam(name = "userId") Long userId) {

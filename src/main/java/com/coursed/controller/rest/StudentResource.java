@@ -22,6 +22,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,6 +60,7 @@ public class StudentResource {
         binder.addValidators(recaptchaResponseDTOValidator, userStudentDTOValidator);
     }
 
+//    @PreAuthorize("hasAnyRole('HEAD','TEACHER', 'SECRETARY')")
     @GetMapping
     public ResponseEntity<GenericResponse> get(@RequestParam(name = "groupId", required = false) Long groupId) {
         if(groupId != null) {
@@ -74,8 +76,6 @@ public class StudentResource {
                                                                   final HttpServletRequest request) {
         LOGGER.debug("Registering user account with information: {}", userStudentDTO);
 
-        System.err.println("Saving Student");
-
         User registered = userService.registerStudent(userStudentDTO);
         if (registered == null) {
             throw new UserAlreadyExistException();
@@ -86,6 +86,13 @@ public class StudentResource {
 
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", registered.getId()),
                 HttpStatus.CREATED);
+    }
+
+    //    @PreAuthorize("hasAnyRole('HEAD','TEACHER', 'SECRETARY')")
+    @GetMapping("{username}")
+    public ResponseEntity<GenericResponse> getByUsername(@PathVariable("username") String username) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                userService.getUserByEmail(username)), HttpStatus.OK);
     }
 
 }
