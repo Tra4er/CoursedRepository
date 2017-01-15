@@ -40,6 +40,11 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public Teacher findOne(Long id) {
+        return teacherRepository.findOne(id);
+    }
+
+    @Override
     public List<Teacher> findAll() {
         return teacherRepository.findAll();
     }
@@ -51,11 +56,6 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherRepository.findAll().stream()
                 .filter(teacher -> !teacher.getDisciplines().contains(group))
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public Teacher findOne(Long id) {
-        return teacherRepository.findOne(id);
     }
 
     @Override

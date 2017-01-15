@@ -90,15 +90,10 @@ public class TeacherResource {
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
-    @GetMapping("{username}")
-    public ResponseEntity<GenericResponse> getByUsername(@PathVariable("username") String username,
-                                                         @RequestParam(value = "confirmed", required = false) Boolean confirmed) {
-//        if (confirmed != null) {
-//            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-//                    userService.makeATeacher(userId)), HttpStatus.OK);
-//        }
+    @GetMapping("{id}")
+    public ResponseEntity<GenericResponse> getByUsername(@PathVariable("id") Long id) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                userService.getUserByEmail(username)), HttpStatus.OK);
+                teacherService.findOne(id)), HttpStatus.OK);
     }
 
 }
