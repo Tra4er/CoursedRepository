@@ -9,8 +9,9 @@ import java.util.List;
  */
 public interface TeacherService {
     void create(Teacher teacher);
-    List<Teacher> findAll();
     Teacher findOne(Long id);
+    List<Teacher> findAll();
+    List<Teacher> findAll(Long groupId);
     void setAsCurator(Long teacherId, Long groupId);
     List<Teacher> findAllTeachersWithoutDiscipline(Long disciplineId);
     List<Teacher> findAllTeachersWithDiscipline(Long disciplineId);

@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/css/**", "/js/**", "/fonts/**").permitAll()
                 // REST
-//                .antMatchers("/api/**").permitAll() // TODO for testing, delete after
+                .antMatchers("/api/**").permitAll() // TODO for testing, delete after
                 .antMatchers(HttpMethod.POST, "/api/students", "/api/teachers").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/years", "/api/years/*/semesters", "/api/specialities", "/api/groups")
                 .permitAll()

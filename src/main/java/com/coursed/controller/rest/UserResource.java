@@ -63,11 +63,6 @@ public class UserResource {
         return userService.findAllUnconfirmedTeachers();
     }
 
-    @GetMapping("/getAllTeachers") // TODO create separate controller
-    private Collection<User> getAllTeachers(@RequestParam(name = "groupId", required = false) Long groupId) {
-        return userService.findAllTeachers(groupId);
-    }
-
     @GetMapping("/getAllGroupCurators")
     private Collection<User> getAllGroupCurators(@RequestParam(name = "groupId") Long groupId) {
         return userService.findAllGroupCurators(groupId);

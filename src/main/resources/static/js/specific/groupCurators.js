@@ -35,8 +35,8 @@ $('#groupCurators-table > tbody').on('click', 'tr > td > .btn-default', function
     var info = $(this).closest('tr').children('td:first').text();
     $('#teacher-container').html("<h2 id='"+ grId +"'> група " + info + "</h2> <br/>");
 
-    $.getJSON("api/users/getAllTeachers", {groupId: grId}, function(response){
-        $.each(response, function(i, teach){
+    $.getJSON("api/teachers", {groupId: grId}, function(response){
+        $.each(response.data, function(i, teach){
             var item = "<input type='button' id='" + teach.teacherEntity['id'] + "' class='btn btn-default col-xs-12' value = '"
                 + teach.teacherEntity['lastName'] + " " + teach.teacherEntity['firstName'] + " " + teach.teacherEntity['patronymic'] + "'/>";
             $('#teacher-container').append(item);
