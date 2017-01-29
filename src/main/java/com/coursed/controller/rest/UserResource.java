@@ -23,14 +23,21 @@ public class UserResource {
     @Autowired
     private UserService userService;
 
+    //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping
     public ResponseEntity<GenericResponse> get() {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                 userService.getAll()), HttpStatus.OK);
     }
 
+    //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping("/search")
-    public ResponseEntity<GenericResponse> search(@RequestParam(value = "curatorsOfGroup", required = false) Long groupId) {
+    public ResponseEntity<GenericResponse> search(@RequestParam(value = "filter", required = false) String filter,
+                                                  @RequestParam(value = "curatorsOfGroup", required = false) Long groupId) {
+        if (filter.equals("unconfirmed")) {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    userService.getAllUnconfirmedTeachers()), HttpStatus.OK);
+        }
         if (groupId != null) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                     userService.getAllGroupCurators(groupId)), HttpStatus.OK);
@@ -39,17 +46,26 @@ public class UserResource {
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
-    @GetMapping("{username}")
-    public ResponseEntity<GenericResponse> getByUsername(@PathVariable("username") String username) {
+    @GetMapping("{id}")
+    public ResponseEntity<GenericResponse> getByUsername(@PathVariable("id") Long id) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                userService.getByEmail(username)), HttpStatus.OK);
+                userService.getById(id)), HttpStatus.OK);
     }
 
-    // OLD
+    //    @PreAuthorize("hasAnyRole('HEAD')")
+    @PostMapping("/{id}/confirm-teacher")
+    public ResponseEntity<GenericResponse> confirmTeacher(@PathVariable("id") Long id) {
+        userService.makeATeacher(id);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                userService.getById(id)), HttpStatus.OK);
+    }
 
-    @PostMapping("/confirm-teacher")
-    public void confirmTeacher(@RequestParam(name = "userId") Long userId) {
-        userService.makeATeacher(userId);
+    //    @PreAuthorize("hasAnyRole('HEAD')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<GenericResponse> delete(@PathVariable("id") Long id) {
+        userService.deleteUser(id);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                userService.getById(id)), HttpStatus.OK);
     }
 
     //TODO: solve n+1 JPA problem via avoiding traversal of unfetched entities when JSON is creating
@@ -71,15 +87,5 @@ public class UserResource {
 //
 //        return json;
 //    }
-
-    @GetMapping("/getAllUnconfirmedTeachers")
-    private Collection<User> getAllUnconfirmedTeachers() {
-        return userService.getAllUnconfirmedTeachers();
-    }
-
-    @GetMapping("/deleteUser") // TODO delete method
-    private void deleteUser(@RequestParam(name = "userId") Long userId) {
-        userService.deleteUser(userId);
-    }
 
 }

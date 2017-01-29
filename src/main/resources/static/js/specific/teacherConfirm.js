@@ -9,9 +9,9 @@ $(function(){
 });
 
 function fillTeachersTable(){
-    $.getJSON("api/users/getAllUnconfirmedTeachers", function(response){
+    $.getJSON("api/users/search", {filter: "unconfirmed"}, function(response){
         //Go through the each entity in the response
-        $.each(response, function (i, entity) {
+        $.each(response.data, function (i, entity) {
             if(entity.teacherEntity != null) {
                 var htmlRow = "<tr >";
                 htmlRow += ("<td>" + entity.teacherEntity['lastName'] + " " + entity.teacherEntity['firstName'] + " " + entity.teacherEntity['patronymic'] + "</td>");
@@ -27,7 +27,7 @@ function fillTeachersTable(){
 $('#UnconfirmedTeachers-table > tbody').on('click', 'tr > td > .btn-success', function(){
     var myId = $(this).parent().attr("id");
     var thisButton = $(this).closest('tr');
-    $.post( "api/users/confirm-teacher", {userId: myId})
+    $.post( "api/users/" + myId + "/confirm-teacher")
         .done(function(){
             $(thisButton).remove();
         })
@@ -39,7 +39,10 @@ $('#UnconfirmedTeachers-table > tbody').on('click', 'tr > td > .btn-success', fu
 $('#UnconfirmedTeachers-table > tbody').on('click', 'tr > td > .btn-danger', function(){
     var myId = $(this).parent().attr("id");
     var thisButton = $(this).closest('tr');
-    $.get( "api/users/deleteUser", {userId: myId})
+    $.ajax({
+        type: 'DELETE',
+        url: "api/users/" + myId,
+        contentType: "application/json"})
         .done(function(){
             $(thisButton).remove();
         })
