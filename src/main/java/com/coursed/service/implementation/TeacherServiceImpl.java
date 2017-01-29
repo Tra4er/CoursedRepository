@@ -1,16 +1,17 @@
 package com.coursed.service.implementation;
 
+import com.coursed.error.exception.PageSizeTooBigException;
 import com.coursed.model.Discipline;
 import com.coursed.model.Group;
 import com.coursed.model.Teacher;
 import com.coursed.model.auth.Role;
-import com.coursed.model.auth.User;
 import com.coursed.repository.DisciplineRepository;
 import com.coursed.repository.GroupRepository;
 import com.coursed.repository.RoleRepository;
 import com.coursed.repository.TeacherRepository;
 import com.coursed.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,10 @@ import java.util.stream.Collectors;
  */
 @Service
 public class TeacherServiceImpl implements TeacherService {
+
+    public static final int DEFAULT_PAGE = 1;
+    public static final int DEFAULT_PAGE_SIZE = 10;
+    public static final int MAX_PAGE_SIZE = 20;
 
     @Autowired
     private TeacherRepository teacherRepository;
@@ -46,7 +51,15 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<Teacher> getAll() {
-        return teacherRepository.findAll();
+        return teacherRepository.findAll(new PageRequest(DEFAULT_PAGE, DEFAULT_PAGE_SIZE));
+    }
+
+    @Override
+    public List<Teacher> getAll(int page, int size) {
+        if(size > MAX_PAGE_SIZE) {
+            throw new PageSizeTooBigException("Requested size is too big.");
+        }
+        return teacherRepository.findAll(new PageRequest(page, size));
     }
 
     @Override

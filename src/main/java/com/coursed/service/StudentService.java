@@ -13,5 +13,6 @@ public interface StudentService {
     void create(Student student);
     Student getById(Long id);
     List<Student> getAll();
+    List<Student> getAll(int page, int size);
     List<Student> getAllFromGroup(Long groupId);
 }

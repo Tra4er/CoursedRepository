@@ -2,7 +2,6 @@ package com.coursed.error.handler;
 
 import com.coursed.error.exception.*;
 import com.coursed.util.GenericResponse;
-import com.coursed.util.GenericResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -88,6 +87,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<Object> handleIllegalArgument(final RuntimeException ex, final WebRequest request) {
+        LOGGER.error("400 Status Code: " + ex.getMessage());
+        final GenericResponse bodyOfResponse = new GenericResponse(HttpStatus.BAD_REQUEST.value(), "fail",
+                "BadRequestParam", "Ви передали невірні парметри.");
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
     // 403
     @ExceptionHandler({AccessDeniedException.class})
     public ResponseEntity<Object> handleAccessDenied(final RuntimeException ex, final WebRequest request) {
@@ -121,6 +128,16 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         final GenericResponse bodyOfResponse = new GenericResponse(HttpStatus.CONFLICT.value(), "fail",
                 "UserAlreadyExist", "Профіль для даного емейлу вже існує. Введіть інший емейл.");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
+    // 416
+    @ExceptionHandler({PageSizeTooBigException.class})
+    public ResponseEntity<Object> handlePageSize(final RuntimeException ex, final WebRequest request) {
+        LOGGER.error("416 Status Code: " + ex.getMessage());
+        final GenericResponse bodyOfResponse = new GenericResponse(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value(),
+                "fail", "PageSizeIsTooBig", "Ви перевищили дозволений розмір елементів для однієї сторінки.");
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE,
+                request);
     }
 
     //    500
