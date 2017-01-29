@@ -4,7 +4,9 @@ import com.coursed.dto.AttestationDTO;
 import com.coursed.dto.AttestationDTOList;
 import com.coursed.model.AttestationGrade;
 import com.coursed.service.AttestationService;
+import com.coursed.util.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,10 +23,12 @@ public class AttestationResource {
     @Autowired
     private AttestationService attestationService;
 
-    @GetMapping("/getAll")
-    private Collection<AttestationGrade> getAll(){
+    @GetMapping
+    private ResponseEntity<GenericResponse> getAll(){
         return null;
     }
+
+    // OLD
 
     @PostMapping("/createManyFirst")
     private void createSet(@RequestBody AttestationDTOList attestationGrades){

@@ -10,14 +10,14 @@ $(function () {
 });
 
 function fillTableDisciplinesForPlan() {
-    $.get("/api/educationPlans/getOne", {educationPlanId: $.urlParam('planId')}, function (r) {
-            $('.specialityId').attr('value', r.speciality['id']).text(r.speciality['fullName']);
-            $('.plan-info .groupType').attr('value', r.groupType).text(localGroupUkr[r.groupType]);
-            $('.plan-info .groupDegree').attr('value', r.groupDegree).text(localGroupUkr[r.groupDegree]);
-            $('.courseNumber').attr('value', r.courseNumber).text(localGroupUkr[r.courseNumber]);
+    $.get("/api/educationPlans/" + $.urlParam('planId'), function (response) {
+            $('.specialityId').attr('value', response.speciality['id']).text(response.data.speciality['fullName']);
+            $('.plan-info .groupType').attr('value', response.data.groupType).text(localGroupUkr[response.data.groupType]);
+            $('.plan-info .groupDegree').attr('value', response.data.groupDegree).text(localGroupUkr[response.data.groupDegree]);
+            $('.courseNumber').attr('value', response.data.courseNumber).text(localGroupUkr[response.data.courseNumber]);
              var countFirst = 0;
              var countSecond = 0;
-            $.each(r.disciplines, function (i, entity) {
+            $.each(response.data.disciplines, function (i, entity) {
                 addDisciplineIntoTable(entity);
             });
         }
@@ -55,17 +55,17 @@ $('#button-post-discipline').on('click', function () {
 
     $.ajax({
         type: "POST",
-        url: "/api/disciplines/create",
+        url: "/api/disciplines",
         contentType: "application/json",
         data: obj,
-        success: function (data) {
+        success: function (response) {
             $('#discipline-dialog').modal("toggle");
             // location.reload();
-            addDisciplineIntoTable(data);
+            addDisciplineIntoTable(response.data);
         },
-        error: function (e) {
+        error: function (response) {
             alert('Помилка!');
-            console.log(data)
+            console.log(response)
         }
     });
 });

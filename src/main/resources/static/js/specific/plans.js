@@ -149,16 +149,16 @@ $('#button-post-plan-simple').on('click', function() {
 
     $.ajax({
             type: "POST",
-            url: "api/educationPlans/create",
+            url: "api/educationPlans",
             contentType: "application/json",
             data: obj,
-            success: function (plan) {
+            success: function (response) {
                 $('#plan-dialog-simple').modal("toggle");
-                addCourseButton(yearId, specialityId, groupType, courseNumber, plan.id);
+                addCourseButton(yearId, specialityId, groupType, courseNumber, response.data.id);
             },
-            error: function (e) {
+            error: function (response) {
                 alert('Помилка!');
-                console.log(data)
+                console.log(response.message)
             }
         });
 });

@@ -5,7 +5,10 @@ import com.coursed.model.Discipline;
 import com.coursed.model.auth.User;
 import com.coursed.service.DisciplineService;
 import com.coursed.service.UserService;
+import com.coursed.util.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -23,16 +26,24 @@ public class DisciplineResource {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/create")
-    private Discipline createEducationPlan(@RequestBody DisciplineDTO disciplineDTO) {
-        return disciplineService.create(disciplineDTO);
+    @GetMapping
+    public ResponseEntity<GenericResponse> get() {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                disciplineService.findAll()), HttpStatus.OK);
     }
 
-    @GetMapping("/getAll")
-    private Collection<Discipline> getAll()
-    {
-        return disciplineService.findAll();
+    @PostMapping
+    public ResponseEntity<GenericResponse> post(@RequestBody DisciplineDTO disciplineDTO) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                disciplineService.create(disciplineDTO)), HttpStatus.OK);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<GenericResponse> search() {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
+    }
+
+    // OLD
 
     @PostMapping("connectTeacherWithDiscipline")
     private void connectWithTeacher(@RequestParam(name = "disciplineId") Long disciplineId,
