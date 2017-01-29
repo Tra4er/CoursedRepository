@@ -24,13 +24,18 @@ public class UserResource {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<GenericResponse> get(@RequestParam(value = "curatorsOfGroup", required = false) Long groupId) {
+    public ResponseEntity<GenericResponse> get() {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                userService.getAll()), HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<GenericResponse> search(@RequestParam(value = "curatorsOfGroup", required = false) Long groupId) {
         if (groupId != null) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                     userService.getAllGroupCurators(groupId)), HttpStatus.OK);
         }
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                userService.getAll()), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.NO_CONTENT.value(), "success"), HttpStatus.NO_CONTENT);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")

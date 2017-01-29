@@ -59,7 +59,7 @@ $('#teacher-container').on('click', 'input', function(){
 
 
 function reloadCuratorsForGroup(grId){
-    $.getJSON('api/users', {curatorsOfGroup: grId}, function(response){
+    $.getJSON('api/users/search', {curatorsOfGroup: grId}, function(response){
             var htmlRow = "";
             if (response.data.length != 0){
                 $.each( response.data, function (i, curator) {
