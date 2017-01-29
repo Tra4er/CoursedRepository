@@ -53,12 +53,8 @@ public class StudentResource {
 //    @PreAuthorize("hasAnyRole('HEAD','TEACHER', 'SECRETARY')")
     @GetMapping
     public ResponseEntity<GenericResponse> get(@RequestParam(value = "page", required = false) Integer page,
-                                               @RequestParam(value = "size", required = false) Integer size,
-                                               @RequestParam(value = "groupId", required = false) Long groupId) {
-        if(groupId != null) {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    studentService.getAllFromGroup(groupId)), HttpStatus.OK);
-        }
+                                               @RequestParam(value = "size", required = false) Integer size) {
+
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", studentService.getAll(page,size)),
                 HttpStatus.OK);
     }
@@ -78,6 +74,18 @@ public class StudentResource {
 
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", registered.getId()),
                 HttpStatus.CREATED);
+    }
+
+    //    @PreAuthorize("hasAnyRole('HEAD','TEACHER', 'SECRETARY')")
+    @GetMapping("/search")
+    public ResponseEntity<GenericResponse> search(@RequestParam(value = "page", required = false) Integer page,
+                                               @RequestParam(value = "size", required = false) Integer size,
+                                               @RequestParam(value = "groupId", required = false) Long groupId) {
+        if(groupId != null) {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    studentService.getAllFromGroup(groupId)), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.NO_CONTENT.value(), "success"), HttpStatus.NO_CONTENT);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD','TEACHER', 'SECRETARY')")

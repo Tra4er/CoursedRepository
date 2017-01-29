@@ -53,22 +53,7 @@ public class TeacherResource {
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping
     public ResponseEntity<GenericResponse> get(@RequestParam(value = "page", required = false) Integer page,
-                                               @RequestParam(value = "size", required = false) Integer size,
-                                               @RequestParam(value = "curatorsOfGroup", required = false) Long groupId,
-                                               @RequestParam(value = "disciplineId", required = false) Long disciplineId,
-                                               @RequestParam(value = "withDiscipline", required = false) Boolean withDiscipline) {
-        if (groupId != null) {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    teacherService.getAllCuratorsOfGroup(groupId)), HttpStatus.OK);
-        }
-        if (disciplineId != null && withDiscipline) {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    teacherService.getAllTeachersWithDiscipline(disciplineId)), HttpStatus.OK);
-        }
-        if (disciplineId != null && !withDiscipline) {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    teacherService.getAllTeachersWithoutDiscipline(disciplineId)), HttpStatus.OK);
-        }
+                                               @RequestParam(value = "size", required = false) Integer size) {
 
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", teacherService.getAll(page, size)),
                 HttpStatus.OK);
@@ -90,6 +75,29 @@ public class TeacherResource {
 
         return new ResponseEntity<>(new GenericResponse(HttpStatus.CREATED.value(), "success", registered.getId()),
                 HttpStatus.CREATED);
+    }
+
+    //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
+    @GetMapping("/search")
+    public ResponseEntity<GenericResponse> search(@RequestParam(value = "page", required = false) Integer page,
+                                               @RequestParam(value = "size", required = false) Integer size,
+                                               @RequestParam(value = "curatorsOfGroup", required = false) Long groupId,
+                                               @RequestParam(value = "disciplineId", required = false) Long disciplineId,
+                                               @RequestParam(value = "withDiscipline", required = false) Boolean withDiscipline) {
+        if (groupId != null) {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    teacherService.getAllCuratorsOfGroup(groupId)), HttpStatus.OK);
+        }
+        if (disciplineId != null && withDiscipline) {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    teacherService.getAllTeachersWithDiscipline(disciplineId)), HttpStatus.OK);
+        }
+        if (disciplineId != null && !withDiscipline) {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    teacherService.getAllTeachersWithoutDiscipline(disciplineId)), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.NO_CONTENT.value(), "success"), HttpStatus.NO_CONTENT);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")

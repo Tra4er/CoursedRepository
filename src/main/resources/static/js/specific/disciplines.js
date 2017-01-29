@@ -96,7 +96,7 @@ $('tbody').on('click', 'tr .disc-teach-btn', function(){
     var discId = $(this).closest('tr').attr("id");
     var info = $(this).closest('tr').children('td:first').next().text();
     $('#teacher-container').html("<h2 id='"+ discId +"'>" + info + "</h2> <br/>");
-    $.getJSON("/api/teachers", {disciplineId : discId, withDiscipline : false}, function(response){
+    $.getJSON("/api/teachers/search", {disciplineId : discId, withDiscipline : false}, function(response){
         var $tc = $('#teacher-container');
         $.each(response, function(i, teach){
             var item = "<input type='button' id='" + teach.id + "' class='btn btn-default col-xs-12' value = '"
@@ -121,7 +121,7 @@ $('#teacher-container').on('click', 'input', function(){
 
 function reloadTeachersForDiscipline(disciplineId)
 {
-    $.getJSON('/api/teachers', {disciplineId : disciplineId, withDiscipline : true}, function(response){
+    $.getJSON('/api/teachers/search', {disciplineId : disciplineId, withDiscipline : true}, function(response){
         var htmlRow = "";
         if (response.length != 0){
             $.each( response, function (i, teacher) {
