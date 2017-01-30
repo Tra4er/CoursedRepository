@@ -42,9 +42,10 @@ $('#accordion-event').on('click', '.discipline-button', function (e){
     var info = $(this).attr('value');
     var eventType = $(this).closest('.panel').attr('eventType');
     $('#groups-container').html("<h2 id='"+ discId + "' eventType='" + eventType + "'>" + info + "</h2> <br/>");
-    $.getJSON("api/groups/getAllForGrading", {disciplineId : discId, courseNumber: course, semesterNumber: semester}, function(response){
+    $.getJSON("api/groups/search", {filter : "forGrading", disciplineId : discId, courseNumber: course,
+        semesterNumber: semester}, function(response){
         var items = "";
-        $.each(response, function(i, group){
+        $.each(response.data, function(i, group){
             items += "<input type='button' id='" + group.id + "' class='btn btn-success col-xs-12' value = '"
                 + group.speciality['groupsName'] + "-" + group.number + "'/>";
         })

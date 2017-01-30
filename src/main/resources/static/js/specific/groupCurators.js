@@ -8,8 +8,8 @@ $(function(){
 });
 
 function fillCuratorsTable() {
-    $.getJSON("/api/groups/getAll" , function(response){
-        $.each(response, function (i, entity) {
+    $.getJSON("/api/groups" , function(response){
+        $.each(response.data, function (i, entity) {
             var htmlRow = "<tr id=" + entity.id + ">";
              htmlRow +="<td>" + entity.speciality['groupsName'] + "-" + entity.number + "</td>";
             htmlRow +="<td>" + groupType[entity.groupType] + "</td>";
@@ -47,7 +47,7 @@ $('#groupCurators-table > tbody').on('click', 'tr > td > .btn-default', function
 $('#teacher-container').on('click', 'input', function(){
     var gId = $(this).parent().children('h2:first').attr('id');
     var tId= $(this).attr('id');
-    $.post( "api/groups/connectWithTeacher", {groupId: gId, teacherId: tId})
+    $.post( "api/groups/" + gId + "/curators/" + tId)
         .done(function(){
             $('#curator-dialog').modal("hide");
             reloadCuratorsForGroup(gId);

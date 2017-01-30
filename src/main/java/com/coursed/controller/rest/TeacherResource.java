@@ -55,7 +55,7 @@ public class TeacherResource {
     public ResponseEntity<GenericResponse> get(@RequestParam(value = "page", required = false) Integer page,
                                                @RequestParam(value = "size", required = false) Integer size) {
 
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", teacherService.getAll(page, size)),
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", teacherService.getAll()),
                 HttpStatus.OK);
     }
 
@@ -102,7 +102,7 @@ public class TeacherResource {
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping("{id}")
-    public ResponseEntity<GenericResponse> getByUsername(@PathVariable("id") Long id) {
+    public ResponseEntity<GenericResponse> getById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                 teacherService.getById(id)), HttpStatus.OK);
     }

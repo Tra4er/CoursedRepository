@@ -49,7 +49,7 @@ function fillTableFrom(tableId, requestAddress, params) {
 function fillLocalizedTableFrom(tableId, requestAddress, params, local) {
     $.getJSON(requestAddress, function(response){
         //Go through the each entity in the response
-        $.each(response, function (i, entity) {
+        $.each(response.data, function (i, entity) {
             var htmlRow = "<tr>";
             //Go through the each parameter in the entity
             $.each(entity, function (paramName, paramValue) {

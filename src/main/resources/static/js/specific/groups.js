@@ -7,7 +7,7 @@ $(document).ready(function () {
     insertTable(titles, "content-table");
 
     var entityParams = ['id', 'number', 'groupType', 'groupDegree', 'courseNumber'];
-    fillLocalizedTableFrom("content-table", "/api/groups/getAll", entityParams, localGroupUkr);
+    fillLocalizedTableFrom("content-table", "/api/groups", entityParams, localGroupUkr);
 
     fillSelect("courseNumber", courseNumbers);
     fillSelect("groupType", groupType);
@@ -20,7 +20,7 @@ $(document).ready(function () {
 //AJAX post to create a group
 $('#button-group-post').click(function(){
     var form = $('#modal-body-form');
-    sendAjaxPost(form, 'api/groups/create', 'add-dialog');
+    sendAjaxPost(form, 'api/groups', 'add-dialog');
 });
 
 //When the modal hides set to dafault selects and inputs

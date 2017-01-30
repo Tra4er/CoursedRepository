@@ -16,7 +16,7 @@ function fillHeaderOfReport()
             $cont.prepend('<h2>' + plannedEventType[response.data.eventType] + '</h2>');
         });
 
-    $.get('/api/groups/getOne/', {groupId: $.urlParam('groupId')})
+    $.get('/api/groups/' + $.urlParam('groupId'))
         .done(function(response){
             $cont.find('.groupName').text(response.data.speciality['groupsName'] + "-" + response.data.number);
         });

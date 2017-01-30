@@ -35,9 +35,47 @@ public class GroupResource {
     private TeacherService teacherService;
 
     @GetMapping
-    private ResponseEntity<GenericResponse> get(@RequestParam(name = "specialityId", required = false) Long specialityId,
-                                                @RequestParam(name = "semesterId", required = false) Long semesterId) {
+    private ResponseEntity<GenericResponse> get(@RequestParam(value = "page", required = false) Integer page,
+                                                @RequestParam(value = "size", required = false) Integer size) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                groupService.findAll()), HttpStatus.OK);
+    }
 
+    @PostMapping
+    private ResponseEntity<GenericResponse> post(@RequestBody GroupDTO groupDTO) {
+        Semester sem = semesterService.findOne(groupDTO.getSemesterId());
+        Speciality spec = specialityService.findOne(groupDTO.getSpecialityId());
+
+        Group group = new Group(groupDTO.getNumber(), groupDTO.getGroupType(), groupDTO.getGroupDegree(),
+                groupDTO.getCourseNumber(),sem, spec);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.CREATED.value(), "success",
+                groupService.create(group)), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/search")
+    private ResponseEntity<GenericResponse> search(@RequestParam(value = "page", required = false) Integer page,
+                                                   @RequestParam(value = "size", required = false) Integer size,
+                                                   @RequestParam(value = "filter", required = false) String filter,
+                                                   @RequestParam(name = "semesterNumber") SemesterNumber semesterNumber,
+                                                   @RequestParam(name = "courseNumber") CourseNumber courseNumber,
+                                                   @RequestParam(name = "disciplineId") Long disciplineId,
+                                                   @RequestParam(name = "specialityId", required = false) Long specialityId,
+                                                   @RequestParam(name = "semesterId", required = false) Long semesterId) {
+
+        switch (filter) {
+            case "withoutCurators" : {
+                return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                        groupService.findAll()), HttpStatus.OK); // TODO findAll()
+            }
+            case "forGrading" : {
+                if (disciplineId != null && semesterId != null && courseNumber != null) {
+                    return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                            groupService.findAllForGrading(disciplineId, semesterNumber, courseNumber)), HttpStatus.OK);
+                } else {
+                    throw new IllegalArgumentException("Missing parameters.");
+                }
+            }
+        }
         if(specialityId != null && semesterId != null)
         {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
@@ -54,67 +92,27 @@ public class GroupResource {
                     groupService.findAllFromSemester(semesterId)), HttpStatus.OK);
         }
 
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.NO_CONTENT.value(), "success"), HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/{id}")
+    private ResponseEntity<GenericResponse> getById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                groupService.findAll()), HttpStatus.OK);
+                groupService.findOne(id)), HttpStatus.OK);
     }
 
-    @GetMapping("/getAll")
-    private Collection<Group> getGroups(@RequestParam(name = "specialityId", required = false) Long specialityId,
-                                        @RequestParam(name = "semesterId", required = false) Long semesterId) {
-
-        if(specialityId != null && semesterId != null)
-        {
-            return groupService.findAllFromSpecialityAndSemester(specialityId, semesterId);
-        }
-        else if(specialityId != null)
-        {
-            return groupService.findAllFromSpeciality(specialityId);
-        }
-        else if(semesterId != null)
-        {
-            return groupService.findAllFromSemester(semesterId);
-        }
-
-        return groupService.findAll();
-    }
-
-    @GetMapping("/getAllForGrading")
-    private Collection<Group> getGroupsForGrading(@RequestParam(name = "semesterNumber") SemesterNumber semesterNumber,
-                                                  @RequestParam(name = "courseNumber") CourseNumber courseNumber,
-                                                  @RequestParam(name = "disciplineId") Long disciplineId)
-    {
-
-        return groupService.findAllForGrading(disciplineId, semesterNumber, courseNumber);
-    }
-
-    @GetMapping("/getAllWithoutCurators")
-    private Collection<Group> getGroupsWithoutCurators() {
-        return groupService.findAll();
-    }
-
-    @PostMapping("/create")
-    private Group createGroup(@RequestBody GroupDTO groupDTO) {
-        Semester sem = semesterService.findOne(groupDTO.getSemesterId());
-        Speciality spec = specialityService.findOne(groupDTO.getSpecialityId());
-
-        Group group = new Group(groupDTO.getNumber(), groupDTO.getGroupType(), groupDTO.getGroupDegree(),
-                groupDTO.getCourseNumber(),sem, spec);
-        return groupService.create(group);
-    }
-
-    @PostMapping("/connectWithTeacher")
-    private void setGroupCurator(@RequestParam(name = "groupId") Long groupId, @RequestParam(name = "teacherId") Long teacherId){
+    @GetMapping("/{groupId}/curators/{teacherId}")
+    private ResponseEntity<GenericResponse> getById(@PathVariable("groupId") Long groupId,
+                                                    @RequestParam(name = "teacherId") Long teacherId) {
         teacherService.setAsCurator(teacherId, groupId);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
     }
+
+    //OLD TODO
 
     @GetMapping("/getAllFromSemesterFromPlannedEvent")
     private Collection<Group> getGroupsFromSemesterFromPlannedEvent(@RequestParam(name = "plannedEventId")Long plannedEventId) {
-        return groupService.findAllFromSemesterFromPlannedEvent(plannedEventId);
-    }
-
-    @GetMapping("/getOne")
-    private Group getOne(@RequestParam(name = "groupId")Long groupId) {
-        return groupService.findOne(groupId);
+        return groupService.findAllFromSemesterByPlannedEvent(plannedEventId);
     }
 
 }

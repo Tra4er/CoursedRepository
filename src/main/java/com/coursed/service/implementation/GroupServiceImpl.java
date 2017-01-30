@@ -109,7 +109,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Group> findAllFromSemesterFromPlannedEvent(Long plannedEventId) {
+    public List<Group> findAllFromSemesterByPlannedEvent(Long plannedEventId) {
         PlannedEvent plannedEvent = plannedEventRepository.findOne(plannedEventId);
         Semester semester = plannedEvent.getSemester();
         return semester.getGroups();
