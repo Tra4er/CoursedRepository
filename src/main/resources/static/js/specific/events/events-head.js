@@ -21,7 +21,7 @@
 //     var titles = ['id', 'Тип', 'Дата початку', 'Дата завершення'];
 //     insertTable(titles, "content-table");
 //     var entityParams = ['id', 'eventType', 'beginDate', 'expirationDate'];
-//     fillTableFromWithLinks("content-table", "/api/events/getAll", entityParams, "eventType");
+//     fillTableFromWithLinks("content-table", "/api/events", entityParams, "eventType");
 // }
 
 $(function () {
@@ -39,8 +39,8 @@ $(function () {
 
 function fillTablePlannedEvent() {
     var $tableBody = $("#events-table > tbody");
-    $.getJSON("api/events/getAll", function (response) {
-        $.each(response, function (i, entity) {
+    $.getJSON("api/events", function (response) {
+        $.each(response.data, function (i, entity) {
             var htmlRow = "<tr>";
             htmlRow += ("<td><button id='" + entity.id + "' type='button' class='btn btn-" +
             isActuallyEvent(entity.beginDate, entity.expirationDate) +
@@ -85,12 +85,12 @@ $('#button-event-post').on('click', function () {
 
     $.ajax({
         type: 'POST',
-        url: 'api/events/create',
+        url: 'api/events',
         contentType: "application/json",
         data: obj,
-        success: function (data) {
+        success: function (response) {
             $('#add-event-dialog').modal("toggle");
-            // addItem(data);
+            // addItem(response);
         },
         error: function (data) {
             alert("Помилка!");

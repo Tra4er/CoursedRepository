@@ -143,7 +143,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     //    500
     @ExceptionHandler({ReCaptchaUnavailableException.class})
     public ResponseEntity<Object> handleReCaptchaUnavailable(final RuntimeException ex, final WebRequest request) {
-        LOGGER.error("500 Status Code: " + ex.getMessage());
+        LOGGER.error("500 Status Code: " + ex);
         final GenericResponse bodyOfResponse = new GenericResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error",
                 "ReCaptchaUnavailable", "Реєстрація неможлива в даний момент. Спробуйте пізніше.");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
@@ -152,7 +152,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler({MessagingException.class, SSLHandshakeException.class})
     public ResponseEntity<Object> handleMessagingError(final RuntimeException ex, final WebRequest request) {
-        LOGGER.error("500 Status Code: " + ex.getMessage());
+        LOGGER.error("500 Status Code: " + ex);
         final GenericResponse bodyOfResponse = new GenericResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error",
                 "SendingEmailFailed", "Щось пішло не так. Ми не змогли відправити вам листа на емейл.");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
@@ -160,14 +160,15 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler({RegistrationException.class})
     public ResponseEntity<Object> handleRegistrationError(final RuntimeException ex, final WebRequest request) {
-        LOGGER.error("500 Status Code: " + ex.getMessage());
+        LOGGER.error("500 Status Code: " + ex);
         final GenericResponse bodyOfResponse = new GenericResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error",
                 "RegistrationFailed", "Щось пішло не так. Ми не змогли зареєструвати ваш профіль.");
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
     @ExceptionHandler({Exception.class})
-    public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
+    public ResponseEntity<Object> handleInternal(final Exception ex, final WebRequest request) {
+        ex.printStackTrace();
         LOGGER.error("500 Status Code: " + ex);
         final GenericResponse bodyOfResponse = new GenericResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error",
                 "InternalError", "Сталась помилка");

@@ -55,7 +55,7 @@ public class StudentResource {
     public ResponseEntity<GenericResponse> get(@RequestParam(value = "page", required = false) Integer page,
                                                @RequestParam(value = "size", required = false) Integer size) {
 
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", studentService.getAll(page,size)),
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", studentService.getAll()),
                 HttpStatus.OK);
     }
 

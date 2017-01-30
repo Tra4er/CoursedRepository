@@ -11,14 +11,14 @@ $(function () {
 function fillHeaderOfReport()
 {
     var $cont = $('#header-report');
-    $.get('/api/events/getOne/', {plannedEventId: $.urlParam('eventId')})
-        .done(function(data){
-            $cont.prepend('<h2>' + plannedEventType[data.eventType] + '</h2>');
+    $.get('/api/events/' + $.urlParam('eventId'))
+        .done(function(response){
+            $cont.prepend('<h2>' + plannedEventType[response.data.eventType] + '</h2>');
         });
 
     $.get('/api/groups/getOne/', {groupId: $.urlParam('groupId')})
-        .done(function(data){
-            $cont.find('.groupName').text(data.speciality['groupsName'] + "-" + data.number);
+        .done(function(response){
+            $cont.find('.groupName').text(response.data.speciality['groupsName'] + "-" + response.data.number);
         });
     //
     // $cont.append('Навчальний рік ' + "");
@@ -61,7 +61,7 @@ function fillRowsReport(disciplines, teachers){
                 disciplinesCountA.push(0);
                 disciplinesCountNA.push(0);
             }
-            $.each(response.data, function(i, student){
+            $.each(response.data.content, function(i, student){
                 var countA = 0;
                 var countNA = 0;
                 var htmlRow = '<tr class="'+ student.id  + '"><td>' + ++studentNumber + '</td><td>'+ student.lastName +'</td>';

@@ -11,11 +11,11 @@ function init(){
 }
 function fillTable(){
     var entityParams = ['id', 'beginDate', 'expirationDate', 'eventType'];
-    // fillTableFrom("content-table", "/api/events/getAll", entityParams);
-    var requestAddress = "/api/events/getAll";
+    // fillTableFrom("content-table", "/api/events", entityParams);
+    var requestAddress = "/api/events";
     $.getJSON(requestAddress, function(response){
         //Go through the each entity in the response
-        $.each(response, function (i, entity) {
+        $.each(response.data, function (i, entity) {
             var htmlRow = "<tr>";
             //Go through the each parameter in the entity
             $.each(entity, function (paramName, paramValue) {

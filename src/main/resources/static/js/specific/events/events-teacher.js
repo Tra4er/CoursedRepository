@@ -1,7 +1,7 @@
 $(function () {
     // get all current planned events
-    $.getJSON('/api/events/getAllFromCurrentYear', function (entity) {
-        $.each(entity, function (i, item) {
+    $.getJSON('/api/events/search', {filter: "currentYear"}, function (response) {
+        $.each(response.data, function (i, item) {
             var id = item.id;
             var isEventActual = isActuallyEvent(item.beginDate, item.expirationDate);
             var body = '<div class="panel panel-' + isEventActual + '" id ="' + id + '" eventType="' +
@@ -60,7 +60,7 @@ $('#groups-container').on('click', 'input', function(){
     var eventType = $element.attr('eventType');
     var groupId= $(this).attr('id');
     $.getJSON( "api/students", {groupId: groupId})
-        .done(function(responce){
+        .done(function(response){
             $('.atest-content').html('');
             $('#discipline-groups-dialog').modal("hide");
             $('#accordion-event').addClass('col-xs-6');
@@ -68,7 +68,7 @@ $('#groups-container').on('click', 'input', function(){
             var htmlTable = '<div class="col-xs-6 atest-content"><h2 disciplineId ="'+ discId + '">' + discName+ '</h2><table id="event-content-table" class="table table-hover table-striped"><thead><tr><th>№</th><th>ПІБ</th>';
             htmlTable += '<th>' + event + '</th></tr></thead><tbody>';
             var counter = 0;
-            $.each(responce.data, function(i,student){
+            $.each(response.data.content, function(i,student){
                 htmlTable += '<tr><td studentId="'+ student.id +'">'+ ++counter +'</td><td>' + student.lastName + " " + student.firstName + '</td><td>';
                 htmlTable += '<div class="material-switch pull-right"><input id="switch'+ student.id +'" name="' + student.id + '" type="checkbox"/><label for="switch'+ student.id +'" class="label-success"></label></div></td></tr>'
             });
