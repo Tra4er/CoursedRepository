@@ -24,7 +24,7 @@ public class AttestationResource {
     private AttestationService attestationService;
 
     @GetMapping
-    private ResponseEntity<GenericResponse> getAll(){
+    private ResponseEntity<GenericResponse> get(){
         return null;
     }
 
