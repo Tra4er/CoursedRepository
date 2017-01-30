@@ -9,7 +9,8 @@ import java.util.List;
  * Created by Hexray on 11.12.2016.
  */
 public interface DisciplineService {
-    List<Discipline> findAll();
+    Discipline getById(Long id);
+    List<Discipline> getAll();
     Discipline create(DisciplineDTO disciplineDTO);
     void connectWithTeacher(Long disciplineId, Long teacherId);
     List<Discipline> getAllActualConnectedWithTeacher(Long teacherId, Long plannedEventId);

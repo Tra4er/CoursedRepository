@@ -104,8 +104,8 @@ $('#events-table > tbody').on('click', 'tr > td > .btn', function(){
     var info = $(this).text();
     $('#groups-container').html("<h2 id='"+ eventId +"'>" + info + "</h2><br/>");
 
-    $.getJSON("api/groups/getAllFromSemesterFromPlannedEvent", {plannedEventId: eventId}, function(response){
-        $.each(response, function(i, group){
+    $.getJSON("api/groups/search", {plannedEventId: eventId}, function(response){
+        $.each(response.data, function(i, group){
             var item = "<a href='/events/report?eventId=" + eventId + "&groupId=" + group.id + "'><input type='button' id='" + group.id + "' class='btn btn-default col-xs-12' value = '"
                 + group.speciality['groupsName'] + "-" + group.number;
             if (group.groupType == 'DISTANCE_FORM') item+= " (" + localGroupUkr["DISTANCE_FORM"] + ")'/></a>"

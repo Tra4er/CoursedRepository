@@ -38,7 +38,12 @@ public class DisciplineServiceImpl implements DisciplineService {
     private GroupRepository groupRepository;
 
     @Override
-    public List<Discipline> findAll() {
+    public Discipline getById(Long id) {
+        return disciplineRepository.findOne(id);
+    }
+
+    @Override
+    public List<Discipline> getAll() {
         return disciplineRepository.findAll();
     }
 

@@ -29,7 +29,7 @@ public class DisciplineResource {
     @GetMapping
     public ResponseEntity<GenericResponse> get() {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                disciplineService.findAll()), HttpStatus.OK);
+                disciplineService.getAll()), HttpStatus.OK);
     }
 
     @PostMapping
@@ -41,6 +41,12 @@ public class DisciplineResource {
     @GetMapping("/search")
     public ResponseEntity<GenericResponse> search() {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.NO_CONTENT.value(), "success"), HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("[id}")
+    public ResponseEntity<GenericResponse> getById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                disciplineService.getById(id)), HttpStatus.OK);
     }
 
     // OLD

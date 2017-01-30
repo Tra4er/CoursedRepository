@@ -56,6 +56,7 @@ public class GroupResource {
     private ResponseEntity<GenericResponse> search(@RequestParam(value = "page", required = false) Integer page,
                                                    @RequestParam(value = "size", required = false) Integer size,
                                                    @RequestParam(value = "filter", required = false) String filter,
+                                                   @RequestParam(name = "plannedEventId")Long plannedEventId,
                                                    @RequestParam(name = "semesterNumber") SemesterNumber semesterNumber,
                                                    @RequestParam(name = "courseNumber") CourseNumber courseNumber,
                                                    @RequestParam(name = "disciplineId") Long disciplineId,
@@ -76,8 +77,11 @@ public class GroupResource {
                 }
             }
         }
-        if(specialityId != null && semesterId != null)
-        {
+        if(plannedEventId != null) {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    groupService.findAllByPlannedEvent(plannedEventId)), HttpStatus.OK);
+        }
+        if(specialityId != null && semesterId != null) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                     groupService.findAllFromSpecialityAndSemester(specialityId, semesterId)), HttpStatus.OK);
         }
@@ -106,13 +110,6 @@ public class GroupResource {
                                                     @RequestParam(name = "teacherId") Long teacherId) {
         teacherService.setAsCurator(teacherId, groupId);
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
-    }
-
-    //OLD TODO
-
-    @GetMapping("/getAllFromSemesterFromPlannedEvent")
-    private Collection<Group> getGroupsFromSemesterFromPlannedEvent(@RequestParam(name = "plannedEventId")Long plannedEventId) {
-        return groupService.findAllFromSemesterByPlannedEvent(plannedEventId);
     }
 
 }
