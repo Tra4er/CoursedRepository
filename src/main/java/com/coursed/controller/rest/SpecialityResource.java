@@ -16,24 +16,21 @@ import java.util.Collection;
  */
 @RestController
 @RequestMapping("/api/specialities")
-public class SpecialityResourse {
+public class SpecialityResource {
+
     @Autowired
     private SpecialityService specialityService;
 
     @GetMapping
-    @ResponseBody
     public ResponseEntity<GenericResponse> get() {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                 specialityService.findAll()), HttpStatus.OK);
     }
 
-    @GetMapping("/getAll")
-    private Collection<Speciality> getSpecialities() {
-        return specialityService.findAll();
+    @PostMapping
+    public ResponseEntity<GenericResponse> post(@RequestBody SpecialityDTO specialityDTO) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.CREATED.value(), "success",
+                specialityService.create(specialityDTO)), HttpStatus.CREATED);
     }
 
-    @PostMapping("/create")
-    private Speciality createSpeciality(@RequestBody SpecialityDTO specialityDTO) {
-        return specialityService.create(specialityDTO);
-    }
 }

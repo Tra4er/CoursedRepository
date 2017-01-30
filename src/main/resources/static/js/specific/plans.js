@@ -16,8 +16,8 @@ if ($(e.target).attr('id') == 'one-plan') {
 
 function getSpecialities() {
     var spec = [];
-    $.getJSON("api/specialities/getAll", function(response){
-        $.each(response, function(key, speciality){
+    $.getJSON("api/specialities", function(response){
+        $.each(response.data, function(key, speciality){
             spec.push({
                 id: speciality.id,
                 name : speciality.fullName

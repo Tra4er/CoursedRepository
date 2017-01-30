@@ -13,7 +13,7 @@ $(document).ready(function () {
     fillSelect("groupType", groupType);
     fillSelect("groupDegree", groupDegree);
     fillSelectYear("yearId", "/api/years");
-    fillSelectFrom("specialityId", "/api/specialities/getAll", "fullName");
+    fillSelectFrom("specialityId", "/api/specialities", "fullName");
 
 });
 
