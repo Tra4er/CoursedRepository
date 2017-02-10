@@ -29,6 +29,6 @@ public class TokensPurgeTask {
         Date now = Date.from(Instant.now());
 
         passwordTokenRepository.deleteAllExpiredSince(now);
-//        verificationTokenRepository.deleteAllExpiredAndActivatedSince(now); // TODO
+        verificationTokenRepository.deleteAllExpiredAndActivatedSince(now);
     }
 }
