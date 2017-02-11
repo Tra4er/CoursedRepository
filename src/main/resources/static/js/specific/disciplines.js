@@ -98,7 +98,7 @@ $('tbody').on('click', 'tr .disc-teach-btn', function(){
     $('#teacher-container').html("<h2 id='"+ discId +"'>" + info + "</h2> <br/>");
     $.getJSON("/api/teachers/search", {disciplineId : discId, withDiscipline : false}, function(response){
         var $tc = $('#teacher-container');
-        $.each(response, function(i, teach){
+        $.each(response.data, function(i, teach){
             var item = "<input type='button' id='" + teach.id + "' class='btn btn-default col-xs-12' value = '"
                 + teach.lastName + " " + teach.firstName + " " + teach.patronymic + "'/>";
             $tc.append(item);
