@@ -40,7 +40,7 @@ public class DisciplineResource {
 
     @GetMapping("/search")
     public ResponseEntity<GenericResponse> search() {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.NO_CONTENT.value(), "success"), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("[id}")

@@ -34,15 +34,17 @@ public class UserResource {
     @GetMapping("/search")
     public ResponseEntity<GenericResponse> search(@RequestParam(value = "filter", required = false) String filter,
                                                   @RequestParam(value = "curatorsOfGroup", required = false) Long groupId) {
-        if (filter.equals("unconfirmed")) {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    userService.getAllUnconfirmedTeachers()), HttpStatus.OK);
+        if(filter != null) {
+            if (filter.equals("unconfirmed")) {
+                return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                        userService.getAllUnconfirmedTeachers()), HttpStatus.OK);
+            }
         }
         if (groupId != null) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                     userService.getAllGroupCurators(groupId)), HttpStatus.OK);
         }
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.NO_CONTENT.value(), "success"), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")

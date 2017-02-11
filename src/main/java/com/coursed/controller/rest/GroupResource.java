@@ -56,25 +56,27 @@ public class GroupResource {
     private ResponseEntity<GenericResponse> search(@RequestParam(value = "page", required = false) Integer page,
                                                    @RequestParam(value = "size", required = false) Integer size,
                                                    @RequestParam(value = "filter", required = false) String filter,
-                                                   @RequestParam(name = "plannedEventId")Long plannedEventId,
-                                                   @RequestParam(name = "semesterNumber") SemesterNumber semesterNumber,
-                                                   @RequestParam(name = "courseNumber") CourseNumber courseNumber,
-                                                   @RequestParam(name = "disciplineId") Long disciplineId,
+                                                   @RequestParam(name = "plannedEventId", required = false)Long plannedEventId,
+                                                   @RequestParam(name = "semesterNumber", required = false) SemesterNumber semesterNumber,
+                                                   @RequestParam(name = "courseNumber", required = false) CourseNumber courseNumber,
+                                                   @RequestParam(name = "disciplineId", required = false) Long disciplineId,
                                                    @RequestParam(name = "specialityId", required = false) Long specialityId,
                                                    @RequestParam(name = "semesterId", required = false) Long semesterId) {
-
-        switch (filter) {
-            case "withoutCurators" : {
-                return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                        groupService.findAll()), HttpStatus.OK); // TODO findAll()
-            }
-            case "forGrading" : {
-                if (disciplineId != null && semesterId != null && courseNumber != null) {
+        if(filter != null) {
+            switch (filter) {
+                case "withoutCurators": {
                     return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                            groupService.findAllForGrading(disciplineId, semesterNumber, courseNumber)), HttpStatus.OK);
-                } else {
-                    throw new IllegalArgumentException("Missing parameters.");
+                            groupService.findAll()), HttpStatus.OK); // TODO findAll()
                 }
+                case "forGrading": {
+                    if (disciplineId != null && semesterId != null && courseNumber != null) {
+                        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                                groupService.findAllForGrading(disciplineId, semesterNumber, courseNumber)), HttpStatus.OK);
+                    } else {
+                        throw new IllegalArgumentException("Missing parameters.");
+                    }
+                }
+                default : break;
             }
         }
         if(plannedEventId != null) {
@@ -96,7 +98,7 @@ public class GroupResource {
                     groupService.findAllFromSemester(semesterId)), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.NO_CONTENT.value(), "success"), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}")
