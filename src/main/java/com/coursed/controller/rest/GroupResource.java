@@ -105,6 +105,12 @@ public class GroupResource {
                 groupService.findOne(id)), HttpStatus.OK);
     }
 
+    @GetMapping("/{groupId}/curators")
+    private ResponseEntity<GenericResponse> getCurators(@PathVariable("groupId") Long groupId) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                groupService.getCurators(groupId)), HttpStatus.OK);
+    }
+
     @PostMapping("/{groupId}/curators/{teacherId}")
     private ResponseEntity<GenericResponse> setCurator(@PathVariable("groupId") Long groupId,
                                                     @RequestParam(name = "teacherId") Long teacherId) {

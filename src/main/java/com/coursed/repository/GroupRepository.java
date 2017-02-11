@@ -1,6 +1,9 @@
 package com.coursed.repository;
 
+import com.coursed.dto.TeacherDTO;
 import com.coursed.model.Group;
+import com.coursed.model.Teacher;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +15,8 @@ import java.util.List;
 @Repository
 public interface GroupRepository extends CrudRepository<Group, Long> {
     List<Group> findAll();
+
+    @Query("select new com.coursed.dto.TeacherDTO(c.id, c.firstName, c.lastName, c.patronymic, c.phoneNumber) " +
+            "from com.coursed.model.Group g join g.curators c where g.id = ?1")
+    List<TeacherDTO> findCurators(Long groupId);
 }

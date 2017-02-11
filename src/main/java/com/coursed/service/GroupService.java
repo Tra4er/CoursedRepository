@@ -1,5 +1,6 @@
 package com.coursed.service;
 
+import com.coursed.dto.TeacherDTO;
 import com.coursed.model.Group;
 import com.coursed.model.enums.CourseNumber;
 import com.coursed.model.enums.SemesterNumber;
@@ -15,6 +16,7 @@ public interface GroupService {
     List<Group> findAllFromSpeciality(Long specialityId);
     List<Group> findAllFromSemester(Long semesterId);
     List<Group> findAllFromSpecialityAndSemester(Long specialityId, Long semesterId);
+    List<TeacherDTO> getCurators(Long groupId);
     List<Group> findAllWithoutCurator(Long semesterId);
     List<Group> findAllForGrading(Long educationPlanId, SemesterNumber semesterNumber, CourseNumber courseNumber);
     List<Group> findAllByPlannedEvent(Long plannedEventId);

@@ -1,5 +1,6 @@
 package com.coursed.service.implementation;
 
+import com.coursed.dto.TeacherDTO;
 import com.coursed.model.*;
 import com.coursed.model.enums.CourseNumber;
 import com.coursed.model.enums.SemesterNumber;
@@ -82,6 +83,11 @@ public class GroupServiceImpl implements GroupService {
             return semester.getGroups().stream().filter(speciality.getGroups()::contains).collect(Collectors.toList());
         }
         return null;
+    }
+
+    @Override
+    public List<TeacherDTO> getCurators(Long groupId) {
+        return groupRepository.findCurators(groupId);
     }
 
     @Override
