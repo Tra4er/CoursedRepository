@@ -1,7 +1,10 @@
 package com.coursed;
 
+import com.coursed.model.Teacher;
+import com.coursed.repository.TeacherRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -12,8 +15,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class ApplicationTests {
 
+    @Autowired
+    TeacherRepository teacherRepository;
+
     @Test
     public void contextLoads() {
+        System.out.println("Result: ");
+        System.out.println(teacherRepository.findAllInDTO());
+//        for(Object[] items : teacherRepository.findM()) {
+//            String t = (String)items[0];
+//            System.out.println(t);
+//        }
     }
 
 }

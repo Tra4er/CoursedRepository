@@ -1,5 +1,6 @@
 package com.coursed.service;
 
+import com.coursed.dto.TeacherDTO;
 import com.coursed.model.Teacher;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public interface TeacherService {
     void create(Teacher teacher);
     Teacher getById(Long id);
-    List<Teacher> getAll();
+    List<TeacherDTO> getAll();
     List<Teacher> getAll(int page, int size);
     List<Teacher> getAllCuratorsOfGroup(Long groupId);
     void setAsCurator(Long teacherId, Long groupId);

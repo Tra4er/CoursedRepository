@@ -1,5 +1,6 @@
 package com.coursed.service.implementation;
 
+import com.coursed.dto.TeacherDTO;
 import com.coursed.error.exception.PageSizeTooBigException;
 import com.coursed.model.Discipline;
 import com.coursed.model.Group;
@@ -50,8 +51,9 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Teacher> getAll() {
-        return teacherRepository.findAll(new PageRequest(DEFAULT_PAGE, DEFAULT_PAGE_SIZE));
+    public List<TeacherDTO> getAll() {
+//        return teacherRepository.findAll(new PageRequest(DEFAULT_PAGE, DEFAULT_PAGE_SIZE));
+        return teacherRepository.findAllInDTO();
     }
 
     @Override

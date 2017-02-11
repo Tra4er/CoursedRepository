@@ -38,12 +38,11 @@ public class Teacher {
     public Teacher() {
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public Teacher(String firstName, String lastName, String patronymic, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.patronymic = patronymic;
+        this.phoneNumber = phoneNumber;
     }
 
     public Teacher(String firstName, String lastName, String patronymic, List<FinalGrade> finalGrades, List<Discipline> disciplines) {
@@ -60,6 +59,14 @@ public class Teacher {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getFirstName() {
@@ -116,5 +123,20 @@ public class Teacher {
 
     public void setCuratedGroups(List<Group> curatedGroups) {
         this.curatedGroups = curatedGroups;
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id=" + id +
+                ", user=" + user +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", finalGrades=" + finalGrades +
+                ", disciplines=" + disciplines +
+                ", curatedGroups=" + curatedGroups +
+                '}';
     }
 }
