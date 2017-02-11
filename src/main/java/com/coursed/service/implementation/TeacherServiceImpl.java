@@ -74,7 +74,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void setAsCurator(Long teacherId, Long groupId) {
+    public void setAsCurator(Long teacherId, Long groupId) { // TODO strange
         Teacher teacher = teacherRepository.findOne(teacherId);
         Group group = groupRepository.findOne(groupId);
 
