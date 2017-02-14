@@ -80,10 +80,17 @@ public class TeacherResource {
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping("/search")
     public ResponseEntity<GenericResponse> search(@RequestParam(value = "page", required = false) Integer page,
-                                               @RequestParam(value = "size", required = false) Integer size,
-                                               @RequestParam(value = "curatorsOfGroup", required = false) Long groupId,
-                                               @RequestParam(value = "disciplineId", required = false) Long disciplineId,
-                                               @RequestParam(value = "withDiscipline", required = false) Boolean withDiscipline) {
+                                                  @RequestParam(value = "size", required = false) Integer size,
+                                                  @RequestParam(value = "filter", required = false) String filter,
+                                                  @RequestParam(value = "curatorsOfGroup", required = false) Long groupId,
+                                                  @RequestParam(value = "disciplineId", required = false) Long disciplineId,
+                                                  @RequestParam(value = "withDiscipline", required = false) Boolean withDiscipline) {
+        if (filter != null) {
+            if (filter.equals("unconfirmed")) {
+                return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                        teacherService.getAllUnconfirmed()), HttpStatus.OK);
+            }
+        }
         if (groupId != null) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                     teacherService.getAllCuratorsOfGroup(groupId)), HttpStatus.OK);
@@ -103,6 +110,21 @@ public class TeacherResource {
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping("{id}")
     public ResponseEntity<GenericResponse> getById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                teacherService.getById(id)), HttpStatus.OK);
+    }
+
+    //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
+    @DeleteMapping("{id}")
+    public ResponseEntity<GenericResponse> deleteById(@PathVariable("id") Long id) {
+        teacherService.delete(id);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
+    }
+
+    //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
+    @PostMapping("{id}/confirm")
+    public ResponseEntity<GenericResponse> confirm(@PathVariable("id") Long id) {
+        teacherService.confirmTeacher(id);
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                 teacherService.getById(id)), HttpStatus.OK);
     }

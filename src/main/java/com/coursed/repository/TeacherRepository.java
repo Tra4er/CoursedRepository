@@ -20,4 +20,9 @@ public interface TeacherRepository extends CrudRepository<Teacher, Long> {
     @Query("select new com.coursed.dto.TeacherDTO(t.id, t.firstName, t.lastName, t.patronymic, t.phoneNumber) " +
             "from Teacher t")
     List<TeacherDTO> findAllInDTO();
+
+    @Query("SELECT new com.coursed.dto.TeacherDTO(t.id, t.firstName, t.lastName, t.patronymic, t.phoneNumber) " +
+            "FROM Teacher t WHERE t.user.id " +
+            "NOT IN (SELECT u.id FROM User u JOIN u.roles r where r.name = 'ROLE_TEACHER')")
+    List<TeacherDTO> findAllUnconfirmed();
 }

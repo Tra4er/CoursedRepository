@@ -11,6 +11,7 @@ import com.coursed.repository.GroupRepository;
 import com.coursed.repository.RoleRepository;
 import com.coursed.repository.TeacherRepository;
 import com.coursed.service.TeacherService;
+import com.coursed.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,11 @@ public class TeacherServiceImpl implements TeacherService {
     @Autowired
     private DisciplineRepository disciplineRepository;
 
+    @Autowired
+    private UserService userService;
+
     @Override
-    public void create(Teacher teacher) {
+    public void create(Teacher teacher) { // TODO change to save and check if teacher exist
         teacherRepository.save(teacher);
     }
 
@@ -73,6 +77,13 @@ public class TeacherServiceImpl implements TeacherService {
                 .collect(Collectors.toList());
     }
 
+
+    @Override
+    public void delete(Long teacherId) {
+        Teacher teacher = teacherRepository.findOne(teacherId);
+        userService.deleteUser(teacher.getUser().getId());
+    }
+
     @Override
     public void setAsCurator(Long teacherId, Long groupId) { // TODO strange
         Teacher teacher = teacherRepository.findOne(teacherId);
@@ -83,6 +94,23 @@ public class TeacherServiceImpl implements TeacherService {
 
         group.setCurators(curators);
         groupRepository.save(group);
+    }
+
+    @Override
+    public List<TeacherDTO> getAllUnconfirmed() {
+        return teacherRepository.findAllUnconfirmed();
+    }
+
+    @Override
+    public void confirmTeacher(Long teacherId) {
+        Role role = roleRepository.findByName("ROLE_TEACHER");
+        Teacher teacher = teacherRepository.findOne(teacherId);
+        if (role != null) {
+            userService.connectUserWithRole(teacher.getUser(), role);
+        } else {
+            throw new RuntimeException("There no base role ROLE_TEACHER");
+        }
+
     }
 
     @Override

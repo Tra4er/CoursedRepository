@@ -14,7 +14,10 @@ public interface TeacherService {
     List<TeacherDTO> getAll();
     List<Teacher> getAll(int page, int size);
     List<Teacher> getAllCuratorsOfGroup(Long groupId);
+    void delete(Long teacherId);
     void setAsCurator(Long teacherId, Long groupId);
+    List<TeacherDTO> getAllUnconfirmed();
+    void confirmTeacher(Long teacherId);
     List<Teacher> getAllTeachersWithoutDiscipline(Long disciplineId);
     List<Teacher> getAllTeachersWithDiscipline(Long disciplineId);
 }

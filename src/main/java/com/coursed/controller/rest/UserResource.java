@@ -71,12 +71,12 @@ public class UserResource {
     }
 
     //TODO: solve n+1 JPA problem via avoiding traversal of unfetched entities when JSON is creating
-//    @GetMapping("/getAllUnconfirmedTeachers")
-//    private Set<Object> getAllUnconfirmedTeachers() {
+//    @GetMapping("/getAllUnconfirmed")
+//    private Set<Object> getAllUnconfirmed() {
 //
 //        Set<Object> json = new HashSet<>();
 //
-//        List<User> UnconfirmedTeachers = userService.getAllUnconfirmedTeachers();
+//        List<User> UnconfirmedTeachers = userService.getAllUnconfirmed();
 //
 //        for (User user : UnconfirmedTeachers) {
 //            Map<String, Object> value = new HashMap<>();

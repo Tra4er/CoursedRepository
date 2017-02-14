@@ -167,7 +167,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUnconfirmedTeachers() {
-//        System.out.println(userRepository.findM());
         return userRepository.findAllUnconfirmedTeachers();
     }
 
