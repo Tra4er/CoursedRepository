@@ -1,8 +1,10 @@
 package com.coursed.service;
 
+import com.coursed.dto.StudentDTO;
 import com.coursed.dto.UserStudentDTO;
 import com.coursed.model.Student;
 import com.coursed.model.auth.User;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -11,8 +13,8 @@ import java.util.List;
  */
 public interface StudentService {
     void create(Student student);
-    Student getById(Long id);
-    List<Student> getAll();
-    List<Student> getAll(int page, int size);
+    StudentDTO getById(Long id);
+    Page<StudentDTO.StudentTitleDTO> getAllInDTO();
+    Page<StudentDTO.StudentTitleDTO> getAllInDTO(int page, int size);
     List<Student> getAllFromGroup(Long groupId);
 }

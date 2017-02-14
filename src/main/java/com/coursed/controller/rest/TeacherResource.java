@@ -55,7 +55,11 @@ public class TeacherResource {
     public ResponseEntity<GenericResponse> get(@RequestParam(value = "page", required = false) Integer page,
                                                @RequestParam(value = "size", required = false) Integer size) {
 
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", teacherService.getAll()),
+        if(page != null && size != null) {
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    teacherService.getAllInDTO(page, size)), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", teacherService.getAllInDTO()),
                 HttpStatus.OK);
     }
 
@@ -88,7 +92,7 @@ public class TeacherResource {
         if (filter != null) {
             if (filter.equals("unconfirmed")) {
                 return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                        teacherService.getAllUnconfirmed()), HttpStatus.OK);
+                        teacherService.getAllUnconfirmed(page, size)), HttpStatus.OK);
             }
         }
         if (groupId != null) {

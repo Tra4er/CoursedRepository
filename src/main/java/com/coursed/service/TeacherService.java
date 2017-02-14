@@ -2,6 +2,7 @@ package com.coursed.service;
 
 import com.coursed.dto.TeacherDTO;
 import com.coursed.model.Teacher;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
  */
 public interface TeacherService {
     void create(Teacher teacher);
-    Teacher getById(Long id);
-    List<TeacherDTO> getAll();
-    List<Teacher> getAll(int page, int size);
-    List<Teacher> getAllCuratorsOfGroup(Long groupId);
     void delete(Long teacherId);
+    Teacher getById(Long id);
+    Page<TeacherDTO.TeacherTitleDTO> getAllInDTO();
+    Page<TeacherDTO.TeacherTitleDTO> getAllInDTO(int page, int size);
+    Page<TeacherDTO.TeacherTitleDTO> getAllUnconfirmed(int page, int size);
+    List<Teacher> getAllCuratorsOfGroup(Long groupId);
     void setAsCurator(Long teacherId, Long groupId);
-    List<TeacherDTO> getAllUnconfirmed();
     void confirmTeacher(Long teacherId);
     List<Teacher> getAllTeachersWithoutDiscipline(Long disciplineId);
     List<Teacher> getAllTeachersWithDiscipline(Long disciplineId);

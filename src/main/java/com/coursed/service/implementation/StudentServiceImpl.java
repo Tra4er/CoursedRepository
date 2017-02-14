@@ -1,5 +1,6 @@
 package com.coursed.service.implementation;
 
+import com.coursed.dto.StudentDTO;
 import com.coursed.error.exception.PageSizeTooBigException;
 import com.coursed.model.Group;
 import com.coursed.model.Student;
@@ -11,6 +12,7 @@ import com.coursed.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,7 @@ public class StudentServiceImpl implements StudentService {
 
     public static final int DEFAULT_PAGE = 1;
     public static final int DEFAULT_PAGE_SIZE = 10;
-    public static final int MAX_PAGE_SIZE = 20;
+    public static final int MAX_PAGE_SIZE = 10;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StudentServiceImpl.class);
 
@@ -46,21 +48,21 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student getById(Long id) {
-        return studentRepository.findOne(id);
+    public StudentDTO getById(Long id) {
+        return studentRepository.findOneInDTO(id);
     }
 
     @Override
-    public List<Student> getAll() {
-        return studentRepository.findAll(new PageRequest(DEFAULT_PAGE, DEFAULT_PAGE_SIZE));
+    public Page<StudentDTO.StudentTitleDTO> getAllInDTO() {
+        return studentRepository.findAllInDTO(new PageRequest(DEFAULT_PAGE, MAX_PAGE_SIZE));
     }
 
     @Override
-    public List<Student> getAll(int page, int size) {
+    public Page<StudentDTO.StudentTitleDTO> getAllInDTO(int page, int size) {
         if(size > MAX_PAGE_SIZE) {
             throw new PageSizeTooBigException("Requested size is too big.");
         }
-        return studentRepository.findAll(new PageRequest(page, size));
+        return studentRepository.findAllInDTO(new PageRequest(page, size));
     }
 
     @Override

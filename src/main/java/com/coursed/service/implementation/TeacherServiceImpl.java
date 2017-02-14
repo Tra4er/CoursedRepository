@@ -13,6 +13,7 @@ import com.coursed.repository.TeacherRepository;
 import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -50,22 +51,27 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public void delete(Long teacherId) {
+        Teacher teacher = teacherRepository.findOne(teacherId);
+        userService.deleteUser(teacher.getUser().getId());
+    }
+
+    @Override
     public Teacher getById(Long id) {
         return teacherRepository.findOne(id);
     }
 
     @Override
-    public List<TeacherDTO> getAll() {
-//        return teacherRepository.findAll(new PageRequest(DEFAULT_PAGE, DEFAULT_PAGE_SIZE));
-        return teacherRepository.findAllInDTO();
+    public Page<TeacherDTO.TeacherTitleDTO> getAllInDTO() {
+        return teacherRepository.findAllInDTO(new PageRequest(DEFAULT_PAGE, MAX_PAGE_SIZE));
     }
 
     @Override
-    public List<Teacher> getAll(int page, int size) {
+    public Page<TeacherDTO.TeacherTitleDTO> getAllInDTO(int page, int size) {
         if(size > MAX_PAGE_SIZE) {
             throw new PageSizeTooBigException("Requested size is too big.");
         }
-        return teacherRepository.findAll(new PageRequest(page, size));
+        return teacherRepository.findAllInDTO(new PageRequest(page, size));
     }
 
     @Override
@@ -77,11 +83,12 @@ public class TeacherServiceImpl implements TeacherService {
                 .collect(Collectors.toList());
     }
 
-
     @Override
-    public void delete(Long teacherId) {
-        Teacher teacher = teacherRepository.findOne(teacherId);
-        userService.deleteUser(teacher.getUser().getId());
+    public Page<TeacherDTO.TeacherTitleDTO> getAllUnconfirmed(int page, int size) {
+        if(size > MAX_PAGE_SIZE) {
+            throw new PageSizeTooBigException("Requested size is too big.");
+        }
+        return teacherRepository.findAllUnconfirmedInDTO(new PageRequest(page, size));
     }
 
     @Override
@@ -94,11 +101,6 @@ public class TeacherServiceImpl implements TeacherService {
 
         group.setCurators(curators);
         groupRepository.save(group);
-    }
-
-    @Override
-    public List<TeacherDTO> getAllUnconfirmed() {
-        return teacherRepository.findAllUnconfirmed();
     }
 
     @Override

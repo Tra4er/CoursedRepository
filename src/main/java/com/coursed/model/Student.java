@@ -57,7 +57,9 @@ public class Student {
         this.user = user;
     }
 
-    public Student(String firstName, String lastName, String patronymic, String address, String gradeBookNumber, Date birthDate, StudentEducationStatus studentEducationStatus, Boolean isBudgetStudent, String additionalInformation, String parentsInfo) {
+    public Student(String firstName, String lastName, String patronymic, String address, String gradeBookNumber,
+                   Date birthDate, StudentEducationStatus studentEducationStatus, Boolean isBudgetStudent,
+                   String additionalInformation, String parentsInfo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
