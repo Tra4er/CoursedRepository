@@ -23,7 +23,11 @@ public interface UserRepository extends CrudRepository<User, Long> {
 //    @Query("SELECT users FROM User users INNER JOIN users.roles " +
 //            "WHERE role_id = SELECT role.id FROM Role role WHERE role.name = 'ROLE_TEACHER'")
     //AND role_id IN SELECT r.id FROM Role r WHERE r.name = 'ROLE_TEACHER'
-    @Query("SELECT DISTINCT u FROM User AS u LEFT JOIN FETCH u.roles WHERE u.isATeacher = true AND role_id != 3")
+//    @Query("SELECT DISTINCT u FROM User AS u LEFT JOIN FETCH u.roles WHERE u.isATeacher = true AND role_id != 3")
+//    List<User> findAllUnconfirmedTeachers();
+
+    @Query("SELECT u FROM User u WHERE u.isATeacher = true AND u.id NOT IN (" +
+            "SELECT u2.id FROM User u2 JOIN u2.roles r where r.name = 'ROLE_TEACHER')")
     List<User> findAllUnconfirmedTeachers();
 
 //    @Query("SELECT dis FROM Discipline dis INNER JOIN dis.teachers WHERE teacher_id = :teacherid")
