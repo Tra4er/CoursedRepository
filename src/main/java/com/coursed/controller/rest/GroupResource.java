@@ -116,7 +116,7 @@ public class GroupResource {
     @PostMapping("/{groupId}/curators/{teacherId}")
     private ResponseEntity<GenericResponse> setCurator(@PathVariable("groupId") Long groupId,
                                                     @RequestParam(name = "teacherId") Long teacherId) {
-        teacherService.setAsCurator(teacherId, groupId);
+        groupService.addCurator(teacherId, groupId);
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
     }
 
@@ -128,10 +128,10 @@ public class GroupResource {
                 groupService.getStudents(groupId, page, size)), HttpStatus.OK);
     }
 
-    @PostMapping("/{groupId}/students/{studentId}") // TODO
+    @PostMapping("/{groupId}/students/{studentId}")
     private ResponseEntity<GenericResponse> addStudent(@PathVariable("groupId") Long groupId,
                                                        @RequestParam(name = "studentId") Long studentId) {
-//        groupService.addStudent(groupId, studentId);
+        groupService.addStudent(groupId, studentId);
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
     }
 }

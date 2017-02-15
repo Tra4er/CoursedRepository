@@ -116,6 +116,14 @@ public class Group {
         this.students = students;
     }
 
+    public void addStudent(Student student) {
+        students.add(student);
+    }
+
+    public void removeStudent(Student student) {
+        curators.remove(student);
+    }
+
     public Speciality getSpeciality() {
         return speciality;
     }
@@ -130,5 +138,13 @@ public class Group {
 
     public void setCurators(List<Teacher> curators) {
         this.curators = curators;
+    }
+
+    public void addCurator(Teacher teacher) {
+        curators.add(teacher);
+    }
+
+    public void removeCurator(Teacher teacher) {
+        curators.remove(teacher);
     }
 }

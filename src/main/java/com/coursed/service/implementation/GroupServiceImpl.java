@@ -30,6 +30,12 @@ public class GroupServiceImpl implements GroupService {
     private GroupRepository groupRepository;
 
     @Autowired
+    private TeacherRepository teacherRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
     private SpecialityRepository specialityRepository;
 
     @Autowired
@@ -89,8 +95,12 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public TeacherDTO.TeacherTitleDTO addCurator(Long groupId, Long studentId) {
-        return null; //TODO
+    public void addCurator(Long groupId, Long teacherId) {
+        Teacher curator = teacherRepository.findOne(teacherId);
+        Group group = groupRepository.findOne(groupId);
+
+        group.addCurator(curator);
+        groupRepository.save(group);
     }
 
     @Override
@@ -99,19 +109,18 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public StudentDTO.StudentTitleDTO addStudent(Long groupId, Long studentId) {
-        return null; // TODO
+    public void addStudent(Long groupId, Long studentId) {
+        Student student = studentRepository.findOne(studentId);
+        Group group = groupRepository.findOne(groupId);
+
+        group.addStudent(student);
+        groupRepository.save(group);
     }
 
     @Override
     public Page<StudentDTO.StudentTitleDTO> getStudents(Long groupId, int page, int size) {
         return groupRepository.findAllStudents(groupId, new PageRequest(page, size));
     }
-
-//    @Override
-//    public StudentDTO addStudent(Long groupId, Long studentId) {
-//
-//    }
 
     @Override
     public List<Group> findAllWithoutCurator(Long semesterId) {

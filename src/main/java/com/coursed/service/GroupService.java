@@ -18,9 +18,9 @@ public interface GroupService {
     List<Group> findAllFromSpeciality(Long specialityId);
     List<Group> findAllFromSemester(Long semesterId);
     List<Group> findAllFromSpecialityAndSemester(Long specialityId, Long semesterId);
-    TeacherDTO.TeacherTitleDTO addCurator(Long groupId, Long teacherId);
+    void addCurator(Long groupId, Long teacherId);
     List<TeacherDTO.TeacherTitleDTO> getCurators(Long groupId);
-    StudentDTO.StudentTitleDTO addStudent(Long groupId, Long studentId);
+    void addStudent(Long groupId, Long studentId);
     Page<StudentDTO.StudentTitleDTO> getStudents(Long groupId, int page, int size);
     List<Group> findAllWithoutCurator(Long semesterId);
     List<Group> findAllForGrading(Long educationPlanId, SemesterNumber semesterNumber, CourseNumber courseNumber);
