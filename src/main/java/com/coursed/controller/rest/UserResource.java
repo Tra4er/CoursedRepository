@@ -32,32 +32,13 @@ public class UserResource {
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping("/search")
-    public ResponseEntity<GenericResponse> search(@RequestParam(value = "filter", required = false) String filter,
-                                                  @RequestParam(value = "curatorsOfGroup", required = false) Long groupId) {
-        if(filter != null) {
-            if (filter.equals("unconfirmed")) {
-                return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                        userService.getAllUnconfirmedTeachers()), HttpStatus.OK);
-            }
-        }
-        if (groupId != null) {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    userService.getAllGroupCurators(groupId)), HttpStatus.OK);
-        }
+    public ResponseEntity<GenericResponse> search(@RequestParam(value = "filter", required = false) String filter) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping("{id}")
     public ResponseEntity<GenericResponse> getByUsername(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                userService.getById(id)), HttpStatus.OK);
-    }
-
-    //    @PreAuthorize("hasAnyRole('HEAD')")
-    @PostMapping("/{id}/confirm-teacher")
-    public ResponseEntity<GenericResponse> confirmTeacher(@PathVariable("id") Long id) {
-        userService.makeATeacher(id);
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                 userService.getById(id)), HttpStatus.OK);
     }
