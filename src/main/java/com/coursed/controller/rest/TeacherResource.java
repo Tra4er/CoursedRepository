@@ -4,6 +4,7 @@ import com.coursed.dto.UserTeacherDTO;
 import com.coursed.error.exception.UserAlreadyExistException;
 import com.coursed.model.auth.User;
 import com.coursed.registration.OnRegistrationCompleteEvent;
+import com.coursed.service.DisciplineService;
 import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
 import com.coursed.util.GenericResponse;
@@ -37,6 +38,9 @@ public class TeacherResource {
     private TeacherService teacherService;
 
     @Autowired
+    private DisciplineService disciplineService;
+
+    @Autowired
     private ApplicationEventPublisher eventPublisher;
 
     @Autowired
@@ -52,15 +56,11 @@ public class TeacherResource {
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping
-    public ResponseEntity<GenericResponse> get(@RequestParam(value = "page", required = false) Integer page,
-                                               @RequestParam(value = "size", required = false) Integer size) {
+    public ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
+                                               @RequestParam(value = "size") Integer size) {
 
-        if(page != null && size != null) {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    teacherService.getAllInDTO(page, size)), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", teacherService.getAllInDTO()),
-                HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                teacherService.getAllInDTO(page, size)), HttpStatus.OK);
     }
 
     @PostMapping
@@ -86,21 +86,16 @@ public class TeacherResource {
     public ResponseEntity<GenericResponse> search(@RequestParam(value = "page", required = false) Integer page,
                                                   @RequestParam(value = "size", required = false) Integer size,
                                                   @RequestParam(value = "filter", required = false) String filter,
-                                                  @RequestParam(value = "disciplineId", required = false) Long disciplineId,
-                                                  @RequestParam(value = "withDiscipline", required = false) Boolean withDiscipline) {
+                                                  @RequestParam(value = "disciplineId", required = false) Long disciplineId) {
         if (filter != null) {
             if (filter.equals("unconfirmed")) {
                 return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                         teacherService.getAllUnconfirmed(page, size)), HttpStatus.OK);
             }
-        }
-        if (disciplineId != null && withDiscipline) {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    teacherService.getAllTeachersWithDiscipline(disciplineId)), HttpStatus.OK);
-        }
-        if (disciplineId != null && !withDiscipline) {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    teacherService.getAllTeachersWithoutDiscipline(disciplineId)), HttpStatus.OK);
+            if (filter.equals("withoutDiscipline") && disciplineId != null) {
+                return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                        teacherService.getAllTeachersWithoutDiscipline(disciplineId)), HttpStatus.OK);
+            }
         }
 
         return new ResponseEntity<>(new GenericResponse(HttpStatus.NO_CONTENT.value(), "success"), HttpStatus.NO_CONTENT);
@@ -126,6 +121,14 @@ public class TeacherResource {
         teacherService.confirmTeacher(id);
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                 teacherService.getById(id)), HttpStatus.OK);
+    }
+
+    @GetMapping("{teacherId}/disciplines")
+    public ResponseEntity<GenericResponse> getDisciplines(@PathVariable("teacherId") Long teacherId,
+                                                          @RequestParam(value = "page", required = false) Integer page,
+                                                          @RequestParam(value = "size", required = false) Integer size) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                disciplineService.getAllByTeacher(teacherId, page, size)), HttpStatus.OK);
     }
 
 }

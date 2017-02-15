@@ -8,6 +8,8 @@ import com.coursed.model.enums.SemesterNumber;
  * Created by Hexray on 11.12.2016.
  */
 public class DisciplineDTO {
+
+    private Long id;
     private String name;
     private DisciplineType type;
     private Float hours;
@@ -15,6 +17,21 @@ public class DisciplineDTO {
     private CourseNumber courseNumber;
     private SemesterNumber semesterNumber;
     private Long educationPlanId;
+
+    public DisciplineDTO(Long id, String name, CourseNumber courseNumber, SemesterNumber semesterNumber) {
+        this.id = id;
+        this.name = name;
+        this.courseNumber = courseNumber;
+        this.semesterNumber = semesterNumber;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

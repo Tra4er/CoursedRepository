@@ -1,7 +1,10 @@
 package com.coursed.repository;
 
+import com.coursed.dto.DisciplineDTO;
 import com.coursed.model.Discipline;
 import com.coursed.model.Semester;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +18,10 @@ import java.util.List;
 @Repository
 public interface DisciplineRepository extends CrudRepository<Discipline, Long> {
     List<Discipline> findAll();
+
+    @Query("SELECT new com.coursed.dto.DisciplineDTO(d.id, d.name, d.courseNumber, d.semesterNumber) " +
+            "FROM Discipline d INNER JOIN d.teachers t WHERE t.id = ?1")
+    Page<DisciplineDTO> findAllByTeacher(Long teacherId, Pageable pageable);
 
     @Query("SELECT dis FROM " +
             "Discipline dis INNER JOIN dis.teachers " +

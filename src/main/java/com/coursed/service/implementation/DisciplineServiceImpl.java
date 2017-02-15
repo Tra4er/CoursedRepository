@@ -8,6 +8,8 @@ import com.coursed.repository.*;
 import com.coursed.service.DisciplineService;
 import com.coursed.service.YearService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -78,6 +80,11 @@ public class DisciplineServiceImpl implements DisciplineService {
 
         discipline.setTeachers(teachersList);
         disciplineRepository.save(discipline);
+    }
+
+    @Override
+    public Page<DisciplineDTO> getAllByTeacher(Long teacherId, int page, int size) {
+        return disciplineRepository.findAllByTeacher(teacherId, new PageRequest(page, size));
     }
 
     @Override

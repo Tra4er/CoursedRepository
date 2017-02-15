@@ -19,7 +19,7 @@ import java.util.List;
 public interface GroupRepository extends CrudRepository<Group, Long> {
     List<Group> findAll();
 
-    @Query("SELECT new com.coursed.dto.TeacherDTO$TeacherTitleDTO(c.id, c.firstName, c.lastName, c.patronymic, c.phoneNumber) " +
+    @Query("SELECT new com.coursed.dto.TeacherDTO$TeacherTitleDTO(c.id, c.firstName, c.lastName, c.patronymic) " +
             "FROM com.coursed.model.Group g LEFT JOIN g.curators c WHERE g.id = ?1")
     List<TeacherDTO.TeacherTitleDTO> findCurators(Long groupId);
 
