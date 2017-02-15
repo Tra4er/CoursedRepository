@@ -1,8 +1,11 @@
 package com.coursed.repository;
 
+import com.coursed.dto.StudentDTO;
 import com.coursed.dto.TeacherDTO;
 import com.coursed.model.Group;
 import com.coursed.model.Teacher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -16,7 +19,11 @@ import java.util.List;
 public interface GroupRepository extends CrudRepository<Group, Long> {
     List<Group> findAll();
 
-    @Query("SELECT new com.coursed.dto.TeacherDTO(c.id, c.firstName, c.lastName, c.patronymic, c.phoneNumber) " +
+    @Query("SELECT new com.coursed.dto.TeacherDTO$TeacherTitleDTO(c.id, c.firstName, c.lastName, c.patronymic, c.phoneNumber) " +
             "FROM com.coursed.model.Group g LEFT JOIN g.curators c WHERE g.id = ?1")
-    List<TeacherDTO> findCurators(Long groupId);
+    List<TeacherDTO.TeacherTitleDTO> findCurators(Long groupId);
+
+    @Query("SELECT new com.coursed.dto.StudentDTO$StudentTitleDTO(s.id, s.firstName, s.lastName, s.patronymic) " +
+            "FROM com.coursed.model.Group g LEFT JOIN g.students s WHERE g.id = ?1")
+    Page<StudentDTO.StudentTitleDTO> findAllStudents(Long groupId, Pageable pageable);
 }

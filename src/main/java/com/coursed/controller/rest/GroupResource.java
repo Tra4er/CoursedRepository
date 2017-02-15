@@ -120,4 +120,18 @@ public class GroupResource {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
     }
 
+    @GetMapping("/{groupId}/students")
+    private ResponseEntity<GenericResponse> getStudents(@PathVariable("groupId") Long groupId,
+                                                        @RequestParam(value = "page") Integer page,
+                                                        @RequestParam(value = "size") Integer size) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                groupService.getStudents(groupId, page, size)), HttpStatus.OK);
+    }
+
+    @PostMapping("/{groupId}/students/{studentId}") // TODO
+    private ResponseEntity<GenericResponse> addStudent(@PathVariable("groupId") Long groupId,
+                                                       @RequestParam(name = "studentId") Long studentId) {
+//        groupService.addStudent(groupId, studentId);
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
+    }
 }

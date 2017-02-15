@@ -1,5 +1,6 @@
 package com.coursed.service.implementation;
 
+import com.coursed.dto.StudentDTO;
 import com.coursed.dto.TeacherDTO;
 import com.coursed.model.*;
 import com.coursed.model.enums.CourseNumber;
@@ -9,6 +10,8 @@ import com.coursed.service.GroupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -86,9 +89,29 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<TeacherDTO> getCurators(Long groupId) {
+    public TeacherDTO.TeacherTitleDTO addCurator(Long groupId, Long studentId) {
+        return null; //TODO
+    }
+
+    @Override
+    public List<TeacherDTO.TeacherTitleDTO> getCurators(Long groupId) {
         return groupRepository.findCurators(groupId);
     }
+
+    @Override
+    public StudentDTO.StudentTitleDTO addStudent(Long groupId, Long studentId) {
+        return null; // TODO
+    }
+
+    @Override
+    public Page<StudentDTO.StudentTitleDTO> getStudents(Long groupId, int page, int size) {
+        return groupRepository.findAllStudents(groupId, new PageRequest(page, size));
+    }
+
+//    @Override
+//    public StudentDTO addStudent(Long groupId, Long studentId) {
+//
+//    }
 
     @Override
     public List<Group> findAllWithoutCurator(Long semesterId) {
@@ -125,4 +148,5 @@ public class GroupServiceImpl implements GroupService {
     public Group findOne(Long groupId) {
         return groupRepository.findOne(groupId);
     }
+
 }

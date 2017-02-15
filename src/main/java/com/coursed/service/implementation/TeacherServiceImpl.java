@@ -75,15 +75,6 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Teacher> getAllCuratorsOfGroup(Long groupId) {
-        Group group = groupRepository.findOne(groupId);
-
-        return teacherRepository.findAll().stream()
-                .filter(teacher -> !teacher.getDisciplines().contains(group))
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public Page<TeacherDTO.TeacherTitleDTO> getAllUnconfirmed(int page, int size) {
         if(size > MAX_PAGE_SIZE) {
             throw new PageSizeTooBigException("Requested size is too big.");

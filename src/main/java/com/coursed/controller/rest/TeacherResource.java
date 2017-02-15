@@ -86,7 +86,6 @@ public class TeacherResource {
     public ResponseEntity<GenericResponse> search(@RequestParam(value = "page", required = false) Integer page,
                                                   @RequestParam(value = "size", required = false) Integer size,
                                                   @RequestParam(value = "filter", required = false) String filter,
-                                                  @RequestParam(value = "curatorsOfGroup", required = false) Long groupId,
                                                   @RequestParam(value = "disciplineId", required = false) Long disciplineId,
                                                   @RequestParam(value = "withDiscipline", required = false) Boolean withDiscipline) {
         if (filter != null) {
@@ -94,10 +93,6 @@ public class TeacherResource {
                 return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                         teacherService.getAllUnconfirmed(page, size)), HttpStatus.OK);
             }
-        }
-        if (groupId != null) {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    teacherService.getAllCuratorsOfGroup(groupId)), HttpStatus.OK);
         }
         if (disciplineId != null && withDiscipline) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
