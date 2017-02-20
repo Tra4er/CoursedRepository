@@ -83,8 +83,8 @@ public class TeacherResource {
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping("/search")
-    public ResponseEntity<GenericResponse> search(@RequestParam(value = "page", required = false) Integer page,
-                                                  @RequestParam(value = "size", required = false) Integer size,
+    public ResponseEntity<GenericResponse> search(@RequestParam(value = "page") Integer page,
+                                                  @RequestParam(value = "size") Integer size,
                                                   @RequestParam(value = "filter", required = false) String filter,
                                                   @RequestParam(value = "disciplineId", required = false) Long disciplineId) {
         if (filter != null) {
@@ -95,11 +95,11 @@ public class TeacherResource {
             if(disciplineId != null) {
                 if (filter.equals("withDiscipline")) {
                     return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                            teacherService.getAllTeachersWithDiscipline(disciplineId)), HttpStatus.OK);
+                            teacherService.getAllTeachersWithDiscipline(disciplineId, page, size)), HttpStatus.OK);
                 }
                 if (filter.equals("withoutDiscipline")) {
                     return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                            teacherService.getAllTeachersWithoutDiscipline(disciplineId)), HttpStatus.OK);
+                            teacherService.getAllTeachersWithoutDiscipline(disciplineId, page, size)), HttpStatus.OK);
                 }
             }
         }

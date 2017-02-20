@@ -18,6 +18,6 @@ public interface TeacherService {
     Page<TeacherDTO.TeacherTitleDTO> getAllUnconfirmed(int page, int size);
     void setAsCurator(Long teacherId, Long groupId);
     void confirmTeacher(Long teacherId);
-    List<Teacher> getAllTeachersWithoutDiscipline(Long disciplineId);
-    List<Teacher> getAllTeachersWithDiscipline(Long disciplineId);
+    Page<TeacherDTO.TeacherTitleDTO> getAllTeachersWithoutDiscipline(Long disciplineId, int page, int size);
+    Page<TeacherDTO.TeacherTitleDTO> getAllTeachersWithDiscipline(Long disciplineId, int page, int size);
 }

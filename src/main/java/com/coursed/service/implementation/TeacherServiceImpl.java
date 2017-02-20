@@ -107,24 +107,12 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Teacher> getAllTeachersWithoutDiscipline(Long disciplineId) {
-        Role role = roleRepository.findByName("ROLE_TEACHER");
-
-        Discipline discipline = disciplineRepository.findOne(disciplineId);
-
-        return teacherRepository.findAll().stream()
-                .filter(teacher -> !teacher.getDisciplines().contains(discipline))
-                .collect(Collectors.toList());
+    public Page<TeacherDTO.TeacherTitleDTO> getAllTeachersWithoutDiscipline(Long disciplineId, int page, int size) {
+        return teacherRepository.findAllWithoutDisciplineInDTO(disciplineId, new PageRequest(page,size));
     }
 
     @Override
-    public List<Teacher> getAllTeachersWithDiscipline(Long disciplineId) {
-        Role role = roleRepository.findByName("ROLE_TEACHER");
-
-        Discipline discipline = disciplineRepository.findOne(disciplineId);
-
-        return teacherRepository.findAll().stream()
-                .filter(teacher -> teacher.getDisciplines().contains(discipline))
-                .collect(Collectors.toList());
+    public Page<TeacherDTO.TeacherTitleDTO> getAllTeachersWithDiscipline(Long disciplineId, int page, int size) {
+        return teacherRepository.findAllWithDisciplineInDTO(disciplineId, new PageRequest(page,size));
     }
 }

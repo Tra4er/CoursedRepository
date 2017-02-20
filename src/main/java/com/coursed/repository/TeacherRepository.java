@@ -16,8 +16,7 @@ import java.util.List;
 @Repository
 public interface TeacherRepository extends CrudRepository<Teacher, Long> {
 
-    List<Teacher> findAll(); // TODO temporary. Remove this.
-    List<Teacher> findAll(Pageable pageable);
+    List<Teacher> findAll();
 
     @Query("select new com.coursed.dto.TeacherDTO(t.id, t.firstName, t.lastName, t.patronymic, t.phoneNumber) " +
             "from Teacher t WHERE t.id = ?1")
@@ -31,4 +30,12 @@ public interface TeacherRepository extends CrudRepository<Teacher, Long> {
             "FROM Teacher t WHERE t.user.id " +
             "NOT IN (SELECT u.id FROM User u JOIN u.roles r where r.name = 'ROLE_TEACHER')")
     Page<TeacherDTO.TeacherTitleDTO> findAllUnconfirmedInDTO(Pageable pageable);
+
+    @Query("SELECT new com.coursed.dto.TeacherDTO$TeacherTitleDTO(t.id, t.firstName, t.lastName, t.patronymic) " +
+            "FROM Teacher t JOIN t.disciplines d WHERE ?1 IN (d.id)")
+    Page<TeacherDTO.TeacherTitleDTO> findAllWithDisciplineInDTO(Long disciplineId, Pageable pageable);
+
+    @Query("SELECT new com.coursed.dto.TeacherDTO$TeacherTitleDTO(t.id, t.firstName, t.lastName, t.patronymic) " +
+            "FROM Teacher t JOIN t.disciplines d WHERE ?1 NOT IN (d.id)")
+    Page<TeacherDTO.TeacherTitleDTO> findAllWithoutDisciplineInDTO(Long disciplineId, Pageable pageable);
 }
