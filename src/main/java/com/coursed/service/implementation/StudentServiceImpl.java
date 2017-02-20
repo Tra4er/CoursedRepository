@@ -53,12 +53,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Page<StudentDTO.StudentTitleDTO> getAllInDTO() {
+    public Page<StudentDTO.StudentTitleDTO> getAll() {
         return studentRepository.findAllInDTO(new PageRequest(DEFAULT_PAGE, MAX_PAGE_SIZE));
     }
 
     @Override
-    public Page<StudentDTO.StudentTitleDTO> getAllInDTO(int page, int size) {
+    public Page<StudentDTO.StudentTitleDTO> getAll(int page, int size) {
         if(size > MAX_PAGE_SIZE) {
             throw new PageSizeTooBigException("Requested size is too big.");
         }

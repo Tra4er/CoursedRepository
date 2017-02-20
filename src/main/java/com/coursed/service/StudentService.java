@@ -14,7 +14,7 @@ import java.util.List;
 public interface StudentService {
     void create(Student student);
     StudentDTO getById(Long id);
-    Page<StudentDTO.StudentTitleDTO> getAllInDTO();
-    Page<StudentDTO.StudentTitleDTO> getAllInDTO(int page, int size);
+    Page<StudentDTO.StudentTitleDTO> getAll();
+    Page<StudentDTO.StudentTitleDTO> getAll(int page, int size);
     List<Student> getAllFromGroup(Long groupId);
 }

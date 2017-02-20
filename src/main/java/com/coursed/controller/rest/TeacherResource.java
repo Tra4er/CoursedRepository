@@ -60,7 +60,7 @@ public class TeacherResource {
                                                @RequestParam(value = "size") Integer size) {
 
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                teacherService.getAllInDTO(page, size)), HttpStatus.OK);
+                teacherService.getAll(page, size)), HttpStatus.OK);
     }
 
     @PostMapping
@@ -92,9 +92,15 @@ public class TeacherResource {
                 return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                         teacherService.getAllUnconfirmed(page, size)), HttpStatus.OK);
             }
-            if (filter.equals("withoutDiscipline") && disciplineId != null) {
-                return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                        teacherService.getAllTeachersWithoutDiscipline(disciplineId)), HttpStatus.OK);
+            if(disciplineId != null) {
+                if (filter.equals("withDiscipline")) {
+                    return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                            teacherService.getAllTeachersWithDiscipline(disciplineId)), HttpStatus.OK);
+                }
+                if (filter.equals("withoutDiscipline")) {
+                    return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                            teacherService.getAllTeachersWithoutDiscipline(disciplineId)), HttpStatus.OK);
+                }
             }
         }
 

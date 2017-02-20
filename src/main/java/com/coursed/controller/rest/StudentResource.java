@@ -57,9 +57,9 @@ public class StudentResource {
 
         if(page != null && size != null) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    studentService.getAllInDTO(page, size)), HttpStatus.OK);
+                    studentService.getAll(page, size)), HttpStatus.OK);
         }
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", studentService.getAllInDTO()),
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", studentService.getAll()),
                 HttpStatus.OK);
     }
 

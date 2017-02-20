@@ -12,9 +12,9 @@ import java.util.List;
 public interface TeacherService {
     void create(Teacher teacher);
     void delete(Long teacherId);
-    Teacher getById(Long id);
-    Page<TeacherDTO.TeacherTitleDTO> getAllInDTO();
-    Page<TeacherDTO.TeacherTitleDTO> getAllInDTO(int page, int size);
+    TeacherDTO getById(Long id);
+    Page<TeacherDTO.TeacherTitleDTO> getAll();
+    Page<TeacherDTO.TeacherTitleDTO> getAll(int page, int size);
     Page<TeacherDTO.TeacherTitleDTO> getAllUnconfirmed(int page, int size);
     void setAsCurator(Long teacherId, Long groupId);
     void confirmTeacher(Long teacherId);

@@ -57,17 +57,17 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher getById(Long id) {
-        return teacherRepository.findOne(id);
+    public TeacherDTO getById(Long id) {
+        return teacherRepository.findOneInDTO(id);
     }
 
     @Override
-    public Page<TeacherDTO.TeacherTitleDTO> getAllInDTO() {
+    public Page<TeacherDTO.TeacherTitleDTO> getAll() {
         return teacherRepository.findAllInDTO(new PageRequest(DEFAULT_PAGE, MAX_PAGE_SIZE));
     }
 
     @Override
-    public Page<TeacherDTO.TeacherTitleDTO> getAllInDTO(int page, int size) {
+    public Page<TeacherDTO.TeacherTitleDTO> getAll(int page, int size) {
         if(size > MAX_PAGE_SIZE) {
             throw new PageSizeTooBigException("Requested size is too big.");
         }
