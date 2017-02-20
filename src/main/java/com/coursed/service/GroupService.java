@@ -1,5 +1,6 @@
 package com.coursed.service;
 
+import com.coursed.dto.GroupDTO;
 import com.coursed.dto.StudentDTO;
 import com.coursed.dto.TeacherDTO;
 import com.coursed.model.Group;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public interface GroupService {
     Group create(Group group);
-    List<Group> findAll();
+    Page<GroupDTO> getAll(int page, int size);
     List<Group> findAllFromSpeciality(Long specialityId);
     List<Group> findAllFromSemester(Long semesterId);
     List<Group> findAllFromSpecialityAndSemester(Long specialityId, Long semesterId);

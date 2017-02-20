@@ -35,10 +35,10 @@ public class GroupResource {
     private TeacherService teacherService;
 
     @GetMapping
-    private ResponseEntity<GenericResponse> get(@RequestParam(value = "page", required = false) Integer page,
-                                                @RequestParam(value = "size", required = false) Integer size) {
+    private ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
+                                                @RequestParam(value = "size") Integer size) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                groupService.findAll()), HttpStatus.OK);
+                groupService.getAll(page, size)), HttpStatus.OK);
     }
 
     @PostMapping

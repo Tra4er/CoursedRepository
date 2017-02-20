@@ -1,5 +1,6 @@
 package com.coursed.service.implementation;
 
+import com.coursed.dto.GroupDTO;
 import com.coursed.dto.StudentDTO;
 import com.coursed.dto.TeacherDTO;
 import com.coursed.model.*;
@@ -56,8 +57,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Group> findAll() {
-        return groupRepository.findAll();
+    public Page<GroupDTO> getAll(int page, int size) {
+        return groupRepository.findAllInDTO(new PageRequest(page, size));
     }
 
     @Override

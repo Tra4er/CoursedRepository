@@ -15,6 +15,25 @@ public class GroupDTO {
     private Long semesterId;
     private Long specialityId;
 
+    public GroupDTO(Integer number, GroupType groupType, GroupDegree groupDegree, CourseNumber courseNumber) {
+        this.number = number;
+        this.groupType = groupType;
+        this.groupDegree = groupDegree;
+        this.courseNumber = courseNumber;
+        this.semesterId = semesterId;
+        this.specialityId = specialityId;
+    }
+
+    public GroupDTO(Integer number, GroupType groupType, GroupDegree groupDegree, CourseNumber courseNumber,
+                    Long semesterId, Long specialityId) {
+        this.number = number;
+        this.groupType = groupType;
+        this.groupDegree = groupDegree;
+        this.courseNumber = courseNumber;
+        this.semesterId = semesterId;
+        this.specialityId = specialityId;
+    }
+
     public Integer getNumber() {
         return number;
     }

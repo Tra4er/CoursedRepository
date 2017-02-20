@@ -1,5 +1,6 @@
 package com.coursed.repository;
 
+import com.coursed.dto.GroupDTO;
 import com.coursed.dto.StudentDTO;
 import com.coursed.dto.TeacherDTO;
 import com.coursed.model.Group;
@@ -18,6 +19,10 @@ import java.util.List;
 @Repository
 public interface GroupRepository extends CrudRepository<Group, Long> {
     List<Group> findAll();
+
+    @Query("SELECT new com.coursed.dto.GroupDTO(g.number, g.groupType, g.groupDegree, g.courseNumber, g.semester.id, " +
+            "g.speciality.id) FROM com.coursed.model.Group g ")
+    Page<GroupDTO> findAllInDTO(Pageable pageable);
 
     @Query("SELECT new com.coursed.dto.TeacherDTO$TeacherTitleDTO(c.id, c.firstName, c.lastName, c.patronymic) " +
             "FROM com.coursed.model.Group g LEFT JOIN g.curators c WHERE g.id = ?1")
