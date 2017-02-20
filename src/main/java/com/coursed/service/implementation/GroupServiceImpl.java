@@ -105,7 +105,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public List<TeacherDTO.TeacherTitleDTO> getCurators(Long groupId) {
-        return groupRepository.findCurators(groupId);
+        return groupRepository.findCuratorsInDTO(groupId);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Page<StudentDTO.StudentTitleDTO> getStudents(Long groupId, int page, int size) {
-        return groupRepository.findAllStudents(groupId, new PageRequest(page, size));
+        return groupRepository.findAllStudentsInDTO(groupId, new PageRequest(page, size));
     }
 
     @Override
