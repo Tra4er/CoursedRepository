@@ -72,19 +72,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Group> findAllWithoutCurator(Long semesterId) {
-        return null;
-    }
-
-    @Override
-    public List<Group> findAllFromSpeciality(Long specialityId) {
-        Speciality speciality = specialityRepository.findOne(specialityId);
-        if(speciality != null)
-        {
-            return speciality.getGroups();
-        }
-
-        return null; // TODO throw new IllegalArgumentException()
+    public Page<GroupDTO> getAllBySpeciality(Long specialityId, int page, int size) {
+        return groupRepository.findAllBySpecialityInDTO(specialityId, new PageRequest(page, size));
     }
 
     @Override

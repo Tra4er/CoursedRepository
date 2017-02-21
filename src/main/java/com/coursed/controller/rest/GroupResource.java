@@ -90,7 +90,7 @@ public class GroupResource {
         else if(specialityId != null)
         {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    groupService.findAllFromSpeciality(specialityId)), HttpStatus.OK);
+                    groupService.getAllBySpeciality(specialityId, page, size)), HttpStatus.OK);
         }
         else if(semesterId != null)
         {

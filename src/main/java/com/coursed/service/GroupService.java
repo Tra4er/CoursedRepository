@@ -18,14 +18,13 @@ public interface GroupService {
     GroupDTO getById(Long groupId);
     Page<GroupDTO> getAll(int page, int size);
     Page<GroupDTO> getAllWithoutCurators(int page, int size);
-    List<Group> findAllFromSpeciality(Long specialityId);
+    Page<GroupDTO> getAllBySpeciality(Long specialityId, int page, int size);
     List<Group> findAllFromSemester(Long semesterId);
     List<Group> findAllFromSpecialityAndSemester(Long specialityId, Long semesterId);
     void addCurator(Long groupId, Long teacherId);
     List<TeacherDTO.TeacherTitleDTO> getCurators(Long groupId);
     void addStudent(Long groupId, Long studentId);
     Page<StudentDTO.StudentTitleDTO> getStudents(Long groupId, int page, int size);
-    List<Group> findAllWithoutCurator(Long semesterId);
     List<Group> findAllForGrading(Long educationPlanId, SemesterNumber semesterNumber, CourseNumber courseNumber);
     List<Group> findAllByPlannedEvent(Long plannedEventId);
 }

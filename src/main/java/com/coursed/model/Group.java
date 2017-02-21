@@ -26,19 +26,19 @@ public class Group {
     @Enumerated
     private CourseNumber courseNumber;
 
-    @JsonIgnore
+//    @JsonIgnore
     //@JsonBackReference("semester-groups")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="semester_id")
     private Semester semester;
 
-    @JsonIgnore
+//    @JsonIgnore
     //@JsonManagedReference("group-students")
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
     private List<Student> students;
 
 
-    @JsonManagedReference("group-speciality")
+//    @JsonManagedReference("group-speciality")
     @ManyToOne
     @JoinColumn(name="speciality_id")
     private Speciality speciality;
