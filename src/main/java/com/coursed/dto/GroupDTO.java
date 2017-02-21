@@ -8,6 +8,8 @@ import com.coursed.model.enums.GroupType;
  * Created by Hexray on 04.12.2016.
  */
 public class GroupDTO {
+
+    private Long id;
     private Integer number;
     private GroupType groupType;
     private GroupDegree groupDegree;
@@ -15,7 +17,9 @@ public class GroupDTO {
     private Long semesterId;
     private Long specialityId;
 
-    public GroupDTO(Integer number, GroupType groupType, GroupDegree groupDegree, CourseNumber courseNumber) {
+    public GroupDTO(Long id, Integer number, GroupType groupType, GroupDegree groupDegree, CourseNumber courseNumber,
+                    Long semesterId, Long specialityId) {
+        this.id = id;
         this.number = number;
         this.groupType = groupType;
         this.groupDegree = groupDegree;
@@ -24,14 +28,12 @@ public class GroupDTO {
         this.specialityId = specialityId;
     }
 
-    public GroupDTO(Integer number, GroupType groupType, GroupDegree groupDegree, CourseNumber courseNumber,
-                    Long semesterId, Long specialityId) {
-        this.number = number;
-        this.groupType = groupType;
-        this.groupDegree = groupDegree;
-        this.courseNumber = courseNumber;
-        this.semesterId = semesterId;
-        this.specialityId = specialityId;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Integer getNumber() {

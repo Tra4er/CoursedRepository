@@ -65,8 +65,8 @@ public class GroupResource {
         if(filter != null) {
             switch (filter) {
                 case "withoutCurators": {
-//                    return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-//                            groupService.findAll()), HttpStatus.OK); // TODO findAll()
+                    return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                            groupService.getAllWithoutCurators(page, size)), HttpStatus.OK);
                 }
                 case "forGrading": {
                     if (disciplineId != null && semesterId != null && courseNumber != null) {

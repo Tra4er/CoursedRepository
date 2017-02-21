@@ -17,6 +17,7 @@ public interface GroupService {
     Group create(Group group);
     GroupDTO getById(Long groupId);
     Page<GroupDTO> getAll(int page, int size);
+    Page<GroupDTO> getAllWithoutCurators(int page, int size);
     List<Group> findAllFromSpeciality(Long specialityId);
     List<Group> findAllFromSemester(Long semesterId);
     List<Group> findAllFromSpecialityAndSemester(Long specialityId, Long semesterId);

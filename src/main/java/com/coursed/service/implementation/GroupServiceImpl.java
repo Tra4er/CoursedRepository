@@ -67,6 +67,16 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public Page<GroupDTO> getAllWithoutCurators(int page, int size) {
+        return groupRepository.findAllWithoutCuratorsInDTO(new PageRequest(page, size));
+    }
+
+    @Override
+    public List<Group> findAllWithoutCurator(Long semesterId) {
+        return null;
+    }
+
+    @Override
     public List<Group> findAllFromSpeciality(Long specialityId) {
         Speciality speciality = specialityRepository.findOne(specialityId);
         if(speciality != null)
@@ -126,11 +136,6 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public Page<StudentDTO.StudentTitleDTO> getStudents(Long groupId, int page, int size) {
         return groupRepository.findAllStudentsInDTO(groupId, new PageRequest(page, size));
-    }
-
-    @Override
-    public List<Group> findAllWithoutCurator(Long semesterId) {
-        return null;
     }
 
     @Override
