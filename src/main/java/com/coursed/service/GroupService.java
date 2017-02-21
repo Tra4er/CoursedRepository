@@ -15,6 +15,7 @@ import java.util.List;
  */
 public interface GroupService {
     Group create(Group group);
+    GroupDTO getById(Long groupId);
     Page<GroupDTO> getAll(int page, int size);
     List<Group> findAllFromSpeciality(Long specialityId);
     List<Group> findAllFromSemester(Long semesterId);
@@ -26,5 +27,4 @@ public interface GroupService {
     List<Group> findAllWithoutCurator(Long semesterId);
     List<Group> findAllForGrading(Long educationPlanId, SemesterNumber semesterNumber, CourseNumber courseNumber);
     List<Group> findAllByPlannedEvent(Long plannedEventId);
-    Group findOne(Long groupId);
 }

@@ -65,8 +65,8 @@ public class GroupResource {
         if(filter != null) {
             switch (filter) {
                 case "withoutCurators": {
-                    return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                            groupService.findAll()), HttpStatus.OK); // TODO findAll()
+//                    return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+//                            groupService.findAll()), HttpStatus.OK); // TODO findAll()
                 }
                 case "forGrading": {
                     if (disciplineId != null && semesterId != null && courseNumber != null) {
@@ -101,10 +101,10 @@ public class GroupResource {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/{id}")
-    private ResponseEntity<GenericResponse> getById(@PathVariable("id") Long id) {
+    @GetMapping("/{groupId}")
+    private ResponseEntity<GenericResponse> getById(@PathVariable("groupId") Long groupId) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                groupService.findOne(id)), HttpStatus.OK);
+                groupService.getById(groupId)), HttpStatus.OK);
     }
 
     @GetMapping("/{groupId}/curators")

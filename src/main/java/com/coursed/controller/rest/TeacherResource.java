@@ -108,25 +108,25 @@ public class TeacherResource {
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
-    @GetMapping("{id}")
-    public ResponseEntity<GenericResponse> getById(@PathVariable("id") Long id) {
+    @GetMapping("{teacherId}")
+    public ResponseEntity<GenericResponse> getById(@PathVariable("teacherId") Long teacherId) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                teacherService.getById(id)), HttpStatus.OK);
+                teacherService.getById(teacherId)), HttpStatus.OK);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
-    @DeleteMapping("{id}")
-    public ResponseEntity<GenericResponse> deleteById(@PathVariable("id") Long id) {
-        teacherService.delete(id);
+    @DeleteMapping("{teacherId}")
+    public ResponseEntity<GenericResponse> deleteById(@PathVariable("teacherId") Long teacherId) {
+        teacherService.delete(teacherId);
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
-    @PostMapping("{id}/confirm")
-    public ResponseEntity<GenericResponse> confirm(@PathVariable("id") Long id) {
-        teacherService.confirmTeacher(id);
+    @PostMapping("{teacherId}/confirm")
+    public ResponseEntity<GenericResponse> confirm(@PathVariable("teacherId") Long teacherId) {
+        teacherService.confirmTeacher(teacherId);
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                teacherService.getById(id)), HttpStatus.OK);
+                teacherService.getById(teacherId)), HttpStatus.OK);
     }
 
     @GetMapping("{teacherId}/disciplines")

@@ -57,6 +57,11 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public GroupDTO getById(Long groupId) {
+        return groupRepository.findOneInDTO(groupId);
+    }
+
+    @Override
     public Page<GroupDTO> getAll(int page, int size) {
         return groupRepository.findAllInDTO(new PageRequest(page, size));
     }
@@ -152,11 +157,6 @@ public class GroupServiceImpl implements GroupService {
         PlannedEvent plannedEvent = plannedEventRepository.findOne(plannedEventId);
         Semester semester = plannedEvent.getSemester();
         return semester.getGroups();
-    }
-
-    @Override
-    public Group findOne(Long groupId) {
-        return groupRepository.findOne(groupId);
     }
 
 }
