@@ -21,11 +21,11 @@ public class Speciality {
     private String fullName;
     private String groupsName;
 
-    @JsonBackReference("group-speciality")
+//    @JsonBackReference("group-speciality")
     @OneToMany(mappedBy = "speciality")
     private List<Group> groups;
 
-    @JsonIgnore
+//    @JsonIgnore
     //@JsonManagedReference("speciality-educationplan")
     @OneToMany(mappedBy = "speciality")
     private List<EducationPlan> educationPlans;

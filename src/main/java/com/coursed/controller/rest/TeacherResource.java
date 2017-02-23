@@ -131,8 +131,8 @@ public class TeacherResource {
 
     @GetMapping("{teacherId}/disciplines")
     public ResponseEntity<GenericResponse> getDisciplines(@PathVariable("teacherId") Long teacherId,
-                                                          @RequestParam(value = "page", required = false) Integer page,
-                                                          @RequestParam(value = "size", required = false) Integer size) {
+                                                          @RequestParam(value = "page") Integer page,
+                                                          @RequestParam(value = "size") Integer size) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                 disciplineService.getAllByTeacher(teacherId, page, size)), HttpStatus.OK);
     }

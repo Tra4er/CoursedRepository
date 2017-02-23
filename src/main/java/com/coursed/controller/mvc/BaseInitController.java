@@ -82,8 +82,10 @@ public class BaseInitController {
         //Specialities
         SpecialityDTO is = new SpecialityDTO("Комп'ютерні науки", "ІС");
         SpecialityDTO pi = new SpecialityDTO("Програмна інженерія", "ІП");
-        Speciality isSp = specialityService.create(is);
-        Speciality piSp = specialityService.create(pi);
+//        Speciality isSp = specialityService.create(is); // TODO
+//        Speciality piSp = specialityService.create(pi);
+        Speciality isSp = new Speciality();
+        Speciality piSp = new Speciality();
 
 
         //Groups

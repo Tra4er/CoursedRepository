@@ -52,8 +52,8 @@ public class StudentResource {
 
 //    @PreAuthorize("hasAnyRole('HEAD','TEACHER', 'SECRETARY')")
     @GetMapping
-    public ResponseEntity<GenericResponse> get(@RequestParam(value = "page", required = false) Integer page,
-                                               @RequestParam(value = "size", required = false) Integer size) {
+    public ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
+                                               @RequestParam(value = "size") Integer size) {
 
         if(page != null && size != null) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",

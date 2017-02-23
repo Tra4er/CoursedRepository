@@ -2,6 +2,7 @@ package com.coursed.controller.rest;
 
 import com.coursed.dto.SpecialityDTO;
 import com.coursed.model.Speciality;
+import com.coursed.service.GroupService;
 import com.coursed.service.SpecialityService;
 import com.coursed.util.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,34 @@ public class SpecialityResource {
     @Autowired
     private SpecialityService specialityService;
 
+    @Autowired
+    private GroupService groupService;
+
     @GetMapping
-    public ResponseEntity<GenericResponse> get() {
+    public ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
+                                               @RequestParam(value = "size") Integer size) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                specialityService.findAll()), HttpStatus.OK);
+                specialityService.getAll(page, size)), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<GenericResponse> post(@RequestBody SpecialityDTO specialityDTO) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.CREATED.value(), "success",
                 specialityService.create(specialityDTO)), HttpStatus.CREATED);
+    }
+
+    @GetMapping("{specialityId}")
+    public ResponseEntity<GenericResponse> getById(@PathVariable("specialityId") Long specialityId) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                specialityService.getById(specialityId)), HttpStatus.OK);
+    }
+
+    @GetMapping("{specialityId}/groups")
+    public ResponseEntity<GenericResponse> getGroups(@PathVariable("specialityId") Long specialityId,
+                                                     @RequestParam(value = "page") Integer page,
+                                                     @RequestParam(value = "size") Integer size) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                groupService.getAllBySpeciality(specialityId, page, size)), HttpStatus.OK);
     }
 
 }

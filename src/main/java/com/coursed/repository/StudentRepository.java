@@ -22,11 +22,11 @@ public interface StudentRepository extends CrudRepository<Student, Long> {
 //            "s.additionalInformation, s.parentsInfo, s.group.id) " +
 //            "from Student s WHERE s.id = ?1")
 
-    @Query("select new com.coursed.dto.StudentDTO(s.id, s.firstName, s.lastName, s.patronymic) " +
-            "from Student s WHERE s.id = ?1") // TODO add more fields like in the comment upper
-    StudentDTO findOneInDTO(Long id);
+    @Query("SELECT new com.coursed.dto.StudentDTO(s.id, s.firstName, s.lastName, s.patronymic) " +
+            "FROM Student s WHERE s.id = ?1") // TODO add more fields like in the comment upper
+    StudentDTO findOneInDTO(Long studentId);
 
-    @Query("select new com.coursed.dto.StudentDTO$StudentTitleDTO(s.id, s.firstName, s.lastName, s.patronymic) " +
-            "from Student s")
+    @Query("SELECT new com.coursed.dto.StudentDTO$StudentTitleDTO(s.id, s.firstName, s.lastName, s.patronymic) " +
+            "FROM Student s")
     Page<StudentDTO.StudentTitleDTO> findAllInDTO(Pageable pageable);
 }
