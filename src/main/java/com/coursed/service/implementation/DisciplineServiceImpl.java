@@ -66,15 +66,13 @@ public class DisciplineServiceImpl implements DisciplineService {
     }
 
     @Override
-    public void connectWithTeacher(Long disciplineId, Long teacherId) {
+    public DisciplineDTO connectWithTeacher(Long disciplineId, Long teacherId) {
         Teacher teacher = teacherRepository.findOne(teacherId);
         Discipline discipline = disciplineRepository.findOne(disciplineId);
 
-        List<Teacher> teachersList = discipline.getTeachers();
-        teachersList.add(teacher);
-
-        discipline.setTeachers(teachersList);
-        disciplineRepository.save(discipline);
+        discipline.addTeacher(teacher);
+        Discipline savedDiscipline = disciplineRepository.save(discipline);
+        return disciplineRepository.findOneInDTO(savedDiscipline.getId());
     }
 
     @Override

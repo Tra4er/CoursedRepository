@@ -57,24 +57,31 @@ public class DisciplineResource {
                 teacherService.getAllByDiscipline(disciplineId, page, size)), HttpStatus.OK);
     }
 
+    @PostMapping("{disciplineId}/teachers/{teacherId}")
+    public ResponseEntity<GenericResponse> connectWithTeacher(@PathVariable("disciplineId") Long disciplineId,
+                                                              @PathVariable("teacherId") Long teacherId) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                disciplineService.connectWithTeacher(disciplineId, teacherId)), HttpStatus.OK);
+    }
+
     @GetMapping("/search")
-    public ResponseEntity<GenericResponse> search() {
+    public ResponseEntity<GenericResponse> search(@RequestParam(value = "page") Integer page,
+                                                  @RequestParam(value = "size") Integer size,
+                                                  @RequestParam(value = "plannedEventId", required = false) Long plannedEventId,
+                                                  @RequestParam(value = "groupId", required = false) Long groupId) {
+
+        if(plannedEventId != null && groupId != null) { // TODO
+            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    disciplineService.getAllDisciplinesFromPlannedEvent(plannedEventId, groupId)), HttpStatus.OK);
+        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // OLD
 
-    @PostMapping("connectTeacherWithDiscipline")
-    private void connectWithTeacher(@RequestParam(name = "disciplineId") Long disciplineId,
-                                    @RequestParam(name = "teacherId") Long teacherId)
-    {
-        disciplineService.connectWithTeacher(disciplineId, teacherId);
-    }
-
     @GetMapping("/getAllActualConnectedWithTeacher")
-    private Collection<Discipline> getAllActualConnectedWithTeacher(@RequestParam(name = "plannedEventId", required = false) Long plannedEventId, Principal principal)
-    {
-        if(principal == null)
+    private Collection<Discipline> getAllActualConnectedWithTeacher(@RequestParam(name = "plannedEventId", required = false) Long plannedEventId, Principal principal) {
+        if (principal == null)
             throw new IllegalArgumentException("You haven`t logged in to retrieve principal");
 
         User user = userService.getByEmail(principal.getName());
@@ -82,10 +89,4 @@ public class DisciplineResource {
         return disciplineService.getAllActualConnectedWithTeacher(user.getTeacherEntity().getId(), plannedEventId);
     }
 
-    @GetMapping("/getAllDisciplinesFromPlannedEvent")
-    private Collection<Discipline> getAllDisciplinesFromPlannedEvent(@RequestParam(name = "plannedEventId")Long plannedEventId,
-                                                                     @RequestParam(name = "groupId")Long groupId)
-    {
-        return disciplineService.getAllDisciplinesFromPlannedEvent(plannedEventId, groupId);
-    }
 }

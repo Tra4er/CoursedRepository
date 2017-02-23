@@ -12,7 +12,7 @@ import java.util.List;
 public interface DisciplineService {
     DisciplineDTO getById(Long id);
     Discipline create(DisciplineDTO disciplineDTO);
-    void connectWithTeacher(Long disciplineId, Long teacherId);
+    DisciplineDTO connectWithTeacher(Long disciplineId, Long teacherId);
     Page<DisciplineDTO.DisciplineTitleDTO> getAll(int page, int size);
     Page<DisciplineDTO.DisciplineTitleDTO> getAllByTeacher(Long teacherId, int page, int size);
     List<Discipline> getAllActualConnectedWithTeacher(Long teacherId, Long plannedEventId);

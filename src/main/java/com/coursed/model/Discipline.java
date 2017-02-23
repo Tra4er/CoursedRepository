@@ -128,6 +128,10 @@ public class Discipline {
         this.teachers = teachers;
     }
 
+    public void addTeacher(Teacher teacher) {
+        teachers.add(teacher);
+    }
+
     public List<FinalGrade> getFinalGrades() {
         return finalGrades;
     }
