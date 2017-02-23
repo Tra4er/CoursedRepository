@@ -19,7 +19,7 @@ public interface GroupService {
     Page<GroupDTO> getAll(int page, int size);
     Page<GroupDTO> getAllWithoutCurators(int page, int size);
     Page<GroupDTO> getAllBySpeciality(Long specialityId, int page, int size);
-    List<Group> findAllFromSemester(Long semesterId);
+    Page<GroupDTO> getAllBySemester(Long semesterId, int page, int size);
     List<Group> findAllFromSpecialityAndSemester(Long specialityId, Long semesterId);
     void addCurator(Long groupId, Long teacherId);
     void addStudent(Long groupId, Long studentId);

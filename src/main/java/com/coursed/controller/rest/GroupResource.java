@@ -89,16 +89,6 @@ public class GroupResource {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                     groupService.findAllFromSpecialityAndSemester(specialityId, semesterId)), HttpStatus.OK);
         }
-        else if(specialityId != null)
-        {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    groupService.getAllBySpeciality(specialityId, page, size)), HttpStatus.OK);
-        }
-        else if(semesterId != null)
-        {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    groupService.findAllFromSemester(semesterId)), HttpStatus.OK);
-        }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

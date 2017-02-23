@@ -77,14 +77,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Group> findAllFromSemester(Long semesterId) {
-        Semester semester = semesterRepository.findOne(semesterId);
-        if(semester != null)
-        {
-            return semester.getGroups();
-        }
-
-        return null;
+    public Page<GroupDTO> getAllBySemester(Long semesterId, int page, int size) {
+        return groupRepository.findAllBySemesterInDTO(semesterId, new PageRequest(page, size));
     }
 
     @Override

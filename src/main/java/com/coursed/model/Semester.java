@@ -20,17 +20,17 @@ public class Semester {
     @Enumerated
     private SemesterNumber semesterNumber;
 
-    @JsonBackReference("year-semesters")
+//    @JsonBackReference("year-semesters")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="year_id")
     private Year year;
 
-    @JsonIgnore
+//    @JsonIgnore
     //@JsonManagedReference("semester-groups")
     @OneToMany(mappedBy = "semester")
     private List<Group> groups;
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "semester")
     private List<PlannedEvent> plannedEvents;
 
