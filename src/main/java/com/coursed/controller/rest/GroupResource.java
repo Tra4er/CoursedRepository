@@ -58,7 +58,6 @@ public class GroupResource {
     private ResponseEntity<GenericResponse> search(@RequestParam(value = "page", required = false) Integer page,
                                                    @RequestParam(value = "size", required = false) Integer size,
                                                    @RequestParam(value = "filter", required = false) String filter,
-                                                   @RequestParam(name = "plannedEventId", required = false)Long plannedEventId,
                                                    @RequestParam(name = "semesterNumber", required = false) SemesterNumber semesterNumber,
                                                    @RequestParam(name = "courseNumber", required = false) CourseNumber courseNumber,
                                                    @RequestParam(name = "disciplineId", required = false) Long disciplineId,
@@ -80,10 +79,6 @@ public class GroupResource {
                 }
                 default : break;
             }
-        }
-        if(plannedEventId != null) {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    groupService.findAllByPlannedEvent(plannedEventId)), HttpStatus.OK);
         }
         if(specialityId != null && semesterId != null) {
             return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",

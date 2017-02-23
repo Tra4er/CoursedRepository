@@ -25,5 +25,4 @@ public interface GroupService {
     void addCurator(Long groupId, Long teacherId);
     void addStudent(Long groupId, Long studentId);
     List<Group> findAllForGrading(Long educationPlanId, SemesterNumber semesterNumber, CourseNumber courseNumber);
-    List<Group> findAllByPlannedEvent(Long plannedEventId);
 }

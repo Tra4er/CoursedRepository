@@ -83,8 +83,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Page<GroupDTO> getAllByPlannedEvent(Long plannedEventId, int page, int size) {
-//        return groupRepository.findAllByPlannedEventInDTO(plannedEventId, new PageRequest(page, size));
-        return null;
+        return groupRepository.findAllByPlannedEventInDTO(plannedEventId, new PageRequest(page, size));
     }
 
     @Override
@@ -134,13 +133,6 @@ public class GroupServiceImpl implements GroupService {
                 .collect(Collectors.toList());
 
         return groups;
-    }
-
-    @Override
-    public List<Group> findAllByPlannedEvent(Long plannedEventId) {
-        PlannedEvent plannedEvent = plannedEventRepository.findOne(plannedEventId);
-        Semester semester = plannedEvent.getSemester();
-        return semester.getGroups();
     }
 
 }
