@@ -24,14 +24,14 @@ public class Teacher {
     private String patronymic;
     private String phoneNumber;
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
     private List<FinalGrade> finalGrades;
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToMany(mappedBy = "teachers", fetch = FetchType.LAZY)
     private List<Discipline> disciplines;
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToMany(mappedBy = "curators", fetch = FetchType.LAZY)
     private List<Group> curatedGroups;
 

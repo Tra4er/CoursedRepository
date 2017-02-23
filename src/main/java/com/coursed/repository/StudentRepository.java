@@ -29,4 +29,8 @@ public interface StudentRepository extends CrudRepository<Student, Long> {
     @Query("SELECT new com.coursed.dto.StudentDTO$StudentTitleDTO(s.id, s.firstName, s.lastName, s.patronymic) " +
             "FROM Student s")
     Page<StudentDTO.StudentTitleDTO> findAllInDTO(Pageable pageable);
+
+    @Query("SELECT new com.coursed.dto.StudentDTO$StudentTitleDTO(s.id, s.firstName, s.lastName, s.patronymic) " +
+            "FROM Student s LEFT JOIN s.group g WHERE g.id = ?1")
+    Page<StudentDTO.StudentTitleDTO> findAllByGroupInDTO(Long groupId, Pageable pageable);
 }

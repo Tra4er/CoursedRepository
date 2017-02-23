@@ -20,4 +20,5 @@ public interface TeacherService {
     void confirmTeacher(Long teacherId);
     Page<TeacherDTO.TeacherTitleDTO> getAllTeachersWithoutDiscipline(Long disciplineId, int page, int size);
     Page<TeacherDTO.TeacherTitleDTO> getAllTeachersWithDiscipline(Long disciplineId, int page, int size);
+    Page<TeacherDTO.TeacherTitleDTO> getAllCuratorsByGroup(Long groupId, int page, int size);
 }

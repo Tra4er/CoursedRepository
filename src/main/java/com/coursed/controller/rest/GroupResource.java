@@ -4,10 +4,7 @@ import com.coursed.dto.GroupDTO;
 import com.coursed.model.*;
 import com.coursed.model.enums.CourseNumber;
 import com.coursed.model.enums.SemesterNumber;
-import com.coursed.service.GroupService;
-import com.coursed.service.SemesterService;
-import com.coursed.service.SpecialityService;
-import com.coursed.service.TeacherService;
+import com.coursed.service.*;
 import com.coursed.util.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +19,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/api/groups")
 public class GroupResource {
+
     @Autowired
     private GroupService groupService;
 
@@ -33,6 +31,9 @@ public class GroupResource {
 
     @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private StudentService studentService;
 
     @GetMapping
     private ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
@@ -109,9 +110,11 @@ public class GroupResource {
     }
 
     @GetMapping("/{groupId}/curators")
-    private ResponseEntity<GenericResponse> getCurators(@PathVariable("groupId") Long groupId) {
+    private ResponseEntity<GenericResponse> getCurators(@PathVariable("groupId") Long groupId,
+                                                        @RequestParam(value = "page") Integer page,
+                                                        @RequestParam(value = "size") Integer size) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                groupService.getCurators(groupId)), HttpStatus.OK);
+                teacherService.getAllCuratorsByGroup(groupId, page, size)), HttpStatus.OK);
     }
 
     @PostMapping("/{groupId}/curators/{teacherId}")
@@ -126,7 +129,7 @@ public class GroupResource {
                                                         @RequestParam(value = "page") Integer page,
                                                         @RequestParam(value = "size") Integer size) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                groupService.getStudents(groupId, page, size)), HttpStatus.OK);
+                studentService.getAllByGroup(groupId, page, size)), HttpStatus.OK);
     }
 
     @PostMapping("/{groupId}/students/{studentId}")

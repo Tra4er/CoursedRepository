@@ -36,11 +36,4 @@ public interface GroupRepository extends CrudRepository<Group, Long> {
             "g.speciality.id) FROM com.coursed.model.Group g WHERE g.speciality.id = ?1")
     Page<GroupDTO> findAllBySpecialityInDTO(Long specialityId, Pageable pageable);
 
-    @Query("SELECT new com.coursed.dto.TeacherDTO$TeacherTitleDTO(c.id, c.firstName, c.lastName, c.patronymic) " +
-            "FROM com.coursed.model.Group g LEFT JOIN g.curators c WHERE g.id = ?1")
-    List<TeacherDTO.TeacherTitleDTO> findCuratorsInDTO(Long groupId);
-
-    @Query("SELECT new com.coursed.dto.StudentDTO$StudentTitleDTO(s.id, s.firstName, s.lastName, s.patronymic) " +
-            "FROM com.coursed.model.Group g LEFT JOIN g.students s WHERE g.id = ?1")
-    Page<StudentDTO.StudentTitleDTO> findAllStudentsInDTO(Long groupId, Pageable pageable);
 }

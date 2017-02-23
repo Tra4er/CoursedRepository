@@ -16,5 +16,5 @@ public interface StudentService {
     StudentDTO getById(Long id);
     Page<StudentDTO.StudentTitleDTO> getAll();
     Page<StudentDTO.StudentTitleDTO> getAll(int page, int size);
-    List<Student> getAllFromGroup(Long groupId);
+    Page<StudentDTO.StudentTitleDTO> getAllByGroup(Long groupId, int page, int size);
 }

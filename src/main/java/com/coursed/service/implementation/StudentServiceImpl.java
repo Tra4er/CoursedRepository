@@ -66,9 +66,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> getAllFromGroup(Long groupId) {
-        Group group = groupRepository.findOne(groupId);
-
-        return group.getStudents();
+    public Page<StudentDTO.StudentTitleDTO> getAllByGroup(Long groupId, int page, int size) {
+        return studentRepository.findAllByGroupInDTO(groupId, new PageRequest(page, size));
     }
 }
