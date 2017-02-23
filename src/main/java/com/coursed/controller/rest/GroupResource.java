@@ -44,8 +44,8 @@ public class GroupResource {
 
     @PostMapping
     private ResponseEntity<GenericResponse> post(@RequestBody GroupDTO groupDTO) { // TODO
-//        Semester sem = semesterService.findOne(groupDTO.getSemesterId());
-//        Speciality spec = specialityService.findOne(groupDTO.getSpecialityId());
+//        Semester sem = semesterService.getById(groupDTO.getSemesterId());
+//        Speciality spec = specialityService.getById(groupDTO.getSpecialityId());
 //
 //        Group group = new Group(groupDTO.getNumber(), groupDTO.getGroupType(), groupDTO.getGroupDegree(),
 //                groupDTO.getCourseNumber(),sem, spec);

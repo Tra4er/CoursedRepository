@@ -82,6 +82,12 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public Page<GroupDTO> getAllByPlannedEvent(Long plannedEventId, int page, int size) {
+//        return groupRepository.findAllByPlannedEventInDTO(plannedEventId, new PageRequest(page, size));
+        return null;
+    }
+
+    @Override
     public List<Group> findAllFromSpecialityAndSemester(Long specialityId, Long semesterId) {
         Speciality speciality = specialityRepository.findOne(specialityId);
         Semester semester = semesterRepository.findOne(semesterId);

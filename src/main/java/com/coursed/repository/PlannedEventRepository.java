@@ -1,8 +1,12 @@
 package com.coursed.repository;
 
+import com.coursed.dto.PlannedEventDTO;
 import com.coursed.model.PlannedEvent;
 import com.coursed.model.Semester;
 import com.coursed.model.enums.PlannedEventType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +23,12 @@ public interface PlannedEventRepository extends CrudRepository<PlannedEvent, Lon
     List<PlannedEvent> findAllByExpirationDate(LocalDateTime date);
     List<PlannedEvent> findAllByEventType(PlannedEventType plannedEventType);
     List<PlannedEvent> findAllBySemester(Semester semester);
+
+    @Query("SELECT new com.coursed.dto.PlannedEventDTO(e.id, e.beginDate, e.expirationDate, e.creationDate, " +
+            "e.eventType, e.semester.id) FROM PlannedEvent e WHERE e.id = ?1")
+    PlannedEventDTO findOneInDTO(Long plannedEventId);
+
+    @Query("SELECT new com.coursed.dto.PlannedEventDTO(e.id, e.beginDate, e.expirationDate, e.creationDate, " +
+            "e.eventType, e.semester.id) FROM PlannedEvent e")
+    Page<PlannedEventDTO> findAllInDTO(Pageable pageable);
 }

@@ -14,10 +14,31 @@ import java.time.ZonedDateTime;
  * Created by Hexray on 18.12.2016.
  */
 public class PlannedEventDTO {
+
+    private Long id;
     private LocalDateTime beginDate;
     private LocalDateTime expirationDate;
+    private LocalDateTime creationDate;
     private PlannedEventType eventType;
     private Long semesterId;
+
+    public PlannedEventDTO(Long id, LocalDateTime beginDate, LocalDateTime expirationDate, LocalDateTime creationDate,
+                           PlannedEventType eventType, Long semesterId) {
+        this.id = id;
+        this.beginDate = beginDate;
+        this.expirationDate = expirationDate;
+        this.creationDate = creationDate;
+        this.eventType = eventType;
+        this.semesterId = semesterId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public LocalDateTime getBeginDate() {
         return beginDate;
@@ -33,6 +54,14 @@ public class PlannedEventDTO {
 
     public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     public PlannedEventType getEventType() {

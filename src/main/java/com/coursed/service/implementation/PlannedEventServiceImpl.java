@@ -12,6 +12,8 @@ import com.coursed.service.YearService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
@@ -39,12 +41,8 @@ public class PlannedEventServiceImpl implements PlannedEventService {
     private SemesterRepository semesterRepository;
 
     @Override
-    public PlannedEvent findOne(Long eventId) {
-        try{
-            return plannedEventRepository.findOne(eventId);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Wrong event id.");
-        }
+    public PlannedEventDTO getById(Long eventId) {
+        return plannedEventRepository.findOneInDTO(eventId);
     }
     /**
 
@@ -71,9 +69,9 @@ public class PlannedEventServiceImpl implements PlannedEventService {
     }
 
     @Override
-    public List<PlannedEvent> findAll() {
+    public Page<PlannedEventDTO> getAll(int page, int size) {
         LOGGER.debug("Getting all planned events");
-        return plannedEventRepository.findAll();
+        return plannedEventRepository.findAllInDTO(new PageRequest(page, size));
     }
 
     /**
