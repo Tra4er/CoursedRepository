@@ -9,6 +9,8 @@ import com.coursed.repository.SpecialityRepository;
 import com.coursed.repository.YearRepository;
 import com.coursed.service.EducationPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,8 +30,8 @@ public class EducationPlanServiceImpl implements EducationPlanService {
     private SpecialityRepository specialityRepository;
 
     @Override
-    public List<EducationPlan> findAll() {
-        return educationPlanRepository.findAll();
+    public EducationPlanDTO getById(Long educationPlanId) {
+        return educationPlanRepository.findOneInDTO(educationPlanId);
     }
 
     @Override
@@ -52,7 +54,8 @@ public class EducationPlanServiceImpl implements EducationPlanService {
     }
 
     @Override
-    public EducationPlan findOne(Long educationPlanId) {
-        return educationPlanRepository.findOne(educationPlanId);
+    public Page<EducationPlanDTO> getAll(int page, int size) {
+        return educationPlanRepository.findAllInDTO(new PageRequest(page, size));
     }
+
 }

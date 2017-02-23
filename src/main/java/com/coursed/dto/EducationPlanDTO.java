@@ -8,6 +8,9 @@ import com.coursed.model.enums.GroupType;
  * Created by Hexray on 11.12.2016.
  */
 public class EducationPlanDTO {
+
+    private Long id;
+
     private Long yearId;
     private Long specialityId;
 
@@ -16,6 +19,24 @@ public class EducationPlanDTO {
     private CourseNumber courseNumber;
 
     public EducationPlanDTO() {
+    }
+
+    public EducationPlanDTO(Long id, Long yearId, Long specialityId, GroupType groupType, GroupDegree groupDegree,
+                            CourseNumber courseNumber) {
+        this.id = id;
+        this.yearId = yearId;
+        this.specialityId = specialityId;
+        this.groupType = groupType;
+        this.groupDegree = groupDegree;
+        this.courseNumber = courseNumber;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getYearId() {

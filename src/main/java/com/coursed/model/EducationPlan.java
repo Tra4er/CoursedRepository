@@ -24,7 +24,7 @@ public class EducationPlan {
     @Enumerated
     private CourseNumber courseNumber;
 
-    @JsonManagedReference("educationPlan-discipline")
+//    @JsonManagedReference("educationPlan-discipline")
     @OneToMany(mappedBy = "educationPlan", fetch = FetchType.LAZY)
     private List<Discipline> disciplines;
 
@@ -33,7 +33,7 @@ public class EducationPlan {
     @JoinColumn(name="speciality_id")
     private Speciality speciality;
 
-    @JsonBackReference("year-educationplan")
+//    @JsonBackReference("year-educationplan")
     @ManyToOne/*(fetch = FetchType.LAZY)*/
     @JoinColumn(name="year_id")
     private Year year;
