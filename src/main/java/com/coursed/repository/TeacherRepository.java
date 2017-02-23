@@ -33,7 +33,7 @@ public interface TeacherRepository extends CrudRepository<Teacher, Long> {
 
     @Query("SELECT new com.coursed.dto.TeacherDTO$TeacherTitleDTO(t.id, t.firstName, t.lastName, t.patronymic) " +
             "FROM Teacher t JOIN t.disciplines d WHERE ?1 IN (d.id)")
-    Page<TeacherDTO.TeacherTitleDTO> findAllWithDisciplineInDTO(Long disciplineId, Pageable pageable);
+    Page<TeacherDTO.TeacherTitleDTO> findAllByDisciplineInDTO(Long disciplineId, Pageable pageable);
 
     @Query("SELECT new com.coursed.dto.TeacherDTO$TeacherTitleDTO(t.id, t.firstName, t.lastName, t.patronymic) " +
             "FROM Teacher t JOIN t.disciplines d WHERE ?1 NOT IN (d.id)")

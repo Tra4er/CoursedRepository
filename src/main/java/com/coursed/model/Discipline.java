@@ -32,15 +32,15 @@ public class Discipline {
     @JoinTable(name = "discipline_teachers", joinColumns = @JoinColumn(name = "discipline_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private List<Teacher> teachers;
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "discipline")
     private List<FinalGrade> finalGrades;
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "discipline")
     private List<AttestationGrade> attestationGrades;
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="educationPlan_id")
     private EducationPlan educationPlan;

@@ -40,13 +40,8 @@ public class DisciplineServiceImpl implements DisciplineService {
     private GroupRepository groupRepository;
 
     @Override
-    public Discipline getById(Long id) {
-        return disciplineRepository.findOne(id);
-    }
-
-    @Override
-    public List<Discipline> getAll() {
-        return disciplineRepository.findAll();
+    public DisciplineDTO getById(Long id) {
+        return disciplineRepository.findOneInDTO(id);
     }
 
     @Override
@@ -83,7 +78,12 @@ public class DisciplineServiceImpl implements DisciplineService {
     }
 
     @Override
-    public Page<DisciplineDTO> getAllByTeacher(Long teacherId, int page, int size) {
+    public Page<DisciplineDTO.DisciplineTitleDTO> getAll(int page, int size) {
+        return disciplineRepository.findAllInDTO(new PageRequest(page, size));
+    }
+
+    @Override
+    public Page<DisciplineDTO.DisciplineTitleDTO> getAllByTeacher(Long teacherId, int page, int size) {
         return disciplineRepository.findAllByTeacher(teacherId, new PageRequest(page, size));
     }
 

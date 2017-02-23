@@ -19,11 +19,19 @@ import java.util.List;
 public interface DisciplineRepository extends CrudRepository<Discipline, Long> {
     List<Discipline> findAll();
 
-    @Query("SELECT new com.coursed.dto.DisciplineDTO(d.id, d.name, d.courseNumber, d.semesterNumber) " +
-            "FROM Discipline d INNER JOIN d.teachers t WHERE t.id = ?1")
-    Page<DisciplineDTO> findAllByTeacher(Long teacherId, Pageable pageable);
+    @Query("SELECT new com.coursed.dto.DisciplineDTO(d.id, d.name, d.type, d.hours, d.credits, d.courseNumber," +
+            "d.semesterNumber, d.educationPlan.id) FROM Discipline d WHERE d.id = ?1")
+    DisciplineDTO findOneInDTO(Long disciplineId);
 
-    @Query("SELECT dis FROM " +
+    @Query("SELECT new com.coursed.dto.DisciplineDTO$DisciplineTitleDTO(d.id, d.name, d.type, d.courseNumber) " +
+            "FROM Discipline d")
+    Page<DisciplineDTO.DisciplineTitleDTO> findAllInDTO(Pageable pageable);
+
+    @Query("SELECT new com.coursed.dto.DisciplineDTO$DisciplineTitleDTO(d.id, d.name, d.type, d.courseNumber) " +
+            "FROM Discipline d INNER JOIN d.teachers t WHERE t.id = ?1")
+    Page<DisciplineDTO.DisciplineTitleDTO> findAllByTeacher(Long teacherId, Pageable pageable);
+
+    @Query("SELECT dis FROM " + // TODO remove?
             "Discipline dis INNER JOIN dis.teachers " +
             "WHERE teacher_id = :teacherid")
     List<Discipline> getAllActualConnectedWithTeacher(@Param("teacherid")Long teacherId);

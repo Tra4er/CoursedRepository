@@ -92,14 +92,10 @@ public class TeacherResource {
                 return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
                         teacherService.getAllUnconfirmed(page, size)), HttpStatus.OK);
             }
-            if(disciplineId != null) {
-                if (filter.equals("withDiscipline")) {
+            if (filter.equals("withoutDiscipline")) {
+                if (disciplineId != null) {
                     return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                            teacherService.getAllTeachersWithDiscipline(disciplineId, page, size)), HttpStatus.OK);
-                }
-                if (filter.equals("withoutDiscipline")) {
-                    return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                            teacherService.getAllTeachersWithoutDiscipline(disciplineId, page, size)), HttpStatus.OK);
+                            teacherService.getAllWithoutDiscipline(disciplineId, page, size)), HttpStatus.OK);
                 }
             }
         }

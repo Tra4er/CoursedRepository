@@ -4,6 +4,7 @@ import com.coursed.dto.DisciplineDTO;
 import com.coursed.model.Discipline;
 import com.coursed.model.auth.User;
 import com.coursed.service.DisciplineService;
+import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
 import com.coursed.util.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,16 @@ public class DisciplineResource {
     private DisciplineService disciplineService;
 
     @Autowired
+    private TeacherService teacherService;
+
+    @Autowired
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<GenericResponse> get() {
+    public ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
+                                               @RequestParam(value = "size") Integer size) {
         return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                disciplineService.getAll()), HttpStatus.OK);
+                disciplineService.getAll(page, size)), HttpStatus.OK);
     }
 
     @PostMapping
@@ -38,15 +43,23 @@ public class DisciplineResource {
                 disciplineService.create(disciplineDTO)), HttpStatus.OK);
     }
 
+    @GetMapping("{disciplineId}")
+    public ResponseEntity<GenericResponse> getById(@PathVariable("disciplineId") Long disciplineId) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                disciplineService.getById(disciplineId)), HttpStatus.OK);
+    }
+
+    @GetMapping("{disciplineId}/teachers")
+    public ResponseEntity<GenericResponse> getTeachers(@PathVariable("disciplineId") Long disciplineId,
+                                                       @RequestParam(value = "page") Integer page,
+                                                       @RequestParam(value = "size") Integer size) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                teacherService.getAllByDiscipline(disciplineId, page, size)), HttpStatus.OK);
+    }
+
     @GetMapping("/search")
     public ResponseEntity<GenericResponse> search() {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @GetMapping("[id}")
-    public ResponseEntity<GenericResponse> getById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                disciplineService.getById(id)), HttpStatus.OK);
     }
 
     // OLD

@@ -2,7 +2,6 @@ package com.coursed.service.implementation;
 
 import com.coursed.dto.TeacherDTO;
 import com.coursed.error.exception.PageSizeTooBigException;
-import com.coursed.model.Discipline;
 import com.coursed.model.Group;
 import com.coursed.model.Teacher;
 import com.coursed.model.auth.Role;
@@ -18,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Hexray on 06.12.2016.
@@ -107,13 +105,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Page<TeacherDTO.TeacherTitleDTO> getAllTeachersWithoutDiscipline(Long disciplineId, int page, int size) {
+    public Page<TeacherDTO.TeacherTitleDTO> getAllWithoutDiscipline(Long disciplineId, int page, int size) {
         return teacherRepository.findAllWithoutDisciplineInDTO(disciplineId, new PageRequest(page,size));
     }
 
     @Override
-    public Page<TeacherDTO.TeacherTitleDTO> getAllTeachersWithDiscipline(Long disciplineId, int page, int size) {
-        return teacherRepository.findAllWithDisciplineInDTO(disciplineId, new PageRequest(page,size));
+    public Page<TeacherDTO.TeacherTitleDTO> getAllByDiscipline(Long disciplineId, int page, int size) {
+        return teacherRepository.findAllByDisciplineInDTO(disciplineId, new PageRequest(page,size));
     }
 
     @Override

@@ -10,11 +10,11 @@ import java.util.List;
  * Created by Hexray on 11.12.2016.
  */
 public interface DisciplineService {
-    Discipline getById(Long id);
-    List<Discipline> getAll();
+    DisciplineDTO getById(Long id);
     Discipline create(DisciplineDTO disciplineDTO);
     void connectWithTeacher(Long disciplineId, Long teacherId);
-    Page<DisciplineDTO> getAllByTeacher(Long teacherId, int page, int size);
+    Page<DisciplineDTO.DisciplineTitleDTO> getAll(int page, int size);
+    Page<DisciplineDTO.DisciplineTitleDTO> getAllByTeacher(Long teacherId, int page, int size);
     List<Discipline> getAllActualConnectedWithTeacher(Long teacherId, Long plannedEventId);
     List<Discipline> getAllDisciplinesFromPlannedEvent(Long plannedEventId, Long groupId);
 }
