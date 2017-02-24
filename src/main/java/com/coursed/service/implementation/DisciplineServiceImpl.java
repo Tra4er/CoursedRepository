@@ -87,45 +87,46 @@ public class DisciplineServiceImpl implements DisciplineService {
 
     @Override
     public List<Discipline> getAllActualConnectedWithTeacher(Long teacherId, Long plannedEventId) {
-        Year currentYear = yearService.getCurrent();
-        List<EducationPlan> educationPlans = currentYear.getEducationPlans();
+//        Year currentYear = yearService.getCurrent();
+//        List<EducationPlan> educationPlans = currentYear.getEducationPlans();
+//
+//        List<Discipline> connectedWithTeacher = disciplineRepository.getAllActualConnectedWithTeacher(teacherId);
+//
+//        List<Discipline> actualDisciplines = new ArrayList<>();
+//        if (plannedEventId != null) {
+//            PlannedEvent plannedEvent = plannedEventRepository.findOne(plannedEventId);
+//            Semester semester = plannedEvent.getSemester();
+//
+//            for (EducationPlan plan : educationPlans) {
+//                List<Discipline> disciplinesFromPlan = plan.getDisciplines();
+//                for (Discipline discipline : connectedWithTeacher) {
+//
+//                    if (disciplinesFromPlan.contains(discipline) &&
+//                            discipline.getSemesterNumber() == semester.getSemesterNumber()) {
+//
+//                        if((plannedEvent.getEventType() == PlannedEventType.GRADING_WEEK && discipline.getType() == DisciplineType.CREDIT) ||
+//                                (plannedEvent.getEventType() == PlannedEventType.GRADING_WEEK && discipline.getType() == DisciplineType.DIFFERENTIATED_CREDIT) ||
+//                                (plannedEvent.getEventType() == PlannedEventType.GRADING_WEEK && discipline.getType() == DisciplineType.COURSE_PROJECT) ||
+//                                (plannedEvent.getEventType() == PlannedEventType.ATTESTATION_FIRST || plannedEvent.getEventType() == PlannedEventType.ATTESTATION_SECOND)||
+//                                (plannedEvent.getEventType() == PlannedEventType.EXAMINATION && discipline.getType() == DisciplineType.EXAM)) {
+//                            actualDisciplines.add(discipline);
+//                        }
+//                    }
+//                }
+//            }
+//
+//        } else {
+//            for (EducationPlan plan : educationPlans) {
+//                List<Discipline> disciplinesFromPlan = plan.getDisciplines();
+//                for (Discipline discipline : connectedWithTeacher) {
+//                    if (disciplinesFromPlan.contains(discipline))
+//                        actualDisciplines.add(discipline);
+//                }
+//            }
+//        }
 
-        List<Discipline> connectedWithTeacher = disciplineRepository.getAllActualConnectedWithTeacher(teacherId);
-
-        List<Discipline> actualDisciplines = new ArrayList<>();
-        if (plannedEventId != null) {
-            PlannedEvent plannedEvent = plannedEventRepository.findOne(plannedEventId);
-            Semester semester = plannedEvent.getSemester();
-
-            for (EducationPlan plan : educationPlans) {
-                List<Discipline> disciplinesFromPlan = plan.getDisciplines();
-                for (Discipline discipline : connectedWithTeacher) {
-
-                    if (disciplinesFromPlan.contains(discipline) &&
-                            discipline.getSemesterNumber() == semester.getSemesterNumber()) {
-
-                        if((plannedEvent.getEventType() == PlannedEventType.GRADING_WEEK && discipline.getType() == DisciplineType.CREDIT) ||
-                                (plannedEvent.getEventType() == PlannedEventType.GRADING_WEEK && discipline.getType() == DisciplineType.DIFFERENTIATED_CREDIT) ||
-                                (plannedEvent.getEventType() == PlannedEventType.GRADING_WEEK && discipline.getType() == DisciplineType.COURSE_PROJECT) ||
-                                (plannedEvent.getEventType() == PlannedEventType.ATTESTATION_FIRST || plannedEvent.getEventType() == PlannedEventType.ATTESTATION_SECOND)||
-                                (plannedEvent.getEventType() == PlannedEventType.EXAMINATION && discipline.getType() == DisciplineType.EXAM)) {
-                            actualDisciplines.add(discipline);
-                        }
-                    }
-                }
-            }
-
-        } else {
-            for (EducationPlan plan : educationPlans) {
-                List<Discipline> disciplinesFromPlan = plan.getDisciplines();
-                for (Discipline discipline : connectedWithTeacher) {
-                    if (disciplinesFromPlan.contains(discipline))
-                        actualDisciplines.add(discipline);
-                }
-            }
-        }
-
-        return actualDisciplines;
+//        return actualDisciplines;
+        return null;
     }
 
     @Override
