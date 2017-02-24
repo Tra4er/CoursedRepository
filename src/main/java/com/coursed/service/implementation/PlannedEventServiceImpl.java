@@ -78,22 +78,28 @@ public class PlannedEventServiceImpl implements PlannedEventService {
     @Override
     public Page<PlannedEventDTO> getAllUpcoming(int page, int size) {
         LOGGER.debug("Getting all upcoming planned events");
-        Date now = Date.from(Instant.now());
-        return plannedEventRepository.findAllUpcomingInDTO(now, new PageRequest(page, size, new Sort(Sort.Direction.DESC)));
+//        Date now = Date.from(Instant.now());
+        LocalDateTime now = LocalDateTime.now();
+        return plannedEventRepository.findAllUpcomingInDTO(now,
+                new PageRequest(page, size, Sort.Direction.ASC, "beginDate"));
     }
 
     @Override
     public Page<PlannedEventDTO> getAllPast(int page, int size) {
-        LOGGER.debug("Getting all upcoming planned events");
-        Date now = Date.from(Instant.now());
-        return plannedEventRepository.findAllPastInDTO(now, new PageRequest(page, size, new Sort(Sort.Direction.ASC)));
+        LOGGER.debug("Getting all past planned events");
+//        Date now = Date.from(Instant.now());
+        LocalDateTime now = LocalDateTime.now();
+        return plannedEventRepository.findAllPastInDTO(now,
+                new PageRequest(page, size, Sort.Direction.ASC, "expirationDate"));
     }
 
     @Override
     public Page<PlannedEventDTO> getAllInProgress(int page, int size) {
-        LOGGER.debug("Getting all upcoming planned events");
-        Date now = Date.from(Instant.now());
-        return plannedEventRepository.findAllInProgressInDTO(now, new PageRequest(page, size, new Sort(Sort.Direction.DESC)));
+        LOGGER.debug("Getting all in progress planned events");
+//        Date now = Date.from(Instant.now());
+        LocalDateTime now = LocalDateTime.now();
+        return plannedEventRepository.findAllInProgressInDTO(now,
+                new PageRequest(page, size, Sort.Direction.ASC, "beginDate"));
     }
 
     /**
