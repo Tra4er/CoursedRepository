@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
@@ -72,6 +73,27 @@ public class PlannedEventServiceImpl implements PlannedEventService {
     public Page<PlannedEventDTO> getAll(int page, int size) {
         LOGGER.debug("Getting all planned events");
         return plannedEventRepository.findAllInDTO(new PageRequest(page, size));
+    }
+
+    @Override
+    public Page<PlannedEventDTO> getAllUpcoming(int page, int size) {
+        LOGGER.debug("Getting all upcoming planned events");
+        Date now = Date.from(Instant.now());
+        return plannedEventRepository.findAllUpcomingInDTO(now, new PageRequest(page, size, new Sort(Sort.Direction.DESC)));
+    }
+
+    @Override
+    public Page<PlannedEventDTO> getAllPast(int page, int size) {
+        LOGGER.debug("Getting all upcoming planned events");
+        Date now = Date.from(Instant.now());
+        return plannedEventRepository.findAllPastInDTO(now, new PageRequest(page, size, new Sort(Sort.Direction.ASC)));
+    }
+
+    @Override
+    public Page<PlannedEventDTO> getAllInProgress(int page, int size) {
+        LOGGER.debug("Getting all upcoming planned events");
+        Date now = Date.from(Instant.now());
+        return plannedEventRepository.findAllInProgressInDTO(now, new PageRequest(page, size, new Sort(Sort.Direction.DESC)));
     }
 
     /**

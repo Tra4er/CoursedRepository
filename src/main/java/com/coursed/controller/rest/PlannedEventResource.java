@@ -50,11 +50,28 @@ public class PlannedEventResource {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<GenericResponse> search(@RequestParam(value = "filter", required = false) String filter) {
+    public ResponseEntity<GenericResponse> search(@RequestParam(value = "filter", required = false) String filter,
+                                                  @RequestParam(value = "page") Integer page,
+                                                  @RequestParam(value = "size") Integer size) {
         if(filter != null) {
-            if (filter.equals("currentYear")) {
-                return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                        plannedEventService.findAllFromCurrentYear()), HttpStatus.OK);
+            switch(filter) {
+                case "upcoming" : {
+                    return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                            plannedEventService.getAllUpcoming(page, size)), HttpStatus.OK);
+                }
+                case "past" : {
+                    return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                            plannedEventService.getAllPast(page, size)), HttpStatus.OK);
+                }
+                case "inProgress" : {
+                    return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                            plannedEventService.getAllInProgress(page, size)), HttpStatus.OK);
+                }
+                case "currentYear" : {
+                    return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                            plannedEventService.findAllFromCurrentYear()), HttpStatus.OK);
+                }
+                default:break;
             }
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

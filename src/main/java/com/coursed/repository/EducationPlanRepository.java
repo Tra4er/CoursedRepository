@@ -16,7 +16,7 @@ public interface EducationPlanRepository extends CrudRepository<EducationPlan, L
     List<EducationPlan> findAll();
 
     @Query("SELECT new com.coursed.dto.EducationPlanDTO(e.id, e.year.id, e.speciality.id, e.groupType, e.groupDegree, " +
-            "e.courseNumber) FROM EducationPlan e WHERE d.id = ?1")
+            "e.courseNumber) FROM EducationPlan e WHERE e.id = ?1")
     EducationPlanDTO findOneInDTO(Long educationPlanId);
 
     @Query("SELECT new com.coursed.dto.EducationPlanDTO(e.id, e.year.id, e.speciality.id, e.groupType, e.groupDegree, " +

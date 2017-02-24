@@ -11,6 +11,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,4 +32,16 @@ public interface PlannedEventRepository extends CrudRepository<PlannedEvent, Lon
     @Query("SELECT new com.coursed.dto.PlannedEventDTO(e.id, e.beginDate, e.expirationDate, e.creationDate, " +
             "e.eventType, e.semester.id) FROM PlannedEvent e")
     Page<PlannedEventDTO> findAllInDTO(Pageable pageable);
+
+    @Query("SELECT new com.coursed.dto.PlannedEventDTO(e.id, e.beginDate, e.expirationDate, e.creationDate, " +
+            "e.eventType, e.semester.id) FROM PlannedEvent e WHERE e.beginDate >= ?1")
+    Page<PlannedEventDTO> findAllUpcomingInDTO(Date now, Pageable pageable);
+
+    @Query("SELECT new com.coursed.dto.PlannedEventDTO(e.id, e.beginDate, e.expirationDate, e.creationDate, " +
+            "e.eventType, e.semester.id) FROM PlannedEvent e WHERE e.expirationDate <= ?1")
+    Page<PlannedEventDTO> findAllPastInDTO(Date now, Pageable pageable);
+
+    @Query("SELECT new com.coursed.dto.PlannedEventDTO(e.id, e.beginDate, e.expirationDate, e.creationDate, " +
+            "e.eventType, e.semester.id) FROM PlannedEvent e WHERE ?1 BETWEEN e.beginDate AND e.expirationDate ")
+    Page<PlannedEventDTO> findAllInProgressInDTO(Date now, Pageable pageable);
 }
