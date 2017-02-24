@@ -15,7 +15,7 @@ public class AttestationGrade {
     private Boolean firstTry;
     private Boolean secondTry;
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="student_id")
     private Student student;

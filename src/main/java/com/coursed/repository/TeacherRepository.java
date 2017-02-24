@@ -18,12 +18,12 @@ public interface TeacherRepository extends CrudRepository<Teacher, Long> {
 
     List<Teacher> findAll();
 
-    @Query("select new com.coursed.dto.TeacherDTO(t.id, t.firstName, t.lastName, t.patronymic, t.phoneNumber) " +
-            "from Teacher t WHERE t.id = ?1")
+    @Query("SELECT new com.coursed.dto.TeacherDTO(t.id, t.firstName, t.lastName, t.patronymic, t.phoneNumber) " +
+            "FROM Teacher t WHERE t.id = ?1")
     TeacherDTO findOneInDTO(Long id);
 
-    @Query("select new com.coursed.dto.TeacherDTO$TeacherTitleDTO(t.id, t.firstName, t.lastName, t.patronymic) " +
-            "from Teacher t")
+    @Query("SELECT new com.coursed.dto.TeacherDTO$TeacherTitleDTO(t.id, t.firstName, t.lastName, t.patronymic) " +
+            "FROM Teacher t")
     Page<TeacherDTO.TeacherTitleDTO> findAllInDTO(Pageable pageable);
 
     @Query("SELECT new com.coursed.dto.TeacherDTO$TeacherTitleDTO(t.id, t.firstName, t.lastName, t.patronymic) " +
