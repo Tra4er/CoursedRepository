@@ -89,7 +89,8 @@ public class BaseInitController {
 
 
         //Groups
-        Semester fifthSemester = yearService.findOne(1L).getSemesters().get(1);
+//        Semester fifthSemester = yearService.getById(1L).getSemesters().get(1);
+        Semester fifthSemester = new Semester();
         Group is43 = new Group(43, GroupType.GENERAL_FORM, GroupDegree.BACHELOR, CourseNumber.THIRD, fifthSemester, isSp);
         Group is42 = new Group(42, GroupType.GENERAL_FORM, GroupDegree.BACHELOR, CourseNumber.THIRD, fifthSemester, isSp);
         Group is41 = new Group(41, GroupType.GENERAL_FORM, GroupDegree.BACHELOR, CourseNumber.THIRD, fifthSemester, isSp);

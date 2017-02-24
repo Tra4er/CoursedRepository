@@ -30,4 +30,9 @@ public class SemesterServiceImpl implements SemesterService {
        return semesterRepository.findAllInDTO(new PageRequest(page, size));
     }
 
+    @Override
+    public Page<SemesterDTO> getAllByYear(Long yearId, int page, int size) {
+        return semesterRepository.findAllByYearInDTO(yearId, new PageRequest(page, size));
+    }
+
 }

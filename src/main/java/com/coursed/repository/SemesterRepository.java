@@ -22,4 +22,8 @@ public interface SemesterRepository extends CrudRepository<Semester, Long> {
     @Query("SELECT new com.coursed.dto.SemesterDTO(s.id, s.semesterNumber) " +
             "FROM Semester s")
     Page<SemesterDTO> findAllInDTO(Pageable pageable);
+
+    @Query("SELECT new com.coursed.dto.SemesterDTO(s.id, s.semesterNumber) " +
+            "FROM Semester s WHERE s.year.id = ?1")
+    Page<SemesterDTO> findAllByYearInDTO(Long yearId, Pageable pageable);
 }

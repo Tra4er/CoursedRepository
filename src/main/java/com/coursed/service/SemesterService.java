@@ -12,4 +12,5 @@ import java.util.List;
 public interface SemesterService {
     SemesterDTO getById(Long id);
     Page<SemesterDTO> getAll(int page, int size);
+    Page<SemesterDTO> getAllByYear(Long yearId, int page, int size);
 }

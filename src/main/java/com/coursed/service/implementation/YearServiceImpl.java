@@ -8,8 +8,11 @@ import com.coursed.repository.SemesterRepository;
 import com.coursed.repository.YearRepository;
 import com.coursed.service.YearService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.*;
 
 /**
@@ -25,13 +28,13 @@ public class YearServiceImpl implements YearService {
     private SemesterRepository semesterRepository;
 
     @Override
-    public List<Year> findAll() {
-        return yearRepository.findAll();
+    public Page<YearDTO> getAll(int page, int size) {
+        return yearRepository.findAllInDTO(new PageRequest(page, size));
     }
 
     @Override
-    public Year findOne(Long id) {
-        return yearRepository.findOne(id);
+    public YearDTO getById(Long yearId) {
+        return yearRepository.findOneInDTO(yearId);
     }
 
     @Override
@@ -56,28 +59,10 @@ public class YearServiceImpl implements YearService {
     }
 
     @Override
-    public Year getCurrent() {
-        Date date = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int month = cal.get(Calendar.MONTH) + 1;
-
-        Optional<Year> searchedYear;
-
-        if(month >= 1 && month <= 8)
-            searchedYear = yearRepository.findAll().stream()
-                    .filter(year -> year.getEndYear() == cal.get(Calendar.YEAR))
-                    .findFirst();
-        else//(month >= 9 && month <= 12)
-            searchedYear = yearRepository.findAll().stream()
-                    .filter(year -> year.getBeginYear() == cal.get(Calendar.YEAR))
-                    .findFirst();
-
-        if(!searchedYear.isPresent())
-            searchedYear = yearRepository.findAll().stream()
-                    .max((y1, y2) -> Integer.compare(y1.getBeginYear(), y2.getBeginYear()));
-
-        return searchedYear.get();
+    public YearDTO getCurrent() { // TODO
+//        Date now = Date.from(Instant.now());
+//        return yearRepository.findOneByDateInDTO(now);
+        return null;
     }
 
 }

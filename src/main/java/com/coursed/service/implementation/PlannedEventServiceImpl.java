@@ -138,18 +138,6 @@ public class PlannedEventServiceImpl implements PlannedEventService {
 
     @Override
     public List<PlannedEvent> findAllFromCurrentYear() {
-        Year year = yearService.getCurrent();
-        List<PlannedEvent> plannedEvents = new ArrayList<>();
-
-        List<PlannedEvent> eventsFromFirstSemester = year.getSemesters().get(0).getPlannedEvents();
-        List<PlannedEvent> eventsFromSecondSemester = year.getSemesters().get(1).getPlannedEvents();
-
-        eventsFromFirstSemester.stream().forEach(plannedEvent -> plannedEvents.add(plannedEvent));
-        eventsFromSecondSemester.stream().forEach(plannedEvent -> plannedEvents.add(plannedEvent));
-
-        //Order by BeginDate
-        return plannedEvents.stream()
-                .sorted((o1, o2) -> o1.getBeginDate().compareTo(o2.getBeginDate()))
-                .collect(Collectors.toList());
+        return null; // TODO
     }
 }
