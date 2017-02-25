@@ -21,9 +21,9 @@ public interface YearRepository extends CrudRepository<Year, Long> {
             "FROM Year y WHERE y.id = ?1")
     YearDTO findOneInDTO(Long yearId);
 
-//    @Query("SELECT new com.coursed.dto.YearDTO(y.id, y.beginYear, y.endYear) " +
-//            "FROM Year y WHERE ?1 BETWEEN y.begindYear AND y.endYear")
-//    YearDTO findOneByDateInDTO(Date date);
+    @Query("SELECT new com.coursed.dto.YearDTO(y.id, y.beginYear, y.endYear) " +
+            "FROM Year y WHERE y.beginYear = ?1")
+    YearDTO findOneByYearInDTO(Integer year);
 
     @Query("SELECT new com.coursed.dto.YearDTO(y.id, y.beginYear, y.endYear) " +
             "FROM Year y ")

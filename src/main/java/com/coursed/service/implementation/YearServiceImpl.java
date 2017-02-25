@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -60,10 +61,9 @@ public class YearServiceImpl implements YearService {
     }
 
     @Override
-    public YearDTO getCurrent() { // TODO
-//        Date now = Date.from(Instant.now());
-//        return yearRepository.findOneByDateInDTO(now);
-        return null;
+    public YearDTO getCurrent() {
+        LocalDate f = LocalDate.now();
+        return yearRepository.findOneByYearInDTO(f.getYear());
     }
 
 }
