@@ -1,6 +1,5 @@
 package com.coursed.controller.mvc;
 
-import com.coursed.model.auth.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -12,16 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 
 /**
  * Created by Trach on 12/10/2016.
  */
 @Controller
-public class EventsController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EventsController.class);
+public class PlannedEventController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlannedEventController.class);
 
     @GetMapping("/events")
     public String events(RedirectAttributes redAtt, Authentication authentication) {

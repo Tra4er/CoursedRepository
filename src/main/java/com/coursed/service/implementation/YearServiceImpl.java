@@ -10,6 +10,7 @@ import com.coursed.service.YearService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -29,7 +30,7 @@ public class YearServiceImpl implements YearService {
 
     @Override
     public Page<YearDTO> getAll(int page, int size) {
-        return yearRepository.findAllInDTO(new PageRequest(page, size));
+        return yearRepository.findAllInDTO(new PageRequest(page, size, Sort.Direction.DESC, "beginYear"));
     }
 
     @Override

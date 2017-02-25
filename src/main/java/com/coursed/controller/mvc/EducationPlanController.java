@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Created by Hexray on 21.11.2016.
  */
 @Controller
-public class PlanController {
+public class EducationPlanController {
 
     @GetMapping("/plans")
     public String getPage()

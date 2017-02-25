@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function () {
+    fillSelect("studentEducationStatus", studentEducationStatus);
 });
 
 var person;
@@ -16,9 +17,8 @@ $("#registration-teacher").click(function () {
 });
 
 $("#registration-student").on('click', function () {
-    fillSelectYear("yearId", "/api/years");
-    fillSelectFrom("specialityId", "/api/specialities", "fullName");
-    fillSelect("studentEducationStatus", studentEducationStatus)
+    fillSelectYear("yearId", "/api/years?page=0&size=6");
+    fillSelectFrom("specialityId", "/api/specialities?page=0&size=10", "fullName");
 });
 
 // заполняет группы для выбранных семестра и специальности
@@ -28,11 +28,11 @@ function fillGroups() {
 
     if ($("#specialityId > option:selected").attr("value") != '0'
         && $("#semesterId > option:selected").attr("value") != '0') {
-        $.getJSON("/api/groups", {
+        $.getJSON("/api/groups?page=0&size=50", {
             specialityId: $("#specialityId > option:selected").attr("value"),
             semesterId: $("#semesterId > option:selected").attr("value")
         }, function (response) {
-            $.each(response.data, function (i, entity) {
+            $.each(response.data.content, function (i, entity) {
                 var myVar = "";
                 if (entity.groupType == 'DISTANCE_FORM') myVar = " (заочна)";
                 items += "<option value='" + entity.id + "'>" + entity.number + myVar + "</option>";
@@ -56,7 +56,7 @@ $("#semesterId").on('change', function () {
 $("#yearId").on('change', function () {
     var firstString = $("#groupId > option:first").text();
     var items = "<option value='0'> " + firstString + "</option>";
-    $("#groupIdId").html(items);
+    $("#groupId").html(items);
 });
 
 $('#button-student-post').click(function () {

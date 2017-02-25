@@ -8,7 +8,7 @@ function fillSelectYear(selectId, requestAddress) {
         var firstString = $("#" + selectId + " > option:first").text();
         var htmlElements = "<option value='0'> " + firstString + "</option>";
         //Go through the each entity in the response
-        $.each(response.data, function (i, year) {
+        $.each(response.data.content, function (i, year) {
             htmlElements += "<option value='" + year.id + "'>" + year.beginYear + "-" + year.endYear + "</option>";
         });
         $("#" + selectId).html(htmlElements);
@@ -23,7 +23,7 @@ function fillSelectFrom(selectId, requestAddress, param) {
         var firstString = $("#" + selectId + " > option:first").text();
         var htmlElements = "<option value='0'> " + firstString + "</option>";
         //Go through the each entity in the response
-        $.each(response.data, function (i, entity) {
+        $.each(response.data.content, function (i, entity) {
             htmlElements += "<option value='" + entity.id + "'>" + entity[param] + "</option>";
         });
         $("#" + selectId).html(htmlElements);
@@ -46,13 +46,13 @@ $("#yearId").on('change', function () {
     var items = "<option value='0'> " + firstString + "</option>";
     var sem = "";
     if ($("#yearId > option:selected").attr("value") != '0') {
-        $.getJSON("api/years/" + $("#yearId > option:selected").attr("value") + "/semesters", function (response) {
-            $.each(response.data, function (i, entity) {
+        $.getJSON("api/years/" + $("#yearId > option:selected").attr("value") + "/semesters?page=0&size=2", function (response) {
+            $.each(response.data.content, function (i, entity) {
                 //ToDo that is because we fill semesters in two different pages
                 if (typeof localStudentUkr != 'undefined')
-                    sem = localStudent(entity['semesterNumber']);
+                    sem = localStudent(entity.semesterNumber);
                 else
-                    sem = localGroup(entity['semesterNumber']);
+                    sem = localGroup(entity.semesterNumber);
                 items += "<option value='" + entity.id + "'>" + sem + "</option>";
             });
             $("#semesterId").html(items);

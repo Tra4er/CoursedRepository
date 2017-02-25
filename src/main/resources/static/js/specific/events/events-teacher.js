@@ -1,7 +1,7 @@
 $(function () {
     // get all current planned events
-    $.getJSON('/api/events/search', {filter: "currentYear"}, function (response) {
-        $.each(response.data, function (i, item) {
+    $.getJSON('/api/events/search', {filter: "currentYear", page:"0", size:"20"}, function (response) {
+        $.each(response.data.content, function (i, item) {
             var id = item.id;
             var isEventActual = isActuallyEvent(item.beginDate, item.expirationDate);
             var body = '<div class="panel panel-' + isEventActual + '" id ="' + id + '" eventType="' +

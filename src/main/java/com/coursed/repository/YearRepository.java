@@ -26,6 +26,6 @@ public interface YearRepository extends CrudRepository<Year, Long> {
 //    YearDTO findOneByDateInDTO(Date date);
 
     @Query("SELECT new com.coursed.dto.YearDTO(y.id, y.beginYear, y.endYear) " +
-            "FROM Year y")
+            "FROM Year y ")
     Page<YearDTO> findAllInDTO(Pageable pageable);
 }
