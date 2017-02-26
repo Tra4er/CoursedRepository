@@ -106,7 +106,7 @@ public class PlannedEventServiceImpl implements PlannedEventService {
     public Page<PlannedEventDTO> getAllByCurrentYear(int page, int size) {
         LocalDate now = LocalDate.now();
         LocalDateTime startYear = LocalDateTime.of(now.getYear(), 1, 1, 0, 0);
-        LocalDateTime endYear = LocalDateTime.of(now.getYear() + 1, 1, 1, 0, 0);
+        LocalDateTime endYear = LocalDateTime.of(now.getYear(), 12, 31, 23, 59);
         return plannedEventRepository.findAllByYearInDTO(startYear, endYear, new PageRequest(page, size));
     }
 
