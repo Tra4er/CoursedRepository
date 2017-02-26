@@ -69,7 +69,7 @@ public class PlannedEventResource {
                 }
                 case "currentYear" : {
                     return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                            plannedEventService.findAllFromCurrentYear()), HttpStatus.OK);
+                            plannedEventService.getAllByCurrentYear(page, size)), HttpStatus.OK);
                 }
                 default:break;
             }

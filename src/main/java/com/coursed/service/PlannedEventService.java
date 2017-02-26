@@ -22,6 +22,7 @@ public interface PlannedEventService {
     Page<PlannedEventDTO> getAllUpcoming(int page, int size);
     Page<PlannedEventDTO> getAllPast(int page, int size);
     Page<PlannedEventDTO> getAllInProgress(int page, int size);
+    Page<PlannedEventDTO> getAllByCurrentYear(int page, int size);
     List<PlannedEvent> findAllByBeginDate(String date);
     List<PlannedEvent> findAllByExpirationDate(String date);
     List<PlannedEvent> findAllByEventType(PlannedEventType plannedEventType);

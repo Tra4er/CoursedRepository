@@ -15,6 +15,10 @@ import java.util.Set;
  * Created by Hexray on 13.11.2016.
  */
 public interface YearRepository extends CrudRepository<Year, Long> {
+
+    @Query("SELECT y FROM Year y WHERE y.beginYear = ?1")
+    Year findOneByYear(Integer year);
+
     List<Year> findAll();
 
     @Query("SELECT new com.coursed.dto.YearDTO(y.id, y.beginYear, y.endYear) " +

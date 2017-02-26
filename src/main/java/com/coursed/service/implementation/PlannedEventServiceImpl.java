@@ -102,6 +102,14 @@ public class PlannedEventServiceImpl implements PlannedEventService {
                 new PageRequest(page, size, Sort.Direction.ASC, "beginDate"));
     }
 
+    @Override
+    public Page<PlannedEventDTO> getAllByCurrentYear(int page, int size) {
+        LocalDate now = LocalDate.now();
+        LocalDateTime startYear = LocalDateTime.of(now.getYear(), 1, 1, 0, 0);
+        LocalDateTime endYear = LocalDateTime.of(now.getYear() + 1, 1, 1, 0, 0);
+        return plannedEventRepository.findAllByYearInDTO(startYear, endYear, new PageRequest(page, size));
+    }
+
     /**
      *  Returns list of events that have begin date from as in param
      * @param dateString date - string of format "1986-04-08T12:30:00"

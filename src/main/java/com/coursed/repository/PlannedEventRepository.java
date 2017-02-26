@@ -44,4 +44,8 @@ public interface PlannedEventRepository extends CrudRepository<PlannedEvent, Lon
     @Query("SELECT new com.coursed.dto.PlannedEventDTO(e.id, e.beginDate, e.expirationDate, e.creationDate, " +
             "e.eventType, e.semester.id) FROM PlannedEvent e WHERE ?1 BETWEEN e.beginDate AND e.expirationDate ")
     Page<PlannedEventDTO> findAllInProgressInDTO(LocalDateTime now, Pageable pageable);
+
+    @Query("SELECT new com.coursed.dto.PlannedEventDTO(e.id, e.beginDate, e.expirationDate, e.creationDate, " +
+            "e.eventType, e.semester.id) FROM PlannedEvent e WHERE e.beginDate BETWEEN ?1 AND ?2")
+    Page<PlannedEventDTO> findAllByYearInDTO(LocalDateTime startYear, LocalDateTime endYear, Pageable pageable);
 }
