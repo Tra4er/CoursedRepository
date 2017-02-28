@@ -28,7 +28,7 @@ function insertTable(titleArray, tableId) {
 function fillTableFrom(tableId, requestAddress, params) {
     $.getJSON(requestAddress, function(response){
         //Go through the each entity in the response
-        $.each(response.data, function (i, entity) {
+        $.each(response.data.content, function (i, entity) {
             var htmlRow = "<tr>";
             //Go through the each parameter in the entity
             $.each(entity, function (paramName, paramValue) {
@@ -82,7 +82,8 @@ function sendAjaxPost(element, url, modalId) {
         success: function (data) {
             // alert("Успішно");
             $('#' + modalId).modal("toggle");
-            addItem(data);
+            reloadPage();
+            //addItem(data);
         },
         error: function (data) {
             alert("Помилка!");
