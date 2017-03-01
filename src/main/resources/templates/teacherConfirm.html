@@ -11,12 +11,21 @@
 <body>
 <div layout:fragment="content">
     <h2>Очікують підтвердження: </h2>
+    <div class="form-inline form-group col-xs-12 col-sm-9">
+        <label for="numberOnPage">Відображати по:</label>
+        <select class="form-control" id="numberOnPage">
+            <option>10</option>
+            <option>20</option>
+            <option>30</option>
+        </select>
+    </div>
     <table id="UnconfirmedTeachers-table" class="table table-hover table-striped">
         <thead>
         <tr></tr>
         </thead>
         <tbody></tbody>
     </table>
+    <nav aria-label="Page navigation" class="col-xs-12"><ul class="pagination pagination-centered"></ul></nav>
 </div>
 </body>
 </html>

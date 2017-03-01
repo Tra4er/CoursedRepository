@@ -4,24 +4,22 @@
 $(function(){
     var titles = ['ПІБ викладача', 'Email'];
     insertTable(titles, "UnconfirmedTeachers-table");
-
-    fillTeachersTable();
+    loadTable(0, $('#numberOnPage').val());
 });
 
-function fillTeachersTable(){
-    $.getJSON("api/teachers/search", {filter: "unconfirmed"}, function(response){
-        //Go through the each entity in the response
-        $.each(response.data, function (i, entity) {
+function loadTable(page, size){
+    $.getJSON("api/teachers/search", {page: page, size: size, filter: "unconfirmed"}, function(response){
+        var htmlRow = "";
+        $.each(response.data.content, function (i, entity) {
             if(entity != null) {
-                var htmlRow = "<tr >";
-                // htmlRow += ("<td>" + entity.teacherEntity['lastName'] + " " + entity.teacherEntity['firstName'] + " " + entity.teacherEntity['patronymic'] + "</td>");
-                // htmlRow += ("<td>" + entity.email + "</td>");
+                htmlRow += "<tr >";
                 htmlRow += ("<td>" + entity.id + " " + entity.lastName + " " + entity.firstName + " " + entity.patronymic + "</td>");
                 htmlRow += ("<td id=" + entity.id + "><button type='button' class='btn btn-success btn-sm'><span class='glyphicon glyphicon-ok'></span> Так</button><button type='button' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-remove'></span> Ні</button></td>");
                 htmlRow += "</tr>";
-                $("#UnconfirmedTeachers-table > tbody").append(htmlRow);
             }
         });
+        $("#UnconfirmedTeachers-table > tbody").html(htmlRow);
+        createPagination(response.data['totalPages'], page);
     });
 }
 
@@ -50,5 +48,4 @@ $('#UnconfirmedTeachers-table > tbody').on('click', 'tr > td > .btn-danger', fun
         .fail(function () {
             alert("Помилка!")
         });
-
 });
