@@ -16,7 +16,6 @@ function fillSelectYear(selectId, requestAddress) {
 
 }
 
-
 // Fills select-list 'selectId' using getJSON and using alias 'param'
 function fillSelectFrom(selectId, requestAddress, param) {
     $.getJSON(requestAddress, function (response) {

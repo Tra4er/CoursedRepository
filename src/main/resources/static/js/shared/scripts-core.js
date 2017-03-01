@@ -25,11 +25,12 @@ function insertTable(titleArray, tableId) {
 }
 
 //It fills table's '#tableId' rows via the getting JSON from 'requestAddress' which contains selected keys in 'params'
-function fillTableFrom(tableId, requestAddress, params) {
+function fillTableFrom(tableId, requestAddress, params, page) {
     $.getJSON(requestAddress, function(response){
+        var htmlRow = "";
         //Go through the each entity in the response
         $.each(response.data.content, function (i, entity) {
-            var htmlRow = "<tr>";
+            htmlRow += "<tr>";
             //Go through the each parameter in the entity
             $.each(entity, function (paramName, paramValue) {
                 //If a parameter belongs to params array(argument of function)
@@ -39,18 +40,21 @@ function fillTableFrom(tableId, requestAddress, params) {
                 }
             });
             htmlRow += "</tr>";
-            $("#" + tableId + "> tbody").append(htmlRow);
+
         });
+        $("#" + tableId + "> tbody").html(htmlRow);
+        createPagination(response.data['totalPages'], page);
     });
 }
 
 //It fills table's '#tableId' rows via the getting JSON from 'requestAddress' which contains selected keys in 'params'
 //Parameter 'local' is a map which is responsible for localization of paramValue parameters
-function fillLocalizedTableFrom(tableId, requestAddress, params, local) {
+function fillLocalizedTableFrom(tableId, requestAddress, params, local, page) {
     $.getJSON(requestAddress, function(response){
+        var htmlRow = "";
         //Go through the each entity in the response
-        $.each(response.data, function (i, entity) {
-            var htmlRow = "<tr>";
+        $.each(response.data.content, function (i, entity) {
+            htmlRow += "<tr>";
             //Go through the each parameter in the entity
             $.each(entity, function (paramName, paramValue) {
                 //If a parameter belongs to params array(argument of function)
@@ -67,8 +71,9 @@ function fillLocalizedTableFrom(tableId, requestAddress, params, local) {
                 }
             });
             htmlRow += "</tr>";
-            $("#" + tableId + "> tbody").append(htmlRow);
+            createPagination(response.data['totalPages'], page);
         });
+        $("#" + tableId + "> tbody").html(htmlRow);
     });
 }
 
@@ -80,10 +85,10 @@ function sendAjaxPost(element, url, modalId) {
         contentType: "application/json",
         data: JSON.stringify(element.serializeObject()),
         success: function (data) {
-            // alert("Успішно");
             $('#' + modalId).modal("toggle");
-            reloadPage();
-            //addItem(data);
+            // reload table for active page
+            var active = $('.pagination').children('.active').children('a').text() - 1;
+            loadTable(active, $('#numberOnPage').val());
         },
         error: function (data) {
             alert("Помилка!");
@@ -109,3 +114,41 @@ $.fn.serializeObject = function()
     });
     return o;
 };
+
+
+// insert pagination list
+function createPagination(totalPages, page){
+    var item = '<li';
+    if (page == 0) item += ' class="disabled"';
+    item += '><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
+    for (var i = 0; i < totalPages; i++) {
+        if (i == page) item += '<li class="active"><a href="#">' + (i + 1) + '</a></li>';
+        else item += '<li><a href="#">' + (i + 1) + '</a></li>';
+    }
+    item += '<li';
+    if(totalPages - 1 == page) item += ' class="disabled"';
+    item += '><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
+    $('.pagination').html(item);
+};
+
+// change number of Page
+$('.pagination').on('click', 'li:not(.disabled)', function(){
+    var active = $(this).siblings('.active').children('a').text();
+    var number = $(this).children('a').text();
+    var page = active;
+    switch ($(this).children('a').attr('aria-label')) {
+        case 'Previous':
+            page -= 2;
+            break;
+        case 'Next':
+            break;
+        default:
+            var page = number - 1;
+    }
+    loadTable(page, $('#numberOnPage').val());
+});
+
+// change number of rows in table
+$('#numberOnPage').on('change', function(){
+    loadTable(0, $(this).val());
+});

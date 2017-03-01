@@ -5,17 +5,19 @@
 $(document).ready(function () {
     var titles = ['id', 'Назва', 'Тип', 'Рівень', 'Номер курсу'];
     insertTable(titles, "content-table");
-
-    var entityParams = ['id', 'number', 'groupType', 'groupDegree', 'courseNumber'];
-    fillLocalizedTableFrom("content-table", "/api/groups", entityParams, localGroupUkr);
-
+    loadTable(0, $('#numberOnPage').val());
     fillSelect("courseNumber", courseNumbers);
     fillSelect("groupType", groupType);
     fillSelect("groupDegree", groupDegree);
-    fillSelectYear("yearId", "/api/years");
-    fillSelectFrom("specialityId", "/api/specialities", "fullName");
-
+    fillSelectYear("yearId", "/api/years?page=0&size=10");
+    fillSelectFrom("specialityId", "/api/specialities?page=0&size=10", "fullName");
 });
+
+function loadTable(page, size){
+    var entityParams = ['id', 'number', 'groupType', 'groupDegree', 'courseNumber'];
+    fillLocalizedTableFrom("content-table", "/api/groups?page=" + page + "&size=" + size, entityParams,
+        localGroupUkr, page);
+};
 
 //AJAX post to create a group
 $('#button-group-post').click(function(){
@@ -32,22 +34,3 @@ $('#add-dialog').on('hidden.bs.modal', function() {
     });
     $('#modal-body-form').find('input[name=number]').val('');
 });
-
-function addItem(item){
-    var params = ['id', 'number', 'groupType', 'groupDegree', 'courseNumber'];
-    var htmlRow = "<tr>";
-    $.each(item, function (paramName, paramValue) {
-        if($.inArray(paramName, params) !== -1) {
-            if (typeof localGroupUkr[paramValue] != 'undefined')
-            {
-                htmlRow += ("<td>" + localGroupUkr[paramValue] + "</td>");
-            }
-            else
-            {
-                htmlRow += ("<td>" + paramValue + "</td>");
-            }
-        }
-    });
-    htmlRow += "</tr>";
-    $("#content-table > tbody").append(htmlRow);
-}
