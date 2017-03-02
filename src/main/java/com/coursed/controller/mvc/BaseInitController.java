@@ -95,9 +95,9 @@ public class BaseInitController {
         Group is42 = new Group(42, GroupType.GENERAL_FORM, GroupDegree.BACHELOR, CourseNumber.THIRD, fifthSemester, isSp);
         Group is41 = new Group(41, GroupType.GENERAL_FORM, GroupDegree.BACHELOR, CourseNumber.THIRD, fifthSemester, isSp);
 
-        groupService.create(is43);
-        groupService.create(is42);
-        groupService.create(is41);
+//        groupService.create(is43);
+//        groupService.create(is42);
+//        groupService.create(is41);
 
         //Planned Events
         PlannedEvent event1 = null;
