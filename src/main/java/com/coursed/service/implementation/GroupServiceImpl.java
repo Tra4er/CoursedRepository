@@ -52,8 +52,14 @@ public class GroupServiceImpl implements GroupService {
     private PlannedEventRepository plannedEventRepository;
 
     @Override
-    public Group create(Group group) {
-        return groupRepository.save(group);
+    public GroupDTO create(GroupDTO groupDTO) {
+        Semester sem = semesterRepository.findOne(groupDTO.getSemesterId());
+        Speciality spec = specialityRepository.findOne(groupDTO.getSpecialityId());
+
+        Group group = new Group(groupDTO.getNumber(), groupDTO.getGroupType(), groupDTO.getGroupDegree(),
+                groupDTO.getCourseNumber(),sem, spec);
+        Group savedGroup = groupRepository.save(group);
+        return groupRepository.findOneInDTO(savedGroup.getId());
     }
 
     @Override

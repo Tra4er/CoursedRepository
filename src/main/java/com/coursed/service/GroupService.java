@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Hexray on 26.11.2016.
  */
 public interface GroupService {
-    Group create(Group group);
+    GroupDTO create(GroupDTO groupDTO);
     GroupDTO getById(Long groupId);
     Page<GroupDTO> getAll(int page, int size);
     Page<GroupDTO> getAllWithoutCurators(int page, int size);

@@ -43,15 +43,9 @@ public class GroupResource {
     }
 
     @PostMapping
-    private ResponseEntity<GenericResponse> post(@RequestBody GroupDTO groupDTO) { // TODO
-//        Semester sem = semesterService.getById(groupDTO.getSemesterId());
-//        Speciality spec = specialityService.getById(groupDTO.getSpecialityId());
-//
-//        Group group = new Group(groupDTO.getNumber(), groupDTO.getGroupType(), groupDTO.getGroupDegree(),
-//                groupDTO.getCourseNumber(),sem, spec);
-//        return new ResponseEntity<>(new GenericResponse(HttpStatus.CREATED.value(), "success",
-//                groupService.create(group)), HttpStatus.CREATED);
-        return null;
+    private ResponseEntity<GenericResponse> post(@RequestBody GroupDTO groupDTO) {
+        return new ResponseEntity<>(new GenericResponse(HttpStatus.CREATED.value(), "created",
+                groupService.create(groupDTO)), HttpStatus.CREATED);
     }
 
     @GetMapping("/search")
