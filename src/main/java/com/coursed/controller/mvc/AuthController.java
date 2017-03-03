@@ -34,19 +34,11 @@ import java.util.Calendar;
  */
 @Controller
 public class AuthController {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private SecurityService securityService;
-
-    @Autowired
     private LoginAttemptService loginAttemptService;
-
-    @Autowired
-    private ApplicationEventPublisher eventPublisher;
 
     @Autowired
     private UserStudentDTOValidator userStudentDTOValidator;
@@ -78,74 +70,6 @@ public class AuthController {
         return "auth/login";
     }
 
-    @PostMapping("/old/registration-student")
-    public String registerStudent(@Valid @ModelAttribute("studentForm") UserStudentDTO userStudentDTO,
-                             BindingResult bindingResult, final HttpServletRequest request, Model model) {
-
-        LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userStudentDTO, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            LOGGER.debug("Validation error.");
-            model.addAttribute("message", getMessageFromBindingResult(bindingResult));
-            return "auth/badUser";
-        }
-
-        User registered;
-        try{
-            registered = userService.registerStudent(userStudentDTO);
-        } catch(DataIntegrityViolationException e) {
-            LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
-            model.addAttribute("message", "Exception occurred when trying to save the user, assuming duplicate email");
-            return "auth/badUser";
-        }
-
-        try {
-            final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
-            model.addAttribute("emailMessage", registered.getEmail());
-        } catch (final Exception ex) {
-            LOGGER.warn("Unable to register user", ex);
-            model.addAttribute("message", "Unable to send verification email");
-            return "auth/badUser";
-        }
-
-        return "/auth/verifyYourAccount";
-    }
-
-    @PostMapping("/old/registration-teacher")
-    public String registerTeacher(@Valid @ModelAttribute("teacherForm") UserTeacherDTO userTeacherDTO,
-                             BindingResult bindingResult, final HttpServletRequest request, Model model) {
-
-        LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userTeacherDTO, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            LOGGER.debug("Validation error.");
-            model.addAttribute("message", getMessageFromBindingResult(bindingResult));
-            return "auth/badUser";
-        }
-
-        User registered;
-        try{
-            registered = userService.registerTeacher(userTeacherDTO);
-        } catch(DataIntegrityViolationException e) {
-            LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
-            model.addAttribute("message", "Exception occurred when trying to save the user, assuming duplicate email");
-            return "auth/badUser";
-        }
-
-        try {
-            final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
-            model.addAttribute("emailMessage", registered.getEmail());
-        } catch (final Exception ex) {
-            LOGGER.warn("Unable to send verification email", ex);
-            model.addAttribute("message", "Unable to send verification email");
-            return "auth/badUser";
-        }
-
-        return "/auth/verifyYourAccount";
-    }
-
 //    NON API
 
     private String getUserIp(final HttpServletRequest request) {
@@ -156,19 +80,4 @@ public class AuthController {
         return xfHeader.split(",")[0];
     }
 
-    private String getMessageFromBindingResult(BindingResult bindingResult) {
-        String message = "Validation error";
-        for (Object object : bindingResult.getAllErrors()) {
-            if(object instanceof FieldError) {
-                FieldError fieldError = (FieldError) object;
-                message = fieldError.getDefaultMessage();
-            }
-
-            if(object instanceof ObjectError) {
-                ObjectError objectError = (ObjectError) object;
-                message = objectError.getDefaultMessage();
-            }
-        }
-        return message;
-    }
 }
