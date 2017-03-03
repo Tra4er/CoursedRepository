@@ -32,11 +32,11 @@ public class UserStudentDTOValidator implements Validator {
         LOGGER.debug("Validating {}", target);
         UserStudentDTO form = (UserStudentDTO) target;
         BasicPersonValidatorUtil.validateEmail(form, userService);
-//            BasicPersonValidatorUtil.validatePasswords(form);
-//            BasicPersonValidatorUtil.validateNames(form);
-//            BasicPersonValidatorUtil.validateNumber(form);
-//            validateAddress(form);
-//            validateSemester(form);
+        BasicPersonValidatorUtil.validatePasswords(form);
+        BasicPersonValidatorUtil.validateNames(form);
+        BasicPersonValidatorUtil.validateNumber(form);
+//        validateAddress(form);
+//        validateSemester(form);
     }
 
     private void validateAddress(UserStudentDTO form) throws ValidationException {

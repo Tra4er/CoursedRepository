@@ -27,7 +27,7 @@
     <!--TODO load captcha on nav-tab click (once)-->
     <script type="text/javascript">
         var recaptchaCallback = function () {
-            if ($("#captchaNeeded").text() === "captchaNeeded" || $("#captchaNeeded").text() === "captchaError") {
+            if ($("#captchaNeeded").text() === "CaptchaNeeded" || $("#captchaNeeded").text() === "CaptchaError") {
                 grecaptcha.render("loginRecaptcha", {
                     sitekey: $("#siteKey").text(),
                 });
@@ -78,16 +78,16 @@
                             <div id="loginRecaptcha"></div>
                         </div>
                         <div th:if="${param.error != null}">
-                            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} == 'captchaNeeded'">
+                            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} == 'CaptchaNeeded'">
                                 <div id="captchaNeeded" th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']}"
                                      hidden="hidden"></div>
                             </div>
-                            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} == 'captchaError'">
+                            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} == 'CaptchaError'">
                                 <div id="captchaNeeded" th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']}"
                                      hidden="hidden"></div>
                                 <div class="alert alert error">Помилка підтвердження на людяність.</div>
                             </div>
-                            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != 'captchaNeeded' and ${session['SPRING_SECURITY_LAST_EXCEPTION']} != 'captchaError'">
+                            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != 'CaptchaNeeded' and ${session['SPRING_SECURITY_LAST_EXCEPTION']} != 'CaptchaError'">
                                 <div th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']}" class="alert alert error">
                                     Повідомлення про помилку.
                                 </div>
@@ -199,7 +199,7 @@
                             <div id="student-request-server-status"></div>
                         </div>
                         <div class="form-group alert alert-warning">
-                            <div>All validation commented. Except email.</div>
+                            <div>Captcha validation commented.</div>
                         </div>
                         <div class="form-group col-xs-12">
                             <input id="button-student-post" type="button" value="Подати заявку"
@@ -253,7 +253,7 @@
                             <div id="teacher-request-server-status"></div>
                         </div>
                         <div class="form-group alert alert-warning">
-                            <div>All validation commented. Except email.</div>
+                            <div>Captcha validation commented.</div>
                         </div>
                         <div class="form-group col-xs-12">
                             <input id="button-teacher-post" type="button" value="Подати заявку"

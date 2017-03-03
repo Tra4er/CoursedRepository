@@ -21,9 +21,6 @@ public class PasswordDTOValidator implements Validator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PasswordDTOValidator.class);
 
-    @Autowired
-    private UserService userService;
-
     public boolean supports(Class clazz) {
         return PasswordDTO.class.isAssignableFrom(clazz);
     }
@@ -32,7 +29,7 @@ public class PasswordDTOValidator implements Validator {
     public void validate(Object target, Errors errors) {
         LOGGER.debug("Validating {}", target);
         PasswordDTO form = (PasswordDTO) target;
-//        validatePasswords(form); // TODO uncomment
+        validatePasswords(form);
     }
 
     private void validatePasswords(PasswordDTO form) {

@@ -60,23 +60,23 @@ $("#yearId").on('change', function () {
 });
 
 $('#button-student-post').click(function () {
-    // if (Validate()) {
-    var sendButton = $('#button-student-post');
-    var form = $('#registration-student-form');
-    var result = $("#student-request-server-status");
-    sendButton.button('loading');
-    sendRegistrationAjaxPost(form, '/api/students', 'Myform', result, sendButton);
-    // }
+    if (Validate()) {
+        var sendButton = $('#button-student-post');
+        var form = $('#registration-student-form');
+        var result = $("#student-request-server-status");
+        sendButton.button('loading');
+        sendRegistrationAjaxPost(form, '/api/students', 'Myform', result, sendButton);
+    }
 });
 
 $('#button-teacher-post').click(function () {
-    // if (Validate()) {
-    var sendButton = $('#button-teacher-post');
-    var form = $('#registration-teacher-form');
-    var result = $("#teacher-request-server-status");
-    sendButton.button('loading');
-    sendRegistrationAjaxPost(form, '/api/teachers', 'Myform', result, sendButton);
-    // }
+    if (Validate()) {
+        var sendButton = $('#button-teacher-post');
+        var form = $('#registration-teacher-form');
+        var result = $("#teacher-request-server-status");
+        sendButton.button('loading');
+        sendRegistrationAjaxPost(form, '/api/teachers', 'Myform', result, sendButton);
+    }
 });
 
 function sendRegistrationAjaxPost(element, url, modalId, resultElement, sendButton) {
@@ -85,14 +85,6 @@ function sendRegistrationAjaxPost(element, url, modalId, resultElement, sendButt
         url: url,
         contentType: "application/json",
         data: JSON.stringify(element.serializeObject()),
-        success: function (response) {
-            // alert("Успішно");
-            // $('#' + modalId).modal("toggle");
-        },
-        error: function (response) {
-            // alert("Помилка!");
-            // console.log(response)
-        }
     }).done(function (response) {
         $('#' + modalId).modal("toggle");
         if (response.status == "success") {
@@ -106,7 +98,7 @@ function sendRegistrationAjaxPost(element, url, modalId, resultElement, sendButt
         if (response.message == "InvalidReCaptcha") {
             $("#captchaError").show().html(response.responseJSON.data);
         }
-        resultElement.text(response.data);
+        resultElement.text(response.responseJSON.data + " / " + response.responseJSON.message);
         sendButton.button('reset');
     });
 }

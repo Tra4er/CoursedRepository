@@ -1,10 +1,6 @@
 package com.coursed.error.handler;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -13,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Locale;
 
 /**
  * Created by Trach on 12/20/2016.
@@ -31,6 +26,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
         super.onAuthenticationFailure(request, response, exception);
 
+
         String errorMessage = "Невірний емейл або пароль.";
 
         if (exception.getMessage().equalsIgnoreCase("User is disabled")) {
@@ -39,10 +35,10 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
             errorMessage = "Профіль не активований. Час на активацію вийшов.";
         } else if (exception.getMessage().equalsIgnoreCase("blocked")) {
             errorMessage = "Профіль заблокований.";
-        } else if (exception.getMessage().equalsIgnoreCase("captchaNeeded")) {
-            errorMessage = "captchaNeeded";
-        } else if (exception.getMessage().equalsIgnoreCase("captchaError")) {
-            errorMessage = "captchaError";
+        } else if (exception.getMessage().equalsIgnoreCase("CaptchaNeeded")) {
+            errorMessage = "CaptchaNeeded";
+        } else if (exception.getMessage().equalsIgnoreCase("CaptchaError")) {
+            errorMessage = "CaptchaError";
         }
 
         request.getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, errorMessage);

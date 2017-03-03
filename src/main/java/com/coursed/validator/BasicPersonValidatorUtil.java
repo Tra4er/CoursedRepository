@@ -32,7 +32,7 @@ public class BasicPersonValidatorUtil {
     }
 
     public static void validateNames(BasicPerson form) throws ValidationException {
-        String reg = "^[А-ЯІЄҐ][а-яієґ]{1,15}";
+        String reg = "^[А-ЯІЄҐ][а-яієґ']{1,15}";
         if (!form.getFirstName().matches(reg)) {
             throw new ValidationException("FirstNameIsWrong");
         }
@@ -44,7 +44,7 @@ public class BasicPersonValidatorUtil {
         }
     }
 
-    public void validateNumber(BasicPerson form) throws ValidationException {
+    public static void validateNumber(BasicPerson form) throws ValidationException {
         String reg = "^(\\+380)[0-9]{9}";
         if (!form.getPhoneNumber().matches(reg)) {
             throw new ValidationException("WrongPhoneNumber");

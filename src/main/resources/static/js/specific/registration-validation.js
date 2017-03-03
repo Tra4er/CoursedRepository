@@ -1,4 +1,4 @@
-var namesRegex = /^[А-ЯІЄҐ][а-яієґ]{1,15}/;
+var namesRegex = /^[А-ЯІЄҐ][а-яієґ']{1,15}/;
 var emailRegex = /^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*\@[A-Za-z]*\.[A-Za-z]{2,5}$/;
 var passRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})/;
 var phoneNumberRegex = /^(\+380)[0-9]{9}/;
@@ -159,6 +159,9 @@ function Validate(){
         return false;
     } else if(!checkConfirmPassword()) {
         $("#confirmPasswordField-" + person).focus();
+        return false;
+    } else if(!checkPhoneNumber()) {
+        $("#phoneNumber-" + person).focus();
         return false;
     }
     return true;

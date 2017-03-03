@@ -1,6 +1,7 @@
 package com.coursed.security;
 
 import com.coursed.captcha.CaptchaService;
+import com.coursed.error.exception.CaptchaException;
 import com.coursed.model.auth.Role;
 import com.coursed.model.auth.User;
 import com.coursed.repository.UserRepository;
@@ -51,11 +52,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 try {
                     captchaService.processResponse(request.getParameter("g-recaptcha-response"));
                 } catch (Exception e) {
-                    throw new RuntimeException("captchaError");
+                    throw new CaptchaException("CaptchaError");
                 }
 
             } else {
-                throw new RuntimeException("captchaNeeded");
+                throw new CaptchaException("CaptchaNeeded");
             }
         }
 

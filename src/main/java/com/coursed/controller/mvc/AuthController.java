@@ -72,14 +72,14 @@ public class AuthController {
         String userIp = getUserIp(request);
 
         if(loginAttemptService.isCaptchaNeeded(userIp) && error == null){
-            session.setAttribute("SPRING_SECURITY_LAST_EXCEPTION", "captchaNeeded");
+            session.setAttribute("SPRING_SECURITY_LAST_EXCEPTION", "CaptchaNeeded");
             return "redirect:/login?error=true";
         }
         return "auth/login";
     }
 
     @PostMapping("/old/registration-student")
-    public String regsterStudent(@Valid @ModelAttribute("studentForm") UserStudentDTO userStudentDTO,
+    public String registerStudent(@Valid @ModelAttribute("studentForm") UserStudentDTO userStudentDTO,
                              BindingResult bindingResult, final HttpServletRequest request, Model model) {
 
         LOGGER.debug("Processing user registration userForm={}, bindingResult={}", userStudentDTO, bindingResult);
