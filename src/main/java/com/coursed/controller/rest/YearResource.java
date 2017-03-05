@@ -2,6 +2,7 @@ package com.coursed.controller.rest;
 
 import com.coursed.dto.YearDTO;
 import com.coursed.model.Year;
+import com.coursed.service.EducationPlanService;
 import com.coursed.service.SemesterService;
 import com.coursed.service.YearService;
 import com.coursed.util.GenericResponse;
@@ -22,6 +23,9 @@ public class YearResource {
 
     @Autowired
     private SemesterService semesterService;
+
+    @Autowired
+    private EducationPlanService educationPlanService;
 
     @GetMapping
     public ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
@@ -52,4 +56,13 @@ public class YearResource {
     private ResponseEntity<GenericResponse> getCurrentYear() {
         return new ResponseEntity<>(new GenericResponse(yearService.getCurrent()), HttpStatus.OK);
     }
+
+    @GetMapping("/{yearId}/educationPlans")
+    public ResponseEntity<GenericResponse> getAllFromYear(@RequestParam(value = "page") Integer page,
+                                                          @RequestParam(value = "size") Integer size,
+                                                          @PathVariable("yearId") Long yearId) {
+        return new ResponseEntity<>(new
+                GenericResponse(educationPlanService.getAllFromYear(page, size, yearId)), HttpStatus.OK);
+    }
+
 }
