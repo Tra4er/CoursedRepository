@@ -36,7 +36,7 @@ public interface DisciplineRepository extends CrudRepository<Discipline, Long> {
             "WHERE teacher_id = :teacherid")
     List<Discipline> getAllActualConnectedWithTeacher(@Param("teacherid")Long teacherId);
 
-    @Query("SELECT dis FROM Discipline dis JOIN dis.educationPlan WHERE dis.educationPlan.id = ?1")
+    @Query("SELECT dis FROM Discipline dis JOIN dis.educationPlan pl WHERE pl.id = ?1")
     Page<DisciplineDTO> getAllFromEducationPlan(Long educationPlanId, Pageable pageable);
 
 //    SELECT *FROM discipline_teachers LEFT JOIN discipline ON discipline_teachers.discipline_id = discipline.id
