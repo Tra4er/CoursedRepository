@@ -35,8 +35,7 @@ public class YearResource {
 
     @PostMapping
     public ResponseEntity<GenericResponse> post(@RequestBody YearDTO yearDTO) { // TODO @Valid
-        Year year = yearService.create(yearDTO);
-        return new ResponseEntity<>(new GenericResponse(year.getId()), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(yearService.create(yearDTO)), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
