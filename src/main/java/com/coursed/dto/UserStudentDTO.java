@@ -31,6 +31,8 @@ public class UserStudentDTO extends CaptchaDTO implements BasicPerson {
 
     private String confirmPassword;
 
+    public UserStudentDTO() {}
+
     @Override
     public String getFirstName() {
         return firstName;

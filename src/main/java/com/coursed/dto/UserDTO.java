@@ -12,6 +12,8 @@ public class UserDTO {
     @NotEmpty
     private String confirmPassword = "";
 
+    public UserDTO() {}
+
     public String getEmail() {
         return email;
     }

@@ -13,6 +13,8 @@ public class PasswordDTO {
 
     private String confirmPassword;
 
+    public PasswordDTO(){}
+
     public String getToken() {
         return token;
     }

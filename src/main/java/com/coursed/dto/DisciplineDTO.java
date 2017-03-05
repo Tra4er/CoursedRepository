@@ -16,6 +16,8 @@ public class DisciplineDTO {
         private DisciplineType type;
         private CourseNumber courseNumber;
 
+        public DisciplineTitleDTO(){}
+
         public DisciplineTitleDTO(Long id, String name, DisciplineType type, CourseNumber courseNumber) {
             this.id = id;
             this.name = name;
@@ -64,6 +66,8 @@ public class DisciplineDTO {
     private CourseNumber courseNumber;
     private SemesterNumber semesterNumber;
     private Long educationPlanId;
+
+    public DisciplineDTO(){}
 
     public DisciplineDTO(Long id, String name, DisciplineType type, Float hours, Float credits, CourseNumber courseNumber,
                          SemesterNumber semesterNumber, Long educationPlanId) {

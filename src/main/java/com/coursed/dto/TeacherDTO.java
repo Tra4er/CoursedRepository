@@ -11,6 +11,8 @@ public class TeacherDTO {
         private String lastName;
         private String patronymic;
 
+        public TeacherTitleDTO(){}
+
         public TeacherTitleDTO(Long id, String firstName, String lastName, String patronymic) {
             this.id = id;
             this.firstName = firstName;

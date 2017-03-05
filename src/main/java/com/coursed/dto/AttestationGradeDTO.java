@@ -11,6 +11,8 @@ public class AttestationGradeDTO {
     private Long studentId;
     private Long disciplineId;
 
+    public AttestationGradeDTO() {}
+
     public AttestationGradeDTO(Long id, Boolean firstTry, Boolean secondTry, Long studentId, Long disciplineId) {
         this.id = id;
         this.firstTry = Boolean.toString(firstTry);

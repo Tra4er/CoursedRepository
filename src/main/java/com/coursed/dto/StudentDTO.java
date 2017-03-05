@@ -15,6 +15,8 @@ public class StudentDTO {
         private String lastName;
         private String patronymic;
 
+        public StudentTitleDTO(){}
+
         public StudentTitleDTO(Long id, String firstName, String lastName, String patronymic) {
             this.id = id;
             this.firstName = firstName;
@@ -69,6 +71,7 @@ public class StudentDTO {
     private Long groupId;
     //phoneNumber Todo
 
+    public StudentDTO(){}
 
     public StudentDTO(Long id, String firstName, String lastName, String patronymic) {
         this.id = id;

@@ -7,9 +7,12 @@ import org.hibernate.validator.constraints.NotEmpty;
  * Created by Trach on 1/5/2017.
  */
 public abstract class CaptchaDTO {
-//    @NotEmpty
+
+//    @NotEmpty // TODO uncomment
     @JsonProperty("g-recaptcha-response")
     private String captchaResponse;
+
+    public CaptchaDTO() {}
 
     public String getCaptchaResponse() {
         return captchaResponse;
