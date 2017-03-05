@@ -62,7 +62,6 @@ public class EducationPlanServiceImpl implements EducationPlanService {
 
     @Override
     public Page<EducationPlanDTO> getAllByYear(int page, int size, Long yearId) {
-        return educationPlanRepository.findAllByYearInDTO(new PageRequest(page, size), yearId);
+        return educationPlanRepository.findAllByYearInDTO(yearId, new PageRequest(page, size));
     }
-
 }
