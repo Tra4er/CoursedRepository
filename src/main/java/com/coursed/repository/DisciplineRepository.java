@@ -29,17 +29,17 @@ public interface DisciplineRepository extends CrudRepository<Discipline, Long> {
 
     @Query("SELECT new com.coursed.dto.DisciplineDTO$DisciplineTitleDTO(d.id, d.name, d.type, d.courseNumber) " +
             "FROM Discipline d INNER JOIN d.teachers t WHERE t.id = ?1")
-    Page<DisciplineDTO.DisciplineTitleDTO> findAllByTeacher(Long teacherId, Pageable pageable);
+    Page<DisciplineDTO.DisciplineTitleDTO> findAllByTeacherInDTO(Long teacherId, Pageable pageable);
+
+    @Query("SELECT new com.coursed.dto.DisciplineDTO(d.id, d.name, d.type, d.hours, d.credits, d.courseNumber, " +
+            "d.semesterNumber, d.educationPlan.id) " +
+            "FROM Discipline d WHERE d.educationPlan.id = ?1")
+    Page<DisciplineDTO> findAllByEducationPlanInDTO(Long educationPlanId, Pageable pageable);
 
     @Query("SELECT dis FROM " + // TODO remove?
             "Discipline dis INNER JOIN dis.teachers " +
             "WHERE teacher_id = :teacherid")
     List<Discipline> getAllActualConnectedWithTeacher(@Param("teacherid")Long teacherId);
-
-    //@Query("SELECT new com.coursed.dto.DisciplineDTO(d.id, d.name, d.type, d.hours, d.credits, d.semesterNumber) " +
-    //        "FROM Discipline d")
-    @Query("SELECT d FROM Discipline d")
-    Page<DisciplineDTO> getAllFromEducationPlan(Long educationPlanId, Pageable pageable);
 
 //    SELECT *FROM discipline_teachers LEFT JOIN discipline ON discipline_teachers.discipline_id = discipline.id
 //    WHERE

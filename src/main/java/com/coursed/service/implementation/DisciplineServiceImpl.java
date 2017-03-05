@@ -2,8 +2,6 @@ package com.coursed.service.implementation;
 
 import com.coursed.dto.DisciplineDTO;
 import com.coursed.model.*;
-import com.coursed.model.enums.DisciplineType;
-import com.coursed.model.enums.PlannedEventType;
 import com.coursed.repository.*;
 import com.coursed.service.DisciplineService;
 import com.coursed.service.YearService;
@@ -84,7 +82,7 @@ public class DisciplineServiceImpl implements DisciplineService {
 
     @Override
     public Page<DisciplineDTO.DisciplineTitleDTO> getAllByTeacher(Long teacherId, int page, int size) {
-        return disciplineRepository.findAllByTeacher(teacherId, new PageRequest(page, size));
+        return disciplineRepository.findAllByTeacherInDTO(teacherId, new PageRequest(page, size));
     }
 
     @Override
@@ -155,7 +153,7 @@ public class DisciplineServiceImpl implements DisciplineService {
     }
 
     @Override
-    public Page<DisciplineDTO> getAllFromEducationPlan(Long educationPlanId, int page, int size) {
-        return disciplineRepository.getAllFromEducationPlan(educationPlanId, new PageRequest(page, size));
+    public Page<DisciplineDTO> getAllByEducationPlan(Long educationPlanId, int page, int size) {
+        return disciplineRepository.findAllByEducationPlanInDTO(educationPlanId, new PageRequest(page, size));
     }
 }

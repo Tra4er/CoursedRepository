@@ -34,14 +34,14 @@ public class EducationPlanResource {
     }
 
     @GetMapping("{educationPlanId}")
-    public ResponseEntity<GenericResponse> getById(@PathVariable("educationPlanId") Long id) {
-        return new ResponseEntity<>(new GenericResponse(educationPlanService.getById(id)), HttpStatus.OK);
+    public ResponseEntity<GenericResponse> getById(@PathVariable("educationPlanId") Long educationPlanId) {
+        return new ResponseEntity<>(new GenericResponse(educationPlanService.getById(educationPlanId)), HttpStatus.OK);
     }
 
     @GetMapping("/{educationPlanId}/disciplines")
     public ResponseEntity<GenericResponse> getDisciplinesByEducationPlan(@PathVariable("educationPlanId") Long educationPlanId,
                                                                          @RequestParam(value = "page") Integer page,
                                                                          @RequestParam(value = "size") Integer size){
-        return new ResponseEntity<>(new GenericResponse(disciplineService.getAllFromEducationPlan(educationPlanId, page, size)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(disciplineService.getAllByEducationPlan(educationPlanId, page, size)), HttpStatus.OK);
     }
 }

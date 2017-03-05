@@ -69,6 +69,18 @@ public class DisciplineDTO {
 
     public DisciplineDTO(){}
 
+    public DisciplineDTO(Long id, String name, DisciplineType type, Float hours, Float credits, CourseNumber courseNumber,
+                         SemesterNumber semesterNumber, Long educationPlanId) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.hours = hours;
+        this.credits = credits;
+        this.courseNumber = courseNumber;
+        this.semesterNumber = semesterNumber;
+        this.educationPlanId = educationPlanId;
+    }
+
     public Long getId() {
         return id;
     }

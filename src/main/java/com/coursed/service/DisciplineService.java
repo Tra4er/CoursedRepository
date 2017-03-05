@@ -18,5 +18,5 @@ public interface DisciplineService {
     Page<DisciplineDTO.DisciplineTitleDTO> getAllByTeacher(Long teacherId, int page, int size);
     List<Discipline> getAllActualConnectedWithTeacher(Long teacherId, Long plannedEventId);
     List<Discipline> getAllDisciplinesFromPlannedEvent(Long plannedEventId, Long groupId);
-    Page<DisciplineDTO> getAllFromEducationPlan(Long educationPlanId, int page, int size);
+    Page<DisciplineDTO> getAllByEducationPlan(Long educationPlanId, int page, int size);
 }
