@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface YearService {
     YearDTO getById(Long yearId);
-    Year create(YearDTO yearDTO);
+    YearDTO create(YearDTO yearDTO);
     Page<YearDTO> getAll(int page, int size);
     YearDTO getCurrent();
 }

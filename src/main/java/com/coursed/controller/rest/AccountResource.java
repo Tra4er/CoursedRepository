@@ -107,21 +107,7 @@ public class AccountResource {
     //  In case user forgot his password and resets it by sending resetToken to email.
     @PostMapping("/savePassword")
     public ResponseEntity savePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
-        String token = passwordDTO.getToken();
-        LOGGER.debug("Validating password reset token: " + token);
-        PasswordResetToken passToken = passwordResetTokenService.getByToken(token);
-        if ((passToken == null)) {
-            throw new InvalidPasswordResetTokenException("InvalidToken");
-        }
-
-        Calendar cal = Calendar.getInstance();
-        if ((passToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-            throw new InvalidPasswordResetTokenException("Expired");
-        }
-
-        User user = passwordResetTokenService.getUserByToken(token);
-
-        userService.changeUserPassword(user, passwordDTO.getNewPassword());
+        passwordResetTokenService.resetPassword(passwordDTO);
         return new ResponseEntity(HttpStatus.OK);
     }
 

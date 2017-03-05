@@ -27,6 +27,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
 //    @Query("SELECT DISTINCT u FROM User AS u LEFT JOIN FETCH u.roles WHERE u.isATeacher = true AND role_id != 3")
 //    List<User> findAllUnconfirmedTeachers();
 
+    @Query("SELECT t.user FROM PasswordResetToken t WHERE t.token = ?1")
+    User findOneByPasswordResetTokenInDTO(String token);
+
     @Query("SELECT new com.coursed.dto.UserDTO(u.id, u.email) FROM User u WHERE u.studentEntity.id = ?1)")
     UserDTO findOneByStudentInDTO(Long studentId);
 
