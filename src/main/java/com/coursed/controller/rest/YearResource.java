@@ -58,9 +58,9 @@ public class YearResource {
     }
 
     @GetMapping("/{yearId}/educationPlans")
-    public ResponseEntity<GenericResponse> getAllFromYear(@RequestParam(value = "page") Integer page,
-                                                          @RequestParam(value = "size") Integer size,
-                                                          @PathVariable("yearId") Long yearId) {
+    public ResponseEntity<GenericResponse> getAllFromYear(@PathVariable("yearId") Long yearId,
+                                                          @RequestParam(value = "page", required = false) Integer page,
+                                                          @RequestParam(value = "size", required = false) Integer size) {
         return new ResponseEntity<>(new
                 GenericResponse(educationPlanService.getAllFromYear(page, size, yearId)), HttpStatus.OK);
     }
