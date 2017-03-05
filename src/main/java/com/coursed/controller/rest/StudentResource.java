@@ -66,7 +66,7 @@ public class StudentResource {
                                                                   final HttpServletRequest request) {
         LOGGER.debug("Registering user account with information: {}", userStudentDTO);
 
-        User registered = userService.registerStudent(userStudentDTO);
+        User registered = studentService.create(userStudentDTO);
         if (registered == null) {
             throw new UserAlreadyExistException();
         }
@@ -74,7 +74,7 @@ public class StudentResource {
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
 
-        return new ResponseEntity<>(new GenericResponse(registered.getId()), HttpStatus.CREATED);
+        return new ResponseEntity<>(new GenericResponse(registered), HttpStatus.CREATED);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD','TEACHER', 'SECRETARY')")

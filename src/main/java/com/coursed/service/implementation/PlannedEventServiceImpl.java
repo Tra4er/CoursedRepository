@@ -49,7 +49,7 @@ public class PlannedEventServiceImpl implements PlannedEventService {
 
      */
     @Override
-    public PlannedEvent create(PlannedEventDTO plannedEventDTO){
+    public PlannedEventDTO create(PlannedEventDTO plannedEventDTO){
         PlannedEvent plannedEvent = new PlannedEvent();
 
         plannedEvent.setBeginDate(plannedEventDTO.getBeginDate());
@@ -61,12 +61,9 @@ public class PlannedEventServiceImpl implements PlannedEventService {
         Semester semester = semesterRepository.findOne(plannedEventDTO.getSemesterId());
         plannedEvent.setSemester(semester);
 
-        return plannedEventRepository.save(plannedEvent);
-    }
+        PlannedEvent saved = plannedEventRepository.save(plannedEvent);
 
-    @Override
-    public PlannedEvent create(PlannedEvent event) {
-        return plannedEventRepository.save(event);
+        return plannedEventRepository.findOneInDTO(saved.getId());
     }
 
     @Override
