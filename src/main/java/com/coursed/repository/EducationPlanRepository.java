@@ -22,4 +22,8 @@ public interface EducationPlanRepository extends CrudRepository<EducationPlan, L
     @Query("SELECT new com.coursed.dto.EducationPlanDTO(e.id, e.year.id, e.speciality.id, e.groupType, e.groupDegree, " +
             "e.courseNumber) FROM EducationPlan e")
     Page<EducationPlanDTO> findAllInDTO(Pageable pageable);
+
+    @Query("SELECT new com.coursed.dto.EducationPlanDTO(e.id, e.year.id, e.speciality.id, e.groupType, e.groupDegree, " +
+            "e.courseNumber) FROM EducationPlan e WHERE e.year_id = ?2")
+    Page<EducationPlanDTO> findAllFromYearInDTO(Pageable pageable, Long yearId);
 }
