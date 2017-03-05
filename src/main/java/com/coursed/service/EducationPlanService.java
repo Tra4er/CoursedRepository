@@ -13,5 +13,5 @@ public interface EducationPlanService {
     EducationPlanDTO getById(Long educationPlanId);
     EducationPlanDTO create(EducationPlanDTO planForm);
     Page<EducationPlanDTO> getAll(int page, int size);
-    Page<EducationPlanDTO> getAllFromYear(int page, int size, Long yearId);
+    Page<EducationPlanDTO> getAllByYear(int page, int size, Long yearId);
 }

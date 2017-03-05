@@ -62,7 +62,7 @@ public class YearResource {
                                                           @RequestParam(value = "page") Integer page,
                                                           @RequestParam(value = "size") Integer size) {
         return new ResponseEntity<>(new
-                GenericResponse(educationPlanService.getAllFromYear(page, size, yearId)), HttpStatus.OK);
+                GenericResponse(educationPlanService.getAllByYear(page, size, yearId)), HttpStatus.OK);
     }
 
 }

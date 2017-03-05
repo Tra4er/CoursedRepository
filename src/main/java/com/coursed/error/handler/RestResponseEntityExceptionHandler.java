@@ -158,6 +158,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleInternal(final Exception ex, final WebRequest request) {
         LOGGER.error("500 Status Code: " + ex);
+        ex.printStackTrace();
         final GenericResponse bodyOfResponse = new GenericResponse("InternalError", "Сталась помилка");
         return new ResponseEntity<>(bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
