@@ -63,7 +63,13 @@ public class YearServiceImpl implements YearService {
     @Override
     public YearDTO getCurrent() {
         LocalDate f = LocalDate.now();
-        return yearRepository.findOneByYearInDTO(f.getYear());
+        //1 to 12
+        int currentMonth = f.getMonth().getValue();
+        int currentYear = f.getYear();
+        //If current month in [1;8]
+        if(currentMonth >= 1 && currentMonth <= 7)
+            return yearRepository.findOneByEndInDTO(currentYear);
+        else//If current month in [8;12]
+            return yearRepository.findOneByBeginInDTO(currentYear);
     }
-
 }
