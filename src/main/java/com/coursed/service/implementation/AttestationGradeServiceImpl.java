@@ -20,7 +20,7 @@ import java.util.List;
  * Created by Hexray on 19.12.2016.
  */
 @Service
-public class AttestationGradeGradeServiceImpl implements AttestationGradeService {
+public class AttestationGradeServiceImpl implements AttestationGradeService {
 
     @Autowired
     private AttestationGradeRepository attestationGradeRepository;
