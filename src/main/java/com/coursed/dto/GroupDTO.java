@@ -16,6 +16,7 @@ public class GroupDTO {
     private CourseNumber courseNumber;
     private Long semesterId;
     private Long specialityId;
+    private String shortSpecialityName;
 
     public GroupDTO() {
     }
@@ -29,6 +30,18 @@ public class GroupDTO {
         this.courseNumber = courseNumber;
         this.semesterId = semesterId;
         this.specialityId = specialityId;
+    }
+
+    public GroupDTO(Long id, Integer number, GroupType groupType, GroupDegree groupDegree, CourseNumber courseNumber,
+                    Long semesterId, Long specialityId, String shortSpecialityName) {
+        this.id = id;
+        this.number = number;
+        this.groupType = groupType;
+        this.groupDegree = groupDegree;
+        this.courseNumber = courseNumber;
+        this.semesterId = semesterId;
+        this.specialityId = specialityId;
+        this.shortSpecialityName = shortSpecialityName;
     }
 
     public Long getId() {
@@ -85,5 +98,13 @@ public class GroupDTO {
 
     public void setSpecialityId(Long specialityId) {
         this.specialityId = specialityId;
+    }
+
+    public String getShortSpecialityName() {
+        return shortSpecialityName;
+    }
+
+    public void setShortSpecialityName(String shortSpecialityName) {
+        this.shortSpecialityName = shortSpecialityName;
     }
 }

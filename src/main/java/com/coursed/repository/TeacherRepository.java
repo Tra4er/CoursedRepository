@@ -45,6 +45,6 @@ public interface TeacherRepository extends CrudRepository<Teacher, Long> {
 
     @Query("SELECT new com.coursed.dto.TeacherDTO$TeacherTitleDTO(t.id, t.firstName, t.lastName, t.patronymic) " +
             "FROM Teacher t WHERE t NOT IN (SELECT cur FROM Teacher cur JOIN cur.curatedGroups gr WHERE gr.id = ?1)" +
-            "ORDER BY t.Surname")
+            "ORDER BY t.lastName")
     Page<TeacherDTO.TeacherTitleDTO> findAllNotCuratorsByGroupInDTO(Long groupId, Pageable pageable);
 }
