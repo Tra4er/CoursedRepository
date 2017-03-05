@@ -1,7 +1,7 @@
 package com.coursed.controller.rest;
 
 import com.coursed.dto.AttestationGradeDTO;
-import com.coursed.dto.AttestationDTOList;
+import com.coursed.dto.AttestationsWrapper;
 import com.coursed.service.AttestationGradeService;
 import com.coursed.util.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +33,24 @@ public class AttestationResource {
     }
 
     // OLD
-
     @PostMapping("/createManyFirst")
-    private void createSet(@RequestBody AttestationDTOList attestationGrades) {
+    private void createSet(@RequestBody AttestationsWrapper attestationGrades) {
         List<AttestationGradeDTO> list = new ArrayList<>(attestationGrades);
         attestationGradeService.createManyFirst(list);
     }
+    //Transferring to rest
+    @PostMapping("/")
+    private void createAttestations(@RequestBody AttestationsWrapper attestationGrades){
+        List<AttestationGradeDTO> list = new ArrayList<>(attestationGrades);
+        attestationGradeService.createManyFirst(list);
+    }
+
+    //For first post
+    //@RequestMapping(value = "/{studentId}/disciplines/{disciplineId}/attestations/{attestationId}", method = RequestMethod.PUT)
+//    @RequestMapping(value = "/{attestationId}", method = RequestMethod.PUT)
+//    private ResponseEntity<GenericResponse> editAttestation(@PathVariable("attestationId") Long attestationId,
+//                                                            @RequestBody AttestationGradeDTO attestationGrade)
+//    {
+//
+//    }
 }

@@ -17,7 +17,7 @@ function loadTable(page, size){
     $.getJSON("/api/groups" ,{page: page, size: size} ,function(response){
         var htmlRow = "";
         $.each(response.data.content, function (i, entity) {
-            htmlRow +="<td>" + entity.shortSpecialityName + "-" + entity.number + "</td>";
+            htmlRow +="<tr><td>" + entity.shortSpecialityName + "-" + entity.number + "</td>";
             htmlRow +="<td>" + groupType[entity.groupType] + "</td>";
             htmlRow +="<td>" + groupDegree[entity.groupDegree] + "</td>";
             htmlRow +="<td>" + courseNumbers[entity.courseNumber] + "</td></tr>";

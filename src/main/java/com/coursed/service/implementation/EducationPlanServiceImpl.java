@@ -64,5 +64,4 @@ public class EducationPlanServiceImpl implements EducationPlanService {
     public Page<EducationPlanDTO> getAllByYear(int page, int size, Long yearId) {
         return educationPlanRepository.findAllByYearInDTO(yearId, new PageRequest(page, size));
     }
-
 }

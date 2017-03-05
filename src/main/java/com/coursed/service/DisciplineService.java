@@ -3,6 +3,7 @@ package com.coursed.service;
 import com.coursed.dto.DisciplineDTO;
 import com.coursed.model.Discipline;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface DisciplineService {
     Page<DisciplineDTO.DisciplineTitleDTO> getAllByTeacher(Long teacherId, int page, int size);
     List<Discipline> getAllActualConnectedWithTeacher(Long teacherId, Long plannedEventId);
     List<Discipline> getAllDisciplinesFromPlannedEvent(Long plannedEventId, Long groupId);
+    Page<DisciplineDTO> getAllFromEducationPlan(Long educationPlanId, int page, int size);
 }

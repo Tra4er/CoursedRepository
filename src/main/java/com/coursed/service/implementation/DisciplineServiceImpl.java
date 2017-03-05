@@ -153,4 +153,9 @@ public class DisciplineServiceImpl implements DisciplineService {
 
         return neededDisciplines;
     }
+
+    @Override
+    public Page<DisciplineDTO> getAllFromEducationPlan(Long educationPlanId, int page, int size) {
+        return disciplineRepository.getAllFromEducationPlan(educationPlanId, new PageRequest(page, size));
+    }
 }

@@ -14,7 +14,7 @@ if ($(e.target).attr('id') == 'one-plan') {
     }
 });
 
-//
+// get list of speciality
 function getSpecialities() {
     var spec = [];
     $.getJSON("api/specialities", {page: 0, size: 10}, function(response){
@@ -28,21 +28,6 @@ function getSpecialities() {
     return spec;
 }
 
-function getYears(page, size){
-    var years = [];
-    $.getJSON("api/years", {page: page, size: size}, function(response){
-        $.each(response.data.content, function(key, year){
-            years.push({
-                id: year.id,
-                beginYear : year.beginYear,
-                endYear: year.endYear
-            });
-        });
-        createPagination('plansPagination', response.data['totalPages'], response.data['number']);
-    });
-    return years;
-}
-
 function fillOnePlan(){
     var spec = getSpecialities();
     $("#one-plan-container").html(" ");
@@ -53,11 +38,23 @@ function fillOnePlan(){
 
 function loadTable(page, size) {
     var spec = getSpecialities();
-    var years = getYears(page, size);
-    $.each(years, function (key1, year) {
-        htmlFormForEducationPlan(year, spec, 'all-plans-container');
-    });
-
+    $("#all-plans-container").html(" ");
+    var years = [];
+    $.getJSON("api/years", {page: page, size: size}, function(response){
+        $.each(response.data.content, function(key, year){
+            years.push({
+                id: year.id,
+                beginYear : year.beginYear,
+                endYear: year.endYear
+            });
+        });
+        createPagination('plansPagination', response.data['totalPages'], response.data['number']);
+    })
+        .done(function(){
+            $.each(years, function (key1, year) {
+                htmlFormForEducationPlan(year, spec, 'all-plans-container');
+            });
+        });
 }
 
 function htmlFormForEducationPlan(year, spec, containerId){
@@ -65,24 +62,25 @@ function htmlFormForEducationPlan(year, spec, containerId){
     var htmlCode = "<div class='row year-container' name='" + year.id + "'><h3 align='center'>на " + yearString + " рік</h3>";
     $.getJSON("/api/years/" + year.id + "/educationPlans", {page: 0, size: 30}, function(response) {
         $.each(spec, function (key2, speciality) {
-            htmlCode += "<div class='speciality-container col-xs-12' name='" + spec[key2].id + "'><h4 align='center'>" + spec[key2].name + "</h4>";
+            htmlCode += "<div class='speciality-container col-xs-12' name='" + speciality.id + "'><h4 align='center'>" + speciality.name + "</h4>";
             var general = "<div class='col-xs-6 group-type-container' name='GENERAL_FORM'><h5 align='center' class='col-xs-12'>" + localGroupUkr['GENERAL_FORM'] + "</h5>";
             var distance = "<div class='col-xs-6 group-type-container' name='DISTANCE_FORM'><h5 align='center' class='col-xs-12'>" + localGroupUkr['DISTANCE_FORM'] + "</h5>";
             var generalCounter = 0;
             var distanceCounter = 0;
-
-            $.each(response.data.content, function (key3, plan) {
-                if (plan.speciality['id'] == spec[key2].id) {
-                    if (plan.groupType == 'GENERAL_FORM') {
-                        general += "<a href='/disciplines?planId=" + plan.id + "&yearStr=" + yearString + "' name='" + plan.courseNumber + "'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
-                        generalCounter++;
+            if (response.data.totalElements != 0 ) {
+                $.each(response.data.content, function (key3, plan) {
+                    if (plan.specialityId == speciality.id) {
+                        if (plan.groupType == 'GENERAL_FORM') {
+                            general += "<a href='/disciplines?planId=" + plan.id + "&yearStr=" + yearString + "' name='" + plan.courseNumber + "'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
+                            generalCounter++;
+                        }
+                        else if (plan.groupType == 'DISTANCE_FORM') {
+                            distance += "<a href='/disciplines?planId=" + plan.id + "&yearStr=" + yearString + "' name='" + plan.courseNumber + "'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
+                            distanceCounter++;
+                        }
                     }
-                    else if (plan.groupType == 'DISTANCE_FORM') {
-                        distance += "<a href='/disciplines?planId=" + plan.id + "&yearStr=" + yearString + "' name='" + plan.courseNumber + "'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
-                        distanceCounter++;
-                    }
-                }
-            });
+                });
+            }
             if (distanceCounter < 6) {
                 distance += "<button name='" + yearString + "' type='button' class='btn btn-success col-xs-12 add-plan-btn' data-toggle='modal' data-target='#plan-dialog-simple'><span class='glyphicon glyphicon-plus'></span></button>";
             }
@@ -93,49 +91,11 @@ function htmlFormForEducationPlan(year, spec, containerId){
             distance += "</div>";
             htmlCode += general + distance + "</div>";
         });
+        htmlCode += "</div>";
+        $("#" + containerId).append(htmlCode);
     });
-    htmlCode += "</div>";
-    $("#" + containerId).html(htmlCode);
+
 }
-
-
-//
-// function htmlFormForEducationPlan(beginYear, endYear, yearId, spec, containerId){
-//     var yearString = beginYear + "-" + endYear;
-//     var htmlCode = "<div class='row year-container' name='" + yearId + "'><h3 align='center'>на " + yearString + " рік</h3>";
-//     $.each(spec, function (key2, speciality){
-//         htmlCode += "<div class='speciality-container col-xs-12' name='" + spec[key2].id + "'><h4 align='center'>" + spec[key2].name + "</h4>";
-//         var general = "<div class='col-xs-6 group-type-container' name='GENERAL_FORM'><h5 align='center' class='col-xs-12'>" + localGroupUkr['GENERAL_FORM'] + "</h5>";
-//         var distance = "<div class='col-xs-6 group-type-container' name='DISTANCE_FORM'><h5 align='center' class='col-xs-12'>" + localGroupUkr['DISTANCE_FORM'] + "</h5>";
-//         var generalCounter = 0;
-//         var distanceCounter = 0;
-//
-//         $.each(educationPlans, function(key3, plan){
-//             if (plan.speciality['id'] == spec[key2].id){
-//                 if (plan.groupType == 'GENERAL_FORM') {
-//                     general += "<a href='/disciplines?planId=" + plan.id + "&yearStr=" + yearString + "' name='" + plan.courseNumber + "'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
-//                     generalCounter++;
-//                 }
-//                 else if (plan.groupType == 'DISTANCE_FORM')
-//                 {
-//                     distance += "<a href='/disciplines?planId=" + plan.id + "&yearStr=" + yearString + "' name='" + plan.courseNumber + "'><input type='button' class='btn btn-primary col-xs-12' value='" + localGroupUkr[plan.courseNumber] + " курс'/></a>";
-//                     distanceCounter++;
-//                 }
-//             }
-//         });
-//         if(distanceCounter < 6){
-//             distance += "<button name='"+ yearString +"' type='button' class='btn btn-success col-xs-12 add-plan-btn' data-toggle='modal' data-target='#plan-dialog-simple'><span class='glyphicon glyphicon-plus'></span></button>";
-//         };
-//         if (generalCounter < 6){
-//             general += "<button name='"+ yearString +"' type='button' class='btn btn-success col-xs-12 add-plan-btn' data-toggle='modal' data-target='#plan-dialog-simple'><span class='glyphicon glyphicon-plus'></span></button>";
-//         }
-//         general += "</div>"
-//         distance += "</div>";
-//         htmlCode += general + distance + "</div>";
-//     });
-//     htmlCode += "</div>";
-//     $("#" + containerId).html(htmlCode);
-// }
 
 $('.plan-content-container').on('click', '.add-plan-btn', function () {
     var yearId = $(this).closest('.year-container').attr('name');

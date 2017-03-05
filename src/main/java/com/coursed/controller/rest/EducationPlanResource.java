@@ -1,6 +1,7 @@
 package com.coursed.controller.rest;
 
 import com.coursed.dto.EducationPlanDTO;
+import com.coursed.service.DisciplineService;
 import com.coursed.service.EducationPlanService;
 import com.coursed.util.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class EducationPlanResource {
     @Autowired
     private EducationPlanService educationPlanService;
 
+    @Autowired
+    private DisciplineService disciplineService;
+
     @GetMapping
     public ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
                                                @RequestParam(value = "size") Integer size) {
@@ -29,8 +33,15 @@ public class EducationPlanResource {
         return new ResponseEntity<>(new GenericResponse(educationPlanService.create(planForm)), HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<GenericResponse> getById(@PathVariable("id") Long id) {
+    @GetMapping("{educationPlanId}")
+    public ResponseEntity<GenericResponse> getById(@PathVariable("educationPlanId") Long id) {
         return new ResponseEntity<>(new GenericResponse(educationPlanService.getById(id)), HttpStatus.OK);
+    }
+
+    @GetMapping("/{educationPlanId}/disciplines")
+    public ResponseEntity<GenericResponse> getDisciplinesByEducationPlan(@PathVariable("educationPlanId") Long educationPlanId,
+                                                                         @RequestParam(value = "page") Integer page,
+                                                                         @RequestParam(value = "size") Integer size){
+        return new ResponseEntity<>(new GenericResponse(disciplineService.getAllFromEducationPlan(educationPlanId, page, size)), HttpStatus.OK);
     }
 }
