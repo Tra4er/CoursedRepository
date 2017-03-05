@@ -6,25 +6,49 @@ $(function () {
     var titles = ['№', 'Дисципліна', 'Кількіть годин', 'Кількість кредитів', 'Вид семестрової атестації', 'ПІБ викладачів', 'Опції'];
     insertTable(titles, "FIRST");
     insertTable(titles, "SECOND");
-    fillTableDisciplinesForPlan();
-});
-
-function fillTableDisciplinesForPlan() {
-    $.get("/api/educationPlans/" + $.urlParam('planId'), function (response) {
-            $('.specialityId').attr('value', response.speciality['id']).text(response.data.speciality['fullName']);
-            $('.plan-info .groupType').attr('value', response.data.groupType).text(localGroupUkr[response.data.groupType]);
-            $('.plan-info .groupDegree').attr('value', response.data.groupDegree).text(localGroupUkr[response.data.groupDegree]);
-            $('.courseNumber').attr('value', response.data.courseNumber).text(localGroupUkr[response.data.courseNumber]);
-             var countFirst = 0;
-             var countSecond = 0;
-            $.each(response.data.disciplines, function (i, entity) {
-                addDisciplineIntoTable(entity);
-            });
-        }
-    );
+    fillInformationAboutPlan();
+    fillTableForPlan();
     $('.plan-info .yearId').text($.urlParam('yearStr'));
     fillSelect("semesterNumber", semesterNumbers);
     fillSelect("disciplineType", localDisciplineUkr);
+});
+
+function fillInformationAboutPlan() {
+    var spec = [];
+    $.getJSON("api/specialities", {page: 0, size: 10}, function(response){
+        $.each(response.data.content, function(key, speciality){
+            spec.push({
+                id: speciality.id,
+                name : speciality.fullName
+            });
+        });
+    })
+        .done(function(){
+            $.get("/api/educationPlans/" + $.urlParam('planId'), function (response) {
+                    $('.plan-info .groupType').attr('value', response.data.groupType).text(localGroupUkr[response.data.groupType]);
+                    $('.plan-info .groupDegree').attr('value', response.data.groupDegree).text(localGroupUkr[response.data.groupDegree]);
+                    $('.courseNumber').attr('value', response.data.courseNumber).text(localGroupUkr[response.data.courseNumber]);
+                    var specialityName = "";
+                    $.each(spec, function(i, s){
+                        if  (s.id == response.data.specialityId) {
+                            specialityName += s.name;
+                        }
+                    });
+                    $('.specialityId').attr('value', response.data.specialityId).text(specialityName);
+                }
+            );
+    });
+}
+
+function fillTableForPlan(){
+    $.get("/api/educationPlans/" + $.urlParam('planId') + "/disciplines", {page: 0, size: 40}, function (response) {
+         var countFirst = 0;
+         var countSecond = 0;
+        $.each(response.data.content, function (i, entity) {
+            addDisciplineIntoTable(entity);
+        });
+        }
+    );
 }
 
 $.urlParam = function (name) {
