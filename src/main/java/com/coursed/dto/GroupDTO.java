@@ -17,6 +17,9 @@ public class GroupDTO {
     private Long semesterId;
     private Long specialityId;
 
+    public GroupDTO() {
+    }
+
     public GroupDTO(Long id, Integer number, GroupType groupType, GroupDegree groupDegree, CourseNumber courseNumber,
                     Long semesterId, Long specialityId) {
         this.id = id;
