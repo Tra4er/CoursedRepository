@@ -9,6 +9,9 @@ public class SpecialityDTO {
     private String fullName;
     private String groupsName;
 
+    public SpecialityDTO() {
+    }
+
     public SpecialityDTO(Long id, String fullName, String groupsName) {
         this.id = id;
         this.fullName = fullName;
@@ -44,6 +47,4 @@ public class SpecialityDTO {
         this.groupsName = groupsName;
     }
 
-    public SpecialityDTO() {
-    }
 }

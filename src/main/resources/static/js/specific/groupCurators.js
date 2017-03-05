@@ -17,21 +17,50 @@ function loadTable(page, size) {
             htmlRow +="<td>" + groupType[entity.groupType] + "</td>";
             htmlRow +="<td>" + groupDegree[entity.groupDegree] + "</td>";
             htmlRow +="<td>" + courseNumbers[entity.courseNumber] + "</td><td class='curators'>";
-            // if (entity.curators.length != 0){
-            //     $.each(entity.curators, function (i, curator) {
-            //         htmlRow += "<p>" + curator.lastName + "</p>";
-            //     })
-            // }
-            // else {
-                htmlRow += 'не призначено';
-            // }
+            // var row = getCuratorsForGroup(entity.id);
+            // htmlRow += row;
             htmlRow +="</td><td><button id='" + entity.id + "' type='button'   class='btn btn-default btn-sm' data-toggle='modal' data-target='#curator-dialog'>Додати куратора</button></td>";
             htmlRow += "</tr>";
         });
         $("#groupCurators-table > tbody").html(htmlRow);
         createPagination(response.data['totalPages'], page);
+    })
+        .done(function(){
+        getCuratorsForGroups()
     });
 }
+
+function getCuratorsForGroups(){
+    $('#groupCurators-table > tbody  > tr').each(function() {
+        var $row = this;
+        var id = this.id;
+        $.getJSON("/api/groups/" + id + "/curators", {page: 0, size: 5}, function(curators) {
+            var htmlRow="";
+             if (curators.data['totalElements'] == 0){
+                 htmlRow += 'не призначено';
+             }
+            else{
+                 $.each(curators.data.content, function (i, curator){
+                     htmlRow += "<p>" + curator.lastName + "</p>";
+                 });
+             }
+            $($row).children(".curators").html(htmlRow);
+        });
+
+    });
+    // var htmlRow="";
+    // $.getJSON("/api/groups/" + id + "/curators", {page: 0, size: 5}, function(curators) {
+    //     if (curators.data['totalElements'] == 0){
+    //         htmlRow += 'не призначено';
+    //        }
+    //     else{
+    //         $.each(curators.data.content, function (i, curator){
+    //             htmlRow += "<p>" + curator.lastName + "</p>";
+    //         });
+    //     }
+    // })
+    // return htmlRow;
+};
 
 $('#groupCurators-table > tbody').on('click', 'tr > td > .btn-default', function(){
     var grId = $(this).attr("id");

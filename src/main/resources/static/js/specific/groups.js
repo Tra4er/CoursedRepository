@@ -20,10 +20,39 @@ function loadTable(page, size){
 };
 
 //AJAX post to create a group
-$('#button-group-post').click(function(){
-    var form = $('#modal-body-form');
-    sendAjaxPost(form, 'api/groups', 'add-dialog');
+// $('#button-group-post').click(function(){
+//     var form = $('#modal-body-form');
+//     sendAjaxPost(form, '/api/groups', 'add-dialog');
+// });
+
+
+$('#button-group-post').on('click', function () {
+    var obj = JSON.stringify({
+        "number": $('#number').val(),
+        "groupType": $('#groupType').val(),
+        "groupDegree": $('#groupDegree').val(),
+        "courseNumber": $('#courseNumber').val(),
+        "semesterId": $('#semesterId').val(),
+        "specialityId": $('#specialityId').val()
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "/api/groups",
+        contentType: "application/json",
+        data: obj,
+        success: function (response) {
+            $('#add-dialog').modal("toggle");
+            var active = $('.pagination').children('.active').children('a').text() - 1;
+            loadTable(active, $('#numberOnPage').val());
+        },
+        error: function (response) {
+            alert('Помилка!');
+            console.log(response)
+        }
+    });
 });
+
 
 //When the modal hides set to dafault selects and inputs
 $('#add-dialog').on('hidden.bs.modal', function() {
