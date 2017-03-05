@@ -87,12 +87,10 @@ function sendRegistrationAjaxPost(element, url, modalId, resultElement, sendButt
         data: JSON.stringify(element.serializeObject()),
     }).done(function (response) {
         $('#' + modalId).modal("toggle");
-        if (response.status == "success") {
-            sendButton.button('reset');
-            $("#userEmail-modal").text($("#emailField-" + person).val());
-            $("#userEmail-modal").attr("href", "mailto:" + $("#emailField-" + person).val());
-            $("#emailSentMessage").modal({backdrop: "static", keyboard: false});
-        }
+        sendButton.button('reset');
+        $("#userEmail-modal").text($("#emailField-" + person).val());
+        $("#userEmail-modal").attr("href", "mailto:" + $("#emailField-" + person).val());
+        $("#emailSentMessage").modal({backdrop: "static", keyboard: false});
     }).fail(function (response) {
         grecaptcha.reset();
         if (response.message == "InvalidReCaptcha") {

@@ -5,7 +5,7 @@ var sendProblemTo;
 
 $(document).ready(function () {
     var userProblem = $("#userProblem").text();
-    switch(userProblem) {
+    switch (userProblem) {
         case 'ForgotPassword' :
             sendProblemTo = "/sendResetPasswordToken";
             break;
@@ -23,9 +23,7 @@ $('#emailField-send-button').click(function () {
         data: "email=" + $("#emailField").val()
     }).done(function (response) {
         $('#emailField-send-button').button('reset');
-        if (response.status == "success") {
-            $("#emailField-send-request-server-status").text("Перевірте пошту.");
-        }
+        $("#emailField-send-request-server-status").text("Перевірте пошту.");
     }).fail(function (response) {
         $('#emailField-send-button').button('reset');
         $("#emailField-send-request-server-status").text(response.data);

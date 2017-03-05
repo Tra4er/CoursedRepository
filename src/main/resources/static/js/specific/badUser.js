@@ -12,11 +12,9 @@ $("#sendNewRegistrationToken-button").click(function () {
         data: "existingToken=" + $("#sendNewRegistrationToken-token").text()
     }).done(function (response) {
         $("#sendNewRegistrationToken-button").button('reset');
-        if (response.status == "success") {
-            $("#badUser-request-result").text("Перевірте пошту, знову :)");
-        }
+        $("#badUser-request-result").text("Перевірте пошту, знову :)");
     }).fail(function (response) {
-        $('#sendNewRegistrationToken-button').button('reset');
+        $("#sendNewRegistrationToken-button").button('reset');
         $("#badUser-request-result").text("Ти знову облажався: " + response.data);
     });
 });

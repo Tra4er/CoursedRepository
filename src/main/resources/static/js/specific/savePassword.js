@@ -13,9 +13,7 @@ $("#passwordField-save-button").click(function () {
         data: JSON.stringify($("#savePassword-form").serializeObject()),
     }).done(function (response) {
         $('#passwordField-save-button').button('reset');
-        if (response.status == "success") {
-            $("#savePassword-request-server-status").text("Пароль змінено.");
-        }
+        $("#savePassword-request-server-status").text("Пароль змінено.");
     }).fail(function (response) {
         $('#emailField-save-button').button('reset');
         $("#emailField-save-request-server-status").text(response.data);
