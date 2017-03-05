@@ -66,7 +66,7 @@ $('#groupCurators-table > tbody').on('click', 'tr > td > .btn-default', function
     var grId = $(this).attr("id");
     var info = $(this).closest('tr').children('td:first').text();
     $('#teacher-container').html("<h2 id='"+ grId +"'> група " + info + "</h2> <br/>");
-    $.getJSON("api/teachers/search", {curatorsOfGroupId: grId}, function(response){
+    $.getJSON("api/teachers/search", {filter: 'notCurators', groupId: grId}, function(response){
         $.each(response.data.content, function(i, teach){
             var item = "<input type='button' id='" + teach.teacherEntity['id'] + "' class='btn btn-default col-xs-12' value = '"
                 + teach.teacherEntity['lastName'] + " " + teach.teacherEntity['firstName'] + " " + teach.teacherEntity['patronymic'] + "'/>";
