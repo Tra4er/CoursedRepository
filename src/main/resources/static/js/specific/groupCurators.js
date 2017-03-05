@@ -65,7 +65,6 @@ $('#teacher-container').on('click', 'input', function(){
         });
 });
 
-
 function loadCuratorsForGroup(id, $row){
     $.getJSON("/api/groups/" + id + "/curators", {page: 0, size: 10}, function(curators) {
         var htmlRow="";
