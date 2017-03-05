@@ -109,7 +109,7 @@ public class UserController {
     public String updatePassword(@RequestParam(value = "by", required = false) String message) {
         if (message != null) {
             if (message.equals("email")) {
-                return "/auth/resetPassword";
+                return "/auth/savePassword";
             } else if (message.equals("oldPassword")) {
                 return "/auth/updatePassword";
             }
