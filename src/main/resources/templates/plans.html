@@ -26,10 +26,21 @@
             </div>
         </div>
         <div id="all" class="tab-pane fade">
-            <div id="all-plans-container" class="col-xs-12 plan-content-container">
+            <div class="form-inline form-group col-xs-12 col-sm-9">
+                <label for="numberOnPage">Відображати по:</label>
+                <select class="form-control" id="numberOnPage">
+                    <option>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                </select>
             </div>
+            <div id="all-plans-container" class="col-xs-12 plan-content-container">
+
+            </div>
+            <nav aria-label="Page navigation" class="col-xs-12"><ul class="pagination pagination-table"></ul></nav>
         </div>
     </div>
+
     <div id="plan-dialog-simple" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">

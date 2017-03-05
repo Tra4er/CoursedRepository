@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 function loadTable(page, size){
     var params = ['id', 'beginYear', 'endYear'];
-    fillTableFrom("content-table", "/api/years?page=" + page + "&size=" + size, params, page);
+    fillTableFrom("content-table", "/api/years?page=" + page + "&size=" + size, params, page, 'yearsPagination');
 };
 
 //It sends serialized

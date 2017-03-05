@@ -19,7 +19,7 @@ function loadTable(page, size){
             }
         });
         $("#UnconfirmedTeachers-table > tbody").html(htmlRow);
-        createPagination(response.data['totalPages'], page);
+        createPagination('unconfirmedTeachersPagination', response.data['totalPages'], page);
     });
 }
 

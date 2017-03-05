@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 function loadTable(page, size){
     var entityParams = ['id', 'fullName', 'groupsName'];
-    fillTableFrom("content-table", "/api/specialities?page=" + page + "&size=" + size, entityParams, page);
+    fillTableFrom("content-table", "/api/specialities?page=" + page + "&size=" + size, entityParams, page, 'specialitiesPagination');
 };
 
 //It sends serialized

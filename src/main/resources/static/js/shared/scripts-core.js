@@ -25,7 +25,7 @@ function insertTable(titleArray, tableId) {
 }
 
 //It fills table's '#tableId' rows via the getting JSON from 'requestAddress' which contains selected keys in 'params'
-function fillTableFrom(tableId, requestAddress, params, page) {
+function fillTableFrom(tableId, requestAddress, params, page, ulId) {
     $.getJSON(requestAddress, function(response){
         var htmlRow = "";
         //Go through the each entity in the response
@@ -43,13 +43,13 @@ function fillTableFrom(tableId, requestAddress, params, page) {
 
         });
         $("#" + tableId + "> tbody").html(htmlRow);
-        createPagination(response.data['totalPages'], page);
+        createPagination(ulId, response.data['totalPages'], page);
     });
 }
 
 //It fills table's '#tableId' rows via the getting JSON from 'requestAddress' which contains selected keys in 'params'
 //Parameter 'local' is a map which is responsible for localization of paramValue parameters
-function fillLocalizedTableFrom(tableId, requestAddress, params, local, page) {
+function fillLocalizedTableFrom(tableId, requestAddress, params, local, page, ulId) {
     $.getJSON(requestAddress, function(response){
         var htmlRow = "";
         //Go through the each entity in the response
@@ -71,7 +71,7 @@ function fillLocalizedTableFrom(tableId, requestAddress, params, local, page) {
                 }
             });
             htmlRow += "</tr>";
-            createPagination(response.data['totalPages'], page);
+            createPagination(ulId, response.data['totalPages'], page);
         });
         $("#" + tableId + "> tbody").html(htmlRow);
     });
@@ -100,24 +100,24 @@ function sendAjaxPost(element, url, modalId) {
 //It extracts fields from the element to prepare them to be converted to the JSON
 $.fn.serializeObject = function()
 {
-    var o = {};
+    var obj = {};
     var a = this.serializeArray();
     $.each(a, function() {
-        if (o[this.name] !== undefined) {
-            if (!o[this.name].push) {
-                o[this.name] = [o[this.name]];
+        if (obj[this.name] !== undefined) {
+            if (!obj[this.name].push) {
+                obj[this.name] = [obj[this.name]];
             }
-            o[this.name].push(this.value || '');
+            obj[this.name].push(this.value || '');
         } else {
-            o[this.name] = this.value || '';
+            obj[this.name] = this.value || '';
         }
     });
-    return o;
+    return obj;
 };
 
 
 // insert pagination list
-function createPagination(totalPages, page){
+function createPagination(ulId, totalPages, page){
     var item = '<li';
     if (page == 0) item += ' class="disabled"';
     item += '><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
@@ -128,11 +128,11 @@ function createPagination(totalPages, page){
     item += '<li';
     if(totalPages - 1 == page) item += ' class="disabled"';
     item += '><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
-    $('.pagination').html(item);
+    $('#' + ulId).html(item);
 };
 
-// change number of Page
-$('.pagination').on('click', 'li:not(.disabled)', function(){
+// change number of Page in Table
+$('.pagination-table').on('click', 'li:not(.disabled)', function(){
     var active = $(this).siblings('.active').children('a').text();
     var number = $(this).children('a').text();
     var page = active;
@@ -151,4 +151,9 @@ $('.pagination').on('click', 'li:not(.disabled)', function(){
 // change number of rows in table
 $('#numberOnPage').on('change', function(){
     loadTable(0, $(this).val());
+});
+
+// change number of rows in table
+$('#numberOnPageList').on('change', function(){
+    loadList(0, $(this).val());
 });

@@ -17,16 +17,26 @@ function loadTable(page, size) {
             htmlRow +="<td>" + groupType[entity.groupType] + "</td>";
             htmlRow +="<td>" + groupDegree[entity.groupDegree] + "</td>";
             htmlRow +="<td>" + courseNumbers[entity.courseNumber] + "</td><td class='curators'>";
-            // var row = getCuratorsForGroup(entity.id);
-            // htmlRow += row;
             htmlRow +="</td><td><button id='" + entity.id + "' type='button'   class='btn btn-default btn-sm' data-toggle='modal' data-target='#curator-dialog'>Додати куратора</button></td>";
             htmlRow += "</tr>";
         });
         $("#groupCurators-table > tbody").html(htmlRow);
-        createPagination(response.data['totalPages'], page);
+        createPagination('groupCuratorsPagination', response.data['totalPages'], page);
     })
         .done(function(){
         getCuratorsForGroups()
+    });
+}
+
+function loadList(id, page, size) {
+    $.getJSON("api/teachers/search", {filter: 'notCurators', groupId: id, page: 0, size: 10}, function(response){
+        var item = "";
+        $.each(response.data.content, function(i, teach){
+            item += "<input type='button' id='" + teach.teacherEntity['id'] + "' class='btn btn-default col-xs-12' value = '"
+                + teach.teacherEntity['lastName'] + " " + teach.teacherEntity['firstName'] + " " + teach.teacherEntity['patronymic'] + "'/>";
+        });
+        $('#teacher-container').html(item);
+        createPagination('groupCuratorsAddPagination', response.data['totalPages'], response.data.number);
     });
 }
 
@@ -46,33 +56,14 @@ function getCuratorsForGroups(){
              }
             $($row).children(".curators").html(htmlRow);
         });
-
     });
-    // var htmlRow="";
-    // $.getJSON("/api/groups/" + id + "/curators", {page: 0, size: 5}, function(curators) {
-    //     if (curators.data['totalElements'] == 0){
-    //         htmlRow += 'не призначено';
-    //        }
-    //     else{
-    //         $.each(curators.data.content, function (i, curator){
-    //             htmlRow += "<p>" + curator.lastName + "</p>";
-    //         });
-    //     }
-    // })
-    // return htmlRow;
 };
 
 $('#groupCurators-table > tbody').on('click', 'tr > td > .btn-default', function(){
     var grId = $(this).attr("id");
     var info = $(this).closest('tr').children('td:first').text();
     $('#teacher-container').html("<h2 id='"+ grId +"'> група " + info + "</h2> <br/>");
-    $.getJSON("api/teachers/search", {filter: 'notCurators', groupId: grId}, function(response){
-        $.each(response.data.content, function(i, teach){
-            var item = "<input type='button' id='" + teach.teacherEntity['id'] + "' class='btn btn-default col-xs-12' value = '"
-                + teach.teacherEntity['lastName'] + " " + teach.teacherEntity['firstName'] + " " + teach.teacherEntity['patronymic'] + "'/>";
-            $('#teacher-container').append(item);
-        })
-    });
+    loadList(grId, 0, $('#numberOnPageList').val());
 });
 
 $('#teacher-container').on('click', 'input', function(){
@@ -104,3 +95,21 @@ function reloadCuratorsForGroup(grId){
         });
 
 };
+
+// change number of Page in List
+$('.pagination-list').on('click', 'li:not(.disabled)', function(){
+    var active = $(this).siblings('.active').children('a').text();
+    var number = $(this).children('a').text();
+    var page = active;
+    switch ($(this).children('a').attr('aria-label')) {
+        case 'Previous':
+            page -= 2;
+            break;
+        case 'Next':
+            break;
+        default:
+            var page = number - 1;
+    }
+    var id =  $(this).next().attr('id');
+    loadList(id, page, $('#numberOnPageList').val());
+});
