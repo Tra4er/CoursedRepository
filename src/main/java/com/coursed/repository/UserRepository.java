@@ -1,5 +1,6 @@
 package com.coursed.repository;
 
+import com.coursed.dto.UserDTO;
 import com.coursed.model.auth.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -25,6 +26,12 @@ public interface UserRepository extends CrudRepository<User, Long> {
     //AND role_id IN SELECT r.id FROM Role r WHERE r.name = 'ROLE_TEACHER'
 //    @Query("SELECT DISTINCT u FROM User AS u LEFT JOIN FETCH u.roles WHERE u.isATeacher = true AND role_id != 3")
 //    List<User> findAllUnconfirmedTeachers();
+
+    @Query("SELECT new com.coursed.dto.UserDTO(u.id, u.email) FROM User u WHERE u.studentEntity.id = ?1)")
+    UserDTO findOneByStudentInDTO(Long studentId);
+
+    @Query("SELECT new com.coursed.dto.UserDTO(u.id, u.email) FROM User u WHERE u.teacherEntity.id = ?1)")
+    UserDTO findOneByTeacherInDTO(Long teacherId);
 
     @Query("SELECT u FROM User u WHERE u.isATeacher = true AND u.id NOT IN (" +
             "SELECT u2.id FROM User u2 JOIN u2.roles r where r.name = 'ROLE_TEACHER')")

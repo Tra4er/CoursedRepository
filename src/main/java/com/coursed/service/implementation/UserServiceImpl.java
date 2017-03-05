@@ -66,6 +66,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO getByStudentId(Long studentId) {
+        return userRepository.findOneByStudentInDTO(studentId);
+    }
+
+    @Override
+    public UserDTO getByTeacherId(Long teacherId) {
+        return userRepository.findOneByTeacherInDTO(teacherId);
+    }
+
+
+    @Override
     public List<User> getAll() {
         return userRepository.findAll();
     }
@@ -153,7 +164,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void createVerificationTokenForUser(User user, String token) { // TODO
+    public void createVerificationTokenForUser(UserDTO userDTO, String token) { // TODO move to another class?
+        User user = userRepository.findOne(userDTO.getId());
         final VerificationToken myToken = new VerificationToken(token, user);
         verificationTokenRepository.save(myToken);
     }

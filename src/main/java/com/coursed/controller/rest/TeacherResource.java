@@ -1,5 +1,7 @@
 package com.coursed.controller.rest;
 
+import com.coursed.dto.TeacherDTO;
+import com.coursed.dto.UserDTO;
 import com.coursed.dto.UserTeacherDTO;
 import com.coursed.error.exception.UserAlreadyExistException;
 import com.coursed.model.auth.User;
@@ -68,14 +70,16 @@ public class TeacherResource {
                                                                   final HttpServletRequest request) {
         LOGGER.debug("Registering user account with information: {}", userTeacherDTO);
 
-        User registered = userService.registerTeacher(userTeacherDTO);
+        TeacherDTO registered = teacherService.create(userTeacherDTO);
         if (registered == null) {
             System.out.println("Exception");
             throw new UserAlreadyExistException();
         }
 
+        UserDTO user = userService.getByTeacherId(registered.getId());
+
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
+        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, request.getLocale(), appUrl));
 
         return new ResponseEntity<>(new GenericResponse(registered.getId()), HttpStatus.CREATED);
     }
