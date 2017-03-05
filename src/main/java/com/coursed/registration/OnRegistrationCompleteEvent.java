@@ -1,5 +1,6 @@
 package com.coursed.registration;
 
+import com.coursed.dto.UserDTO;
 import com.coursed.model.auth.User;
 import org.springframework.context.ApplicationEvent;
 
@@ -12,11 +13,11 @@ public class OnRegistrationCompleteEvent extends ApplicationEvent {
 
     private final String appUrl;
     private final Locale locale;
-    private final User user;
+    private final UserDTO userDTO;
 
-    public OnRegistrationCompleteEvent(final User user, final Locale locale, final String appUrl) {
-        super(user);
-        this.user = user;
+    public OnRegistrationCompleteEvent(final UserDTO userDTO, final Locale locale, final String appUrl) {
+        super(userDTO);
+        this.userDTO = userDTO;
         this.locale = locale;
         this.appUrl = appUrl;
     }
@@ -29,7 +30,7 @@ public class OnRegistrationCompleteEvent extends ApplicationEvent {
         return locale;
     }
 
-    public User getUser() {
-        return user;
+    public UserDTO getUser() {
+        return userDTO;
     }
 }

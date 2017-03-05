@@ -40,7 +40,7 @@ public class YearServiceImpl implements YearService {
     }
 
     @Override
-    public Year create(YearDTO yearDTO) {
+    public YearDTO create(YearDTO yearDTO) {
 
         Year year = new Year();
         year.setBeginYear(yearDTO.getBeginYear());
@@ -57,7 +57,9 @@ public class YearServiceImpl implements YearService {
         firstSemester.setYear(year);
         secondSemester.setYear(year);
 
-        return yearRepository.save(year);
+        Year saved = yearRepository.save(year);
+
+        return yearRepository.findOneInDTO(saved.getId());
     }
 
     @Override

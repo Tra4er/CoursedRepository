@@ -1,6 +1,7 @@
 package com.coursed.service;
 
 import com.coursed.dto.TeacherDTO;
+import com.coursed.dto.UserTeacherDTO;
 import com.coursed.model.Teacher;
 import org.springframework.data.domain.Page;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by Hexray on 06.12.2016.
  */
 public interface TeacherService {
-    void create(Teacher teacher);
+    TeacherDTO create(UserTeacherDTO registrationForm);
     void delete(Long teacherId);
     TeacherDTO getById(Long id);
     Page<TeacherDTO.TeacherTitleDTO> getAll();

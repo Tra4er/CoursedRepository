@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Trach on 12/12/2016.
  */
 public interface StudentService {
-    void create(Student student);
+    StudentDTO create(UserStudentDTO registrationForm);
     StudentDTO getById(Long id);
     Page<StudentDTO.StudentTitleDTO> getAll();
     Page<StudentDTO.StudentTitleDTO> getAll(int page, int size);

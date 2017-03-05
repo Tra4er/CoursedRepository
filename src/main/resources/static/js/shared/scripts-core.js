@@ -152,8 +152,3 @@ $('.pagination-table').on('click', 'li:not(.disabled)', function(){
 $('#numberOnPage').on('change', function(){
     loadTable(0, $(this).val());
 });
-
-// change number of rows in table
-$('#numberOnPageList').on('change', function(){
-    loadList(0, $(this).val());
-});
