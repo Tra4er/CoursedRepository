@@ -1,5 +1,6 @@
 package com.coursed.service.implementation;
 
+import com.coursed.dto.RoleDTO;
 import com.coursed.model.auth.Role;
 import com.coursed.repository.RoleRepository;
 import com.coursed.service.RoleService;
@@ -18,14 +19,7 @@ public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
 
     @Override
-    public void create(Role role) {
-        //TODO: check for existing roles with the same name
-
-        roleRepository.save(role);
-    }
-
-    @Override
-    public List<Role> findAll() {
-        return roleRepository.findAll();
+    public List<RoleDTO> getAll() {
+        return roleRepository.findAllInDTO();
     }
 }

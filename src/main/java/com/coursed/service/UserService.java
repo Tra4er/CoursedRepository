@@ -14,11 +14,11 @@ import java.util.Optional;
  * Created by Hexray on 06.11.2016.
  */
 public interface UserService {
-    User registerStudent(UserStudentDTO registrationForm);
-    User registerTeacher(UserTeacherDTO registrationForm);
     void saveRegisteredUser(User user);
     User getById(Long id);
     User getByEmail(String email);
+    UserDTO getByStudentId(Long studentId);
+    UserDTO getByTeacherId(Long teacherId);
     List<User> getAll();
     boolean checkIfUserExists(String email);
     List<User> getAllUnconfirmedTeachers();
@@ -28,7 +28,7 @@ public interface UserService {
     void connectUserWithRole(Long userId, Long roleId);
     void connectUserWithRole(User user, Role role);
     void makeATeacher(Long userId);
-    void createVerificationTokenForUser(User user, String token);
+    void createVerificationTokenForUser(UserDTO userDTO, String token);
     VerificationToken getVerificationToken(String VerificationToken);
     VerificationToken generateNewVerificationToken(String token);
     User getUserByVerificationToken(String token);

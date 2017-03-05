@@ -16,8 +16,7 @@ import java.util.List;
  */
 public interface PlannedEventService {
     PlannedEventDTO getById(Long eventId);
-    PlannedEvent create(PlannedEventDTO plannedEventDTO) throws DateTimeParseException;
-    PlannedEvent create(PlannedEvent event);
+    PlannedEventDTO create(PlannedEventDTO plannedEventDTO) throws DateTimeParseException;
     Page<PlannedEventDTO> getAll(int page, int size);
     Page<PlannedEventDTO> getAllUpcoming(int page, int size);
     Page<PlannedEventDTO> getAllPast(int page, int size);

@@ -1,22 +1,28 @@
 package com.coursed.service.implementation;
 
 import com.coursed.dto.TeacherDTO;
+import com.coursed.dto.UserTeacherDTO;
 import com.coursed.error.exception.PageSizeTooBigException;
+import com.coursed.error.exception.UserAlreadyExistException;
 import com.coursed.model.Group;
 import com.coursed.model.Teacher;
 import com.coursed.model.auth.Role;
-import com.coursed.repository.DisciplineRepository;
-import com.coursed.repository.GroupRepository;
-import com.coursed.repository.RoleRepository;
-import com.coursed.repository.TeacherRepository;
+import com.coursed.model.auth.User;
+import com.coursed.repository.*;
 import com.coursed.service.TeacherService;
 import com.coursed.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Hexray on 06.12.2016.
@@ -24,12 +30,17 @@ import java.util.List;
 @Service
 public class TeacherServiceImpl implements TeacherService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(TeacherServiceImpl.class);
+
     public static final int DEFAULT_PAGE = 1;
     public static final int DEFAULT_PAGE_SIZE = 10;
     public static final int MAX_PAGE_SIZE = 20;
 
     @Autowired
     private TeacherRepository teacherRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private GroupRepository groupRepository;
@@ -44,8 +55,43 @@ public class TeacherServiceImpl implements TeacherService {
     private UserService userService;
 
     @Override
-    public void create(Teacher teacher) { // TODO change to save and check if teacher exist
-        teacherRepository.save(teacher);
+    public TeacherDTO create(UserTeacherDTO registrationForm) {
+        if (emailExist(registrationForm.getEmail())) {
+            throw new UserAlreadyExistException("Trying to save new account but there is already one with this email.");
+        }
+
+        User user = new User();
+        user.setEmail(registrationForm.getEmail());
+        user.setPassword(registrationForm.getPassword());
+        user.setAsTeacher(true);
+        user.setAsStudent(false);
+        user.setEnabled(false);
+        user.setRegistrationDate(new Date());
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+
+        Teacher teacher = new Teacher();
+        teacher.setFirstName(registrationForm.getFirstName());
+        teacher.setLastName(registrationForm.getLastName());
+        teacher.setPatronymic(registrationForm.getPatronymic());
+        teacher.setPhoneNumber(registrationForm.getPhoneNumber());
+
+        user.setTeacherEntity(teacher);
+
+        Set<Role> roles = new HashSet<>();
+        Role registeredRole = roleRepository.findByName("ROLE_REGISTERED");
+
+        if (registeredRole == null) {
+            LOGGER.error("There is no role with name 'ROLE_REGISTERED' to create the association with user");
+            throw new RuntimeException("There is no role with name 'ROLE_REGISTERED' to create the association with user. You have to add base info");
+        }
+        roles.add(registeredRole);
+
+        user.setRoles(roles);
+
+        LOGGER.debug("Saving user with email={}", user.getEmail().replaceFirst("@.*", "@***"));
+
+        User saved = userRepository.save(user);
+        return teacherRepository.findOneInDTO(saved.getTeacherEntity().getId());
     }
 
     @Override
@@ -122,5 +168,11 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Page<TeacherDTO.TeacherTitleDTO> getAllNotCuratorsByGroup(Long groupId, int page, int size) {
         return teacherRepository.findAllNotCuratorsByGroupInDTO(groupId, new PageRequest(page, size));
+    }
+
+    //    NON API
+
+    private boolean emailExist(String email) {
+        return userRepository.findOneByEmail(email) != null;
     }
 }

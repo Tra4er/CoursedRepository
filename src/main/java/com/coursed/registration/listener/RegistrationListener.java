@@ -1,6 +1,7 @@
 package com.coursed.registration.listener;
 
 import com.coursed.controller.mvc.AuthController;
+import com.coursed.dto.UserDTO;
 import com.coursed.model.auth.User;
 import com.coursed.registration.OnRegistrationCompleteEvent;
 import com.coursed.service.UserService;
@@ -34,11 +35,11 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
     }
 
     private void confirmRegistration(OnRegistrationCompleteEvent event) {
-        User user = event.getUser();
+        UserDTO userDTO = event.getUser();
         String token = UUID.randomUUID().toString();
-        userService.createVerificationTokenForUser(user, token);
+        userService.createVerificationTokenForUser(userDTO, token);
 
-        String recipientAddress = user.getEmail();
+        String recipientAddress = userDTO.getEmail();
         String subject = "Підтвердження реєстрації на CoursEd";
         String confirmationUrl
                 = event.getAppUrl() + "/users/confirmRegistration?token=" + token;

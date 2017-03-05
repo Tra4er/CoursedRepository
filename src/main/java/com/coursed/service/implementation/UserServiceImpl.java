@@ -48,96 +48,6 @@ public class UserServiceImpl implements UserService {
     private DisciplineRepository disciplineRepository;
 
     @Override
-    public User registerStudent(UserStudentDTO registrationForm) {
-        if (emailExist(registrationForm.getEmail())) {
-            throw new UserAlreadyExistException("Trying to save new account but there is already one with this email.");
-        }
-
-        User user = new User();
-        user.setEmail(registrationForm.getEmail());
-        user.setPassword(registrationForm.getPassword());
-        user.setAsTeacher(false);
-        user.setAsStudent(true);
-        user.setEnabled(false);
-        user.setRegistrationDate(new Date());
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-
-        Student student = new Student();
-        student.setFirstName(registrationForm.getFirstName());
-        student.setLastName(registrationForm.getLastName());
-        student.setPatronymic(registrationForm.getPatronymic());
-        student.setPhoneNumber(registrationForm.getPhoneNumber());
-        student.setAdditionalInformation(registrationForm.getAdditionalInformation());
-        student.setGradeBookNumber(registrationForm.getGradeBookNumber());
-        student.setAddress(registrationForm.getAddress());
-        student.setBirthDate(registrationForm.getBirthDate());
-
-        if ("true".compareTo(registrationForm.getIsBudgetStudent()) == 0)
-            student.setBudgetStudent(true);
-        else
-            student.setBudgetStudent(false);
-        student.setParentsInfo(registrationForm.getParentsInfo());
-        student.setStudentEducationStatus(registrationForm.getStudentEducationStatus());
-
-        Group group = groupRepository.findOne(registrationForm.getGroupId());
-        student.setGroup(group);
-
-        user.setStudentEntity(student);
-
-        Set<Role> roles = new HashSet<>();
-        Role registeredRole = roleRepository.findByName("ROLE_REGISTERED");
-
-        if (registeredRole == null) {
-            LOGGER.error("There is no role with name 'ROLE_REGISTERED' to create the association with user");
-            throw new RuntimeException("There is no role with name 'ROLE_REGISTERED' to create the association with user. You have to add base info");
-        }
-        roles.add(registeredRole);
-
-        user.setRoles(roles);
-
-        LOGGER.debug("Saving user with email={}", user.getEmail().replaceFirst("@.*", "@***"));
-        return userRepository.save(user);
-    }
-
-    @Override
-    public User registerTeacher(UserTeacherDTO registrationForm) {
-        if (emailExist(registrationForm.getEmail())) {
-            throw new UserAlreadyExistException("Trying to save new account but there is already one with this email.");
-        }
-
-        User user = new User();
-        user.setEmail(registrationForm.getEmail());
-        user.setPassword(registrationForm.getPassword());
-        user.setAsTeacher(true);
-        user.setAsStudent(false);
-        user.setEnabled(false);
-        user.setRegistrationDate(new Date());
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-
-        Teacher teacher = new Teacher();
-        teacher.setFirstName(registrationForm.getFirstName());
-        teacher.setLastName(registrationForm.getLastName());
-        teacher.setPatronymic(registrationForm.getPatronymic());
-        teacher.setPhoneNumber(registrationForm.getPhoneNumber());
-
-        user.setTeacherEntity(teacher);
-
-        Set<Role> roles = new HashSet<>();
-        Role registeredRole = roleRepository.findByName("ROLE_REGISTERED");
-
-        if (registeredRole == null) {
-            LOGGER.error("There is no role with name 'ROLE_REGISTERED' to create the association with user");
-            throw new RuntimeException("There is no role with name 'ROLE_REGISTERED' to create the association with user. You have to add base info");
-        }
-        roles.add(registeredRole);
-
-        user.setRoles(roles);
-
-        LOGGER.debug("Saving user with email={}", user.getEmail().replaceFirst("@.*", "@***"));
-        return userRepository.save(user);
-    }
-
-    @Override
     public void saveRegisteredUser(final User user) {
         LOGGER.debug("Saving registered user: {}", user);
         userRepository.save(user);
@@ -154,6 +64,17 @@ public class UserServiceImpl implements UserService {
         LOGGER.debug("Getting user by email={}", email.replaceFirst("@.*", "@***"));
         return userRepository.findOneByEmail(email);
     }
+
+    @Override
+    public UserDTO getByStudentId(Long studentId) {
+        return userRepository.findOneByStudentInDTO(studentId);
+    }
+
+    @Override
+    public UserDTO getByTeacherId(Long teacherId) {
+        return userRepository.findOneByTeacherInDTO(teacherId);
+    }
+
 
     @Override
     public List<User> getAll() {
@@ -243,7 +164,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void createVerificationTokenForUser(User user, String token) { // TODO
+    public void createVerificationTokenForUser(UserDTO userDTO, String token) { // TODO move to another class?
+        User user = userRepository.findOne(userDTO.getId());
         final VerificationToken myToken = new VerificationToken(token, user);
         verificationTokenRepository.save(myToken);
     }
