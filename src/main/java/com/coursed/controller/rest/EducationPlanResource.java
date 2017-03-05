@@ -38,7 +38,7 @@ public class EducationPlanResource {
         return new ResponseEntity<>(new GenericResponse(educationPlanService.getById(id)), HttpStatus.OK);
     }
 
-    @GetMapping("/{educationPlanId}/disciplines/")
+    @GetMapping("/{educationPlanId}/disciplines")
     public ResponseEntity<GenericResponse> getDisciplinesByEducationPlan(@PathVariable("educationPlanId") Long educationPlanId,
                                                                          @RequestParam(value = "page") Integer page,
                                                                          @RequestParam(value = "size") Integer size){
