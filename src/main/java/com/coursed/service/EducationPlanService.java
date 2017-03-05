@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface EducationPlanService {
     EducationPlanDTO getById(Long educationPlanId);
-    EducationPlan create(EducationPlanDTO planForm);
+    EducationPlanDTO create(EducationPlanDTO planForm);
     Page<EducationPlanDTO> getAll(int page, int size);
     Page<EducationPlanDTO> getAllFromYear(int page, int size, Long yearId);
 }

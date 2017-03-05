@@ -25,23 +25,23 @@ public interface GroupRepository extends CrudRepository<Group, Long> {
     GroupDTO findOneInDTO(Long groupId);
 
     @Query("SELECT new com.coursed.dto.GroupDTO(g.id, g.number, g.groupType, g.groupDegree, g.courseNumber, g.semester.id, " +
-            "g.speciality.id) FROM com.coursed.model.Group g")
+            "g.speciality.id, g.speciality.groupsName) FROM com.coursed.model.Group g")
     Page<GroupDTO> findAllInDTO(Pageable pageable);
 
     @Query("SELECT new com.coursed.dto.GroupDTO(g.id, g.number, g.groupType, g.groupDegree, g.courseNumber, g.semester.id, " +
-            "g.speciality.id) FROM com.coursed.model.Group g WHERE g.curators IS EMPTY")
+            "g.speciality.id, g.speciality.groupsName) FROM com.coursed.model.Group g WHERE g.curators IS EMPTY")
     Page<GroupDTO> findAllWithoutCuratorsInDTO(Pageable pageable);
 
     @Query("SELECT new com.coursed.dto.GroupDTO(g.id, g.number, g.groupType, g.groupDegree, g.courseNumber, g.semester.id, " +
-            "g.speciality.id) FROM com.coursed.model.Group g WHERE g.speciality.id = ?1")
+            "g.speciality.id, g.speciality.groupsName) FROM com.coursed.model.Group g WHERE g.speciality.id = ?1")
     Page<GroupDTO> findAllBySpecialityInDTO(Long specialityId, Pageable pageable);
 
     @Query("SELECT new com.coursed.dto.GroupDTO(g.id, g.number, g.groupType, g.groupDegree, g.courseNumber, g.semester.id, " +
-            "g.speciality.id) FROM com.coursed.model.Group g WHERE g.semester.id = ?1")
+            "g.speciality.id, g.speciality.groupsName) FROM com.coursed.model.Group g WHERE g.semester.id = ?1")
     Page<GroupDTO> findAllBySemesterInDTO(Long semesterId, Pageable pageable);
 
     @Query("SELECT new com.coursed.dto.GroupDTO(g.id, g.number, g.groupType, g.groupDegree, g.courseNumber, g.semester.id, " +
-            "g.speciality.id) FROM com.coursed.model.Group g WHERE g.semester.id IN " +
+            "g.speciality.id, g.speciality.groupsName) FROM com.coursed.model.Group g WHERE g.semester.id IN " +
             "(SELECT s.id FROM com.coursed.model.Semester s JOIN s.plannedEvents e WHERE ?1 IN (e.id))")
     Page<GroupDTO> findAllByPlannedEventInDTO(Long plannedEventId, Pageable pageable);
 }

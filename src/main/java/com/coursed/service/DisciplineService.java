@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface DisciplineService {
     DisciplineDTO getById(Long id);
-    Discipline create(DisciplineDTO disciplineDTO);
+    DisciplineDTO create(DisciplineDTO disciplineDTO);
     DisciplineDTO connectWithTeacher(Long disciplineId, Long teacherId);
     Page<DisciplineDTO.DisciplineTitleDTO> getAll(int page, int size);
     Page<DisciplineDTO.DisciplineTitleDTO> getAllByTeacher(Long teacherId, int page, int size);

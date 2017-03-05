@@ -35,7 +35,7 @@ public class EducationPlanServiceImpl implements EducationPlanService {
     }
 
     @Override
-    public EducationPlan create(EducationPlanDTO planForm) {
+    public EducationPlanDTO create(EducationPlanDTO planForm) {
         EducationPlan educationPlan = new EducationPlan();
         educationPlan.setCourseNumber(planForm.getCourseNumber());
         educationPlan.setGroupDegree(planForm.getGroupDegree());
@@ -50,7 +50,9 @@ public class EducationPlanServiceImpl implements EducationPlanService {
         educationPlan.setSpeciality(speciality);
         educationPlan.setYear(year);
 
-        return educationPlanRepository.save(educationPlan);
+        EducationPlan saved = educationPlanRepository.save(educationPlan);
+
+        return educationPlanRepository.findOneInDTO(saved.getId());
     }
 
     @Override

@@ -19,7 +19,7 @@ public class Speciality {
     @GeneratedValue
     private Long id;
     private String fullName;
-    private String groupsName;
+    private String groupsName; // TODO rename
 
 //    @JsonBackReference("group-speciality")
     @OneToMany(mappedBy = "speciality")

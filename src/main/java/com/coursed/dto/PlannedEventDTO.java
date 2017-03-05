@@ -22,6 +22,8 @@ public class PlannedEventDTO {
     private PlannedEventType eventType;
     private Long semesterId;
 
+    public PlannedEventDTO(){}
+
     public PlannedEventDTO(Long id, LocalDateTime beginDate, LocalDateTime expirationDate, LocalDateTime creationDate,
                            PlannedEventType eventType, Long semesterId) {
         this.id = id;

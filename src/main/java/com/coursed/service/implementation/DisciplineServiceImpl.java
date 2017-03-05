@@ -45,7 +45,7 @@ public class DisciplineServiceImpl implements DisciplineService {
     }
 
     @Override
-    public Discipline create(DisciplineDTO disciplineDTO) {
+    public DisciplineDTO create(DisciplineDTO disciplineDTO) {
         Discipline discipline = new Discipline();
 
         discipline.setName(disciplineDTO.getName());
@@ -62,7 +62,9 @@ public class DisciplineServiceImpl implements DisciplineService {
 
         discipline.setEducationPlan(educationPlan);
 
-        return disciplineRepository.save(discipline);
+        Discipline saved = disciplineRepository.save(discipline);
+
+        return disciplineRepository.findOneInDTO(saved.getId());
     }
 
     @Override

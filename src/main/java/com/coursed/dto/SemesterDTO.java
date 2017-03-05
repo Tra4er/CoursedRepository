@@ -10,6 +10,8 @@ public class SemesterDTO {
     private Long id;
     private SemesterNumber semesterNumber;
 
+    public SemesterDTO(){}
+
     public SemesterDTO(Long id, SemesterNumber semesterNumber) {
         this.id = id;
         this.semesterNumber = semesterNumber;
