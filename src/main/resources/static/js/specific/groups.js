@@ -3,7 +3,7 @@
  */
 //On document ready
 $(document).ready(function () {
-    var titles = ['id', 'Назва', 'Тип', 'Рівень', 'Номер курсу'];
+    var titles = ['Група', 'Тип', 'Рівень', 'Номер курсу'];
     insertTable(titles, "content-table");
     loadTable(0, $('#numberOnPage').val());
     fillSelect("courseNumber", courseNumbers);
@@ -14,9 +14,17 @@ $(document).ready(function () {
 });
 
 function loadTable(page, size){
-    var entityParams = ['id', 'number', 'groupType', 'groupDegree', 'courseNumber'];
-    fillLocalizedTableFrom("content-table", "/api/groups?page=" + page + "&size=" + size, entityParams,
-        localGroupUkr, page, 'groupsPagination');
+    $.getJSON("/api/groups" ,{page: page, size: size} ,function(response){
+        var htmlRow = "";
+        $.each(response.data.content, function (i, entity) {
+            htmlRow +="<td>" + entity.shortSpecialityName + "-" + entity.number + "</td>";
+            htmlRow +="<td>" + groupType[entity.groupType] + "</td>";
+            htmlRow +="<td>" + groupDegree[entity.groupDegree] + "</td>";
+            htmlRow +="<td>" + courseNumbers[entity.courseNumber] + "</td></tr>";
+        });
+        $("#content-table > tbody").html(htmlRow);
+        createPagination('groupsPagination', response.data['totalPages'], page);
+    })
 };
 
 // AJAX post to create a group
@@ -24,35 +32,6 @@ $('#button-group-post').click(function(){
     var form = $('#modal-body-form');
     sendAjaxPost(form, '/api/groups', 'add-dialog');
 });
-
-//
-// $('#button-group-post').on('click', function () {
-//     var obj = JSON.stringify({
-//         "number": $('#number').val(),
-//         "groupType": $('#groupType').val(),
-//         "groupDegree": $('#groupDegree').val(),
-//         "courseNumber": $('#courseNumber').val(),
-//         "semesterId": $('#semesterId').val(),
-//         "specialityId": $('#specialityId').val()
-//     });
-//
-//     $.ajax({
-//         type: "POST",
-//         url: "/api/groups",
-//         contentType: "application/json",
-//         data: obj,
-//         success: function (response) {
-//             $('#add-dialog').modal("toggle");
-//             var active = $('.pagination').children('.active').children('a').text() - 1;
-//             loadTable(active, $('#numberOnPage').val());
-//         },
-//         error: function (response) {
-//             alert('Помилка!');
-//             console.log(response)
-//         }
-//     });
-// });
-
 
 //When the modal hides set to dafault selects and inputs
 $('#add-dialog').on('hidden.bs.modal', function() {
