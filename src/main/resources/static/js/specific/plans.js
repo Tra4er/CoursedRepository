@@ -63,7 +63,7 @@ function loadTable(page, size) {
 function htmlFormForEducationPlan(year, spec, containerId){
     var yearString = year.beginYear + "-" + year.endYear;
     var htmlCode = "<div class='row year-container' name='" + year.id + "'><h3 align='center'>на " + yearString + " рік</h3>";
-    $.getJSON("/api/years/" + year.id + "/educationPlans", function(response) {
+    $.getJSON("/api/years/" + year.id + "/educationPlans", {page: 0, size: 30}, function(response) {
         $.each(spec, function (key2, speciality) {
             htmlCode += "<div class='speciality-container col-xs-12' name='" + spec[key2].id + "'><h4 align='center'>" + spec[key2].name + "</h4>";
             var general = "<div class='col-xs-6 group-type-container' name='GENERAL_FORM'><h5 align='center' class='col-xs-12'>" + localGroupUkr['GENERAL_FORM'] + "</h5>";

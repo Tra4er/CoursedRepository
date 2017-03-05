@@ -94,8 +94,8 @@ public class GroupResource {
 
     @PostMapping("/{groupId}/curators/{teacherId}")
     private ResponseEntity setCurator(@PathVariable("groupId") Long groupId,
-                                                    @RequestParam(name = "teacherId") Long teacherId) {
-        groupService.addCurator(teacherId, groupId);
+                                      @PathVariable("teacherId") Long teacherId) {
+        groupService.addCurator(groupId, teacherId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
