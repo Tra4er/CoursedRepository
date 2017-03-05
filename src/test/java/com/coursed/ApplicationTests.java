@@ -23,7 +23,7 @@ public class ApplicationTests {
     @Test
     public void contextLoads() {
         System.out.println("Result: ");
-//        System.out.println(userRepository.findM());
+        System.out.println(userRepository.findOneByStudentInDTO(2L));
 //        for(Object[] items : teacherRepository.findM()) {
 //            String t = (String)items[0];
 //            System.out.println(t);
