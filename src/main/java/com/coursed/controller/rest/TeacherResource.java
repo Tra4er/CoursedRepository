@@ -59,7 +59,7 @@ public class TeacherResource {
     public ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
                                                @RequestParam(value = "size") Integer size) {
 
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+        return new ResponseEntity<>(new GenericResponse(
                 teacherService.getAll(page, size)), HttpStatus.OK);
     }
 
@@ -77,8 +77,7 @@ public class TeacherResource {
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
 
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.CREATED.value(), "success", registered.getId()),
-                HttpStatus.CREATED);
+        return new ResponseEntity<>(new GenericResponse(registered.getId()), HttpStatus.CREATED);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
@@ -89,47 +88,46 @@ public class TeacherResource {
                                                   @RequestParam(value = "disciplineId", required = false) Long disciplineId) {
         if (filter != null) {
             if (filter.equals("unconfirmed")) {
-                return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                return new ResponseEntity<>(new GenericResponse(
                         teacherService.getAllUnconfirmed(page, size)), HttpStatus.OK);
             }
             if (filter.equals("withoutDiscipline")) {
                 if (disciplineId != null) {
-                    return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    return new ResponseEntity<>(new GenericResponse(
                             teacherService.getAllWithoutDiscipline(disciplineId, page, size)), HttpStatus.OK);
                 }
             }
         }
 
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.NO_CONTENT.value(), "success"), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping("{teacherId}")
     public ResponseEntity<GenericResponse> getById(@PathVariable("teacherId") Long teacherId) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+        return new ResponseEntity<>(new GenericResponse(
                 teacherService.getById(teacherId)), HttpStatus.OK);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @DeleteMapping("{teacherId}")
-    public ResponseEntity<GenericResponse> deleteById(@PathVariable("teacherId") Long teacherId) {
+    public ResponseEntity deleteById(@PathVariable("teacherId") Long teacherId) {
         teacherService.delete(teacherId);
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @PostMapping("{teacherId}/confirm")
     public ResponseEntity<GenericResponse> confirm(@PathVariable("teacherId") Long teacherId) {
         teacherService.confirmTeacher(teacherId);
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                teacherService.getById(teacherId)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(teacherService.getById(teacherId)), HttpStatus.OK);
     }
 
     @GetMapping("{teacherId}/disciplines")
     public ResponseEntity<GenericResponse> getDisciplines(@PathVariable("teacherId") Long teacherId,
                                                           @RequestParam(value = "page") Integer page,
                                                           @RequestParam(value = "size") Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+        return new ResponseEntity<>(new GenericResponse(
                 disciplineService.getAllByTeacher(teacherId, page, size)), HttpStatus.OK);
     }
 

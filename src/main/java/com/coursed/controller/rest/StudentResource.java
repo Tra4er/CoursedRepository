@@ -56,11 +56,9 @@ public class StudentResource {
                                                @RequestParam(value = "size") Integer size) {
 
         if(page != null && size != null) {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    studentService.getAll(page, size)), HttpStatus.OK);
+            return new ResponseEntity<>(new GenericResponse(studentService.getAll(page, size)), HttpStatus.OK);
         }
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", studentService.getAll()),
-                HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(studentService.getAll()), HttpStatus.OK);
     }
 
     @PostMapping
@@ -76,22 +74,20 @@ public class StudentResource {
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
 
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", registered.getId()),
-                HttpStatus.CREATED);
+        return new ResponseEntity<>(new GenericResponse(registered.getId()), HttpStatus.CREATED);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD','TEACHER', 'SECRETARY')")
     @GetMapping("/search")
     public ResponseEntity<GenericResponse> search(@RequestParam(value = "page", required = false) Integer page,
                                                @RequestParam(value = "size", required = false) Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.NO_CONTENT.value(), "success"), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD','TEACHER', 'SECRETARY')")
     @GetMapping("{studentId}")
     public ResponseEntity<GenericResponse> getByUsername(@PathVariable("studentId") Long studentId) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                studentService.getById(studentId)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(studentService.getById(studentId)), HttpStatus.OK);
     }
 
 }

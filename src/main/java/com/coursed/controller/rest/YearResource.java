@@ -26,33 +26,30 @@ public class YearResource {
     @GetMapping
     public ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
                                                @RequestParam(value = "size") Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                yearService.getAll(page, size)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(yearService.getAll(page, size)), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<GenericResponse> post(@RequestBody YearDTO yearDTO) { // TODO @Valid
         Year year = yearService.create(yearDTO);
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", year.getId()), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(year.getId()), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GenericResponse> getById(@PathVariable(value="id") Long yearId) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                yearService.getById(yearId)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(yearService.getById(yearId)), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/semesters")
     public ResponseEntity<GenericResponse> getSemesters(@PathVariable(value="id") Long yearId,
                                                         @RequestParam(value = "page") Integer page,
                                                         @RequestParam(value = "size") Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+        return new ResponseEntity<>(new GenericResponse(
                 semesterService.getAllByYear(yearId, page, size)), HttpStatus.OK);
     }
 
     @GetMapping("/current")
     private ResponseEntity<GenericResponse> getCurrentYear() {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success", yearService.getCurrent()),
-                HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(yearService.getCurrent()), HttpStatus.OK);
     }
 }

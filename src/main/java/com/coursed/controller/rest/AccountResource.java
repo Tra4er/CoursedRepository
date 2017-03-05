@@ -64,16 +64,16 @@ public class AccountResource {
     }
 
     @PostMapping("/sendNewRegistrationToken")
-    public ResponseEntity<GenericResponse> sendNewRegistrationToken(@RequestParam String existingToken,
+    public ResponseEntity sendNewRegistrationToken(@RequestParam String existingToken,
                                                                        final HttpServletRequest request) {
         VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
         User user = userService.getUserByVerificationToken(newToken.getToken());
         mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), newToken, user));
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/resendRegistrationToken")
-    public ResponseEntity<GenericResponse> resendRegistrationToken(@RequestParam("email") String email,
+    public ResponseEntity resendRegistrationToken(@RequestParam("email") String email,
                                                                       final HttpServletRequest request) {
         User user = userService.getByEmail(email);
         if(user == null) {
@@ -84,11 +84,11 @@ public class AccountResource {
             throw new TokenNotFoundException();
         }
         mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), token, user));
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/sendResetPasswordToken")
-    public ResponseEntity<GenericResponse> sendResetPasswordToken(@RequestParam("email") String email,
+    public ResponseEntity sendResetPasswordToken(@RequestParam("email") String email,
                                                                      final HttpServletRequest request) {
 
         User user = userService.getByEmail(email);
@@ -101,12 +101,12 @@ public class AccountResource {
         String appUrl = " http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         SimpleMailMessage simpleMailMessage = constructResetTokenEmail(appUrl, token, user);
         mailSender.send(simpleMailMessage);
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
+        return new ResponseEntity(new GenericResponse("sent"), HttpStatus.OK);
     }
 
     //  In case user forgot his password and resets it by sending resetToken to email.
     @PostMapping("/savePassword")
-    public ResponseEntity<GenericResponse> savePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
+    public ResponseEntity savePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
         String token = passwordDTO.getToken();
         LOGGER.debug("Validating password reset token: " + token);
         PasswordResetToken passToken = passwordResetTokenService.getByToken(token);
@@ -122,19 +122,19 @@ public class AccountResource {
         User user = passwordResetTokenService.getUserByToken(token);
 
         userService.changeUserPassword(user, passwordDTO.getNewPassword());
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     //  In case user remembers his password and wont to update it.
     @PostMapping("/updatePassword")
     @PreAuthorize("hasRole('REGISTERED')")
-    public ResponseEntity<GenericResponse> changeUserPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
+    public ResponseEntity changeUserPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
         final User user = userService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         if (!userService.checkIfValidOldPassword(user, passwordDTO.getOldPassword())) {
             throw new InvalidOldPasswordException();
         }
         userService.changeUserPassword(user, passwordDTO.getNewPassword());
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     //    NON API

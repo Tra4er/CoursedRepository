@@ -24,14 +24,12 @@ public class AttestationResource {
     @GetMapping
     private ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
                                                 @RequestParam(value = "size") Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                attestationGradeService.getAll(page, size)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(attestationGradeService.getAll(page, size)), HttpStatus.OK);
     }
 
     @GetMapping("{attestationGradeId}")
     private ResponseEntity<GenericResponse> get(@PathVariable("attestationGradeId") Long attestationGradeId) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                attestationGradeService.getById(attestationGradeId)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(attestationGradeService.getById(attestationGradeId)), HttpStatus.OK);
     }
 
     // OLD

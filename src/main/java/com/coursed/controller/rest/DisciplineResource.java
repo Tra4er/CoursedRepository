@@ -33,35 +33,30 @@ public class DisciplineResource {
     @GetMapping
     public ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
                                                @RequestParam(value = "size") Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                disciplineService.getAll(page, size)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(disciplineService.getAll(page, size)), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<GenericResponse> post(@RequestBody DisciplineDTO disciplineDTO) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                disciplineService.create(disciplineDTO)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(disciplineService.create(disciplineDTO)), HttpStatus.OK);
     }
 
     @GetMapping("{disciplineId}")
     public ResponseEntity<GenericResponse> getById(@PathVariable("disciplineId") Long disciplineId) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                disciplineService.getById(disciplineId)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(disciplineService.getById(disciplineId)), HttpStatus.OK);
     }
 
     @GetMapping("{disciplineId}/teachers")
     public ResponseEntity<GenericResponse> getTeachers(@PathVariable("disciplineId") Long disciplineId,
                                                        @RequestParam(value = "page") Integer page,
                                                        @RequestParam(value = "size") Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                teacherService.getAllByDiscipline(disciplineId, page, size)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(teacherService.getAllByDiscipline(disciplineId, page, size)), HttpStatus.OK);
     }
 
     @PostMapping("{disciplineId}/teachers/{teacherId}")
     public ResponseEntity<GenericResponse> connectWithTeacher(@PathVariable("disciplineId") Long disciplineId,
                                                               @PathVariable("teacherId") Long teacherId) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                disciplineService.connectWithTeacher(disciplineId, teacherId)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(disciplineService.connectWithTeacher(disciplineId, teacherId)), HttpStatus.OK);
     }
 
     @GetMapping("/search")
@@ -71,8 +66,7 @@ public class DisciplineResource {
                                                   @RequestParam(value = "groupId", required = false) Long groupId) {
 
         if(plannedEventId != null && groupId != null) { // TODO
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    disciplineService.getAllDisciplinesFromPlannedEvent(plannedEventId, groupId)), HttpStatus.OK);
+            return new ResponseEntity<>(new GenericResponse(disciplineService.getAllDisciplinesFromPlannedEvent(plannedEventId, groupId)), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

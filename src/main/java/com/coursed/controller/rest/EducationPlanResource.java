@@ -21,20 +21,17 @@ public class EducationPlanResource {
     @GetMapping
     public ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
                                                @RequestParam(value = "size") Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                educationPlanService.getAll(page, size)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(educationPlanService.getAll(page, size)), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<GenericResponse> post(@RequestBody EducationPlanDTO planForm) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                educationPlanService.create(planForm)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(educationPlanService.create(planForm)), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<GenericResponse> getById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                educationPlanService.getById(id)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(educationPlanService.getById(id)), HttpStatus.OK);
     }
 
 }

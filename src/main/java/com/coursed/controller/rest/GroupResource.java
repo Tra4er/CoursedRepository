@@ -38,14 +38,12 @@ public class GroupResource {
     @GetMapping
     private ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
                                                 @RequestParam(value = "size") Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                groupService.getAll(page, size)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(groupService.getAll(page, size)), HttpStatus.OK);
     }
 
     @PostMapping
     private ResponseEntity<GenericResponse> post(@RequestBody GroupDTO groupDTO) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.CREATED.value(), "created",
-                groupService.create(groupDTO)), HttpStatus.CREATED);
+        return new ResponseEntity<>(new GenericResponse(groupService.create(groupDTO)), HttpStatus.CREATED);
     }
 
     @GetMapping("/search")
@@ -60,12 +58,12 @@ public class GroupResource {
         if(filter != null) {
             switch (filter) {
                 case "withoutCurators": {
-                    return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                    return new ResponseEntity<>(new GenericResponse(
                             groupService.getAllWithoutCurators(page, size)), HttpStatus.OK);
                 }
                 case "forGrading": {
                     if (disciplineId != null && semesterId != null && courseNumber != null) {
-                        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+                        return new ResponseEntity<>(new GenericResponse(
                                 groupService.findAllForGrading(disciplineId, semesterNumber, courseNumber)), HttpStatus.OK);
                     } else {
                         throw new IllegalArgumentException("Missing parameters.");
@@ -75,8 +73,7 @@ public class GroupResource {
             }
         }
         if(specialityId != null && semesterId != null) {
-            return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                    groupService.findAllFromSpecialityAndSemester(specialityId, semesterId)), HttpStatus.OK);
+            return new ResponseEntity<>(new GenericResponse(groupService.findAllFromSpecialityAndSemester(specialityId, semesterId)), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -84,37 +81,36 @@ public class GroupResource {
 
     @GetMapping("/{groupId}")
     private ResponseEntity<GenericResponse> getById(@PathVariable("groupId") Long groupId) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                groupService.getById(groupId)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(groupService.getById(groupId)), HttpStatus.OK);
     }
 
     @GetMapping("/{groupId}/curators")
     private ResponseEntity<GenericResponse> getCurators(@PathVariable("groupId") Long groupId,
                                                         @RequestParam(value = "page") Integer page,
                                                         @RequestParam(value = "size") Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+        return new ResponseEntity<>(new GenericResponse(
                 teacherService.getAllCuratorsByGroup(groupId, page, size)), HttpStatus.OK);
     }
 
     @PostMapping("/{groupId}/curators/{teacherId}")
-    private ResponseEntity<GenericResponse> setCurator(@PathVariable("groupId") Long groupId,
+    private ResponseEntity setCurator(@PathVariable("groupId") Long groupId,
                                                     @RequestParam(name = "teacherId") Long teacherId) {
         groupService.addCurator(teacherId, groupId);
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/{groupId}/students")
     private ResponseEntity<GenericResponse> getStudents(@PathVariable("groupId") Long groupId,
                                                         @RequestParam(value = "page") Integer page,
                                                         @RequestParam(value = "size") Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+        return new ResponseEntity<>(new GenericResponse(
                 studentService.getAllByGroup(groupId, page, size)), HttpStatus.OK);
     }
 
     @PostMapping("/{groupId}/students/{studentId}")
-    private ResponseEntity<GenericResponse> addStudent(@PathVariable("groupId") Long groupId,
+    private ResponseEntity addStudent(@PathVariable("groupId") Long groupId,
                                                        @RequestParam(name = "studentId") Long studentId) {
         groupService.addStudent(groupId, studentId);
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success"), HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

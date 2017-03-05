@@ -12,82 +12,47 @@ import java.util.List;
  */
 public class GenericResponse {
 
-    private Integer code;
-    private String status;
     private String message;
     private Object data;
 
-    /**
-     *
-     * @param code HTTP status code
-     * @param status "success", "fail", "error"
-     */
-    public GenericResponse(Integer code, String status) {
-        this(code, status, "", null);
+    public GenericResponse(String message) {
+        this(message, new Object());
     }
 
     /**
      *
-     * @param code HTTP status code
-     * @param status "success", "fail", "error"
      * @param data Use for response body or to describe your error.
      */
-    public GenericResponse(Integer code, String status, Object data) {
-        this(code, status, "", data);
+    public GenericResponse(Object data) {
+        this("", data);
     }
 
     /**
      *
-     * @param code HTTP status code
-     * @param status "success", "fail", "error"
      * @param message Use only for "fail" or "error" statuses. Short error description. Example: "UserAlreadyExist"
      * @param data Use for response body or to describe your error.
      */
-    public GenericResponse(Integer code, String status, String message, Object data) {
-        this.code = code;
-        this.status = status;
+    public GenericResponse(String message, Object data) {
         this.message = message;
         this.data = data;
     }
 
     /**
      *
-     * @param code HTTP status code
-     * @param status "success", "fail", "error"
      * @param globalErrors Use only for "fail" or "error" statuses. Short error description. Example: "UserAlreadyExist"
      * @param fieldErrors Use for response body or to describe your error.
      */
     // TODO TEST
-    public GenericResponse(Integer code, String status, List<ObjectError> globalErrors, List<FieldError> fieldErrors) {
+    public GenericResponse(List<ObjectError> globalErrors, List<FieldError> fieldErrors) {
         super();
         final ObjectMapper mapper = new ObjectMapper();
         try {
-            this.code = code;
-            this.status = status;
             this.message = mapper.writeValueAsString(globalErrors);
             this.data = mapper.writeValueAsString(fieldErrors);
         } catch (final JsonProcessingException e) {
-            this.code = 500;
-            this.status = "error";
             this.message = "Internal Error";
             this.data = "";
         }
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getMessage() {
@@ -109,8 +74,6 @@ public class GenericResponse {
     @Override
     public String toString() {
         return "GenericResponse{" +
-                "code='" + code + '\'' +
-                ", status='" + status + '\'' +
                 ", message='" + message + '\'' +
                 ", data='" + data + '\'' +
                 '}';

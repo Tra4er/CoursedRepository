@@ -24,21 +24,19 @@ public class SemesterResource {
     @GetMapping // TODO Do we need this?
     private ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
                                                 @RequestParam(value = "size") Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                semesterService.getAll(page, size)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(semesterService.getAll(page, size)), HttpStatus.OK);
     }
 
     @GetMapping("{semesterId}")
     private ResponseEntity<GenericResponse> getById(@PathVariable("semesterId") Long semesterId) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                semesterService.getById(semesterId)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(semesterService.getById(semesterId)), HttpStatus.OK);
     }
 
     @GetMapping("{semesterId}/groups")
     private ResponseEntity<GenericResponse> getGroups(@PathVariable("semesterId") Long semesterId,
                                                       @RequestParam(value = "page") Integer page,
                                                       @RequestParam(value = "size") Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+        return new ResponseEntity<>(new GenericResponse(
                 groupService.getAllBySemester(semesterId, page, size)), HttpStatus.OK);
     }
 }

@@ -26,8 +26,7 @@ public class UserResource {
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping
     public ResponseEntity<GenericResponse> get() {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                userService.getAll()), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(userService.getAll()), HttpStatus.OK);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
@@ -39,16 +38,14 @@ public class UserResource {
     //    @PreAuthorize("hasAnyRole('HEAD', 'SECRETARY')")
     @GetMapping("{id}")
     public ResponseEntity<GenericResponse> getByUsername(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                userService.getById(id)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(userService.getById(id)), HttpStatus.OK);
     }
 
     //    @PreAuthorize("hasAnyRole('HEAD')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GenericResponse> delete(@PathVariable("id") Long id) {
         userService.deleteUser(id);
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                userService.getById(id)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(userService.getById(id)), HttpStatus.OK);
     }
 
     //TODO: solve n+1 JPA problem via avoiding traversal of unfetched entities when JSON is creating

@@ -28,27 +28,24 @@ public class SpecialityResource {
     @GetMapping
     public ResponseEntity<GenericResponse> get(@RequestParam(value = "page") Integer page,
                                                @RequestParam(value = "size") Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                specialityService.getAll(page, size)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(specialityService.getAll(page, size)), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<GenericResponse> post(@RequestBody SpecialityDTO specialityDTO) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.CREATED.value(), "success",
-                specialityService.create(specialityDTO)), HttpStatus.CREATED);
+        return new ResponseEntity<>(new GenericResponse(specialityService.create(specialityDTO)), HttpStatus.CREATED);
     }
 
     @GetMapping("{specialityId}")
     public ResponseEntity<GenericResponse> getById(@PathVariable("specialityId") Long specialityId) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
-                specialityService.getById(specialityId)), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(specialityService.getById(specialityId)), HttpStatus.OK);
     }
 
     @GetMapping("{specialityId}/groups")
     public ResponseEntity<GenericResponse> getGroups(@PathVariable("specialityId") Long specialityId,
                                                      @RequestParam(value = "page") Integer page,
                                                      @RequestParam(value = "size") Integer size) {
-        return new ResponseEntity<>(new GenericResponse(HttpStatus.OK.value(), "success",
+        return new ResponseEntity<>(new GenericResponse(
                 groupService.getAllBySpeciality(specialityId, page, size)), HttpStatus.OK);
     }
 
