@@ -21,4 +21,5 @@ public interface TeacherService {
     Page<TeacherDTO.TeacherTitleDTO> getAllWithoutDiscipline(Long disciplineId, int page, int size);
     Page<TeacherDTO.TeacherTitleDTO> getAllByDiscipline(Long disciplineId, int page, int size);
     Page<TeacherDTO.TeacherTitleDTO> getAllCuratorsByGroup(Long groupId, int page, int size);
+    Page<TeacherDTO.TeacherTitleDTO> getAllNotCuratorsByGroup(Long groupId, int page, int size);
 }

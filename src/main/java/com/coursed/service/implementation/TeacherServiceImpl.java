@@ -118,4 +118,9 @@ public class TeacherServiceImpl implements TeacherService {
     public Page<TeacherDTO.TeacherTitleDTO> getAllCuratorsByGroup(Long groupId, int page, int size) {
         return teacherRepository.findAllCuratorsByGroupInDTO(groupId, new PageRequest(page, size));
     }
+
+    @Override
+    public Page<TeacherDTO.TeacherTitleDTO> getAllNotCuratorsByGroup(Long groupId, int page, int size) {
+        return teacherRepository.findAllNotCuratorsByGroupInDTO(groupId, new PageRequest(page, size));
+    }
 }

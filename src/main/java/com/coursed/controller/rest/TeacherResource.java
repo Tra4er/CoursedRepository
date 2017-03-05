@@ -85,7 +85,8 @@ public class TeacherResource {
     public ResponseEntity<GenericResponse> search(@RequestParam(value = "page") Integer page,
                                                   @RequestParam(value = "size") Integer size,
                                                   @RequestParam(value = "filter", required = false) String filter,
-                                                  @RequestParam(value = "disciplineId", required = false) Long disciplineId) {
+                                                  @RequestParam(value = "disciplineId", required = false) Long disciplineId,
+                                                  @RequestParam(value = "groupId", required = false) Long groupId) {
         if (filter != null) {
             if (filter.equals("unconfirmed")) {
                 return new ResponseEntity<>(new GenericResponse(
@@ -95,6 +96,12 @@ public class TeacherResource {
                 if (disciplineId != null) {
                     return new ResponseEntity<>(new GenericResponse(
                             teacherService.getAllWithoutDiscipline(disciplineId, page, size)), HttpStatus.OK);
+                }
+            }
+            if (filter.equals("notCurators")) {
+                if (groupId != null) {
+                    return new ResponseEntity<>(new GenericResponse(
+                            teacherService.getAllNotCuratorsByGroup(groupId, page, size)), HttpStatus.OK);
                 }
             }
         }
