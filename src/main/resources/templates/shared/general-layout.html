@@ -44,9 +44,16 @@
             </ul>
             <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post"></form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a sec:authentication="name"></a></li>
-                <li><a href="javascript:{}"
-                       onclick="document.getElementById('frmlogout').submit(); return false;">Вийти</a></li>
+                <li class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><a sec:authentication="name"></a>
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/users/updatePassword} + '?by=oldPassword'">Змінити пароль</a></li>
+                        <li class="divider"></li>
+                        <li><a href="javascript:{}"
+                               onclick="document.getElementById('frmlogout').submit(); return false;">Вийти</a></li>
+                    </ul>
+                </li>
                 <!--<li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Увійти</a></li>-->
             </ul>
         </div>
